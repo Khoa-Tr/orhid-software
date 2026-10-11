@@ -1,0 +1,21 @@
+name: 'Orchid week 3 - sensor spike filter'
+version: 1
+author: 'orhid'
+
+steps:
+  - wait-serial: 'Orchid garden controller started'
+  - set-control: { part-id: dht, control: temperature, value: 28 }
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - delay: 15000ms
+  - wait-serial: 'raw_humidity=72.0 filtered_humidity=72.0'
+
+  - set-control: { part-id: dht, control: humidity, value: 99 }
+  - wait-serial: 'raw_humidity=99.0 filtered_humidity=72.0'
+  - wait-serial: 'raw_humidity=99.0 filtered_humidity=77.4'
+  - delay: 15000ms
+  - wait-serial: 'raw_humidity=99.0 filtered_humidity=99.0'
+
+  - set-control: { part-id: dht, control: humidity, value: 50 }
+  - wait-serial: 'raw_humidity=50.0 filtered_humidity=99.0'
+  - wait-serial: 'raw_humidity=50.0 filtered_humidity=89.2'

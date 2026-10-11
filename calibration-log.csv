@@ -1,0 +1,4 @@
+timestamp_ms,raw_light_adc,filtered_light_adc,raw_water_adc,filtered_water_adc,raw_temperature_c,filtered_temperature_c,raw_humidity_percent,filtered_humidity_percent,notes
+observed-1,1467,1467,0,0,28.2,28.2,15.0,15.0,"Water low; lockout YES; Mist OFF; Grow light ON"
+observed-2,1467,1467,685,685,28.2,28.2,15.0,15.0,"Water low; lockout YES; Mist OFF"
+observed-3,1467,1467,1517,1517,28.2,28.2,15.0,15.0,"Water enough; lockout NO; Mist ON"

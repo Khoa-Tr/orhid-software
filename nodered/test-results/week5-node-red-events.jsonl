@@ -1,0 +1,8 @@
+{"event":"threshold_active","rule":"orchidHighTemperature","metric":"temperature_c","value":34,"threshold":33,"at":"2026-10-09T13:47:10.169Z"}
+{"event":"threshold_active","rule":"orchidHighHumidity","metric":"humidity_pct","value":92,"threshold":90,"at":"2026-10-09T13:47:10.620Z"}
+{"event":"threshold_cleared","rule":"orchidHighTemperature","metric":"temperature_c","value":30,"threshold":31,"at":"2026-10-09T13:47:11.074Z"}
+{"event":"threshold_cleared","rule":"orchidHighHumidity","metric":"humidity_pct","value":84,"threshold":85,"at":"2026-10-09T13:47:11.527Z"}
+{"event":"water_lockout","water_adc":1100,"threshold":1200,"at":"2026-10-09T13:47:11.990Z"}
+{"event":"water_recovered","water_adc":1550,"threshold":1500,"at":"2026-10-09T13:47:12.440Z"}
+{"event":"mist_demand_observed","humidity_pct":60,"water_adc":1550,"at":"2026-10-09T13:47:12.440Z"}
+{"event":"mist_demand_cleared","humidity_pct":82,"water_adc":1550,"at":"2026-10-09T13:47:13.349Z"}

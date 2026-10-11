@@ -1,0 +1,125 @@
+name: 'Orchid garden - Tuan 3 - Input/Processing/Output'
+version: 1
+author: 'orhid'
+
+# Cach hoat dong: moi ca test dat dau vao bang set-control, roi cho dong Serial mong doi.
+# - Chuyen trang thai: cho dong 'STATE ... -> ...' (chi in ra dung luc chuyen).
+# - Giu nguyen trang thai (hysteresis): delay 25 s cho bo loc on dinh roi cho dong trang thai.
+# Thieu dong mong doi -> het timeout -> scenario FAIL tai dung buoc do.
+# Bo loc trung binh 5 mau x 2,5 s: sau khi doi dau vao cho >= 25 s neu can gia tri on dinh.
+# LDR Wokwi: lux 10 ~ ADC 3400 (toi), lux 110 ~ ADC 2050 (vung hysteresis), lux 1000 ~ ADC 700 (sang).
+# Potentiometer: position 0.1 ~ ADC 410 (can nuoc), 0.33 ~ 1350 (vung hysteresis), 0.6 ~ 2450 (du nuoc).
+
+steps:
+  - wait-serial: 'Orchid garden controller started'
+
+  # ---------- F3 / A1: dieu kien binh thuong ----------
+  - set-control: { part-id: dht, control: temperature, value: 28 }
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - set-control: { part-id: ldr, control: lux, value: 1000 }
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - delay: 30000ms
+  - wait-serial: 'Mist: IDLE | Fan: OFF | Grow light: OFF'      # A1, F3
+
+  # ---------- A. Phun suong ----------
+  - set-control: { part-id: dht, control: humidity, value: 60 }
+  - wait-serial: 'STATE mist IDLE -> RUNNING'                    # A2
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - delay: 25000ms
+  - wait-serial: 'Mist: RUNNING'                                 # A4 (vung hysteresis, van RUNNING)
+  - set-control: { part-id: dht, control: humidity, value: 82 }
+  - wait-serial: 'STATE mist RUNNING -> IDLE'                    # A3
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - delay: 25000ms
+  - wait-serial: 'Mist: IDLE'                                    # A5 (vung hysteresis, van IDLE)
+
+  # ---------- A6, A7: timer phun toi da va cooldown ----------
+  - set-control: { part-id: dht, control: humidity, value: 60 }
+  - wait-serial: 'STATE mist IDLE -> RUNNING'
+  - wait-serial: 'STATE mist RUNNING -> COOLDOWN'                # A6 (sau 120 s)
+  - wait-serial: 'STATE mist COOLDOWN -> IDLE'                   # A7 (sau 60 s)
+  - wait-serial: 'STATE mist IDLE -> RUNNING'                    # A7 (RH van < 65)
+
+  # ---------- B. Muc nuoc ----------
+  - set-control: { part-id: water, control: position, value: 0.1 }
+  - wait-serial: 'STATE mist RUNNING -> WATER_LOCKOUT'           # B2 (cung kiem tra E3: buoc nhay lon van duoc chap nhan)
+  - set-control: { part-id: water, control: position, value: 0.33 }
+  - delay: 25000ms
+  - wait-serial: 'Mist: WATER_LOCKOUT'                           # B3 (hysteresis, chua mo khoa)
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - wait-serial: 'STATE mist WATER_LOCKOUT -> IDLE'              # B4
+  - wait-serial: 'STATE mist IDLE -> RUNNING'                    # B4 (RH van 60)
+
+  - set-control: { part-id: dht, control: humidity, value: 82 }
+  - wait-serial: 'STATE mist RUNNING -> IDLE'
+  - set-control: { part-id: water, control: position, value: 0.1 }
+  - wait-serial: 'STATE mist IDLE -> WATER_LOCKOUT'              # B1
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - wait-serial: 'STATE mist WATER_LOCKOUT -> IDLE'
+
+  - set-control: { part-id: dht, control: humidity, value: 60 }
+  - wait-serial: 'STATE mist IDLE -> RUNNING'
+  - wait-serial: 'STATE mist RUNNING -> COOLDOWN'
+  - set-control: { part-id: water, control: position, value: 0.1 }
+  - wait-serial: 'STATE mist COOLDOWN -> WATER_LOCKOUT'          # B5
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - wait-serial: 'STATE mist WATER_LOCKOUT -> IDLE'
+  - delay: 25000ms
+
+  # ---------- C. Quat ----------
+  - set-control: { part-id: dht, control: temperature, value: 34 }
+  - wait-serial: 'STATE fan -> ON'                               # C1
+  - set-control: { part-id: dht, control: temperature, value: 32 }
+  - delay: 25000ms
+  - wait-serial: 'Fan: ON'                                       # C2 (hysteresis)
+  - set-control: { part-id: dht, control: temperature, value: 30 }
+  - wait-serial: 'STATE fan -> OFF'                              # C3
+  - set-control: { part-id: dht, control: humidity, value: 93 }
+  - wait-serial: 'STATE fan -> ON'                               # C4
+  - set-control: { part-id: dht, control: humidity, value: 87 }
+  - delay: 25000ms
+  - wait-serial: 'Fan: ON'                                       # C5 (hysteresis)
+  - set-control: { part-id: dht, control: humidity, value: 80 }
+  - wait-serial: 'STATE fan -> OFF'                              # C6
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - delay: 25000ms
+
+  # ---------- D. Den ----------
+  - set-control: { part-id: ldr, control: lux, value: 10 }
+  - wait-serial: 'STATE light -> ON'                             # D1 (toi)
+  - set-control: { part-id: ldr, control: lux, value: 110 }
+  - delay: 25000ms
+  - wait-serial: 'Grow light: ON'                                # D2 (hysteresis)
+  - set-control: { part-id: ldr, control: lux, value: 1000 }
+  - wait-serial: 'STATE light -> OFF'                            # D3 (sang)
+
+  # ---------- E. Bo loc nhieu ----------
+  - delay: 25000ms
+  - set-control: { part-id: dht, control: humidity, value: 99 }
+  - wait-serial: 'raw_humidity=99.0 filtered_humidity=72.0'      # E1 (mau nhieu bi loai)
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - delay: 25000ms
+  - set-control: { part-id: dht, control: humidity, value: 50 }
+  - wait-serial: 'raw_humidity=50.0 filtered_humidity=72.0'      # E2 (bi loai lan 1)
+  - wait-serial: 'raw_humidity=50.0 filtered_humidity=67.6'      # E2 (lan 3: chap nhan, khong ket)
+
+  # ---------- F. Ket hop ----------
+  - set-control: { part-id: dht, control: temperature, value: 35 }
+  - set-control: { part-id: dht, control: humidity, value: 60 }
+  - set-control: { part-id: ldr, control: lux, value: 10 }
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - delay: 30000ms
+  - wait-serial: 'Mist: RUNNING | Fan: ON | Grow light: ON'      # F1
+
+  - set-control: { part-id: ldr, control: lux, value: 1000 }
+  - set-control: { part-id: water, control: position, value: 0.1 }
+  - delay: 30000ms
+  - wait-serial: 'Mist: WATER_LOCKOUT | Fan: ON | Grow light: OFF'   # F2
+
+  - set-control: { part-id: dht, control: temperature, value: 28 }
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - delay: 40000ms
+  - wait-serial: 'Mist: IDLE | Fan: OFF | Grow light: OFF'      # F3

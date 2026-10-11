@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "author": "",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht", "top": -30, "left": 250, "attrs": { "temperature": "28", "humidity": "72" } },
+    { "type": "wokwi-photoresistor-sensor", "id": "ldr", "top": 150, "left": 250, "attrs": { "lux": "250" } },
+    { "type": "wokwi-potentiometer", "id": "water", "top": 330, "left": 250, "attrs": { "value": "820" } },
+    { "type": "wokwi-relay-module", "id": "mistRelay", "top": -60, "left": 500, "attrs": { "transistor": "pnp" } },
+    { "type": "wokwi-text", "id": "mistRelayLabel", "top": -50, "left": 650, "attrs": { "text": "BOM / PHUN SUONG - GPIO25" } },
+    { "type": "wokwi-relay-module", "id": "fanRelay", "top": 130, "left": 500, "attrs": { "transistor": "pnp" } },
+    { "type": "wokwi-text", "id": "fanRelayLabel", "top": 140, "left": 650, "attrs": { "text": "QUAT - GPIO26" } },
+    { "type": "wokwi-relay-module", "id": "lightRelay", "top": 320, "left": 500, "attrs": { "transistor": "pnp" } },
+    { "type": "wokwi-text", "id": "lightRelayLabel", "top": 330, "left": 650, "attrs": { "text": "DEN CAY - GPIO27" } }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ], [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "esp:3V3", "dht:VCC", "red", [] ], [ "esp:GND.1", "dht:GND", "black", [] ], [ "esp:D15", "dht:SDA", "green", [] ],
+    [ "esp:3V3", "ldr:VCC", "red", [] ], [ "esp:GND.1", "ldr:GND", "black", [] ], [ "esp:D34", "ldr:AO", "green", [] ],
+    [ "esp:3V3", "water:VCC", "red", [] ], [ "esp:GND.1", "water:GND", "black", [] ], [ "esp:D35", "water:SIG", "green", [] ],
+    [ "esp:VIN", "mistRelay:VCC", "red", [] ], [ "esp:GND.1", "mistRelay:GND", "black", [] ], [ "esp:D25", "mistRelay:IN", "blue", [] ],
+    [ "esp:VIN", "fanRelay:VCC", "red", [] ], [ "esp:GND.1", "fanRelay:GND", "black", [] ], [ "esp:D26", "fanRelay:IN", "blue", [] ],
+    [ "esp:VIN", "lightRelay:VCC", "red", [] ], [ "esp:GND.1", "lightRelay:GND", "black", [] ], [ "esp:D27", "lightRelay:IN", "blue", [] ]
+  ],
+  "dependencies": {}
+}

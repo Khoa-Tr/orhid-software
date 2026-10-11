@@ -1,0 +1,13 @@
+name: 'Orchid week 3 - mist timer and cooldown'
+version: 1
+author: 'orhid'
+
+steps:
+  - wait-serial: 'Orchid garden controller started'
+  - set-control: { part-id: dht, control: temperature, value: 28 }
+  - set-control: { part-id: dht, control: humidity, value: 60 }
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - wait-serial: 'STATE mist IDLE -> RUNNING'
+  - wait-serial: 'STATE mist RUNNING -> COOLDOWN'
+  - wait-serial: 'STATE mist COOLDOWN -> IDLE'
+  - wait-serial: 'STATE mist IDLE -> RUNNING'

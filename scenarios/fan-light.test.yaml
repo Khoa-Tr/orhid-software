@@ -1,0 +1,38 @@
+name: 'Orchid week 3 - fan and light'
+version: 1
+author: 'orhid'
+
+steps:
+  - wait-serial: 'Orchid garden controller started'
+  - set-control: { part-id: dht, control: temperature, value: 28 }
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - set-control: { part-id: ldr, control: lux, value: 1000 }
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - delay: 15000ms
+  - wait-serial: 'Mist: IDLE | Fan: OFF | Grow light: OFF'
+
+  - set-control: { part-id: dht, control: temperature, value: 34 }
+  - wait-serial: 'STATE fan -> ON'
+  - set-control: { part-id: dht, control: temperature, value: 32 }
+  - delay: 15000ms
+  - wait-serial: 'Fan: ON'
+  - set-control: { part-id: dht, control: temperature, value: 30 }
+  - wait-serial: 'STATE fan -> OFF'
+
+  - set-control: { part-id: dht, control: humidity, value: 93 }
+  - wait-serial: 'STATE fan -> ON'
+  - set-control: { part-id: dht, control: humidity, value: 87 }
+  - delay: 15000ms
+  - wait-serial: 'Fan: ON'
+  - set-control: { part-id: dht, control: humidity, value: 80 }
+  - wait-serial: 'STATE fan -> OFF'
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - delay: 15000ms
+
+  - set-control: { part-id: ldr, control: lux, value: 10 }
+  - wait-serial: 'STATE light -> ON'
+  - set-control: { part-id: ldr, control: lux, value: 110 }
+  - delay: 15000ms
+  - wait-serial: 'Grow light: ON'
+  - set-control: { part-id: ldr, control: lux, value: 1000 }
+  - wait-serial: 'STATE light -> OFF'

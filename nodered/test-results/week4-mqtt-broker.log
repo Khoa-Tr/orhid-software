@@ -1,0 +1,10 @@
+Result: PASS
+Date: 2026-10-09
+Broker: broker.emqx.io:1883
+Check: MQTT 3.1.1 connect, subscribe, publish/echo, disconnect, reconnect, resubscribe, publish/echo
+Client: standalone Node.js test client; not the ESP32 firmware
+Temporary isolated topic: garden/orchid/week45-validation/438fdbab3f23/echo
+Payload 1: {"check":"week4-publish-subscribe","run_id":"438fdbab3f23","sequence":1}
+Payload 2: {"check":"week4-publish-subscribe","run_id":"438fdbab3f23","sequence":2}
+Security note: public unauthenticated broker; test used a random non-command topic and synthetic data only.
+Outstanding: verify firmware Wi-Fi/MQTT telemetry, command/ACK, and reconnect using ESP32 or Wokwi.

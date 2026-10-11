@@ -1,0 +1,138 @@
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:1156
+load:0x40078000,len:11456
+ho 0 tail 12 room 4
+load:0x40080400,len:2972
+entry 0x400805dc
+Orchid garden controller startedCAL columns: raw_light filtered_light raw_water filtered_water raw_temp filtered_temp raw_humidity filtered_humidity
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+STATE mist IDLE -> RUNNINGT: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+STATE mist RUNNING -> COOLDOWNT: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+CAL raw_light=1410 filtered_light=1410 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 1410 | Water ADC: 2457 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
