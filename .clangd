@@ -1,0 +1,49 @@
+CompileFlags:
+  Add:
+    - -std=gnu++11
+    - -DPLATFORMIO=60200
+    - -DARDUINO_ESP32_DEV
+    - -DESP_PLATFORM
+    - -DARDUINO_ARCH_ESP32
+    - -DESP32
+    - -DF_CPU=240000000L
+    - -DARDUINO=10812
+    - -DARDUINO_VARIANT="esp32"
+    - -DARDUINO_BOARD="Espressif ESP32 Dev Module"
+    - -DARDUINO_PARTITION_default
+    - -IC:/Users/ACER/OneDrive/Documents/PlatformIO/Projects/orhid/include
+    - -IC:/Users/ACER/OneDrive/Documents/PlatformIO/Projects/orhid/src
+    - -IC:/Users/ACER/OneDrive/Documents/PlatformIO/Projects/orhid/.pio/libdeps/esp32dev/PubSubClient/src
+    - -IC:/Users/ACER/OneDrive/Documents/PlatformIO/Projects/orhid/.pio/libdeps/esp32dev/ArduinoJson/src
+    - -IC:/Users/ACER/OneDrive/Documents/PlatformIO/Projects/orhid/.pio/libdeps/esp32dev/DHT sensor library
+    - -IC:/Users/ACER/OneDrive/Documents/PlatformIO/Projects/orhid/.pio/libdeps/esp32dev/Adafruit Unified Sensor
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/cores/esp32
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/variants/esp32
+    - -IC:/Users/ACER/.platformio/packages/toolchain-xtensa-esp32/xtensa-esp32-elf/include
+    - -IC:/Users/ACER/.platformio/packages/toolchain-xtensa-esp32/xtensa-esp32-elf/include/c++/8.4.0
+    - -IC:/Users/ACER/.platformio/packages/toolchain-xtensa-esp32/xtensa-esp32-elf/include/c++/8.4.0/xtensa-esp32-elf
+    - -IC:/Users/ACER/.platformio/packages/toolchain-xtensa-esp32/lib/gcc/xtensa-esp32-elf/8.4.0/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/port/xtensa/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_common/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_system/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp32/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/soc/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/driver/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_event/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_wifi/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/esp_netif/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/include/apps
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/lwip/src/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/lwip/port/esp32/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/hal/include
+    - -IC:/Users/ACER/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/hal/esp32/include
+    - -Wno-unknown-warning-option
+    - -Wno-unknown-attributes
+  Remove:
+    - -fno-tree-switch-conversion
+    - -fstrict-volatile-bitfields
+    - -mlongcalls
+    - -fno-jump-tables

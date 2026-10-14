@@ -110,34 +110,49 @@ Script dùng topic kiểm tra ngẫu nhiên riêng dưới `garden/orchid/week45
 
 Lần kiểm tra broker gần nhất đạt connect, subscribe, publish/echo và reconnect/resubscribe; log nằm trong `nodered/test-results/week4-mqtt-broker.log`. Đây là bằng chứng đường truyền broker hoạt động, không phải kiểm thử firmware ESP32.
 
-## Tuần 5 - Node-RED middleware và automation
+## Tuần 5-7 - Node-RED middleware, dashboard và automation
 
 **MQTT** là giao thức nhắn tin nhẹ giữa thiết bị và ứng dụng. **Broker** là máy chủ trung gian nhận/chuyển tiếp các tin nhắn MQTT; demo này dùng broker công khai `broker.emqx.io:1883`. **Node-RED** là ứng dụng middleware chạy trên laptop: nó subscribe topic từ broker, xử lý luật và hiển thị/ghi lại event. Ba thứ này khác nhau; MQTT là giao thức nên không cần cài riêng, broker demo đã có trên Internet, còn Node-RED cần chạy trên laptop.
 
-Flow export nằm ở `nodered/orchid-flow.json`, gồm ba tab:
+Flow export nằm ở `nodered/orchid-flow.json`. Ba tab đầu là middleware và rule tuần 5:
 
 1. **Monitor and history**: nhận MQTT feed, hiển thị dữ liệu trong Debug sidebar, ghi thay đổi relay/availability; báo ngay khi thiết bị offline, đồng thời ghi thêm cảnh báo một lần nếu offline liên tục trên 5 phút. Telemetry cũ hơn 15 giây cũng có cảnh báo riêng.
 2. **Climate and light threshold automation**: phát event khi nhiệt độ vượt 33°C, độ ẩm vượt 90%, hoặc LDR vượt 2200 ADC; ghi event clear khi nhiệt độ xuống dưới 31°C, độ ẩm xuống dưới 85%, hoặc LDR xuống dưới 1800 ADC.
 3. **Water and mist rules**: ghi event khóa nước khi ADC <1200, phục hồi khi ADC đạt >=1500; theo dõi điều kiện nhu cầu phun khi RH <65% và nước không khóa, giữ trạng thái đến khi RH đạt >=80% hoặc nước thấp.
 
-Các ngưỡng bám theo logic firmware của `orhid` (LDR tối làm ADC tăng). Automation chỉ tạo event/debug và ghi lịch sử `orchid-history.jsonl`; chúng **không publish lệnh điều khiển relay**. Tuần 5 yêu cầu xử lý automation và log; các nút điều khiển/remote command đầu ra là phần application tuần 6. Giữ quyền điều khiển AUTO trong firmware để tránh Node-RED và ESP32 tranh quyền hoặc tác động tải qua broker public.
+Các ngưỡng bám theo logic firmware của `orhid` (LDR tối làm ADC tăng). Automation chỉ tạo event/debug và ghi lịch sử `orchid-history.jsonl`; chúng **không publish lệnh điều khiển relay**. Broker demo là công khai, vì vậy flow giữ quyền điều khiển trong firmware và không đưa lệnh tải thật qua MQTT.
+
+### Tuần 6 - Dashboard giám sát
+
+Flow có thêm tab **Orchid - Week 6 dashboard** dùng FlowFuse Dashboard 2. Trang chỉ đọc hiển thị nhiệt độ, độ ẩm, ADC ánh sáng/nước, trạng thái phun/quạt/đèn, mode AUTO/MANUAL, trạng thái kết nối và biểu đồ lịch sử ngắn. Thiết bị được đánh dấu `STALE` nếu quá 15 giây không có telemetry. Mở dashboard tại <http://127.0.0.1:1880/dashboard/orchid> sau khi cài package và Deploy flow.
+
+Tab này không có nút điều khiển, đăng nhập/phân quyền, Telegram hay MQTT Out; các phần đó không thuộc vai trò dashboard giám sát đang triển khai.
+
+### Tuần 7 - Business rules dạng đề xuất
+
+Tab **Orchid - Week 7 business rules** tạo event đề xuất, không tự tác động relay:
+
+- Lịch đèn demo 08:00–20:00: chỉ đề xuất bật trong khung giờ khi `light_adc > 2200`; ngoài giờ đề xuất tắt. Giờ và ngưỡng chỉ là mặc định để mô phỏng/test, không phải khuyến nghị trồng lan; cần nhóm hiệu chỉnh theo cảm biến và điều kiện thực tế.
+- Sau khi `mist_state` chuyển từ `RUNNING` sang `IDLE`/`COOLDOWN`, đề xuất bật quạt 180 giây rồi đề xuất tắt. Event chỉ ghi vào Debug và `orchid-history.jsonl`.
+
+Các đề xuất được phát khi trạng thái thay đổi, tránh ghi lặp cùng một khuyến nghị cho lịch đèn. Mọi automation vẫn ở chế độ monitor-only; không có MQTT Out và không tự động bật/tắt tải.
 
 ### Cài/chạy Node-RED trên Windows
 
 Node.js đã cài trên máy thì mở PowerShell và chạy từ thư mục `orhid`:
 
 ```powershell
-npm install --prefix "$env:LOCALAPPDATA\OrchidNodeRED" --no-save node-red
+npm install --prefix "$env:LOCALAPPDATA\OrchidNodeRED" --no-save node-red @flowfuse/node-red-dashboard
 .\nodered\start-node-red.ps1
 ```
 
-Khi terminal báo server đã chạy, mở <http://127.0.0.1:1880>. Script nạp flow lần đầu vào user data riêng bên ngoài project, nên không đụng firmware hoặc project phần cứng. Khi muốn đồng bộ bản flow trong project vào Node-RED đã cài, chạy `.\nodered\start-node-red.ps1 -SyncFlow`; script sẽ sao lưu flow đang dùng thành `flows.backup.<timestamp>.json` trước khi thay. Nếu không muốn thay file đang dùng, có thể nhập `nodered/orchid-flow.json` thủ công qua **Menu → Import → select a file**, rồi Deploy.
+Lệnh npm cần cài cả Node-RED và FlowFuse Dashboard 2. Khi terminal báo server đã chạy, mở <http://127.0.0.1:1880>. Script nạp flow lần đầu vào user data riêng bên ngoài project, nên không đụng firmware hoặc project phần cứng. Khi muốn đồng bộ bản flow trong project vào Node-RED đã cài, chạy `.\nodered\start-node-red.ps1 -SyncFlow`; script sẽ sao lưu flow đang dùng thành `flows.backup.<timestamp>.json` trước khi thay. Nếu không muốn thay file đang dùng, có thể nhập `nodered/orchid-flow.json` thủ công qua **Menu → Import → select a file**, rồi Deploy.
 
 Node-RED chạy trong terminal của người dùng sẽ tiếp tục chạy khi chat bị ngắt, miễn là terminal và laptop vẫn hoạt động. Để dừng, nhấn `Ctrl+C` trong terminal chạy server hoặc chạy `.\nodered\stop-node-red.ps1`. Không cần để assistant giữ một tiến trình nền.
 
-Broker mặc định là `broker.emqx.io:1883`, topic dùng device ID `orchid-01`; nếu đổi `ORCHID_DEVICE_ID` thì cập nhật các MQTT input trong cả ba tab. Mở Debug sidebar để xem dữ liệu và sự kiện. File `orchid-history.jsonl` được tạo trong thư mục data của Node-RED, không trong project phần cứng.
+Broker mặc định là `broker.emqx.io:1883`, topic dùng device ID `orchid-01`; nếu đổi `ORCHID_DEVICE_ID` thì cập nhật các MQTT input trong các tab. Mở Debug sidebar để xem dữ liệu và sự kiện. File `orchid-history.jsonl` được tạo trong thư mục data của Node-RED, không trong project phần cứng.
 
-Có thể chạy kiểm tra cấu trúc và logic Function node (bao gồm ngưỡng đúng 5 phút, không báo sớm và không lặp) mà không cần cài Node-RED hoặc có board:
+Có thể chạy kiểm tra cấu trúc và logic Function node (dashboard, lịch đèn, quạt sau phun, ngưỡng đúng 5 phút, không báo sớm và không lặp) mà không cần board:
 
 ```powershell
 node nodered/test-flow.cjs
@@ -145,9 +160,9 @@ node nodered/test-flow.cjs
 
 Để kiểm tra tích hợp sau khi deploy, publish payload JSON vào `garden/orchid/orchid-01/telemetry`. Ví dụ, đặt `temperature_c` lần lượt là 34, 32, 30 để thấy trạng thái nhiệt độ bật, giữ trong hysteresis, rồi clear; đặt `humidity_pct` lần lượt là 92, 87, 84 để kiểm tra rule độ ẩm. Với LDR, dùng `light_adc` 2400 rồi 1700 để tạo event bật/clear; với nước/phun, dùng `water_adc` 1100 rồi 1550 và `humidity_pct` 60 rồi 82. Xác nhận sự kiện xuất hiện trong Debug sidebar và file lịch sử sau từng chuyển trạng thái.
 
-Broker công khai không có xác thực và các topic có thể bị người khác publish; chỉ dùng flow này cho mô phỏng/demo. MQTT Out và nút điều khiển từ ZIP của Người 3 chưa được đưa vào flow tuần 5: payload của chúng không khớp giao thức firmware hiện tại. Phần hữu ích được giữ lại là cảnh báo offline quá 5 phút; lệnh ON/OFF/AUTO được để dành tuần 6 và cần sửa payload/ACK trước khi tích hợp.
+Broker công khai không có xác thực và các topic có thể bị người khác publish; chỉ dùng flow này cho mô phỏng/demo. MQTT Out và nút điều khiển từ ZIP của Người 3 chưa được tích hợp: payload cần khớp giao thức firmware, đồng thời broker công khai không phù hợp để điều khiển tải thật. Dashboard và automation tuần 6-7 ở đây chỉ giám sát/phát đề xuất.
 
-Flow đã được khởi chạy thử bằng Node-RED runtime cô lập; runtime nạp đủ ba tab, kết nối được broker và xử lý telemetry tổng hợp gửi vào một topic validation riêng. Event history thực tế của lần kiểm tra được lưu ở `nodered/test-results/week5-node-red-events.jsonl`. Các payload là dữ liệu tổng hợp để test ngưỡng, không phải số đo từ cảm biến/board thật. Để có bằng chứng giao diện phù hợp báo cáo lớp, import flow vào Node-RED ông dùng rồi chụp Debug sidebar và giữ file event history sau một lần chạy.
+Các test tự động chạy Function node với payload tổng hợp, không phải số đo từ cảm biến/board thật. Sau khi Deploy flow, có thể kiểm tra giao diện bằng telemetry từ Wokwi/ESP32 hoặc publish dữ liệu thử, rồi chụp Dashboard và giữ event history làm bằng chứng. Chưa xác nhận một lượt kiểm thử end-to-end trên board thật.
 
 ## Sơ đồ chân
 

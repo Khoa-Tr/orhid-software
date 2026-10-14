@@ -8,7 +8,7 @@ const ids = new Set(nodes.map((node) => node.id));
 const tabs = nodes.filter((node) => node.type === "tab");
 
 assert.equal(ids.size, nodes.length, "Node IDs must be unique");
-assert.equal(tabs.length, 3, "Expected monitor, climate, and water tabs");
+assert.equal(tabs.length, 5, "Expected the three existing tabs plus Week 6 and Week 7");
 
 for (const node of nodes) {
   if (node.z) assert(ids.has(node.z), `${node.id} must reference an existing tab`);
@@ -18,7 +18,14 @@ for (const node of nodes) {
   if (node.type === "mqtt in") {
     assert(ids.has(node.broker), `${node.id} must reference an existing MQTT broker`);
   }
+  if (node.type === "function") {
+    assert.equal(node.outputs, node.wires.length, `${node.id} output count must match its wires`);
+  }
 }
+assert.equal(nodes.filter((node) => node.type === "mqtt out").length, 0, "Flow must not publish MQTT commands");
+assert.equal(nodes.filter((node) => node.type === "ui-button" || node.type === "ui-switch").length, 0,
+  "Week 6 dashboard must remain read-only");
+assert.equal(nodes.filter((node) => node.type === "ui-chart").length, 2, "Dashboard must include two history charts");
 
 function createContext() {
   const values = new Map();
@@ -167,4 +174,80 @@ assert(
   "A later offline period must raise a fresh five-minute alert",
 );
 
-console.log("PASS: Node-RED flow structure, climate/light/water/mist rules, and five-minute offline alert.");
+const dashboard = createRunner("orchid-dashboard-render");
+timestamp = Date.parse("2026-10-09T12:00:00.000Z");
+dashboard.setNow(timestamp);
+result = dashboard({
+  topic: "garden/orchid/orchid-01/telemetry",
+  payload: JSON.stringify({
+    temperature_c: 29.5,
+    humidity_pct: 74,
+    light_adc: 2300,
+    water_adc: 1650,
+  }),
+});
+assert.equal(result[0].payload, "29.5 °C");
+assert.equal(result[1].payload, "74 %");
+assert.equal(result[2].payload, "2300");
+assert.equal(result[3].payload, "1650");
+assert.equal(result[7].payload, "ONLINE");
+assert.deepEqual(result[9].map((point) => point.payload), [29.5, 74]);
+assert.deepEqual(result[10].map((point) => point.payload), [2300, 1650]);
+result = dashboard({
+  topic: "garden/orchid/orchid-01/state",
+  payload: JSON.stringify({
+    mist: "OFF",
+    fan: "ON",
+    light: "OFF",
+    mist_state: "COOLDOWN",
+    mode: "AUTO",
+  }),
+});
+assert.equal(result[4].payload, "COOLDOWN");
+assert.equal(result[5].payload, "ON");
+assert.equal(result[6].payload, "OFF");
+assert.equal(result[8].payload, "AUTO");
+dashboard.setNow(timestamp + 15001);
+result = dashboard({ topic: "dashboard/refresh", payload: {} });
+assert.equal(result[7].payload, "STALE", "Telemetry older than 15 seconds must be marked stale");
+result = dashboard({ topic: "garden/orchid/orchid-01/availability", payload: "offline" });
+assert.equal(result[7].payload, "OFFLINE");
+
+const lightSchedule = createRunner("orchid-week7-light-rule");
+const lightAt = (time, lightAdc = 2300) => lightSchedule({
+  topic: "garden/orchid/orchid-01/telemetry",
+  payload: { light_adc: lightAdc },
+  testTime: time,
+});
+result = lightAt("07:59");
+assert.equal(result.event.action, "OFF", "Light must be off before the demo schedule");
+result = lightAt("08:00");
+assert.equal(result.event.action, "ON", "Dark conditions during the schedule must recommend light on");
+assert.equal(lightAt("08:01"), null, "Unchanged on recommendation must not be repeated");
+assert.equal(lightAt("20:00").event.action, "OFF", "Light must be off at the schedule end");
+lightSchedule.context.set("orchidWeek7LightRecommendation", "ON");
+result = lightAt("08:00", 2000);
+assert.equal(result.event.action, "OFF", "Bright conditions must prevent the light-on recommendation");
+
+const fanAssist = createRunner("orchid-week7-fan-rule");
+timestamp = Date.parse("2026-10-09T12:00:00.000Z");
+fanAssist.setNow(timestamp);
+assert.equal(fanAssist({
+  topic: "garden/orchid/orchid-01/state",
+  payload: { mist_state: "RUNNING", fan: "OFF" },
+}), null);
+fanAssist.setNow(timestamp + 1000);
+result = fanAssist({
+  topic: "garden/orchid/orchid-01/state",
+  payload: { mist_state: "COOLDOWN", fan: "OFF" },
+});
+assert.equal(result[0].event.action, "ON");
+assert.equal(result[0].event.duration_s, 180);
+fanAssist.setNow(timestamp + 180999);
+assert.equal(fanAssist({ topic: "week7/rule_tick", payload: {} }), null, "Fan assist must not expire early");
+fanAssist.setNow(timestamp + 181000);
+result = fanAssist({ topic: "week7/rule_tick", payload: {} });
+assert.equal(result[0].event.action, "OFF", "Fan assist must expire after three minutes");
+assert.equal(fanAssist({ topic: "week7/rule_tick", payload: {} }), null, "Fan off recommendation must emit once");
+
+console.log("PASS: Node-RED structure, existing rules, dashboard rendering, Week 7 recommendations, and read-only safety.");
