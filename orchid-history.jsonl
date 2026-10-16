@@ -1,0 +1,81 @@
+{"event":"availability","state":"online","at":"2026-10-09T13:30:54.494Z"}
+{"event":"telemetry_stale","age_s":16,"at":"2026-10-09T13:34:14.110Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-09T13:35:02.713Z"}
+{"event":"relay_change","relay":"mist","from":"OFF","to":"ON","at":"2026-10-09T13:35:11.756Z"}
+{"event":"telemetry_stale","age_s":16,"at":"2026-10-09T13:35:49.222Z"}
+{"event":"availability","state":"offline","at":"2026-10-09T13:36:29.939Z"}
+{"event":"device_offline","at":"2026-10-09T13:36:34.303Z"}
+{"event":"availability","state":"online","at":"2026-10-09T13:38:33.125Z"}
+{"event":"telemetry_stale","age_s":16,"at":"2026-10-09T13:38:54.538Z"}
+{"event":"availability","state":"offline","at":"2026-10-09T13:39:32.826Z"}
+{"event":"device_offline","at":"2026-10-09T13:39:34.593Z"}
+{"event":"availability","state":"online","at":"2026-10-09T13:40:02.672Z"}
+{"event":"telemetry_stale","age_s":17,"at":"2026-10-09T13:40:44.708Z"}
+{"event":"telemetry_stale","age_s":20,"at":"2026-10-09T13:41:24.776Z"}
+{"event":"telemetry_stale","age_s":18,"at":"2026-10-09T13:42:04.856Z"}
+{"event":"availability","state":"offline","at":"2026-10-09T13:42:32.248Z"}
+{"event":"device_offline","at":"2026-10-09T13:42:34.906Z"}
+{"event":"availability","state":"online","at":"2026-10-09T13:42:35.440Z"}
+{"event":"relay_change","relay":"mist","from":"ON","to":"OFF","at":"2026-10-09T13:43:13.671Z"}
+{"event":"telemetry_stale","age_s":19,"at":"2026-10-09T13:51:10.750Z"}
+{"event":"availability","state":"offline","at":"2026-10-09T13:51:43.819Z"}
+{"event":"device_offline","at":"2026-10-09T13:51:45.806Z"}
+{"event":"availability","state":"online","at":"2026-10-09T13:52:11.979Z"}
+{"event":"telemetry_stale","age_s":15,"at":"2026-10-09T13:58:06.352Z"}
+{"event":"telemetry_stale","age_s":16,"at":"2026-10-09T13:58:26.386Z"}
+{"event":"telemetry_stale","age_s":16,"at":"2026-10-09T13:59:11.474Z"}
+{"event":"availability","state":"offline","at":"2026-10-09T13:59:53.993Z"}
+{"event":"device_offline","at":"2026-10-09T13:59:56.533Z"}
+{"event":"availability","state":"online","at":"2026-10-09T14:03:39.641Z"}
+{"event":"relay_change","relay":"mist","from":"OFF","to":"ON","at":"2026-10-09T14:05:02.363Z"}
+{"event":"telemetry_stale","age_s":18,"at":"2026-10-09T14:06:32.165Z"}
+{"event":"availability","state":"offline","at":"2026-10-09T14:07:08.767Z"}
+{"event":"device_offline","at":"2026-10-09T14:07:12.265Z"}
+{"event":"availability","state":"online","at":"2026-10-09T14:09:32.114Z"}
+{"event":"telemetry_stale","age_s":19,"at":"2026-10-09T14:09:52.468Z"}
+{"event":"availability","state":"offline","at":"2026-10-09T14:10:31.820Z"}
+{"event":"device_offline","at":"2026-10-09T14:10:32.519Z"}
+{"event":"availability","state":"offline","at":"2026-10-09T14:10:45.445Z"}
+{"event":"device_offline","at":"2026-10-09T14:10:47.360Z"}
+{"event":"availability","state":"online","at":"2026-10-09T14:10:56.273Z"}
+{"event":"relay_change","relay":"mist","from":"ON","to":"OFF","at":"2026-10-09T14:13:32.097Z"}
+{"event":"relay_change","relay":"mist","from":"OFF","to":"ON","at":"2026-10-09T14:15:31.203Z"}
+{"event":"telemetry_stale","age_s":17,"at":"2026-10-09T14:17:13.025Z"}
+{"event":"availability","state":"offline","at":"2026-10-09T14:17:47.496Z"}
+{"event":"device_offline","at":"2026-10-09T14:17:48.082Z"}
+{"event":"availability","state":"online","at":"2026-10-09T14:18:48.957Z"}
+{"event":"telemetry_stale","age_s":18,"at":"2026-10-09T14:19:33.244Z"}
+{"event":"availability","state":"offline","at":"2026-10-09T14:20:03.579Z"}
+{"event":"device_offline","at":"2026-10-09T14:20:08.304Z"}
+{"event":"availability","state":"online","at":"2026-10-09T14:21:41.692Z"}
+{"event":"telemetry_stale","age_s":19,"at":"2026-10-09T14:22:03.503Z"}
+{"event":"telemetry_stale","age_s":18,"at":"2026-10-09T14:23:08.586Z"}
+{"event":"availability","state":"online","at":"2026-10-16T14:08:57.486Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-16T14:08:57.486Z"},"at":"2026-10-16T14:08:57.486Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOW","severity":"CRITICAL","title":"CẢNH BÁO CẠN NƯỚC","message":"Mực nước bình chứa đang ở mức THẤP (ADC: 0 < 1200)! Phun sương bị khóa an toàn (WATER_LOCKOUT).","water_adc":0,"at":"2026-10-16T14:08:58.608Z"},"at":"2026-10-16T14:08:58.608Z"}
+{"event":"system_alert","alert":{"type":"WATER_REFILLED","severity":"INFO","title":"MỰC NƯỚC ĐÃ PHỤC HỒI","message":"Bình chứa đã được châm nước đầy (ADC: 1800). Hệ thống sẵn sàng hoạt động trở lại.","at":"2026-10-16T14:09:05.364Z"},"at":"2026-10-16T14:09:05.364Z"}
+{"event":"ack_received","request_id":"req-test-1792159771","result":"APPLIED","reason":"","at":"2026-10-16T14:09:33.930Z"}
+{"event":"relay_change","relay":"mist","from":"OFF","to":"ON","at":"2026-10-16T14:09:34.328Z"}
+{"event":"relay_change","relay":"mist","from":"ON","to":"OFF","at":"2026-10-16T14:09:45.402Z"}
+{"event":"ack_received","request_id":"req-fan-on-1792159785403","result":"APPLIED","reason":"","at":"2026-10-16T14:09:45.979Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-16T14:09:46.415Z"}
+{"event":"availability","state":"offline","at":"2026-10-16T14:09:59.463Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-16T14:09:59.463Z"},"at":"2026-10-16T14:09:59.463Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-16T14:10:04.368Z"},"at":"2026-10-16T14:10:04.368Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-16T14:10:47.794Z"}
+{"event":"ack_received","request_id":"req-mist-on-1792159950068","result":"APPLIED","reason":"","at":"2026-10-16T14:12:30.651Z"}
+{"event":"relay_change","relay":"mist","from":"OFF","to":"ON","at":"2026-10-16T14:12:31.021Z"}
+{"event":"ack_received","request_id":"req-fan-on-1792159970947","result":"APPLIED","reason":"","at":"2026-10-16T14:12:51.526Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-16T14:12:51.910Z"}
+{"event":"ack_received","request_id":"req-light-on-1792159976445","result":"APPLIED","reason":"","at":"2026-10-16T14:12:57.030Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-16T14:12:57.431Z"}
+{"event":"ack_received","request_id":"req-light-off-1792159981346","result":"APPLIED","reason":"","at":"2026-10-16T14:13:01.959Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-16T14:13:02.365Z"}
+{"event":"ack_received","request_id":"req-mist-auto-1792159989603","result":"APPLIED","reason":"AUTO","at":"2026-10-16T14:13:10.171Z"}
+{"event":"relay_change","relay":"mist","from":"ON","to":"OFF","at":"2026-10-16T14:13:10.583Z"}
+{"event":"ack_received","request_id":"req-fan-on-1792159990585","result":"APPLIED","reason":"","at":"2026-10-16T14:13:11.174Z"}
+{"event":"ack_received","request_id":"req-fan-auto-1792159992835","result":"APPLIED","reason":"AUTO","at":"2026-10-16T14:13:13.414Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-16T14:13:13.799Z"}
+{"event":"ack_received","request_id":"req-light-auto-1792159993897","result":"APPLIED","reason":"AUTO","at":"2026-10-16T14:13:14.474Z"}
+{"event":"system_alert","alert":{"type":"MANUAL_TEST","severity":"INFO","title":"KIỂM THỬ TÍCH HỢP TELEGRAM BOT","message":"Đây là bản tin kiểm thử kết nối Telegram Bot từ Người 3. Hệ thống sẵn sàng!"},"at":"2026-10-16T14:13:30.241Z"}
+{"event":"system_alert","alert":{"type":"OFFLINE_5MIN","severity":"CRITICAL","title":"BÁO ĐỘNG KHẨN CẤP: MẤT KẾT NỐI QUÁ 5 PHÚT","message":"Thiết bị ESP32 (orchid-01) đã mất kết nối liên tục hơn 5 phút. Vui lòng kiểm tra trạm ngay lập tức!","at":"2026-10-16T14:15:06.344Z"},"at":"2026-10-16T14:15:06.344Z"}

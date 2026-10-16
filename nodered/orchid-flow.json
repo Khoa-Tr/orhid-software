@@ -44,7 +44,11 @@
     "inputs": 0,
     "x": 180,
     "y": 120,
-    "wires": [["orchid-process"]]
+    "wires": [
+      [
+        "orchid-process"
+      ]
+    ]
   },
   {
     "id": "orchid-process",
@@ -60,7 +64,14 @@
     "libs": [],
     "x": 460,
     "y": 120,
-    "wires": [["orchid-feed-debug"], ["orchid-history"]]
+    "wires": [
+      [
+        "orchid-feed-debug"
+      ],
+      [
+        "orchid-history"
+      ]
+    ]
   },
   {
     "id": "orchid-feed-debug",
@@ -92,14 +103,20 @@
     "encoding": "utf8",
     "x": 780,
     "y": 180,
-    "wires": [[]]
+    "wires": [
+      []
+    ]
   },
   {
     "id": "orchid-watchdog-tick",
     "type": "inject",
     "z": "orchid-tab-monitor",
     "name": "Check offline / stale every 5 sec",
-    "props": [{"p": "payload"}],
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
     "repeat": "5",
     "crontab": "",
     "once": true,
@@ -109,7 +126,11 @@
     "payloadType": "date",
     "x": 200,
     "y": 280,
-    "wires": [["orchid-watchdog"]]
+    "wires": [
+      [
+        "orchid-watchdog"
+      ]
+    ]
   },
   {
     "id": "orchid-watchdog",
@@ -125,7 +146,12 @@
     "libs": [],
     "x": 490,
     "y": 280,
-    "wires": [["orchid-alert-debug", "orchid-history"]]
+    "wires": [
+      [
+        "orchid-alert-debug",
+        "orchid-history"
+      ]
+    ]
   },
   {
     "id": "orchid-alert-debug",
@@ -166,7 +192,11 @@
     "inputs": 0,
     "x": 190,
     "y": 120,
-    "wires": [["orchid-climate-rules"]]
+    "wires": [
+      [
+        "orchid-climate-rules"
+      ]
+    ]
   },
   {
     "id": "orchid-climate-rules",
@@ -182,7 +212,12 @@
     "libs": [],
     "x": 500,
     "y": 120,
-    "wires": [["orchid-climate-debug", "orchid-climate-history"]]
+    "wires": [
+      [
+        "orchid-climate-debug",
+        "orchid-climate-history"
+      ]
+    ]
   },
   {
     "id": "orchid-climate-debug",
@@ -212,7 +247,9 @@
     "encoding": "utf8",
     "x": 790,
     "y": 160,
-    "wires": [[]]
+    "wires": [
+      []
+    ]
   },
   {
     "id": "orchid-tab-water",
@@ -236,7 +273,11 @@
     "inputs": 0,
     "x": 190,
     "y": 120,
-    "wires": [["orchid-water-rules"]]
+    "wires": [
+      [
+        "orchid-water-rules"
+      ]
+    ]
   },
   {
     "id": "orchid-water-rules",
@@ -252,7 +293,12 @@
     "libs": [],
     "x": 500,
     "y": 120,
-    "wires": [["orchid-water-debug", "orchid-water-history"]]
+    "wires": [
+      [
+        "orchid-water-debug",
+        "orchid-water-history"
+      ]
+    ]
   },
   {
     "id": "orchid-water-debug",
@@ -282,7 +328,9 @@
     "encoding": "utf8",
     "x": 790,
     "y": 160,
-    "wires": [[]]
+    "wires": [
+      []
+    ]
   },
   {
     "id": "orchid-tab-dashboard",
@@ -298,7 +346,10 @@
     "path": "/dashboard",
     "appIcon": "",
     "includeClientData": true,
-    "acceptsClientConfig": ["ui-notification", "ui-control"],
+    "acceptsClientConfig": [
+      "ui-notification",
+      "ui-control"
+    ],
     "showPathInSidebar": false,
     "headerContent": "page",
     "navigationStyle": "default",
@@ -337,10 +388,26 @@
     "layout": "grid",
     "theme": "orchid-dashboard-theme",
     "breakpoints": [
-      {"name":"Default","px":0,"cols":3},
-      {"name":"Tablet","px":576,"cols":6},
-      {"name":"Small Desktop","px":768,"cols":9},
-      {"name":"Desktop","px":1024,"cols":12}
+      {
+        "name": "Default",
+        "px": 0,
+        "cols": 3
+      },
+      {
+        "name": "Tablet",
+        "px": 576,
+        "cols": 6
+      },
+      {
+        "name": "Small Desktop",
+        "px": 768,
+        "cols": 9
+      },
+      {
+        "name": "Desktop",
+        "px": 1024,
+        "cols": 12
+      }
     ],
     "tabs": [],
     "order": 1,
@@ -393,14 +460,22 @@
     "inputs": 0,
     "x": 170,
     "y": 120,
-    "wires": [["orchid-dashboard-render"]]
+    "wires": [
+      [
+        "orchid-dashboard-render"
+      ]
+    ]
   },
   {
     "id": "orchid-dashboard-refresh",
     "type": "inject",
     "z": "orchid-tab-dashboard",
     "name": "Refresh freshness status every 5 seconds",
-    "props": [{"p":"payload"}],
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
     "repeat": "5",
     "crontab": "",
     "once": true,
@@ -410,7 +485,11 @@
     "payloadType": "date",
     "x": 210,
     "y": 180,
-    "wires": [["orchid-dashboard-render"]]
+    "wires": [
+      [
+        "orchid-dashboard-render"
+      ]
+    ]
   },
   {
     "id": "orchid-dashboard-render",
@@ -427,17 +506,39 @@
     "x": 480,
     "y": 140,
     "wires": [
-      ["orchid-dashboard-temp"],
-      ["orchid-dashboard-humidity"],
-      ["orchid-dashboard-light-adc"],
-      ["orchid-dashboard-water-adc"],
-      ["orchid-dashboard-mist"],
-      ["orchid-dashboard-fan"],
-      ["orchid-dashboard-light"],
-      ["orchid-dashboard-connection"],
-      ["orchid-dashboard-mode"],
-      ["orchid-dashboard-climate-chart"],
-      ["orchid-dashboard-adc-chart"]
+      [
+        "orchid-dashboard-temp"
+      ],
+      [
+        "orchid-dashboard-humidity"
+      ],
+      [
+        "orchid-dashboard-light-adc"
+      ],
+      [
+        "orchid-dashboard-water-adc"
+      ],
+      [
+        "orchid-dashboard-mist"
+      ],
+      [
+        "orchid-dashboard-fan"
+      ],
+      [
+        "orchid-dashboard-light"
+      ],
+      [
+        "orchid-dashboard-connection"
+      ],
+      [
+        "orchid-dashboard-mode"
+      ],
+      [
+        "orchid-dashboard-climate-chart"
+      ],
+      [
+        "orchid-dashboard-adc-chart"
+      ]
     ]
   },
   {
@@ -689,10 +790,19 @@
     "removeOlder": 1,
     "removeOlderUnit": "3600",
     "removeOlderPoints": "",
-    "colors": ["#26734d","#246bce","#FF7F0E","#2CA02C"],
-    "textColor": ["#666666"],
+    "colors": [
+      "#26734d",
+      "#246bce",
+      "#FF7F0E",
+      "#2CA02C"
+    ],
+    "textColor": [
+      "#666666"
+    ],
     "textColorDefault": true,
-    "gridColor": ["#e5e5e5"],
+    "gridColor": [
+      "#e5e5e5"
+    ],
     "gridColorDefault": true,
     "width": 6,
     "height": 6,
@@ -700,7 +810,9 @@
     "interpolation": "linear",
     "x": 1080,
     "y": 460,
-    "wires": [[]]
+    "wires": [
+      []
+    ]
   },
   {
     "id": "orchid-dashboard-adc-chart",
@@ -735,10 +847,19 @@
     "removeOlder": 1,
     "removeOlderUnit": "3600",
     "removeOlderPoints": "",
-    "colors": ["#d89b27","#7b61a8","#FF7F0E","#2CA02C"],
-    "textColor": ["#666666"],
+    "colors": [
+      "#d89b27",
+      "#7b61a8",
+      "#FF7F0E",
+      "#2CA02C"
+    ],
+    "textColor": [
+      "#666666"
+    ],
     "textColorDefault": true,
-    "gridColor": ["#e5e5e5"],
+    "gridColor": [
+      "#e5e5e5"
+    ],
     "gridColorDefault": true,
     "width": 6,
     "height": 6,
@@ -746,7 +867,9 @@
     "interpolation": "linear",
     "x": 1080,
     "y": 520,
-    "wires": [[]]
+    "wires": [
+      []
+    ]
   },
   {
     "id": "orchid-dashboard-control-group",
@@ -817,7 +940,11 @@
     "className": "",
     "x": 480,
     "y": 620,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-btn-mist-off",
@@ -840,7 +967,11 @@
     "className": "",
     "x": 480,
     "y": 660,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-btn-mist-auto",
@@ -863,7 +994,11 @@
     "className": "",
     "x": 480,
     "y": 700,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-btn-fan-on",
@@ -886,7 +1021,11 @@
     "className": "",
     "x": 480,
     "y": 740,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-btn-fan-off",
@@ -909,7 +1048,11 @@
     "className": "",
     "x": 480,
     "y": 760,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-btn-fan-auto",
@@ -932,7 +1075,11 @@
     "className": "",
     "x": 480,
     "y": 780,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-btn-light-on",
@@ -955,7 +1102,11 @@
     "className": "",
     "x": 480,
     "y": 820,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-btn-light-off",
@@ -978,7 +1129,11 @@
     "className": "",
     "x": 480,
     "y": 840,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-btn-light-auto",
@@ -1001,7 +1156,11 @@
     "className": "",
     "x": 480,
     "y": 860,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-btn-thresh-85",
@@ -1024,7 +1183,11 @@
     "className": "",
     "x": 480,
     "y": 920,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-btn-thresh-75",
@@ -1047,7 +1210,11 @@
     "className": "",
     "x": 480,
     "y": 960,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-btn-thresh-fan-28",
@@ -1070,7 +1237,11 @@
     "className": "",
     "x": 480,
     "y": 1000,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-btn-thresh-reset",
@@ -1093,7 +1264,11 @@
     "className": "",
     "x": 480,
     "y": 1040,
-    "wires": [["orchid-dashboard-mqtt-out"]]
+    "wires": [
+      [
+        "orchid-dashboard-mqtt-out"
+      ]
+    ]
   },
   {
     "id": "orchid-tab-week7-rules",
@@ -1117,7 +1292,11 @@
     "inputs": 0,
     "x": 180,
     "y": 120,
-    "wires": [["orchid-week7-light-rule"]]
+    "wires": [
+      [
+        "orchid-week7-light-rule"
+      ]
+    ]
   },
   {
     "id": "orchid-week7-state-in",
@@ -1134,14 +1313,22 @@
     "inputs": 0,
     "x": 200,
     "y": 300,
-    "wires": [["orchid-week7-fan-rule"]]
+    "wires": [
+      [
+        "orchid-week7-fan-rule"
+      ]
+    ]
   },
   {
     "id": "orchid-week7-rule-tick",
     "type": "inject",
     "z": "orchid-tab-week7-rules",
     "name": "Evaluate schedules and timers every 5 seconds",
-    "props": [{"p":"payload"}],
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
     "repeat": "5",
     "crontab": "",
     "once": true,
@@ -1151,7 +1338,12 @@
     "payloadType": "date",
     "x": 230,
     "y": 210,
-    "wires": [["orchid-week7-light-rule","orchid-week7-fan-rule"]]
+    "wires": [
+      [
+        "orchid-week7-light-rule",
+        "orchid-week7-fan-rule"
+      ]
+    ]
   },
   {
     "id": "orchid-week7-light-rule",
@@ -1167,7 +1359,12 @@
     "libs": [],
     "x": 520,
     "y": 120,
-    "wires": [["orchid-week7-rule-debug","orchid-week7-rule-history"]]
+    "wires": [
+      [
+        "orchid-week7-rule-debug",
+        "orchid-week7-rule-history"
+      ]
+    ]
   },
   {
     "id": "orchid-week7-fan-rule",
@@ -1183,7 +1380,12 @@
     "libs": [],
     "x": 540,
     "y": 300,
-    "wires": [["orchid-week7-rule-debug","orchid-week7-rule-history"]]
+    "wires": [
+      [
+        "orchid-week7-rule-debug",
+        "orchid-week7-rule-history"
+      ]
+    ]
   },
   {
     "id": "orchid-week7-rule-debug",
@@ -1213,6 +1415,674 @@
     "encoding": "utf8",
     "x": 850,
     "y": 260,
-    "wires": [[]]
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "orchid-tab-nguoi3",
+    "type": "tab",
+    "label": "Orchid - Người 3: Cảnh báo Telegram & Ghép luồng E2E",
+    "disabled": false,
+    "info": "Tầng Cảnh báo Telegram Bot, Whitelist Chat ID, Downlink Commands chuẩn firmware và E2E Testing."
+  },
+  {
+    "id": "nguoi3-orchid-mqtt-in",
+    "type": "mqtt in",
+    "z": "orchid-tab-nguoi3",
+    "name": "ESP32 All Feeds (Uplink)",
+    "topic": "garden/orchid/orchid-01/#",
+    "qos": "1",
+    "datatype": "auto-detect",
+    "broker": "orchid-broker",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 160,
+    "y": 140,
+    "wires": [
+      [
+        "nguoi3-orchid-process"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-process",
+    "type": "function",
+    "z": "orchid-tab-nguoi3",
+    "name": "Parse Feeds, Detect Alerts & Transitions",
+    "func": "const topic = msg.topic || '';\nlet body = msg.payload;\nif (Buffer.isBuffer(body)) body = body.toString();\nif (typeof body === 'string') {\n    try { body = JSON.parse(body); } catch (e) { /* chuỗi thuần như online/offline */ }\n}\nconst received = new Date().toISOString();\nconst view = { topic, data: body, received_at: received };\nconst historyEvents = [];\nconst alertEvents = [];\nconst automationTriggers = [];\n\n// 1. Xử lý Telemetry\nif (topic.endsWith('/telemetry') && typeof body === 'object' && body !== null) {\n    flow.set('orchidTelemetryAt', Date.now());\n    flow.set('orchidStaleLogged', false);\n    flow.set('orchidLatestTelemetry', body);\n\n    // Kiểm tra cảm biến DHT22\n    if (body.temperature_c === null || body.temperature_c === undefined) {\n        let dhtRejects = (flow.get('orchidDhtFaultCount') || 0) + 1;\n        flow.set('orchidDhtFaultCount', dhtRejects);\n        if (dhtRejects >= 3 && !flow.get('orchidDhtAlertSent')) {\n            alertEvents.push({\n                type: 'DHT_FAULT',\n                severity: 'HIGH',\n                title: 'LỖI CẢM BIẾN DHT22',\n                message: 'Cảm biến DHT22 không trả về dữ liệu (null/NaN) liên tiếp 3 chu kỳ! Hệ thống chuyển sang chế độ phòng vệ.',\n                at: received\n            });\n            flow.set('orchidDhtAlertSent', true);\n        }\n    } else {\n        flow.set('orchidDhtFaultCount', 0);\n        flow.set('orchidDhtAlertSent', false);\n\n        // Kiểm tra nhiệt độ cao\n        if (body.temperature_c >= 33.0) {\n            const lastTempAlert = flow.get('orchidLastTempAlertAt') || 0;\n            if (Date.now() - lastTempAlert > 5 * 60 * 1000) { // debounce 5 phút\n                alertEvents.push({\n                    type: 'HIGH_TEMPERATURE',\n                    severity: 'HIGH',\n                    title: 'CẢNH BÁO NHIỆT ĐỘ CAO',\n                    message: 'Nhiệt độ hiện tại: ' + body.temperature_c.toFixed(1) + '°C (vượt ngưỡng 33.0°C). Cần kích hoạt quạt làm mát.',\n                    temperature: body.temperature_c,\n                    at: received\n                });\n                flow.set('orchidLastTempAlertAt', Date.now());\n            }\n        }\n    }\n\n    // Kiểm tra mực nước thấp (water_adc < 1200)\n    if (body.water_adc !== undefined) {\n        flow.set('orchidLatestWaterAdc', body.water_adc);\n        if (body.water_adc < 1200) {\n            if (!flow.get('orchidWaterLowAlertSent')) {\n                alertEvents.push({\n                    type: 'WATER_LOW',\n                    severity: 'CRITICAL',\n                    title: 'CẢNH BÁO CẠN NƯỚC',\n                    message: 'Mực nước bình chứa đang ở mức THẤP (ADC: ' + body.water_adc + ' < 1200)! Phun sương bị khóa an toàn (WATER_LOCKOUT).',\n                    water_adc: body.water_adc,\n                    at: received\n                });\n                flow.set('orchidWaterLowAlertSent', true);\n            }\n        } else if (body.water_adc >= 1500) {\n            // Nước đã được châm đầy lại\n            if (flow.get('orchidWaterLowAlertSent')) {\n                flow.set('orchidWaterLowAlertSent', false);\n                alertEvents.push({\n                    type: 'WATER_REFILLED',\n                    severity: 'INFO',\n                    title: 'MỰC NƯỚC ĐÃ PHỤC HỒI',\n                    message: 'Bình chứa đã được châm nước đầy (ADC: ' + body.water_adc + '). Hệ thống sẵn sàng hoạt động trở lại.',\n                    at: received\n                });\n            }\n        }\n    }\n}\n// 2. Xử lý Trạng thái State & Relay transitions\nelse if (topic.endsWith('/state') && typeof body === 'object' && body !== null) {\n    const current = { mist: body.mist, fan: body.fan, light: body.light, mist_state: body.mist_state, water_lockout: body.water_lockout, mode: body.mode };\n    const previous = flow.get('orchidRelayState');\n\n    if (previous) {\n        for (const relay of ['mist', 'fan', 'light']) {\n            if (current[relay] !== undefined && previous[relay] !== current[relay]) {\n                historyEvents.push({\n                    event: 'relay_change',\n                    relay: relay,\n                    from: previous[relay],\n                    to: current[relay],\n                    at: received\n                });\n            }\n        }\n\n        // Tự động hóa Tuần 7: Quạt hỗ trợ sau chu kỳ phun (Post-Mist Fan Ventilation)\n        // Khi mist chuyển từ ON -> OFF (kết thúc phun)\n        if (previous.mist === 'ON' && current.mist === 'OFF') {\n            automationTriggers.push({\n                rule: 'POST_MIST_VENTILATION',\n                reason: 'Chu kỳ phun sương vừa kết thúc. Cần bật quạt 60s để hong ráo lá lan.',\n                at: received\n            });\n        }\n\n        // Cảnh báo Water Lockout\n        if (current.water_lockout && !previous.water_lockout) {\n            alertEvents.push({\n                type: 'WATER_LOCKOUT',\n                severity: 'CRITICAL',\n                title: 'KHÓA NƯỚC AN TOÀN (WATER LOCKOUT)',\n                message: 'Firmware ESP32 đã kích hoạt cờ WATER_LOCKOUT. Bơm phun sương bị cưỡng bức ngắt hoàn toàn.',\n                at: received\n            });\n        }\n    }\n    flow.set('orchidRelayState', current);\n}\n// 3. Xử lý Availability (Last Will / Online)\nelse if (topic.endsWith('/availability')) {\n    const wasOnline = flow.get('orchidOnline');\n    flow.set('orchidOnline', body);\n    if ((body === 'online' || body === 'offline') && wasOnline !== body) {\n        historyEvents.push({ event: 'availability', state: body, at: received });\n        if (body === 'offline') {\n            alertEvents.push({\n                type: 'DEVICE_OFFLINE',\n                severity: 'CRITICAL',\n                title: 'MẤT KẾT NỐI ESP32 (OFFLINE)',\n                message: 'Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!',\n                at: received\n            });\n        } else if (body === 'online') {\n            alertEvents.push({\n                type: 'DEVICE_ONLINE',\n                severity: 'INFO',\n                title: 'ESP32 ĐÃ KẾT NỐI LẠI',\n                message: 'Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.',\n                at: received\n            });\n        }\n    }\n}\n// 4. Xử lý ACK từ Firmware\nelse if (topic.endsWith('/ack') && typeof body === 'object' && body !== null) {\n    flow.set('orchidLatestAck', body);\n    historyEvents.push({\n        event: 'ack_received',\n        request_id: body.request_id,\n        result: body.result,\n        reason: body.reason || '',\n        at: received\n    });\n\n    if (body.result === 'REJECTED') {\n        alertEvents.push({\n            type: 'COMMAND_REJECTED',\n            severity: 'WARNING',\n            title: 'LỆNH BỊ TỪ CHỐI (REJECTED)',\n            message: 'Lệnh [' + body.request_id + '] bị ESP32 từ chối vì lý do an toàn: ' + (body.reason || 'UNKNOWN'),\n            request_id: body.request_id,\n            reason: body.reason,\n            at: received\n        });\n    }\n}\n\n// Chuẩn bị các đầu ra\nconst outDebug = { payload: view };\nconst outHistory = historyEvents.map(e => ({ payload: JSON.stringify(e) + '\\n' }));\nconst outAlerts = alertEvents.map(a => ({ payload: a }));\nconst outTriggers = automationTriggers.map(t => ({ payload: t }));\n\n// Output 1: Debug Telemetry\n// Output 2: Ghi file lịch sử\n// Output 3: Kênh Cảnh báo (Alerts -> Telegram & Dashboard)\n// Output 4: Triggers Tự động hóa (Automation Engine)\nreturn [\n    outDebug,\n    outHistory.length > 0 ? outHistory : null,\n    outAlerts.length > 0 ? outAlerts : null,\n    outTriggers.length > 0 ? outTriggers : null\n];",
+    "outputs": 4,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "flow.set('orchidTelemetryAt', 0); flow.set('orchidOnline', 'unknown'); flow.set('orchidRelayState', null); flow.set('orchidStaleLogged', false); flow.set('orchidWaterLowAlertSent', false); flow.set('orchidDhtFaultCount', 0); flow.set('orchidDhtAlertSent', false); flow.set('orchidLastTempAlertAt', 0);",
+    "finalize": "",
+    "libs": [],
+    "x": 490,
+    "y": 140,
+    "wires": [
+      [
+        "nguoi3-orchid-feed-debug"
+      ],
+      [
+        "nguoi3-orchid-history"
+      ],
+      [
+        "nguoi3-orchid-alert-dispatcher"
+      ],
+      [
+        "nguoi3-orchid-rule-fan"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-feed-debug",
+    "type": "debug",
+    "z": "orchid-tab-nguoi3",
+    "name": "Live Sensor & Feed View",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": true,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "payload.topic",
+    "statusType": "msg",
+    "x": 860,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "nguoi3-orchid-history",
+    "type": "file",
+    "z": "orchid-tab-nguoi3",
+    "name": "Append to orchid-history.jsonl",
+    "filename": "orchid-history.jsonl",
+    "filenameType": "str",
+    "appendNewline": false,
+    "createDir": true,
+    "overwriteFile": "false",
+    "encoding": "utf8",
+    "x": 880,
+    "y": 140,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-watchdog-tick",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "Watchdog 5s (Check Stale / Offline)",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "5",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "3",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 190,
+    "y": 240,
+    "wires": [
+      [
+        "nguoi3-orchid-watchdog"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-watchdog",
+    "type": "function",
+    "z": "orchid-tab-nguoi3",
+    "name": "Offline & Stale Watchdog Check",
+    "func": "const now = Date.now();\nconst online = flow.get('orchidOnline');\nlet seen = flow.get('orchidTelemetryAt') || 0;\nconst alerts = [];\n\nif (online === 'offline' && !flow.get('orchidOfflineLogged')) {\n    alerts.push({\n        type: 'DEVICE_OFFLINE',\n        severity: 'CRITICAL',\n        title: 'MẤT KẾT NỐI THIẾT BỊ',\n        message: 'Trạng thái MQTT: ESP32 orchid-01 đang offline!',\n        at: new Date(now).toISOString()\n    });\n    flow.set('orchidOfflineLogged', true);\n}\nif (online === 'online') {\n    flow.set('orchidOfflineLogged', false);\n    if (!seen) {\n        seen = now;\n        flow.set('orchidTelemetryAt', seen);\n    }\n}\nif (seen && now - seen > 15000 && !flow.get('orchidStaleLogged')) {\n    const ageSeconds = Math.floor((now - seen) / 1000);\n    alerts.push({\n        type: 'TELEMETRY_STALE',\n        severity: 'WARNING',\n        title: 'DỮ LIỆU TELEMETRY QUÁ HẠN',\n        message: 'Đã hơn ' + ageSeconds + ' giây không nhận được dữ liệu cảm biến mới từ trạm.',\n        age_s: ageSeconds,\n        at: new Date(now).toISOString()\n    });\n    flow.set('orchidStaleLogged', true);\n}\n\nreturn alerts.map(a => ({ payload: a }));",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "flow.set('orchidOfflineLogged', false);",
+    "finalize": "",
+    "libs": [],
+    "x": 480,
+    "y": 240,
+    "wires": [
+      [
+        "nguoi3-orchid-alert-dispatcher"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-auto-tick",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "Check Offline > 5 min (1m tick)",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "60",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "10",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 200,
+    "y": 300,
+    "wires": [
+      [
+        "nguoi3-orchid-automation"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-automation",
+    "type": "function",
+    "z": "orchid-tab-nguoi3",
+    "name": "Alert if Offline > 5 min",
+    "func": "const now = Date.now();\nconst online = flow.get(\"orchidOnline\");\nconst offlineSince = flow.get(\"orchidOfflineSince\");\n\nif (online === \"offline\") {\n    if (!offlineSince) {\n        flow.set(\"orchidOfflineSince\", now);\n    } else if (now - offlineSince >= 5 * 60 * 1000 && !flow.get(\"orchid5MinAlertSent\")) {\n        flow.set(\"orchid5MinAlertSent\", true);\n        return {\n            payload: {\n                type: \"OFFLINE_5MIN\",\n                severity: \"CRITICAL\",\n                title: \"BÁO ĐỘNG KHẨN CẤP: MẤT KẾT NỐI QUÁ 5 PHÚT\",\n                message: \"Thiết bị ESP32 (orchid-01) đã mất kết nối liên tục hơn 5 phút. Vui lòng kiểm tra trạm ngay lập tức!\",\n                at: new Date(now).toISOString()\n            }\n        };\n    }\n} else {\n    flow.set(\"orchidOfflineSince\", null);\n    flow.set(\"orchid5MinAlertSent\", false);\n}\nreturn null;",
+    "outputs": 1,
+    "x": 480,
+    "y": 300,
+    "wires": [
+      [
+        "nguoi3-orchid-alert-dispatcher"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-alert-dispatcher",
+    "type": "function",
+    "z": "orchid-tab-nguoi3",
+    "name": "Central Alert Dispatcher",
+    "func": "const alert = msg.payload;\nif (!alert || typeof alert !== 'object') return null;\n\n// Ghi log lịch sử cảnh báo\nconst historyLine = JSON.stringify({ event: 'system_alert', alert: alert, at: alert.at || new Date().toISOString() }) + '\\n';\n\n// Soạn định dạng hiển thị Dashboard / Debug\nconst debugMsg = {\n    payload: {\n        SEVERITY: alert.severity || 'INFO',\n        TITLE: alert.title || 'CẢNH BÁO HỆ THỐNG',\n        MESSAGE: alert.message,\n        TIME: alert.at\n    }\n};\n\n// Soạn tin nhắn Telegram\nconst telegramText = \n    \"🌿 <b>[ORCHID SMART SYSTEM]</b>\\n\" +\n    \"🚨 <b>\" + (alert.title || \"CẢNH BÁO\") + \"</b>\\n\" +\n    \"⚠️ Mức độ: <code>\" + (alert.severity || \"INFO\") + \"</code>\\n\" +\n    \"📝 Nội dung: \" + alert.message + \"\\n\" +\n    \"🕒 Thời gian: <i>\" + (alert.at || new Date().toLocaleString()) + \"</i>\";\n\nconst telegramMsg = {\n    payload: {\n        text: telegramText,\n        raw_alert: alert\n    }\n};\n\n// Output 1: Debug Dashboard\n// Output 2: Append vào file lịch sử\n// Output 3: Telegram Filter & Sender\nreturn [ debugMsg, { payload: historyLine }, telegramMsg ];",
+    "outputs": 3,
+    "x": 780,
+    "y": 240,
+    "wires": [
+      [
+        "nguoi3-orchid-alert-debug"
+      ],
+      [
+        "nguoi3-orchid-history"
+      ],
+      [
+        "nguoi3-orchid-telegram-filter"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-alert-debug",
+    "type": "debug",
+    "z": "orchid-tab-nguoi3",
+    "name": "Dashboard Alerts Log",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": true,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "payload.TITLE",
+    "statusType": "msg",
+    "x": 1050,
+    "y": 200,
+    "wires": []
+  },
+  {
+    "id": "nguoi3-orchid-telegram-test",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "Test Send Telegram Alert",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"type\":\"MANUAL_TEST\",\"severity\":\"INFO\",\"title\":\"KIỂM THỬ TÍCH HỢP TELEGRAM BOT\",\"message\":\"Đây là bản tin kiểm thử kết nối Telegram Bot từ Người 3. Hệ thống sẵn sàng!\"}",
+    "payloadType": "json",
+    "x": 200,
+    "y": 360,
+    "wires": [
+      [
+        "nguoi3-orchid-alert-dispatcher"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-telegram-filter",
+    "type": "function",
+    "z": "orchid-tab-nguoi3",
+    "name": "Telegram Whitelist & Token Security",
+    "func": "// CẤU HÌNH BẢO MẬT TELEGRAM BOT\n// 1. Token bot: Lấy từ Environment Variable hoặc biến context, KHÔNG hardcode bí mật công khai.\nconst botToken = env.get(\"TELEGRAM_BOT_TOKEN\") || flow.get(\"telegram_token\") || \"YOUR_TELEGRAM_BOT_TOKEN_HERE\";\n\n// 2. Chat ID nhóm được cấp phép (Whitelist): Chỉ cho phép chat ID của nhóm nhận tin\nconst authorizedChatId = env.get(\"TELEGRAM_GROUP_CHAT_ID\") || flow.get(\"telegram_group_chat_id\") || \"-1001234567890\";\n\nconst incomingText = msg.payload && msg.payload.text ? msg.payload.text : \"Cảnh báo không xác định\";\n\n// Nếu chưa cấu hình token thật, in cảnh báo giả lập và dừng để tránh spam lỗi HTTP 404/401\nif (botToken === \"YOUR_TELEGRAM_BOT_TOKEN_HERE\" || !botToken) {\n    node.warn(\"[TELEGRAM DEMO] Bot token chưa được cấu hình. Nội dung gửi: \" + incomingText);\n    return null;\n}\n\n// Chuẩn bị request HTTP chuẩn gửi đến Telegram Bot API\nmsg.url = \"https://api.telegram.org/bot\" + botToken + \"/sendMessage\";\nmsg.method = \"POST\";\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    chat_id: authorizedChatId,\n    text: incomingText,\n    parse_mode: \"HTML\"\n};\n\nreturn msg;",
+    "outputs": 1,
+    "x": 1090,
+    "y": 260,
+    "wires": [
+      [
+        "nguoi3-orchid-telegram-http"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-telegram-http",
+    "type": "http request",
+    "z": "orchid-tab-nguoi3",
+    "name": "POST Telegram API",
+    "method": "use",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [],
+    "x": 1330,
+    "y": 260,
+    "wires": [
+      [
+        "nguoi3-orchid-telegram-response"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-telegram-response",
+    "type": "debug",
+    "z": "orchid-tab-nguoi3",
+    "name": "Telegram Bot Response",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": true,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "statusCode",
+    "statusType": "msg",
+    "x": 1540,
+    "y": 260,
+    "wires": []
+  },
+  {
+    "id": "nguoi3-orchid-cmd-formatter",
+    "type": "function",
+    "z": "orchid-tab-nguoi3",
+    "name": "Format Firmware-Compliant Command",
+    "func": "// FORMAT PAYLOAD ĐÚNG 100% VỚI FIRMWARE ESP32 HIỆN TẠI\n// Payload yêu cầu:\n// - request_id: chuỗi duy nhất (VD: req-mist-1729123456789)\n// - mode: \"MANUAL\" hoặc \"AUTO\"\n// - state: \"ON\" hoặc \"OFF\" (khi mode === \"MANUAL\")\n// - ttl_s: số nguyên từ 1 đến 3600 (khi mode === \"MANUAL\")\n\nconst input = msg.payload || {};\nconst relay = msg.relay || input.relay || 'mist';\nconst mode = input.mode || 'AUTO';\nconst state = input.state ? String(input.state).toUpperCase() : 'ON';\nconst ttl_s = Number(input.ttl_s) || 60;\n\nconst reqId = 'req-' + relay + '-' + (mode === 'AUTO' ? 'auto' : state.toLowerCase()) + '-' + Date.now();\n\nlet payload = {\n    request_id: reqId,\n    mode: mode\n};\n\nif (mode === 'MANUAL') {\n    payload.state = state;\n    payload.ttl_s = ttl_s;\n}\n\nmsg.topic = 'garden/orchid/orchid-01/cmd/' + relay;\nmsg.payload = payload;\n\n// Lưu request_id vào context để theo dõi ACK\nflow.set('last_sent_request_id', reqId);\nreturn msg;",
+    "outputs": 1,
+    "x": 580,
+    "y": 480,
+    "wires": [
+      [
+        "nguoi3-orchid-mqtt-out-dynamic",
+        "nguoi3-orchid-cmd-sent-debug"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-mqtt-out-dynamic",
+    "type": "mqtt out",
+    "z": "orchid-tab-nguoi3",
+    "name": "MQTT Out (cmd/mist, cmd/fan, cmd/light)",
+    "topic": "",
+    "qos": "1",
+    "retain": "false",
+    "broker": "orchid-broker",
+    "x": 930,
+    "y": 480,
+    "wires": []
+  },
+  {
+    "id": "nguoi3-orchid-cmd-sent-debug",
+    "type": "debug",
+    "z": "orchid-tab-nguoi3",
+    "name": "Command Sent Debug",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": true,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "payload.request_id",
+    "statusType": "msg",
+    "x": 880,
+    "y": 420,
+    "wires": []
+  },
+  {
+    "id": "nguoi3-orchid-btn-mist-on",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "ON mist (60s)",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "relay",
+        "v": "mist",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"mode\":\"MANUAL\",\"state\":\"ON\",\"ttl_s\":60}",
+    "payloadType": "json",
+    "x": 190,
+    "y": 440,
+    "wires": [
+      [
+        "nguoi3-orchid-cmd-formatter"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-btn-mist-off",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "OFF mist",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "relay",
+        "v": "mist",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"mode\":\"MANUAL\",\"state\":\"OFF\",\"ttl_s\":60}",
+    "payloadType": "json",
+    "x": 180,
+    "y": 470,
+    "wires": [
+      [
+        "nguoi3-orchid-cmd-formatter"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-btn-mist-auto",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "AUTO mist",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "relay",
+        "v": "mist",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"mode\":\"AUTO\"}",
+    "payloadType": "json",
+    "x": 190,
+    "y": 500,
+    "wires": [
+      [
+        "nguoi3-orchid-cmd-formatter"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-btn-fan-on",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "ON fan (60s)",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "relay",
+        "v": "fan",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"mode\":\"MANUAL\",\"state\":\"ON\",\"ttl_s\":60}",
+    "payloadType": "json",
+    "x": 190,
+    "y": 540,
+    "wires": [
+      [
+        "nguoi3-orchid-cmd-formatter"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-btn-fan-off",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "OFF fan",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "relay",
+        "v": "fan",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"mode\":\"MANUAL\",\"state\":\"OFF\",\"ttl_s\":60}",
+    "payloadType": "json",
+    "x": 180,
+    "y": 570,
+    "wires": [
+      [
+        "nguoi3-orchid-cmd-formatter"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-btn-fan-auto",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "AUTO fan",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "relay",
+        "v": "fan",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"mode\":\"AUTO\"}",
+    "payloadType": "json",
+    "x": 190,
+    "y": 600,
+    "wires": [
+      [
+        "nguoi3-orchid-cmd-formatter"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-btn-light-on",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "ON light (300s)",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "relay",
+        "v": "light",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"mode\":\"MANUAL\",\"state\":\"ON\",\"ttl_s\":300}",
+    "payloadType": "json",
+    "x": 190,
+    "y": 640,
+    "wires": [
+      [
+        "nguoi3-orchid-cmd-formatter"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-btn-light-off",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "OFF light",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "relay",
+        "v": "light",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"mode\":\"MANUAL\",\"state\":\"OFF\",\"ttl_s\":300}",
+    "payloadType": "json",
+    "x": 180,
+    "y": 670,
+    "wires": [
+      [
+        "nguoi3-orchid-cmd-formatter"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-btn-light-auto",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "AUTO light",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "relay",
+        "v": "light",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{\"mode\":\"AUTO\"}",
+    "payloadType": "json",
+    "x": 190,
+    "y": 700,
+    "wires": [
+      [
+        "nguoi3-orchid-cmd-formatter"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-rule-light",
+    "type": "function",
+    "z": "orchid-tab-nguoi3",
+    "name": "Rule 1: Đèn theo lịch & LDR (Không xuyên đêm)",
+    "func": "// BUSINESS RULE 1: ĐIỀU KHIỂN ĐÈN THEO KHUNG GIỜ VÀ ÁNH SÁNG\n// Quy tắc ban đêm đã thống nhất:\n// 1. Không bật đèn xuyên đêm (từ 21:00 đến 06:00 sáng bắt buộc tắt/AUTO để đảm bảo pha tối cho lan).\n// 2. Trong khung giờ quang chu kỳ (06:00 đến 21:00):\n//    - Nếu thiếu sáng (light_adc >= 2200): Gửi lệnh bật đèn MANUAL với ttl_s = 300 (5 phút).\n//    - Nếu đủ sáng (light_adc <= 1800): Chuyển về AUTO hoặc tắt đèn.\n\nconst now = new Date();\nconst currentHour = now.getHours();\nconst telemetry = flow.get('orchidLatestTelemetry');\nconst relayState = flow.get('orchidRelayState') || {};\n\n// Kiểm tra khung giờ ban đêm: 21h tối đến 6h sáng\nconst isNightTime = (currentHour >= 21 || currentHour < 6);\n\nif (isNightTime) {\n    // Nếu đèn đang bật vào ban đêm, cưỡng bức tắt để bảo vệ lan\n    if (relayState.light === 'ON') {\n        node.warn('[RULE ĐÈN] Đang trong khung giờ ban đêm (21h-6h). Cưỡng bức tắt đèn.');\n        return {\n            relay: 'light',\n            payload: { mode: 'MANUAL', state: 'OFF', ttl_s: 300 }\n        };\n    }\n    return null;\n}\n\n// Trong khung giờ ban ngày (06:00 - 21:00)\nif (telemetry && telemetry.light_adc !== undefined) {\n    if (telemetry.light_adc >= 2200 && relayState.light !== 'ON') {\n        node.log('[RULE ĐÈN] Ban ngày thiếu sáng (ADC ' + telemetry.light_adc + ' >= 2200). Tự động bật đèn 5 phút.');\n        return {\n            relay: 'light',\n            payload: { mode: 'MANUAL', state: 'ON', ttl_s: 300 }\n        };\n    } else if (telemetry.light_adc <= 1800 && relayState.light === 'ON') {\n        node.log('[RULE ĐÈN] Ánh sáng tự nhiên đã đủ (ADC ' + telemetry.light_adc + ' <= 1800). Tự động tắt đèn.');\n        return {\n            relay: 'light',\n            payload: { mode: 'AUTO' }\n        };\n    }\n}\nreturn null;",
+    "outputs": 1,
+    "x": 580,
+    "y": 760,
+    "wires": [
+      [
+        "nguoi3-orchid-cmd-formatter"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-rule-light-tick",
+    "type": "inject",
+    "z": "orchid-tab-nguoi3",
+    "name": "Check Light Rule (1m tick)",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "60",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "5",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 200,
+    "y": 760,
+    "wires": [
+      [
+        "nguoi3-orchid-rule-light"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-rule-fan",
+    "type": "function",
+    "z": "orchid-tab-nguoi3",
+    "name": "Rule 2: Quạt hỗ trợ sau khi phun sương",
+    "func": "// BUSINESS RULE 2: QUẠT HỖ TRỢ SAU KHI PHUN SƯƠNG (POST-MIST VENTILATION)\n// Khi chu kỳ phun sương vừa kết thúc (mist chuyển từ ON sang OFF):\n// - Kích hoạt quạt thông gió trong 60 giây (ttl_s = 60).\n// - Mục đích: Làm ráo nhanh các giọt sương đọng trên kẽ lá lan, giảm tối đa nguy cơ nấm mốc và thối nõn.\n// - Quy tắc ban đêm: Không cho quạt chạy liên tục suốt đêm.\n\nconst trigger = msg.payload;\nif (!trigger || trigger.rule !== 'POST_MIST_VENTILATION') return null;\n\nconst now = new Date();\nconst currentHour = now.getHours();\n\nnode.log('[RULE QUẠT] Phát hiện kết thúc phun sương. Tự động kích hoạt quạt thông gió trong 60 giây.');\n\nreturn {\n    relay: 'fan',\n    payload: {\n        mode: 'MANUAL',\n        state: 'ON',\n        ttl_s: 60\n    }\n};",
+    "outputs": 1,
+    "x": 580,
+    "y": 820,
+    "wires": [
+      [
+        "nguoi3-orchid-cmd-formatter"
+      ]
+    ]
   }
 ]

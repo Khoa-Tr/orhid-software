@@ -232,3 +232,27 @@ Hãy build project trước và đảm bảo VS Code đang mở đúng thư mụ
 ### Wokwi báo `timeout: busy`
 
 Dừng phiên mô phỏng cũ rồi chạy lại script. Test runner chia scenario thành các phiên nhỏ để tránh giới hạn kết nối của Wokwi CI; nếu vẫn timeout, kiểm tra kết nối mạng/Wokwi CI và log riêng của scenario bị ngắt.
+
+---
+
+## Người 3 - Tuần 6 & Tuần 7: Cảnh báo, Telegram Bot, Business Rules & Kiểm thử
+
+Flow Node-RED tại `nodered/orchid-flow.json` đã tích hợp thêm tab riêng cho Người 3 (`Orchid - Người 3: Cảnh báo Telegram & Ghép luồng E2E`):
+
+1. **Chuẩn hóa Lệnh Downlink và Xử lý ACK (Tuần 6):**
+   - Payload lệnh khớp 100% với firmware hiện tại: có `request_id`, `mode` (`MANUAL`/`AUTO`), `state` (`ON`/`OFF`), `ttl_s` (1 đến 3600 giây).
+   - Xử lý ACK từ firmware: phân loại `APPLIED` và `REJECTED` (lý do an toàn: `WATER_LOCKOUT`, `MIST_COOLDOWN`,...).
+
+2. **Cảnh báo Đa kênh & Bảo mật Telegram Bot (Tuần 6):**
+   - Tự động phát hiện và gửi cảnh báo khi: Nước thấp (`water_adc < 1200`), Board offline (LWT & Watchdog 5 phút), Nhiệt độ cao (>= 33°C), Lỗi cảm biến DHT22.
+   - Bảo mật Telegram: Whitelist chat ID nhóm (chặn toàn bộ người lạ), nạp bot token qua biến môi trường `TELEGRAM_BOT_TOKEN` (không hardcode lộ token).
+
+3. **Business Rules Tuần 7:**
+   - **Rule 1 (Đèn theo quang chu kỳ):** Khung giờ chiếu sáng có khoảng tối sinh học bắt buộc; cấm bật xuyên đêm (21h-6h cưỡng bức tắt); ban ngày bù sáng khi thiếu sáng (`light_adc >= 2200`) và tự tắt khi đủ sáng.
+   - **Rule 2 (Quạt sau chu kỳ phun sương):** Khi sương vừa ngắt, quạt tự động bật 60 giây để hong ráo lá lan, chống úng đọng và nấm khuẩn.
+   - **Bảo vệ an toàn cuối cùng:** Firmware ESP32 giữ các interlock cạn nước, cooldown và timeout lệnh.
+
+4. **Kiểm thử và Bàn giao:**
+   - Script test tự động toàn bộ 10 kịch bản: `py test-results/run_e2e_test_suite.py` (đạt 10/10 PASS).
+   - Script test MQTT trực tiếp: `py test-results/run_mqtt_test.py`.
+   - Báo cáo nghiệm thu và ma trận hồi quy: `test-results/tuan6-e2e-integration.md`, `test-results/tuan7-test-matrix.md`, và kịch bản demo `test-results/demo-guide-video.md`.
