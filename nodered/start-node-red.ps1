@@ -11,6 +11,8 @@ $dashboardPackage = Join-Path $installRoot "node_modules\@flowfuse\node-red-dash
 $settingsFile = Join-Path $PSScriptRoot "settings.js"
 $flowSource = Join-Path $PSScriptRoot "orchid-flow.json"
 $flowFile = Join-Path $userDir "flows.json"
+$authFile = Join-Path $userDir "orchid-auth.json"
+$passwordTool = Join-Path $PSScriptRoot "set-dashboard-password.cjs"
 
 if (-not (Test-Path -LiteralPath $nodeRedEntry)) {
   throw "Node-RED is not installed. Run: npm install --prefix `"$installRoot`" --no-save node-red @flowfuse/node-red-dashboard"
@@ -21,6 +23,11 @@ if (-not (Test-Path -LiteralPath $dashboardPackage)) {
 }
 
 New-Item -ItemType Directory -Force -Path $userDir | Out-Null
+if (-not (Test-Path -LiteralPath $authFile)) {
+  throw "Dashboard login is not configured. Create an admin account first: node `"$passwordTool`" `"$authFile`" --user admin --role admin"
+}
+$env:ORCHID_AUTH_FILE = $authFile
+
 if (-not (Test-Path -LiteralPath $flowFile)) {
   Copy-Item -LiteralPath $flowSource -Destination $flowFile
 } elseif ($SyncFlow) {

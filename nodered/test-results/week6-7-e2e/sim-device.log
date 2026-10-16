@@ -1,0 +1,143 @@
+2026-10-16T11:41:25.119Z SIM device=orchid-01 broker=127.0.0.1:18830 timers=fast 15s/10s scenario=none
+2026-10-16T11:41:25.121Z SIM this is a protocol simulator for Node-RED tests, not the ESP32 firmware
+2026-10-16T11:41:25.125Z MQTT connected to 127.0.0.1:18830 as device orchid-01
+2026-10-16T11:41:27.675Z CMD light {"request_id":"auto-mvawd720-1","mode":"MANUAL","state":"OFF","ttl_s":900}
+2026-10-16T11:41:27.678Z ACK auto-mvawd720-1 APPLIED
+2026-10-16T11:41:27.681Z CMD mist {"request_id":"auto-mvawd720-2","mode":"MANUAL","state":"OFF","ttl_s":900}
+2026-10-16T11:41:27.681Z ACK auto-mvawd720-2 APPLIED
+2026-10-16T11:41:33.713Z CMD fan {"request_id":"dash-mvawdbpq-3","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-16T11:41:33.715Z ACK dash-mvawdbpq-3 APPLIED
+2026-10-16T11:41:35.160Z SIM set water low
+2026-10-16T11:41:35.428Z CMD mist {"request_id":"dash-mvawdd1f-4","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-16T11:41:35.429Z ACK dash-mvawdd1f-4 REJECTED WATER_LOCKOUT
+2026-10-16T11:41:37.657Z STATE mist IDLE -> WATER_LOCKOUT
+2026-10-16T11:41:38.486Z SIM set water ok
+2026-10-16T11:41:40.158Z STATE mist WATER_LOCKOUT -> IDLE
+2026-10-16T11:41:40.278Z CMD mist {"request_id":"dash-mvawdgs4-5","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-16T11:41:40.278Z ACK dash-mvawdgs4-5 APPLIED
+2026-10-16T11:41:57.670Z STATE mist IDLE -> COOLDOWN (manual mist safety limit)
+2026-10-16T11:41:58.630Z SIM set drop-cmd on
+2026-10-16T11:41:58.955Z TEST command dropped without ACK: garden/orchid/orchid-01/cmd/light {"request_id":"dash-mvawdv6t-6","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-16T11:42:06.592Z SIM set drop-cmd off
+2026-10-16T11:42:07.673Z STATE mist COOLDOWN -> IDLE
+2026-10-16T11:42:09.593Z CMD mist {"request_id":"dash-mvawe3ef-7","mode":"AUTO"}
+2026-10-16T11:42:09.594Z ACK dash-mvawe3ef-7 APPLIED AUTO
+2026-10-16T11:42:09.594Z CMD fan {"request_id":"dash-mvawe3ef-8","mode":"AUTO"}
+2026-10-16T11:42:09.594Z ACK dash-mvawe3ef-8 APPLIED AUTO
+2026-10-16T11:42:09.594Z CMD light {"request_id":"dash-mvawe3eg-9","mode":"AUTO"}
+2026-10-16T11:42:09.594Z ACK dash-mvawe3eg-9 APPLIED AUTO
+2026-10-16T11:42:09.603Z CMD light {"request_id":"auto-mvawe3eq-10","mode":"MANUAL","state":"OFF","ttl_s":900}
+2026-10-16T11:42:09.603Z ACK auto-mvawe3eq-10 APPLIED
+2026-10-16T11:42:09.603Z CMD mist {"request_id":"auto-mvawe3eq-11","mode":"MANUAL","state":"OFF","ttl_s":900}
+2026-10-16T11:42:09.603Z ACK auto-mvawe3eq-11 APPLIED
+2026-10-16T11:42:09.608Z CMD light {"request_id":"auto-mvawe3et-12","mode":"MANUAL","state":"OFF","ttl_s":900}
+2026-10-16T11:42:09.608Z ACK auto-mvawe3et-12 APPLIED
+2026-10-16T11:42:09.914Z SIM set light dark
+2026-10-16T11:42:09.914Z SIM set rh 60
+2026-10-16T11:42:10.185Z CMD light {"request_id":"auto-mvawe3uu-13","mode":"MANUAL","state":"OFF","ttl_s":15}
+2026-10-16T11:42:10.185Z ACK auto-mvawe3uu-13 APPLIED
+2026-10-16T11:42:10.185Z CMD mist {"request_id":"auto-mvawe3uv-14","mode":"MANUAL","state":"OFF","ttl_s":15}
+2026-10-16T11:42:10.185Z ACK auto-mvawe3uv-14 APPLIED
+2026-10-16T11:42:17.698Z CMD light {"request_id":"auto-mvawe9ni-15","mode":"MANUAL","state":"OFF","ttl_s":15}
+2026-10-16T11:42:17.700Z ACK auto-mvawe9ni-15 APPLIED
+2026-10-16T11:42:17.700Z CMD mist {"request_id":"auto-mvawe9nj-16","mode":"MANUAL","state":"OFF","ttl_s":15}
+2026-10-16T11:42:17.701Z ACK auto-mvawe9nj-16 APPLIED
+2026-10-16T11:42:20.196Z CMD light {"request_id":"auto-mvawebky-17","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:42:20.196Z ACK auto-mvawebky-17 APPLIED
+2026-10-16T11:42:20.196Z CMD mist {"request_id":"auto-mvawebky-18","mode":"AUTO"}
+2026-10-16T11:42:20.197Z ACK auto-mvawebky-18 APPLIED AUTO
+2026-10-16T11:42:22.687Z STATE mist IDLE -> RUNNING
+2026-10-16T11:42:27.697Z CMD light {"request_id":"auto-mvawehdb-19","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:42:27.698Z ACK auto-mvawehdb-19 APPLIED
+2026-10-16T11:42:35.207Z CMD light {"request_id":"auto-mvawen5w-20","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:42:35.210Z ACK auto-mvawen5w-20 APPLIED
+2026-10-16T11:42:37.721Z STATE mist RUNNING -> COOLDOWN
+2026-10-16T11:42:38.060Z CMD fan {"request_id":"auto-mvawepcx-21","mode":"MANUAL","state":"ON","ttl_s":3}
+2026-10-16T11:42:38.060Z ACK auto-mvawepcx-21 APPLIED
+2026-10-16T11:42:42.718Z override expired: fan -> AUTO
+2026-10-16T11:42:42.723Z CMD light {"request_id":"auto-mvawesyq-22","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:42:42.723Z ACK auto-mvawesyq-22 APPLIED
+2026-10-16T11:42:50.225Z STATE mist COOLDOWN -> IDLE
+2026-10-16T11:42:50.304Z CMD light {"request_id":"auto-mvaweyt4-23","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:42:50.304Z ACK auto-mvaweyt4-23 APPLIED
+2026-10-16T11:42:52.726Z STATE mist IDLE -> RUNNING
+2026-10-16T11:43:00.239Z CMD light {"request_id":"auto-mvawf6h8-24","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:43:00.240Z ACK auto-mvawf6h8-24 APPLIED
+2026-10-16T11:43:07.732Z STATE mist RUNNING -> COOLDOWN
+2026-10-16T11:43:07.746Z CMD light {"request_id":"auto-mvawfc9s-25","mode":"MANUAL","state":"ON","ttl_s":13}
+2026-10-16T11:43:07.747Z ACK auto-mvawfc9s-25 APPLIED
+2026-10-16T11:43:07.748Z CMD fan {"request_id":"auto-mvawfc9t-26","mode":"MANUAL","state":"ON","ttl_s":3}
+2026-10-16T11:43:07.748Z ACK auto-mvawfc9t-26 APPLIED
+2026-10-16T11:43:12.735Z override expired: fan -> AUTO
+2026-10-16T11:43:15.256Z CMD light {"request_id":"auto-mvawfi28-27","mode":"MANUAL","state":"ON","ttl_s":5}
+2026-10-16T11:43:15.259Z ACK auto-mvawfi28-27 APPLIED
+2026-10-16T11:43:17.737Z STATE mist COOLDOWN -> IDLE
+2026-10-16T11:43:17.748Z CMD light {"request_id":"auto-mvawfjzm-28","mode":"MANUAL","state":"ON","ttl_s":3}
+2026-10-16T11:43:17.748Z ACK auto-mvawfjzm-28 APPLIED
+2026-10-16T11:43:20.239Z STATE mist IDLE -> RUNNING
+2026-10-16T11:43:20.246Z CMD light {"request_id":"auto-mvawflx1-29","mode":"MANUAL","state":"OFF","ttl_s":15}
+2026-10-16T11:43:20.246Z ACK auto-mvawflx1-29 APPLIED
+2026-10-16T11:43:21.616Z CMD light {"request_id":"auto-mvawfmz1-30","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:43:21.617Z ACK auto-mvawfmz1-30 APPLIED
+2026-10-16T11:43:26.677Z CMD mist {"request_id":"auto-mvawfqvf-31","mode":"MANUAL","state":"OFF","ttl_s":15}
+2026-10-16T11:43:26.680Z ACK auto-mvawfqvf-31 APPLIED
+2026-10-16T11:43:26.697Z CMD fan {"request_id":"auto-mvawfqw5-32","mode":"MANUAL","state":"ON","ttl_s":3}
+2026-10-16T11:43:26.698Z ACK auto-mvawfqw5-32 APPLIED
+2026-10-16T11:43:27.742Z STATE mist RUNNING -> COOLDOWN (AUTO mist held OFF)
+2026-10-16T11:43:30.243Z override expired: fan -> AUTO
+2026-10-16T11:43:30.256Z CMD light {"request_id":"auto-mvawftn1-33","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:43:30.256Z ACK auto-mvawftn1-33 APPLIED
+2026-10-16T11:43:35.264Z CMD mist {"request_id":"auto-mvawfxi4-34","mode":"MANUAL","state":"OFF","ttl_s":15}
+2026-10-16T11:43:35.268Z ACK auto-mvawfxi4-34 APPLIED
+2026-10-16T11:43:37.747Z STATE mist COOLDOWN -> IDLE
+2026-10-16T11:43:37.757Z CMD light {"request_id":"auto-mvawfzfg-35","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:43:37.757Z ACK auto-mvawfzfg-35 APPLIED
+2026-10-16T11:43:42.761Z CMD mist {"request_id":"auto-mvawg3ad-36","mode":"MANUAL","state":"OFF","ttl_s":15}
+2026-10-16T11:43:42.762Z ACK auto-mvawg3ad-36 APPLIED
+2026-10-16T11:43:45.263Z CMD light {"request_id":"auto-mvawg57v-37","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:43:45.264Z ACK auto-mvawg57v-37 APPLIED
+2026-10-16T11:43:48.012Z CMD light {"request_id":"auto-mvawg7c5-38","mode":"MANUAL","state":"OFF","ttl_s":15}
+2026-10-16T11:43:48.013Z ACK auto-mvawg7c5-38 APPLIED
+2026-10-16T11:43:48.014Z CMD mist {"request_id":"auto-mvawg7c7-39","mode":"MANUAL","state":"OFF","ttl_s":15}
+2026-10-16T11:43:48.014Z ACK auto-mvawg7c7-39 APPLIED
+2026-10-16T11:43:56.653Z CMD light {"request_id":"auto-mvawge0b-40","mode":"MANUAL","state":"OFF","ttl_s":15}
+2026-10-16T11:43:56.654Z ACK auto-mvawge0b-40 APPLIED
+2026-10-16T11:43:56.655Z CMD mist {"request_id":"auto-mvawge0b-41","mode":"MANUAL","state":"OFF","ttl_s":15}
+2026-10-16T11:43:56.656Z ACK auto-mvawge0b-41 APPLIED
+2026-10-16T11:44:00.310Z CMD light {"request_id":"auto-mvawggtw-42","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:44:00.310Z ACK auto-mvawggtw-42 APPLIED
+2026-10-16T11:44:00.310Z CMD mist {"request_id":"auto-mvawggtx-43","mode":"AUTO"}
+2026-10-16T11:44:00.310Z ACK auto-mvawggtx-43 APPLIED AUTO
+2026-10-16T11:44:02.797Z STATE mist IDLE -> RUNNING
+2026-10-16T11:44:02.884Z SIM set dht fault
+2026-10-16T11:44:05.299Z DHT22 read failed (1 consecutive)
+2026-10-16T11:44:07.803Z DHT22 read failed (2 consecutive)
+2026-10-16T11:44:07.906Z CMD light {"request_id":"auto-mvawgmou-44","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:44:07.906Z ACK auto-mvawgmou-44 APPLIED
+2026-10-16T11:44:10.306Z DHT22 read failed (3 consecutive)
+2026-10-16T11:44:10.307Z FAULT DHT22 consecutive read failures; mist AUTO blocked
+2026-10-16T11:44:10.307Z STATE mist RUNNING -> SENSOR_FAULT
+2026-10-16T11:44:10.340Z CMD fan {"request_id":"auto-mvawgokf-45","mode":"MANUAL","state":"ON","ttl_s":3}
+2026-10-16T11:44:10.341Z ACK auto-mvawgokf-45 APPLIED
+2026-10-16T11:44:11.427Z SIM set water low
+2026-10-16T11:44:12.806Z DHT22 read failed (4 consecutive)
+2026-10-16T11:44:12.806Z STATE mist SENSOR_FAULT -> WATER_LOCKOUT
+2026-10-16T11:44:13.767Z SIM set water ok
+2026-10-16T11:44:15.311Z DHT22 read failed (5 consecutive)
+2026-10-16T11:44:15.312Z STATE mist WATER_LOCKOUT -> IDLE
+2026-10-16T11:44:15.313Z override expired: fan -> AUTO
+2026-10-16T11:44:16.743Z CMD light {"request_id":"auto-mvawgtga-46","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:44:16.764Z ACK auto-mvawgtga-46 APPLIED
+2026-10-16T11:44:17.842Z DHT22 read failed (6 consecutive)
+2026-10-16T11:44:17.843Z STATE mist IDLE -> SENSOR_FAULT
+2026-10-16T11:44:18.169Z SIM set dht ok
+2026-10-16T11:44:20.344Z RECOVERED DHT22
+2026-10-16T11:44:20.349Z STATE mist SENSOR_FAULT -> COOLDOWN (sensor recovered)
+2026-10-16T11:44:20.532Z TEST link drop for 20s (abrupt TCP close -> broker publishes LWT offline)
+2026-10-16T11:44:20.548Z MQTT disconnected
+2026-10-16T11:44:20.549Z SAFETY MQTT link lost; manual overrides cleared -> AUTO
+2026-10-16T11:44:30.355Z STATE mist COOLDOWN -> IDLE
+2026-10-16T11:44:32.966Z STATE mist IDLE -> RUNNING
+2026-10-16T11:44:40.581Z MQTT connected to 127.0.0.1:18830 as device orchid-01
+2026-10-16T11:44:42.988Z CMD light {"request_id":"auto-mvawhdrc-47","mode":"MANUAL","state":"ON","ttl_s":15}
+2026-10-16T11:44:42.988Z ACK auto-mvawhdrc-47 APPLIED

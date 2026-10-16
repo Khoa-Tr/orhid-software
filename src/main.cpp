@@ -45,11 +45,20 @@ constexpr int waterRefilledAdc = 1500;
 #ifdef ORCHID_TIMER_TEST
 constexpr unsigned long maxMistDurationMs = 15000UL;
 constexpr unsigned long mistCooldownMs = 10000UL;
+constexpr unsigned long maxAutoLightOnMs = 20000UL;
 #else
 constexpr unsigned long maxMistDurationMs = 120000UL;
 constexpr unsigned long mistCooldownMs = 60000UL;
+// Den AUTO cuc bo (khi Node-RED khong giu lich) bat lien tuc toi da 4 gio,
+// sau do tat va chi bat lai khi da thay troi sang -> khong bat suot dem.
+constexpr unsigned long maxAutoLightOnMs = 4UL * 60UL * 60UL * 1000UL;
 #endif
 constexpr unsigned long sampleIntervalMs = 2500UL;
+}
+
+namespace Safety {
+// 3 lan doc DHT loi lien tiep (~7,5 s) -> SENSOR_FAULT: khong phun AUTO, tu choi lenh phun.
+constexpr uint8_t dhtFaultAfterFailures = 3;
 }
 
 namespace Filtering {
@@ -67,6 +76,8 @@ constexpr unsigned long wifiRetryIntervalMs = 10000UL;
 constexpr unsigned long mqttRetryIntervalMs = 5000UL;
 constexpr uint32_t maxManualTtlSeconds = 3600;
 constexpr size_t commandBufferSize = 256;
+// Goi MQTT gom header + topic + payload; state JSON day du can hon 256 byte.
+constexpr size_t mqttPacketBufferSize = 512;
 }
 
 struct FilteredSensors {
@@ -110,8 +121,9 @@ RunningAverage<int> waterFilter;
 
 // ---- State machine ----
 // Mist : Idle -> Running -> (Idle | Cooldown) ; moi trang thai -> WaterLockout khi can nuoc
+//        DHT loi lien tiep -> SensorFault ; DHT hoi phuc -> Cooldown truoc khi phun lai
 // Fan / Light : Off <-> On (hysteresis)
-enum class MistState : uint8_t { Idle, Running, Cooldown, WaterLockout };
+enum class MistState : uint8_t { Idle, Running, Cooldown, WaterLockout, SensorFault };
 enum class SwitchState : uint8_t { Off, On };
 
 MistState mistState = MistState::Idle;
@@ -119,6 +131,18 @@ SwitchState fanState = SwitchState::Off;
 SwitchState lightState = SwitchState::Off;
 unsigned long mistStateSince = 0;
 unsigned long lastSampleAt = 0;
+unsigned long lightOnSince = 0;
+bool lightWaitingForDaylight = false;
+uint8_t dhtFailStreak = 0;
+bool dhtFault = false;
+bool manualMistRunActive = false;
+unsigned long manualMistRunStartedAt = 0;
+
+#ifdef ORCHID_FAULT_INJECTION
+// Chi co trong build test: lenh Serial "FAULT ..." gia lap loi de chay scenario Wokwi.
+bool injectedDhtFault = false;
+bool injectedCommandDrop = false;
+#endif
 
 struct RelayOverride {
   bool active = false;
@@ -174,8 +198,14 @@ FilteredSensors readFilteredSensors() {
   FilteredSensors sensors{};
   sensors.lightRaw = analogRead(Pins::ldr);
   sensors.waterRaw = analogRead(Pins::water);
-  const float temperatureRaw = dhtSensor.readTemperature();
-  const float humidityRaw = dhtSensor.readHumidity();
+  float temperatureRaw = dhtSensor.readTemperature();
+  float humidityRaw = dhtSensor.readHumidity();
+#ifdef ORCHID_FAULT_INJECTION
+  if (injectedDhtFault) {
+    temperatureRaw = NAN;
+    humidityRaw = NAN;
+  }
+#endif
 
   sensors.temperatureRaw = temperatureRaw;
   sensors.humidityRaw = humidityRaw;
@@ -212,6 +242,7 @@ const char* mistStateName(MistState state) {
     case MistState::Running: return "RUNNING";
     case MistState::Cooldown: return "COOLDOWN";
     case MistState::WaterLockout: return "WATER_LOCKOUT";
+    case MistState::SensorFault: return "SENSOR_FAULT";
   }
   return "?";
 }
@@ -222,8 +253,17 @@ bool anyManualOverride() {
   return mistOverride.active || fanOverride.active || lightOverride.active;
 }
 
+const char* overrideModeName(const RelayOverride& relayOverride) {
+  return relayOverride.active ? "MANUAL" : "AUTO";
+}
+
+bool waterLockoutActive() {
+  return mistState == MistState::WaterLockout ||
+      (latestWaterValid && latestWaterAdc < Thresholds::waterLowAdc);
+}
+
 void publishJson(const char* topic, JsonDocument& document, bool retained = false) {
-  char payload[NetworkConfig::commandBufferSize];
+  char payload[NetworkConfig::mqttPacketBufferSize];
   const size_t length = serializeJson(document, payload, sizeof(payload));
   if (length == 0 || length >= sizeof(payload)) {
     Serial.printf("MQTT publish failed: JSON too large for %s\n", topic);
@@ -250,15 +290,20 @@ void publishState() {
   document["fan"] = fanRelayOn ? "ON" : "OFF";
   document["light"] = lightRelayOn ? "ON" : "OFF";
   document["mist_state"] = mistStateName(mistState);
-  document["water_lockout"] = mistState == MistState::WaterLockout;
+  document["water_lockout"] = waterLockoutActive();
+  document["dht_fault"] = dhtFault;
   document["mode"] = anyManualOverride() ? "MANUAL" : "AUTO";
+  document["mist_mode"] = overrideModeName(mistOverride);
+  document["fan_mode"] = overrideModeName(fanOverride);
+  document["light_mode"] = overrideModeName(lightOverride);
   publishJson(stateTopic, document, true);
 }
 
 void publishTelemetry(const FilteredSensors& sensors) {
   if (!mqttClient.connected()) return;
   JsonDocument document;
-  if (sensors.dhtValid || temperatureFilter.count > 0) {
+  // Khi DHT loi lien tiep thi gui null, khong gui gia tri cu nhu the van con dung.
+  if (!dhtFault && temperatureFilter.count > 0) {
     document["temperature_c"] = sensors.temperature;
     document["humidity_pct"] = sensors.humidity;
   } else {
@@ -267,13 +312,13 @@ void publishTelemetry(const FilteredSensors& sensors) {
   }
   document["light_adc"] = sensors.lightFiltered;
   document["water_adc"] = sensors.waterFiltered;
+  document["dht_fail_streak"] = dhtFailStreak;
   publishJson(telemetryTopic, document);
 }
 
 void applyRelayOutputs() {
-  const bool waterLockout = mistState == MistState::WaterLockout ||
-      (latestWaterValid && latestWaterAdc < Thresholds::waterLowAdc);
-  const bool mistSafetyAllowsOn = !waterLockout && mistState != MistState::Cooldown;
+  const bool mistSafetyAllowsOn = !waterLockoutActive() &&
+      mistState != MistState::Cooldown && mistState != MistState::SensorFault;
   const bool requestedMistOn = mistOverride.active
       ? mistOverride.on
       : mistState == MistState::Running;
@@ -281,9 +326,32 @@ void applyRelayOutputs() {
   fanRelayOn = fanOverride.active ? fanOverride.on : fanState == SwitchState::On;
   lightRelayOn = lightOverride.active ? lightOverride.on : lightState == SwitchState::On;
 
+  // Moi lan phun thu cong ket thuc (het TTL, lenh OFF/AUTO, mat ket noi...) deu phai cooldown,
+  // tranh gui lenh ON lien tiep de phun khong nghi.
+  const bool manualMistOn = mistRelayOn && mistOverride.active && mistOverride.on;
+  if (manualMistOn && !manualMistRunActive) {
+    manualMistRunActive = true;
+    manualMistRunStartedAt = millis();
+  } else if (!manualMistOn && manualMistRunActive) {
+    manualMistRunActive = false;
+    if (mistState == MistState::Idle || mistState == MistState::Running) {
+      setMistState(MistState::Cooldown, millis());
+    }
+  }
+
   setRelay(Pins::mistRelay, mistRelayOn);
   setRelay(Pins::fanRelay, fanRelayOn);
   setRelay(Pins::lightRelay, lightRelayOn);
+}
+
+void cancelManualOverrides(const char* reason) {
+  const uint8_t activeCount = static_cast<uint8_t>(mistOverride.active) +
+      static_cast<uint8_t>(fanOverride.active) + static_cast<uint8_t>(lightOverride.active);
+  mistOverride.active = false;
+  fanOverride.active = false;
+  lightOverride.active = false;
+  Serial.printf("SAFETY %s; manual overrides cleared -> AUTO (%u active)\n", reason, activeCount);
+  applyRelayOutputs();
 }
 
 void expireManualOverrides(unsigned long now) {
@@ -297,25 +365,31 @@ void expireManualOverrides(unsigned long now) {
     }
   }
 
-  if (mistOverride.active && mistOverride.on &&
-      now - mistOverride.startedAt >= Thresholds::maxMistDurationMs) {
+  // Tinh tu luc relay bat that, khong tu lenh moi nhat: lenh ON lap lai khong keo dai thoi gian phun.
+  if (manualMistRunActive && now - manualMistRunStartedAt >= Thresholds::maxMistDurationMs) {
     mistOverride.active = false;
     setMistState(MistState::Cooldown, now);
     Serial.println("MQTT mist safety limit reached; entering cooldown");
   }
 
   if (mistOverride.active && mistOverride.on &&
-      (mistState == MistState::WaterLockout ||
-       (latestWaterValid && latestWaterAdc < Thresholds::waterLowAdc))) {
+      (waterLockoutActive() || mistState == MistState::SensorFault)) {
     mistOverride.active = false;
     if (now - lastManualSafetyWarningAt >= 1000UL) {
-      Serial.println("MQTT mist override cancelled: WATER_LOCKOUT");
+      Serial.printf("MQTT mist override cancelled: %s\n",
+                    mistState == MistState::SensorFault ? "SENSOR_FAULT" : "WATER_LOCKOUT");
       lastManualSafetyWarningAt = now;
     }
   }
 }
 
 void handleMqttMessage(char* topic, byte* payload, unsigned int length) {
+#ifdef ORCHID_FAULT_INJECTION
+  if (injectedCommandDrop) {
+    Serial.printf("TEST command dropped without ACK: %s\n", topic);
+    return;
+  }
+#endif
   if (length == 0 || length >= NetworkConfig::commandBufferSize) {
     Serial.printf("MQTT command rejected: invalid payload length=%u\n", length);
     return;
@@ -368,9 +442,12 @@ void handleMqttMessage(char* topic, byte* payload, unsigned int length) {
 
   const bool turnOn = strcmp(state, "ON") == 0;
   if (target == &mistOverride && turnOn) {
-    if (!latestWaterValid || latestWaterAdc < Thresholds::waterLowAdc ||
-        mistState == MistState::WaterLockout) {
+    if (!latestWaterValid || waterLockoutActive()) {
       publishAck(requestId, "REJECTED", "WATER_LOCKOUT");
+      return;
+    }
+    if (mistState == MistState::SensorFault) {
+      publishAck(requestId, "REJECTED", "SENSOR_FAULT");
       return;
     }
     if (mistState == MistState::Cooldown) {
@@ -413,6 +490,10 @@ void serviceNetwork(unsigned long now) {
     if (mqttClient.connected()) mqttClient.disconnect();
     if (wifiWasConnected) Serial.println("NET Wi-Fi disconnected; retrying");
     wifiWasConnected = false;
+    if (mqttWasConnected) {
+      mqttWasConnected = false;
+      cancelManualOverrides("Wi-Fi link lost");
+    }
     if (now - lastWifiAttemptAt >= NetworkConfig::wifiRetryIntervalMs) {
       lastWifiAttemptAt = now;
       Serial.printf("NET Wi-Fi connecting to %s\n", ORCHID_WIFI_SSID);
@@ -434,6 +515,8 @@ void serviceNetwork(unsigned long now) {
   if (mqttWasConnected) {
     Serial.println("MQTT disconnected; retrying");
     mqttWasConnected = false;
+    // Dashboard khong con thay/dung duoc relay -> bo moi override, quay ve AUTO cuc bo.
+    cancelManualOverrides("MQTT link lost");
   }
   if (now - lastMqttAttemptAt < NetworkConfig::mqttRetryIntervalMs) return;
   lastMqttAttemptAt = now;
@@ -469,18 +552,41 @@ void setMistState(MistState next, unsigned long now) {
   mistStateSince = now;
 }
 
-void updateMist(unsigned long now, float humidity, int waterAdc) {
+void updateDhtHealth(bool dhtValid) {
+  if (dhtValid) {
+    if (dhtFault) Serial.println("RECOVERED DHT22 readings valid again");
+    dhtFailStreak = 0;
+    dhtFault = false;
+    return;
+  }
+  if (dhtFailStreak < UINT8_MAX) dhtFailStreak++;
+  Serial.printf("DHT22 read failed (%u consecutive)\n", dhtFailStreak);
+  if (!dhtFault && dhtFailStreak >= Safety::dhtFaultAfterFailures) {
+    dhtFault = true;
+    Serial.printf("FAULT DHT22 %u consecutive read failures; mist AUTO blocked, fan holds last state\n",
+                  dhtFailStreak);
+  }
+}
+
+void updateMist(unsigned long now, bool climateValid, float humidity, int waterAdc) {
   const bool waterLow = waterAdc < Thresholds::waterLowAdc;
   const bool waterRefilled = waterAdc >= Thresholds::waterRefilledAdc;
+  // Lenh MANUAL OFF (vd. Node-RED chan phun ban dem) giu chu trinh AUTO, khong chay ngam phia sau.
+  const bool autoMistHeld = mistOverride.active && !mistOverride.on;
   const unsigned long elapsed = now - mistStateSince;
 
   switch (mistState) {
     case MistState::Idle:
       if (waterLow) setMistState(MistState::WaterLockout, now);
-      else if (humidity < Thresholds::mistHumidityOn) setMistState(MistState::Running, now);
+      else if (dhtFault) setMistState(MistState::SensorFault, now);
+      else if (climateValid && !autoMistHeld && humidity < Thresholds::mistHumidityOn) {
+        setMistState(MistState::Running, now);
+      }
       break;
     case MistState::Running:
       if (waterLow) setMistState(MistState::WaterLockout, now);
+      else if (dhtFault) setMistState(MistState::SensorFault, now);
+      else if (autoMistHeld) setMistState(MistState::Cooldown, now);
       else if (humidity >= Thresholds::mistHumidityOff) setMistState(MistState::Idle, now);
       else if (elapsed >= Thresholds::maxMistDurationMs) setMistState(MistState::Cooldown, now);
       break;
@@ -490,6 +596,10 @@ void updateMist(unsigned long now, float humidity, int waterAdc) {
       break;
     case MistState::WaterLockout:
       if (waterRefilled) setMistState(MistState::Idle, now);  // hysteresis: >= waterRefilledAdc
+      break;
+    case MistState::SensorFault:
+      if (waterLow) setMistState(MistState::WaterLockout, now);
+      else if (!dhtFault) setMistState(MistState::Cooldown, now);  // hoi phuc: nghi 1 chu ky truoc
       break;
   }
 }
@@ -506,15 +616,48 @@ void updateFan(float temperature, float humidity) {
   if (fanState != before) Serial.printf("STATE fan -> %s\n", fanState == SwitchState::On ? "ON" : "OFF");
 }
 
-void updateLight(int lightAdc) {
+void updateLight(unsigned long now, int lightAdc) {
   const SwitchState before = lightState;
-  if (lightState == SwitchState::Off && lightAdc > Thresholds::lightOnAdc) {
+  if (lightAdc < Thresholds::lightOffAdc) lightWaitingForDaylight = false;
+  if (lightState == SwitchState::Off && lightAdc > Thresholds::lightOnAdc && !lightWaitingForDaylight) {
     lightState = SwitchState::On;
+    lightOnSince = now;
   } else if (lightState == SwitchState::On && lightAdc < Thresholds::lightOffAdc) {
     lightState = SwitchState::Off;
+  } else if (lightState == SwitchState::On && now - lightOnSince >= Thresholds::maxAutoLightOnMs) {
+    lightState = SwitchState::Off;
+    lightWaitingForDaylight = true;
+    Serial.println("SAFETY light AUTO on-time limit reached; off until daylight is seen");
   }
   if (lightState != before) Serial.printf("STATE light -> %s\n", lightState == SwitchState::On ? "ON" : "OFF");
 }
+
+#ifdef ORCHID_FAULT_INJECTION
+void serviceFaultInjection() {
+  static char line[32];
+  static size_t length = 0;
+  while (Serial.available() > 0) {
+    const char received = static_cast<char>(Serial.read());
+    if (received == '\r') continue;
+    if (received != '\n') {
+      if (length < sizeof(line) - 1) line[length++] = received;
+      continue;
+    }
+    line[length] = '\0';
+    length = 0;
+    if (strcmp(line, "FAULT DHT ON") == 0) injectedDhtFault = true;
+    else if (strcmp(line, "FAULT DHT OFF") == 0) injectedDhtFault = false;
+    else if (strcmp(line, "FAULT CMD DROP ON") == 0) injectedCommandDrop = true;
+    else if (strcmp(line, "FAULT CMD DROP OFF") == 0) injectedCommandDrop = false;
+    else if (strcmp(line, "FAULT MQTT DROP") == 0) networkSocket.stop();  // dong TCP dot ngot -> broker phat LWT
+    else {
+      Serial.printf("TEST unknown fault command: %s\n", line);
+      continue;
+    }
+    Serial.printf("TEST fault injection: %s\n", line);
+  }
+}
+#endif
 
 void printCalibrationRow(const FilteredSensors& sensors) {
   Serial.printf("CAL raw_light=%d filtered_light=%d raw_water=%d filtered_water=%d raw_temp=%.1f filtered_temp=%.1f raw_humidity=%.1f filtered_humidity=%.1f\n",
@@ -531,7 +674,7 @@ void setup() {
   WiFi.setAutoReconnect(true);
   mqttClient.setServer(NetworkConfig::brokerHost, NetworkConfig::brokerPort);
   mqttClient.setCallback(handleMqttMessage);
-  mqttClient.setBufferSize(NetworkConfig::commandBufferSize);
+  mqttClient.setBufferSize(NetworkConfig::mqttPacketBufferSize);
   mqttClient.setSocketTimeout(1);
   mqttClient.setKeepAlive(30);
   lastWifiAttemptAt = millis() - NetworkConfig::wifiRetryIntervalMs;
@@ -551,10 +694,16 @@ void setup() {
                 ORCHID_DEVICE_ID, NetworkConfig::brokerHost, NetworkConfig::brokerPort);
   Serial.println("MQTT topics: telemetry/state/availability/cmd/{mist,fan,light}/ack");
   Serial.println("MQTT Wi-Fi defaults to Wokwi-GUEST; configure orchid_secrets.h for a local network");
+#ifdef ORCHID_FAULT_INJECTION
+  Serial.println("TEST build: serial FAULT DHT ON|OFF, FAULT CMD DROP ON|OFF, FAULT MQTT DROP");
+#endif
 }
 
 void loop() {
   const unsigned long now = millis();
+#ifdef ORCHID_FAULT_INJECTION
+  serviceFaultInjection();
+#endif
   serviceNetwork(now);
   expireManualOverrides(now);
   applyRelayOutputs();
@@ -565,28 +714,24 @@ void loop() {
   const FilteredSensors sensors = readFilteredSensors();
   latestWaterAdc = sensors.waterFiltered;
   latestWaterValid = true;
+  updateDhtHealth(sensors.dhtValid);
 
-  if (!sensors.dhtValid && temperatureFilter.count == 0) {
-    Serial.println("DHT22 read failed; outputs unchanged");
-    publishTelemetry(sensors);
-    publishState();
-    return;
-  }
-
+  // Mot lan loi le dung gia tri loc cuoi; tu nguong loi lien tiep tro di thi khong dieu khien theo khi hau.
+  const bool climateValid = !dhtFault && temperatureFilter.count > 0;
   const float humidity = sensors.humidity;
   const float temperature = sensors.temperature;
   const int lightRaw = sensors.lightFiltered;
   const int waterRaw = sensors.waterFiltered;
-  printCalibrationRow(sensors);
+  if (temperatureFilter.count > 0) printCalibrationRow(sensors);
 
-  updateMist(now, humidity, waterRaw);
-  updateFan(temperature, humidity);
-  updateLight(lightRaw);
+  updateMist(now, climateValid, humidity, waterRaw);
+  if (climateValid) updateFan(temperature, humidity);
+  updateLight(now, lightRaw);
 
   expireManualOverrides(now);
   applyRelayOutputs();
   Serial.printf("T: %.1f C | RH: %.1f %% | Light ADC: %d | Water ADC: %d | Mist: %s | Fan: %s | Grow light: %s\n",
-                temperature, humidity, lightRaw, waterRaw,
+                climateValid ? temperature : NAN, climateValid ? humidity : NAN, lightRaw, waterRaw,
                 mistStateName(mistState),
                 fanState == SwitchState::On ? "ON" : "OFF",
                 lightState == SwitchState::On ? "ON" : "OFF");
