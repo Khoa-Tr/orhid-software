@@ -444,6 +444,95 @@ void expireManualOverrides(unsigned long now) {
 }
 
 // ============================================================================
+// TUẦN 7: CẤU HÌNH NGƯỠNG QUA TOPIC /config CÓ GIỚI HẠN AN TOÀN
+// Broker công khai không xác thực, nên firmware chỉ nhận ngưỡng trong phạm vi an toàn,
+// giữ khoảng hysteresis tối thiểu, và KHÔNG cho hạ ngưỡng khoá nước dưới mặc định.
+// Một trường sai thì từ chối cả gói (không áp dụng từng phần).
+// ============================================================================
+namespace ConfigLimits {
+constexpr float mistRhOnMin = 40.0f;
+constexpr float mistRhOnMax = 90.0f;
+constexpr float mistRhOffMax = 95.0f;
+constexpr float mistRhMinGap = 5.0f;
+constexpr float fanTempOnMin = 25.0f;
+constexpr float fanTempOnMax = 45.0f;
+constexpr float fanTempOffMin = 20.0f;
+constexpr float fanTempMinGap = 1.0f;
+constexpr int lightOnAdcMin = 500;
+constexpr int lightOnAdcMax = 4000;
+constexpr int lightOffAdcMin = 300;
+constexpr int adcMinGap = 200;
+constexpr int waterLowAdcFloor = 1200;  // = ngưỡng mặc định: chỉ được nâng lên, không được hạ
+constexpr int waterLowAdcMax = 3500;
+constexpr int waterRefilledAdcMax = 4000;
+}
+
+// Trường không gửi thì giữ giá trị hiện tại; gửi sai kiểu (không phải số) thì trả false.
+template <typename T>
+bool readConfigNumber(JsonDocument& document, const char* key, T& value) {
+  JsonVariant field = document[key];
+  if (field.isNull()) return true;
+  if (!field.is<float>()) return false;
+  value = field.as<T>();
+  return true;
+}
+
+void handleConfigMessage(JsonDocument& document) {
+  const char* requestId = document["request_id"] | "cfg";
+  float mistOn = Thresholds::mistHumidityOn;
+  float mistOff = Thresholds::mistHumidityOff;
+  float fanOn = Thresholds::fanTemperatureOn;
+  float fanOff = Thresholds::fanTemperatureOff;
+  int lightOn = Thresholds::lightOnAdc;
+  int lightOff = Thresholds::lightOffAdc;
+  int waterLow = Thresholds::waterLowAdc;
+  int waterRefilled = Thresholds::waterRefilledAdc;
+
+  const bool typesOk = readConfigNumber(document, "mist_rh_on", mistOn) &&
+      readConfigNumber(document, "mist_rh_off", mistOff) &&
+      readConfigNumber(document, "fan_temp_on", fanOn) &&
+      readConfigNumber(document, "fan_temp_off", fanOff) &&
+      readConfigNumber(document, "light_on_adc", lightOn) &&
+      readConfigNumber(document, "light_off_adc", lightOff) &&
+      readConfigNumber(document, "water_low_adc", waterLow) &&
+      readConfigNumber(document, "water_refilled_adc", waterRefilled);
+  if (!typesOk) {
+    Serial.println("CONFIG rejected: values must be numbers");
+    publishAck(requestId, "REJECTED", "INVALID_CONFIG");
+    return;
+  }
+
+  using namespace ConfigLimits;
+  const char* problem = nullptr;
+  if (mistOn < mistRhOnMin || mistOn > mistRhOnMax) problem = "mist_rh_on";
+  else if (mistOff < mistOn + mistRhMinGap || mistOff > mistRhOffMax) problem = "mist_rh_off";
+  else if (fanOn < fanTempOnMin || fanOn > fanTempOnMax) problem = "fan_temp_on";
+  else if (fanOff < fanTempOffMin || fanOff > fanOn - fanTempMinGap) problem = "fan_temp_off";
+  else if (lightOn < lightOnAdcMin || lightOn > lightOnAdcMax) problem = "light_on_adc";
+  else if (lightOff < lightOffAdcMin || lightOff > lightOn - adcMinGap) problem = "light_off_adc";
+  else if (waterLow < waterLowAdcFloor || waterLow > waterLowAdcMax) problem = "water_low_adc";
+  else if (waterRefilled < waterLow + adcMinGap || waterRefilled > waterRefilledAdcMax) problem = "water_refilled_adc";
+  if (problem != nullptr) {
+    Serial.printf("CONFIG rejected: %s out of safe range; thresholds unchanged\n", problem);
+    publishAck(requestId, "REJECTED", "CONFIG_OUT_OF_RANGE");
+    return;
+  }
+
+  Thresholds::mistHumidityOn = mistOn;
+  Thresholds::mistHumidityOff = mistOff;
+  Thresholds::fanTemperatureOn = fanOn;
+  Thresholds::fanTemperatureOff = fanOff;
+  Thresholds::lightOnAdc = lightOn;
+  Thresholds::lightOffAdc = lightOff;
+  Thresholds::waterLowAdc = waterLow;
+  Thresholds::waterRefilledAdc = waterRefilled;
+  Serial.printf("CONFIG updated: mist_rh_on=%.1f mist_rh_off=%.1f fan_temp_on=%.1f light_on=%d water_low=%d\n",
+                mistOn, mistOff, fanOn, lightOn, waterLow);
+  publishAck(requestId, "APPLIED", "CONFIG");
+  publishState();
+}
+
+// ============================================================================
 // TUẦN 6 & TUẦN 7: XỬ LÝ LỆNH DOWNLINK TỪ NODE-RED (ĐIỀU KHIỂN & CẤU HÌNH NGƯỠNG)
 // ============================================================================
 void handleMqttMessage(char* topic, byte* payload, unsigned int length) {
@@ -466,20 +555,7 @@ void handleMqttMessage(char* topic, byte* payload, unsigned int length) {
   }
 
   if (strcmp(topic, configTopic) == 0) {
-    if (!document["mist_rh_on"].isNull()) Thresholds::mistHumidityOn = document["mist_rh_on"].as<float>();
-    if (!document["mist_rh_off"].isNull()) Thresholds::mistHumidityOff = document["mist_rh_off"].as<float>();
-    if (!document["fan_temp_on"].isNull()) Thresholds::fanTemperatureOn = document["fan_temp_on"].as<float>();
-    if (!document["fan_temp_off"].isNull()) Thresholds::fanTemperatureOff = document["fan_temp_off"].as<float>();
-    if (!document["light_on_adc"].isNull()) Thresholds::lightOnAdc = document["light_on_adc"].as<int>();
-    if (!document["light_off_adc"].isNull()) Thresholds::lightOffAdc = document["light_off_adc"].as<int>();
-    if (!document["water_low_adc"].isNull()) Thresholds::waterLowAdc = document["water_low_adc"].as<int>();
-    if (!document["water_refilled_adc"].isNull()) Thresholds::waterRefilledAdc = document["water_refilled_adc"].as<int>();
-    Serial.printf("CONFIG updated: mist_rh_on=%.1f mist_rh_off=%.1f fan_temp_on=%.1f light_on=%d\n",
-                  Thresholds::mistHumidityOn, Thresholds::mistHumidityOff,
-                  Thresholds::fanTemperatureOn, Thresholds::lightOnAdc);
-    const char* reqId = document["request_id"] | "cfg";
-    publishAck(reqId, "APPLIED", "CONFIG");
-    publishState();
+    handleConfigMessage(document);
     return;
   }
 

@@ -158,8 +158,8 @@ Tab **Orchid - Week 7 business rules and safety** chỉ phát lệnh khi dashboa
 
 Automation (Người 1):
 
-1. **Đèn theo khung giờ + ngưỡng sáng**: bật trong `06:00–20:00` khi tối (`light_adc > 2200`, tắt khi `< 1800`). Có giờ tắt `off_time`, và tổng thời lượng bật tối đa `daily_max_on_min` = 240 phút/ngày (tính từ trạng thái relay thật). Ngoài khung giờ, hoặc khi hết ngân sách, rule giữ đèn `OFF`, vì logic LDR của firmware sẽ bật suốt đêm. Lệnh `ON` mang TTL không vượt ngân sách còn lại và giờ tắt.
-2. **Quạt hỗ trợ sau chu kỳ phun**: khi relay phun chuyển `ON → OFF`, gửi `fan ON` với TTL 180 s (tối đa 24 lần/ngày). Firmware tự trả quạt về AUTO khi hết TTL, nên quạt không chạy cả đêm.
+1. **Đèn theo khung giờ + ngưỡng sáng**: bật trong `06:00–21:00` khi tối (`light_adc > 2200`, tắt khi `< 1800`). Có giờ tắt `off_time`, và tổng thời lượng bật tối đa `daily_max_on_min` = 240 phút/ngày (tính từ trạng thái relay thật). Ngoài khung giờ, hoặc khi hết ngân sách, rule giữ đèn `OFF`, vì logic LDR của firmware sẽ bật suốt đêm. Lệnh `ON` mang TTL không vượt ngân sách còn lại và giờ tắt.
+2. **Quạt hỗ trợ sau chu kỳ phun**: khi relay phun chuyển `ON → OFF`, gửi `fan ON` với TTL 60 s (tối đa 24 lần/ngày). Firmware tự trả quạt về AUTO khi hết TTL, nên quạt không chạy cả đêm.
 
 Chăm sóc ban đêm và lỗi an toàn (Người 2):
 
@@ -171,10 +171,13 @@ Chăm sóc ban đêm và lỗi an toàn (Người 2):
 - **Firmware** (`src/main.cpp`):
   - DHT lỗi 3 lần liên tiếp thì vào `SENSOR_FAULT`: tắt phun ngay, không phun AUTO, từ chối `mist ON`, quạt giữ trạng thái cuối, telemetry gửi `null`. Khi DHT hồi phục, firmware vào `COOLDOWN` một chu kỳ rồi mới phun lại.
   - Khóa nước vẫn ưu tiên cao nhất.
+  - Topic `garden/orchid/<id>/config` (đổi ngưỡng từ xa) chỉ nhận số trong phạm vi an toàn và giữ khoảng hysteresis tối thiểu; ngưỡng khóa nước `water_low_adc` chỉ được nâng lên, không được hạ dưới 1200. Một trường sai thì từ chối cả gói (`REJECTED`, `INVALID_CONFIG` hoặc `CONFIG_OUT_OF_RANGE`) và giữ ngưỡng cũ.
   - Mất MQTT/Wi-Fi thì xóa mọi override, quay về AUTO cục bộ.
   - Mỗi lần phun tay kết thúc đều vào cooldown. Thời gian phun tay tính từ lúc relay bật, nên gửi `ON` lặp lại không kéo dài được (trước đây lặp `ON` hoặc chờ hết TTL có thể phun liên tục).
   - Đèn AUTO cục bộ bật liên tục tối đa 4 giờ, rồi chờ thấy trời sáng mới bật lại.
 - **Fault monitor**: phát `fault_active`/`fault_cleared` kèm `safe_state` cho các lỗi `dht_fault`, `water_low`, `link_offline`, `telemetry_stale`, `ack_missing` (lệnh `NO_ACK`). Nó cũng kiểm tra từ bên ngoài rằng firmware giữ khóa: báo `violation_*` mức critical nếu thấy phun khi khóa nước, khi DHT lỗi, hoặc quá 130 s. Trạng thái hiện ở nhóm **Safety and automation** và bảng **Automation and safety events**.
+
+Giờ tắt đèn 21:00 và quạt 60 s là giá trị nhóm đã thống nhất trong `test-results/tuan7-test-matrix.md`. Đây là bộ automation duy nhất: hai rule trùng trên tab Người 3 đã tắt, và các nút test lệnh của tab đó giờ cũng đi qua gateway (khóa AUTO/MANUAL, ACK, lịch sử lệnh).
 
 Thử nhanh bằng **lịch rút ngắn**: bấm inject `Demo: compressed clock x60 from 05:50` (hoặc `from 17:55`) để 1 giây thật = 1 phút lịch. Ngân sách đèn demo là 60 phút, nên chạm giới hạn sau khoảng 1 phút. TTL gửi xuống firmware được quy đổi về giây thật. Bấm lại `Rule config (real clock)` để về giờ thật.
 
@@ -328,6 +331,7 @@ Flow Node-RED tại `nodered/orchid-flow.json` đã tích hợp thêm tab riêng
    - Bảo mật Telegram: Whitelist chat ID nhóm (chặn toàn bộ người lạ), nạp bot token qua biến môi trường `TELEGRAM_BOT_TOKEN` (không hardcode lộ token).
 
 3. **Business Rules Tuần 7:**
+   - Hai rule dưới đây đã được gộp vào tab **Week 7 business rules and safety** (đi qua gateway lệnh, dừng khi dashboard ở MANUAL); node gốc trên tab Người 3 được tắt và giữ lại để đối chiếu.
    - **Rule 1 (Đèn theo quang chu kỳ):** Khung giờ chiếu sáng có khoảng tối sinh học bắt buộc; cấm bật xuyên đêm (21h-6h cưỡng bức tắt); ban ngày bù sáng khi thiếu sáng (`light_adc >= 2200`) và tự tắt khi đủ sáng.
    - **Rule 2 (Quạt sau chu kỳ phun sương):** Khi sương vừa ngắt, quạt tự động bật 60 giây để hong ráo lá lan, chống úng đọng và nấm khuẩn.
    - **Bảo vệ an toàn cuối cùng:** Firmware ESP32 giữ các interlock cạn nước, cooldown và timeout lệnh.

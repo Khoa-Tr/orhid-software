@@ -879,7 +879,7 @@
     "type": "tab",
     "label": "Orchid - Week 7 business rules and safety",
     "disabled": false,
-    "info": "Acting automation rules (light schedule with daily limit, fan assist after a mist cycle, night mist policy) and the abnormal-situation monitor. Rules only command relays while the dashboard is in AUTO; every command carries a firmware TTL so the device falls back to local AUTO if Node-RED stops."
+    "info": "Bộ automation duy nhất của dự án (rule đèn theo khung giờ + giới hạn/ngày, quạt hỗ trợ sau chu kỳ phun, chính sách phun ban đêm) và fault monitor. Rule chỉ ra lệnh khi dashboard ở AUTO, mọi lệnh đi qua gateway và có TTL nên thiết bị tự về AUTO cục bộ nếu Node-RED dừng. Giá trị mặc định theo thống nhất của nhóm: đèn 06:00-21:00, quạt 60 s."
   },
   {
     "id": "orchid-dashboard-control-group",
@@ -1370,9 +1370,10 @@
     "id": "orchid-gateway-in",
     "type": "link in",
     "z": "orchid-tab-dashboard",
-    "name": "Automation commands",
+    "name": "Automation + nút test → gateway",
     "links": [
-      "orchid-week7-to-gateway"
+      "orchid-week7-to-gateway",
+      "nguoi3-orchid-gateway-out"
     ],
     "x": 465,
     "y": 860,
@@ -1745,7 +1746,7 @@
     "once": true,
     "onceDelay": "0.5",
     "topic": "week7/config",
-    "payload": "{\n  \"clock\": {\n    \"speed\": 1,\n    \"start_local\": \"\"\n  },\n  \"light\": {\n    \"enabled\": true,\n    \"window_start\": \"06:00\",\n    \"off_time\": \"20:00\",\n    \"dark_on_adc\": 2200,\n    \"bright_off_adc\": 1800,\n    \"daily_max_on_min\": 240,\n    \"hold_ttl_s\": 900\n  },\n  \"fan_assist\": {\n    \"enabled\": true,\n    \"duration_s\": 180,\n    \"max_per_day\": 24\n  },\n  \"night_policy\": {\n    \"care_start\": \"06:00\",\n    \"care_end\": \"18:00\",\n    \"allow_auto_mist_at_night\": false,\n    \"team_confirmed\": false,\n    \"exception_note\": \"\",\n    \"hold_ttl_s\": 900\n  }\n}",
+    "payload": "{\n  \"clock\": {\n    \"speed\": 1,\n    \"start_local\": \"\"\n  },\n  \"light\": {\n    \"enabled\": true,\n    \"window_start\": \"06:00\",\n    \"off_time\": \"21:00\",\n    \"dark_on_adc\": 2200,\n    \"bright_off_adc\": 1800,\n    \"daily_max_on_min\": 240,\n    \"hold_ttl_s\": 900\n  },\n  \"fan_assist\": {\n    \"enabled\": true,\n    \"duration_s\": 60,\n    \"max_per_day\": 24\n  },\n  \"night_policy\": {\n    \"care_start\": \"06:00\",\n    \"care_end\": \"18:00\",\n    \"allow_auto_mist_at_night\": false,\n    \"team_confirmed\": false,\n    \"exception_note\": \"\",\n    \"hold_ttl_s\": 900\n  }\n}",
     "payloadType": "json",
     "x": 210,
     "y": 60,
@@ -1774,7 +1775,7 @@
     "once": false,
     "onceDelay": "0.1",
     "topic": "week7/config",
-    "payload": "{\n  \"clock\": {\n    \"speed\": 60,\n    \"start_local\": \"05:50\"\n  },\n  \"light\": {\n    \"enabled\": true,\n    \"window_start\": \"06:00\",\n    \"off_time\": \"20:00\",\n    \"dark_on_adc\": 2200,\n    \"bright_off_adc\": 1800,\n    \"daily_max_on_min\": 60,\n    \"hold_ttl_s\": 900\n  },\n  \"fan_assist\": {\n    \"enabled\": true,\n    \"duration_s\": 180,\n    \"max_per_day\": 24\n  },\n  \"night_policy\": {\n    \"care_start\": \"06:00\",\n    \"care_end\": \"18:00\",\n    \"allow_auto_mist_at_night\": false,\n    \"team_confirmed\": false,\n    \"exception_note\": \"\",\n    \"hold_ttl_s\": 900\n  }\n}",
+    "payload": "{\n  \"clock\": {\n    \"speed\": 60,\n    \"start_local\": \"05:50\"\n  },\n  \"light\": {\n    \"enabled\": true,\n    \"window_start\": \"06:00\",\n    \"off_time\": \"21:00\",\n    \"dark_on_adc\": 2200,\n    \"bright_off_adc\": 1800,\n    \"daily_max_on_min\": 60,\n    \"hold_ttl_s\": 900\n  },\n  \"fan_assist\": {\n    \"enabled\": true,\n    \"duration_s\": 60,\n    \"max_per_day\": 24\n  },\n  \"night_policy\": {\n    \"care_start\": \"06:00\",\n    \"care_end\": \"18:00\",\n    \"allow_auto_mist_at_night\": false,\n    \"team_confirmed\": false,\n    \"exception_note\": \"\",\n    \"hold_ttl_s\": 900\n  }\n}",
     "payloadType": "json",
     "x": 210,
     "y": 100,
@@ -1803,7 +1804,7 @@
     "once": false,
     "onceDelay": "0.1",
     "topic": "week7/config",
-    "payload": "{\n  \"clock\": {\n    \"speed\": 60,\n    \"start_local\": \"17:55\"\n  },\n  \"light\": {\n    \"enabled\": true,\n    \"window_start\": \"06:00\",\n    \"off_time\": \"20:00\",\n    \"dark_on_adc\": 2200,\n    \"bright_off_adc\": 1800,\n    \"daily_max_on_min\": 60,\n    \"hold_ttl_s\": 900\n  },\n  \"fan_assist\": {\n    \"enabled\": true,\n    \"duration_s\": 180,\n    \"max_per_day\": 24\n  },\n  \"night_policy\": {\n    \"care_start\": \"06:00\",\n    \"care_end\": \"18:00\",\n    \"allow_auto_mist_at_night\": false,\n    \"team_confirmed\": false,\n    \"exception_note\": \"\",\n    \"hold_ttl_s\": 900\n  }\n}",
+    "payload": "{\n  \"clock\": {\n    \"speed\": 60,\n    \"start_local\": \"17:55\"\n  },\n  \"light\": {\n    \"enabled\": true,\n    \"window_start\": \"06:00\",\n    \"off_time\": \"21:00\",\n    \"dark_on_adc\": 2200,\n    \"bright_off_adc\": 1800,\n    \"daily_max_on_min\": 60,\n    \"hold_ttl_s\": 900\n  },\n  \"fan_assist\": {\n    \"enabled\": true,\n    \"duration_s\": 60,\n    \"max_per_day\": 24\n  },\n  \"night_policy\": {\n    \"care_start\": \"06:00\",\n    \"care_end\": \"18:00\",\n    \"allow_auto_mist_at_night\": false,\n    \"team_confirmed\": false,\n    \"exception_note\": \"\",\n    \"hold_ttl_s\": 900\n  }\n}",
     "payloadType": "json",
     "x": 210,
     "y": 140,
@@ -2298,7 +2299,7 @@
     "type": "tab",
     "label": "Orchid - Người 3: Cảnh báo Telegram & Ghép luồng E2E",
     "disabled": false,
-    "info": "Tầng Cảnh báo Telegram Bot, Whitelist Chat ID, Downlink Commands chuẩn firmware và E2E Testing."
+    "info": "Tầng Cảnh báo Telegram Bot, Whitelist Chat ID, Downlink Commands chuẩn firmware và E2E Testing.\n\nGộp với tab Tuần 7: cảnh báo, watchdog và Telegram của tab này vẫn chạy; hai rule đèn/quạt và đường MQTT Out trực tiếp đã tắt vì trùng với tab Tuần 7. Các nút test lệnh giờ đi qua gateway (khoá AUTO/MANUAL, ACK, lịch sử lệnh)."
   },
   {
     "id": "nguoi3-orchid-mqtt-in",
@@ -2589,10 +2590,44 @@
     "wires": []
   },
   {
+    "id": "nguoi3-orchid-to-gateway",
+    "type": "function",
+    "z": "orchid-tab-nguoi3",
+    "name": "Nút test → gateway lệnh (ACK + lịch sử)",
+    "func": "// Nut test trong editor chi admin mo duoc, nen di qua gateway nhu lenh dashboard cua admin:\n// van bi khoa khi dashboard o AUTO, can thiet bi ONLINE, va duoc theo doi ACK + ghi lich su lenh.\nconst input = msg.payload || {};\nconst relay = msg.relay || input.relay;\nconst mode = input.mode === 'MANUAL' ? 'MANUAL' : 'AUTO';\nconst request = {relay, mode, source: 'dashboard', user: 'editor', role: 'admin', reason: 'editor_test_button'};\nif (mode === 'MANUAL') {\n  request.state = String(input.state || '').toUpperCase();\n  request.ttl_s = Number(input.ttl_s);\n}\nreturn {topic: 'orchid/command', payload: request};",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "info": "Thay cho đường MQTT Out trực tiếp: lệnh từ nút test đi cùng cổng với dashboard và automation.",
+    "x": 580,
+    "y": 540,
+    "wires": [
+      [
+        "nguoi3-orchid-gateway-out"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-gateway-out",
+    "type": "link out",
+    "z": "orchid-tab-nguoi3",
+    "name": "Nút test → gateway",
+    "mode": "link",
+    "links": [
+      "orchid-gateway-in"
+    ],
+    "x": 810,
+    "y": 540,
+    "wires": []
+  },
+  {
     "id": "nguoi3-orchid-cmd-formatter",
     "type": "function",
     "z": "orchid-tab-nguoi3",
-    "name": "Format Firmware-Compliant Command",
+    "name": "Format Firmware-Compliant Command (thay bằng gateway)",
     "func": "// FORMAT PAYLOAD ĐÚNG 100% VỚI FIRMWARE ESP32 HIỆN TẠI\n// Payload yêu cầu:\n// - request_id: chuỗi duy nhất (VD: req-mist-1729123456789)\n// - mode: \"MANUAL\" hoặc \"AUTO\"\n// - state: \"ON\" hoặc \"OFF\" (khi mode === \"MANUAL\")\n// - ttl_s: số nguyên từ 1 đến 3600 (khi mode === \"MANUAL\")\n\nconst input = msg.payload || {};\nconst relay = msg.relay || input.relay || 'mist';\nconst mode = input.mode || 'AUTO';\nconst state = input.state ? String(input.state).toUpperCase() : 'ON';\nconst ttl_s = Number(input.ttl_s) || 60;\n\nconst reqId = 'req-' + relay + '-' + (mode === 'AUTO' ? 'auto' : state.toLowerCase()) + '-' + Date.now();\n\nlet payload = {\n    request_id: reqId,\n    mode: mode\n};\n\nif (mode === 'MANUAL') {\n    payload.state = state;\n    payload.ttl_s = ttl_s;\n}\n\nmsg.topic = 'garden/orchid/orchid-01/cmd/' + relay;\nmsg.payload = payload;\n\n// Lưu request_id vào context để theo dõi ACK\nflow.set('last_sent_request_id', reqId);\nreturn msg;",
     "outputs": 1,
     "x": 580,
@@ -2602,26 +2637,30 @@
         "nguoi3-orchid-mqtt-out-dynamic",
         "nguoi3-orchid-cmd-sent-debug"
       ]
-    ]
+    ],
+    "d": true,
+    "info": "Đã gộp vào tab Week 7 (một bộ rule duy nhất, đi qua gateway lệnh). Node để tắt để tham khảo."
   },
   {
     "id": "nguoi3-orchid-mqtt-out-dynamic",
     "type": "mqtt out",
     "z": "orchid-tab-nguoi3",
-    "name": "MQTT Out (cmd/mist, cmd/fan, cmd/light)",
+    "name": "MQTT Out trực tiếp (thay bằng gateway)",
     "topic": "",
     "qos": "1",
     "retain": "false",
     "broker": "orchid-broker",
     "x": 930,
     "y": 480,
-    "wires": []
+    "wires": [],
+    "d": true,
+    "info": "Đã gộp vào tab Week 7 (một bộ rule duy nhất, đi qua gateway lệnh). Node để tắt để tham khảo."
   },
   {
     "id": "nguoi3-orchid-cmd-sent-debug",
     "type": "debug",
     "z": "orchid-tab-nguoi3",
-    "name": "Command Sent Debug",
+    "name": "Command Sent Debug (thay bằng gateway)",
     "active": true,
     "tosidebar": true,
     "console": false,
@@ -2632,7 +2671,9 @@
     "statusType": "msg",
     "x": 880,
     "y": 420,
-    "wires": []
+    "wires": [],
+    "d": true,
+    "info": "Đã gộp vào tab Week 7 (một bộ rule duy nhất, đi qua gateway lệnh). Node để tắt để tham khảo."
   },
   {
     "id": "nguoi3-orchid-btn-mist-on",
@@ -2660,7 +2701,7 @@
     "y": 440,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2690,7 +2731,7 @@
     "y": 470,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2720,7 +2761,7 @@
     "y": 500,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2750,7 +2791,7 @@
     "y": 540,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2780,7 +2821,7 @@
     "y": 570,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2810,7 +2851,7 @@
     "y": 600,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2840,7 +2881,7 @@
     "y": 640,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2870,7 +2911,7 @@
     "y": 670,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2900,7 +2941,7 @@
     "y": 700,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2908,7 +2949,7 @@
     "id": "nguoi3-orchid-rule-light",
     "type": "function",
     "z": "orchid-tab-nguoi3",
-    "name": "Rule 1: Đèn theo lịch & LDR (Không xuyên đêm)",
+    "name": "Rule 1: Đèn theo lịch & LDR (đã gộp vào tab Tuần 7)",
     "func": "// BUSINESS RULE 1: ĐIỀU KHIỂN ĐÈN THEO KHUNG GIỜ VÀ ÁNH SÁNG\n// Quy tắc ban đêm đã thống nhất:\n// 1. Không bật đèn xuyên đêm (từ 21:00 đến 06:00 sáng bắt buộc tắt/AUTO để đảm bảo pha tối cho lan).\n// 2. Trong khung giờ quang chu kỳ (06:00 đến 21:00):\n//    - Nếu thiếu sáng (light_adc >= 2200): Gửi lệnh bật đèn MANUAL với ttl_s = 300 (5 phút).\n//    - Nếu đủ sáng (light_adc <= 1800): Chuyển về AUTO hoặc tắt đèn.\n\nconst now = new Date();\nconst currentHour = now.getHours();\nconst telemetry = flow.get('orchidLatestTelemetry');\nconst relayState = flow.get('orchidRelayState') || {};\n\n// Kiểm tra khung giờ ban đêm: 21h tối đến 6h sáng\nconst isNightTime = (currentHour >= 21 || currentHour < 6);\n\nif (isNightTime) {\n    // Nếu đèn đang bật vào ban đêm, cưỡng bức tắt để bảo vệ lan\n    if (relayState.light === 'ON') {\n        node.warn('[RULE ĐÈN] Đang trong khung giờ ban đêm (21h-6h). Cưỡng bức tắt đèn.');\n        return {\n            relay: 'light',\n            payload: { mode: 'MANUAL', state: 'OFF', ttl_s: 300 }\n        };\n    }\n    return null;\n}\n\n// Trong khung giờ ban ngày (06:00 - 21:00)\nif (telemetry && telemetry.light_adc !== undefined) {\n    if (telemetry.light_adc >= 2200 && relayState.light !== 'ON') {\n        node.log('[RULE ĐÈN] Ban ngày thiếu sáng (ADC ' + telemetry.light_adc + ' >= 2200). Tự động bật đèn 5 phút.');\n        return {\n            relay: 'light',\n            payload: { mode: 'MANUAL', state: 'ON', ttl_s: 300 }\n        };\n    } else if (telemetry.light_adc <= 1800 && relayState.light === 'ON') {\n        node.log('[RULE ĐÈN] Ánh sáng tự nhiên đã đủ (ADC ' + telemetry.light_adc + ' <= 1800). Tự động tắt đèn.');\n        return {\n            relay: 'light',\n            payload: { mode: 'AUTO' }\n        };\n    }\n}\nreturn null;",
     "outputs": 1,
     "x": 580,
@@ -2917,13 +2958,15 @@
       [
         "nguoi3-orchid-cmd-formatter"
       ]
-    ]
+    ],
+    "d": true,
+    "info": "Đã gộp vào tab Week 7 (một bộ rule duy nhất, đi qua gateway lệnh). Node để tắt để tham khảo."
   },
   {
     "id": "nguoi3-orchid-rule-light-tick",
     "type": "inject",
     "z": "orchid-tab-nguoi3",
-    "name": "Check Light Rule (1m tick)",
+    "name": "Check Light Rule (đã gộp vào tab Tuần 7)",
     "props": [
       {
         "p": "payload"
@@ -2942,13 +2985,15 @@
       [
         "nguoi3-orchid-rule-light"
       ]
-    ]
+    ],
+    "d": true,
+    "info": "Đã gộp vào tab Week 7 (một bộ rule duy nhất, đi qua gateway lệnh). Node để tắt để tham khảo."
   },
   {
     "id": "nguoi3-orchid-rule-fan",
     "type": "function",
     "z": "orchid-tab-nguoi3",
-    "name": "Rule 2: Quạt hỗ trợ sau khi phun sương",
+    "name": "Rule 2: Quạt sau phun sương (đã gộp vào tab Tuần 7)",
     "func": "// BUSINESS RULE 2: QUẠT HỖ TRỢ SAU KHI PHUN SƯƠNG (POST-MIST VENTILATION)\n// Khi chu kỳ phun sương vừa kết thúc (mist chuyển từ ON sang OFF):\n// - Kích hoạt quạt thông gió trong 60 giây (ttl_s = 60).\n// - Mục đích: Làm ráo nhanh các giọt sương đọng trên kẽ lá lan, giảm tối đa nguy cơ nấm mốc và thối nõn.\n// - Quy tắc ban đêm: Không cho quạt chạy liên tục suốt đêm.\n\nconst trigger = msg.payload;\nif (!trigger || trigger.rule !== 'POST_MIST_VENTILATION') return null;\n\nconst now = new Date();\nconst currentHour = now.getHours();\n\nnode.log('[RULE QUẠT] Phát hiện kết thúc phun sương. Tự động kích hoạt quạt thông gió trong 60 giây.');\n\nreturn {\n    relay: 'fan',\n    payload: {\n        mode: 'MANUAL',\n        state: 'ON',\n        ttl_s: 60\n    }\n};",
     "outputs": 1,
     "x": 580,
@@ -2957,6 +3002,8 @@
       [
         "nguoi3-orchid-cmd-formatter"
       ]
-    ]
+    ],
+    "d": true,
+    "info": "Đã gộp vào tab Week 7 (một bộ rule duy nhất, đi qua gateway lệnh). Node để tắt để tham khảo."
   }
 ]

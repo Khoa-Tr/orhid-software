@@ -1,87 +1,87 @@
-2026-10-16T11:41:29.338Z OK  dashboard rejects no login with 401
-2026-10-16T11:41:29.375Z OK  dashboard rejects wrong password with 401
-2026-10-16T11:41:32.519Z OK  alice: dashboard shows device ONLINE
-2026-10-16T11:41:32.521Z OK  AUTO mode locks all six relay buttons
-2026-10-16T11:41:33.361Z SHOT 01-monitor-auto-locked.jpg
-2026-10-16T11:41:33.415Z CLICK MANUAL
-2026-10-16T11:41:33.684Z OK  MANUAL unlocks Fan ON
-2026-10-16T11:41:33.710Z CLICK Fan ON
-2026-10-16T11:41:33.965Z OK  Fan ON acknowledged APPLIED
-2026-10-16T11:41:33.966Z OK  Fan relay reported ON
-2026-10-16T11:41:34.754Z SHOT 02-manual-fan-applied.jpg
-2026-10-16T11:41:35.157Z OK  device state just published (dashboard still shows water OK for ~2.5 s)
-2026-10-16T11:41:35.158Z SIM <- water low
-2026-10-16T11:41:35.426Z CLICK Mist ON
-2026-10-16T11:41:35.680Z OK  Mist ON rejected by device: WATER_LOCKOUT
-2026-10-16T11:41:37.703Z OK  Mist ON locked while water is low
-2026-10-16T11:41:38.485Z SHOT 03-mist-rejected-water-lockout.jpg
-2026-10-16T11:41:38.486Z SIM <- water ok
-2026-10-16T11:41:40.252Z OK  Mist ON unlocked after refill
-2026-10-16T11:41:40.276Z CLICK Mist ON
-2026-10-16T11:41:40.531Z OK  manual Mist ON APPLIED
-2026-10-16T11:41:57.750Z OK  mist enters COOLDOWN after the run limit
-2026-10-16T11:41:57.752Z OK  Mist ON locked during COOLDOWN
-2026-10-16T11:41:58.629Z SHOT 04-mist-cooldown-lock.jpg
-2026-10-16T11:41:58.629Z SIM <- drop-cmd on
-2026-10-16T11:41:58.947Z CLICK Light ON
-2026-10-16T11:41:59.199Z OK  Light ON pending locks light buttons
-2026-10-16T11:42:05.769Z OK  Light ON ends as NO_ACK after 6 s
-2026-10-16T11:42:06.592Z SHOT 05-no-ack.jpg
-2026-10-16T11:42:06.592Z SIM <- drop-cmd off
-2026-10-16T11:42:08.161Z OK  bob: dashboard shows device ONLINE
-2026-10-16T11:42:08.173Z CLICK Fan OFF
-2026-10-16T11:42:08.426Z OK  viewer command blocked FORBIDDEN
-2026-10-16T11:42:08.439Z CLICK AUTO
-2026-10-16T11:42:08.692Z OK  viewer cannot change mode
-2026-10-16T11:42:09.507Z SHOT 06-viewer-forbidden.jpg
-2026-10-16T11:42:09.525Z PHASE back to AUTO
-2026-10-16T11:42:09.591Z CLICK AUTO
-2026-10-16T11:42:09.844Z OK  AUTO relocks buttons
-2026-10-16T11:42:09.844Z OK  three AUTO commands APPLIED
-2026-10-16T11:42:09.844Z PHASE week 7 automation, compressed clock from 05:50
-2026-10-16T11:42:09.913Z SIM <- light dark
-2026-10-16T11:42:09.913Z SIM <- rh 60
-2026-10-16T11:42:09.917Z INJECT orchid-week7-config-demo-morning
-2026-10-16T11:42:10.421Z OK  night policy holds mist OFF before 06:00
-2026-10-16T11:42:20.235Z OK  care window opens at 06:00 and releases AUTO mist
-2026-10-16T11:42:20.236Z OK  light rule turns the lamp ON in the dark schedule window
-2026-10-16T11:42:38.222Z OK  fan assist starts after the AUTO mist cycle
-2026-10-16T11:42:41.757Z OK  fan assist window ends
-2026-10-16T11:42:42.671Z SHOT 07-week7-rules-morning.jpg
-2026-10-16T11:43:20.272Z OK  daily light limit (60 rule-min) forces OFF
-2026-10-16T11:43:20.273Z OK  light OFF command for the daily limit
-2026-10-16T11:43:21.153Z SHOT 08-week7-light-daily-limit.jpg
-2026-10-16T11:43:21.154Z PHASE week 7 night policy, compressed clock from 17:55
-2026-10-16T11:43:21.161Z INJECT orchid-week7-config-demo-evening
-2026-10-16T11:43:26.721Z OK  night hold at 18:00
-2026-10-16T11:43:46.733Z OK  RH 60 % at night for 20 s (20 rule-min): no AUTO mist
-2026-10-16T11:43:47.886Z SHOT 09-week7-night-hold.jpg
-2026-10-16T11:43:47.887Z PHASE week 7 abnormal scenario
-2026-10-16T11:43:47.938Z INJECT orchid-week7-config-demo-morning
-2026-10-16T11:44:02.880Z OK  AUTO mist RUNNING again in the care window
-2026-10-16T11:44:02.883Z SIM <- dht fault
-2026-10-16T11:44:10.569Z OK  dashboard shows SENSOR_FAULT
-2026-10-16T11:44:10.586Z OK  fault monitor: dht_fault active with safe state
-2026-10-16T11:44:10.588Z OK  temperature shown as DHT fault
-2026-10-16T11:44:11.426Z SHOT 10-fault-dht-sensor.jpg
-2026-10-16T11:44:11.426Z SIM <- water low
-2026-10-16T11:44:12.938Z OK  water lockout has priority over the sensor fault
-2026-10-16T11:44:12.940Z OK  fault monitor: water_low active
-2026-10-16T11:44:13.766Z SHOT 11-fault-dht-and-water-low.jpg
-2026-10-16T11:44:13.767Z SIM <- water ok
-2026-10-16T11:44:18.165Z OK  refill returns to SENSOR_FAULT (DHT still broken)
-2026-10-16T11:44:18.167Z SIM <- dht ok
-2026-10-16T11:44:20.528Z OK  DHT recovery goes through COOLDOWN
-2026-10-16T11:44:20.531Z OK  dht_fault cleared
-2026-10-16T11:44:20.532Z SIM <- link drop 20
-2026-10-16T11:44:20.784Z OK  dashboard shows OFFLINE (LWT)
-2026-10-16T11:44:20.785Z OK  fault monitor: link_offline active
-2026-10-16T11:44:21.689Z SHOT 12-fault-link-offline.jpg
-2026-10-16T11:44:43.071Z OK  device back ONLINE
-2026-10-16T11:44:43.075Z OK  link_offline cleared
-2026-10-16T11:44:43.076Z OK  light rule re-asserts after the device dropped overrides
-2026-10-16T11:44:43.076Z     re-assert: {"event":"automation_action","rule":"light_schedule","action":"ON","reason":"dark_in_schedule","trigger":"override_lost","ttl_s":15,"light_adc":2600,"on_today_min":20,"rule_time":"2026-10-16 06:45:01","at":"2026-10-16T11:44:42.974Z"}
-2026-10-16T11:44:43.917Z SHOT 13-recovered.jpg
-2026-10-16T11:44:43.917Z MARK end of scenario 2026-10-16T11:44:43.917Z (events after this are teardown: simulator stopped -> LWT offline)
-2026-10-16T11:44:43.917Z OK  no firmware safety violation observed (mist never ON in lockout / sensor fault / beyond limit)
-2026-10-16T11:44:44.426Z PASS end-to-end
+2026-10-17T02:55:54.353Z OK  dashboard rejects no login with 401
+2026-10-17T02:55:54.391Z OK  dashboard rejects wrong password with 401
+2026-10-17T02:55:56.218Z OK  alice: dashboard shows device ONLINE
+2026-10-17T02:55:56.220Z OK  AUTO mode locks all six relay buttons
+2026-10-17T02:55:57.058Z SHOT 01-monitor-auto-locked.jpg
+2026-10-17T02:55:57.088Z CLICK MANUAL
+2026-10-17T02:55:57.340Z OK  MANUAL unlocks Fan ON
+2026-10-17T02:55:57.362Z CLICK Fan ON
+2026-10-17T02:55:57.614Z OK  Fan ON acknowledged APPLIED
+2026-10-17T02:55:57.615Z OK  Fan relay reported ON
+2026-10-17T02:55:58.408Z SHOT 02-manual-fan-applied.jpg
+2026-10-17T02:56:00.162Z OK  device state just published (dashboard still shows water OK for ~2.5 s)
+2026-10-17T02:56:00.164Z SIM <- water low
+2026-10-17T02:56:00.431Z CLICK Mist ON
+2026-10-17T02:56:00.686Z OK  Mist ON rejected by device: WATER_LOCKOUT
+2026-10-17T02:56:02.716Z OK  Mist ON locked while water is low
+2026-10-17T02:56:03.525Z SHOT 03-mist-rejected-water-lockout.jpg
+2026-10-17T02:56:03.525Z SIM <- water ok
+2026-10-17T02:56:05.302Z OK  Mist ON unlocked after refill
+2026-10-17T02:56:05.313Z CLICK Mist ON
+2026-10-17T02:56:05.566Z OK  manual Mist ON APPLIED
+2026-10-17T02:56:22.850Z OK  mist enters COOLDOWN after the run limit
+2026-10-17T02:56:22.853Z OK  Mist ON locked during COOLDOWN
+2026-10-17T02:56:23.685Z SHOT 04-mist-cooldown-lock.jpg
+2026-10-17T02:56:23.685Z SIM <- drop-cmd on
+2026-10-17T02:56:23.997Z CLICK Light ON
+2026-10-17T02:56:24.252Z OK  Light ON pending locks light buttons
+2026-10-17T02:56:30.613Z OK  Light ON ends as NO_ACK after 6 s
+2026-10-17T02:56:31.410Z SHOT 05-no-ack.jpg
+2026-10-17T02:56:31.410Z SIM <- drop-cmd off
+2026-10-17T02:56:32.521Z OK  bob: dashboard shows device ONLINE
+2026-10-17T02:56:32.535Z CLICK Fan OFF
+2026-10-17T02:56:32.789Z OK  viewer command blocked FORBIDDEN
+2026-10-17T02:56:32.813Z CLICK AUTO
+2026-10-17T02:56:33.066Z OK  viewer cannot change mode
+2026-10-17T02:56:33.877Z SHOT 06-viewer-forbidden.jpg
+2026-10-17T02:56:33.884Z PHASE back to AUTO
+2026-10-17T02:56:33.927Z CLICK AUTO
+2026-10-17T02:56:34.181Z OK  AUTO relocks buttons
+2026-10-17T02:56:34.182Z OK  three AUTO commands APPLIED
+2026-10-17T02:56:34.182Z PHASE week 7 automation, compressed clock from 05:50
+2026-10-17T02:56:34.244Z SIM <- light dark
+2026-10-17T02:56:34.248Z SIM <- rh 60
+2026-10-17T02:56:34.250Z INJECT orchid-week7-config-demo-morning
+2026-10-17T02:56:35.257Z OK  night policy holds mist OFF before 06:00
+2026-10-17T02:56:45.353Z OK  care window opens at 06:00 and releases AUTO mist
+2026-10-17T02:56:45.354Z OK  light rule turns the lamp ON in the dark schedule window
+2026-10-17T02:56:45.354Z OK  fan assist starts after the AUTO mist cycle
+2026-10-17T02:56:45.355Z OK  fan assist window ends
+2026-10-17T02:56:46.213Z SHOT 07-week7-rules-morning.jpg
+2026-10-17T02:57:45.321Z OK  daily light limit (60 rule-min) forces OFF
+2026-10-17T02:57:45.323Z OK  light OFF command for the daily limit
+2026-10-17T02:57:46.163Z SHOT 08-week7-light-daily-limit.jpg
+2026-10-17T02:57:46.163Z PHASE week 7 night policy, compressed clock from 17:55
+2026-10-17T02:57:46.166Z INJECT orchid-week7-config-demo-evening
+2026-10-17T02:57:51.722Z OK  night hold at 18:00
+2026-10-17T02:58:11.727Z OK  RH 60 % at night for 20 s (20 rule-min): no AUTO mist
+2026-10-17T02:58:12.593Z SHOT 09-week7-night-hold.jpg
+2026-10-17T02:58:12.594Z PHASE week 7 abnormal scenario
+2026-10-17T02:58:12.596Z INJECT orchid-week7-config-demo-morning
+2026-10-17T02:58:25.352Z OK  AUTO mist RUNNING again in the care window
+2026-10-17T02:58:25.353Z SIM <- dht fault
+2026-10-17T02:58:32.994Z OK  dashboard shows SENSOR_FAULT
+2026-10-17T02:58:32.996Z OK  fault monitor: dht_fault active with safe state
+2026-10-17T02:58:32.997Z OK  temperature shown as DHT fault
+2026-10-17T02:58:33.827Z SHOT 10-fault-dht-sensor.jpg
+2026-10-17T02:58:33.828Z SIM <- water low
+2026-10-17T02:58:35.344Z OK  water lockout has priority over the sensor fault
+2026-10-17T02:58:35.345Z OK  fault monitor: water_low active
+2026-10-17T02:58:36.154Z SHOT 11-fault-dht-and-water-low.jpg
+2026-10-17T02:58:36.155Z SIM <- water ok
+2026-10-17T02:58:40.473Z OK  refill returns to SENSOR_FAULT (DHT still broken)
+2026-10-17T02:58:40.473Z SIM <- dht ok
+2026-10-17T02:58:42.779Z OK  DHT recovery goes through COOLDOWN
+2026-10-17T02:58:42.780Z OK  dht_fault cleared
+2026-10-17T02:58:42.780Z SIM <- link drop 20
+2026-10-17T02:58:43.040Z OK  dashboard shows OFFLINE (LWT)
+2026-10-17T02:58:43.042Z OK  fault monitor: link_offline active
+2026-10-17T02:58:43.860Z SHOT 12-fault-link-offline.jpg
+2026-10-17T02:59:05.471Z OK  device back ONLINE
+2026-10-17T02:59:05.475Z OK  link_offline cleared
+2026-10-17T02:59:05.476Z OK  light rule re-asserts after the device dropped overrides
+2026-10-17T02:59:05.476Z     re-assert: {"event":"automation_action","rule":"light_schedule","action":"ON","reason":"dark_in_schedule","trigger":"override_lost","ttl_s":15,"light_adc":2600,"on_today_min":20,"rule_time":"2026-10-17 06:42:39","at":"2026-10-17T02:59:05.254Z"}
+2026-10-17T02:59:06.289Z SHOT 13-recovered.jpg
+2026-10-17T02:59:06.289Z MARK end of scenario 2026-10-17T02:59:06.289Z (events after this are teardown: simulator stopped -> LWT offline)
+2026-10-17T02:59:06.289Z OK  no firmware safety violation observed (mist never ON in lockout / sensor fault / beyond limit)
+2026-10-17T02:59:06.407Z PASS end-to-end
