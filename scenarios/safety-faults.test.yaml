@@ -1,0 +1,55 @@
+name: 'Orchid week 7 - DHT fault, water lockout, recovery and light cap'
+version: 1
+author: 'orhid'
+
+# Chay voi build esp32dev_fault_test (phun 15 s, cooldown 10 s, den AUTO toi da 20 s).
+# Loi DHT duoc gia lap bang lenh Serial chi co trong build test.
+steps:
+  - wait-serial: 'Orchid garden controller started'
+  - set-control: { part-id: dht, control: temperature, value: 28 }
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - set-control: { part-id: ldr, control: lux, value: 1000 }
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - delay: 15000ms
+  - wait-serial: 'Mist: IDLE | Fan: OFF | Grow light: OFF'
+
+  # S1: dang phun AUTO thi DHT loi 3 lan lien tiep -> SENSOR_FAULT, relay phun tat ngay
+  - set-control: { part-id: dht, control: humidity, value: 60 }
+  - wait-serial: 'STATE mist IDLE -> RUNNING'
+  - write-serial: "FAULT DHT ON\n"
+  - wait-serial: 'TEST fault injection: FAULT DHT ON'
+  - wait-serial: 'DHT22 read failed (1 consecutive)'
+  - wait-serial: 'FAULT DHT22 3 consecutive read failures'
+  - wait-serial: 'STATE mist RUNNING -> SENSOR_FAULT'
+  - wait-serial: 'OUTPUT mist=OFF'
+
+  # S2: van giu SENSOR_FAULT, khong tu phun lai du RH cuoi cung thap
+  - delay: 10000ms
+  - wait-serial: 'Mist: SENSOR_FAULT | Fan: OFF'
+
+  # S3: nuoc thap trong luc DHT loi -> khoa nuoc uu tien; do nuoc lai -> quay ve SENSOR_FAULT
+  - set-control: { part-id: water, control: position, value: 0.1 }
+  - wait-serial: 'STATE mist SENSOR_FAULT -> WATER_LOCKOUT'
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - wait-serial: 'STATE mist WATER_LOCKOUT -> IDLE'
+  - wait-serial: 'STATE mist IDLE -> SENSOR_FAULT'
+
+  # S4: DHT hoi phuc -> cooldown mot chu ky roi moi phun AUTO lai
+  - write-serial: "FAULT DHT OFF\n"
+  - wait-serial: 'RECOVERED DHT22 readings valid again'
+  - wait-serial: 'STATE mist SENSOR_FAULT -> COOLDOWN'
+  - wait-serial: 'STATE mist COOLDOWN -> IDLE'
+  - wait-serial: 'STATE mist IDLE -> RUNNING'
+
+  # S5: den AUTO cuc bo khong bat qua gioi han, chi bat lai sau khi thay troi sang
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - set-control: { part-id: ldr, control: lux, value: 10 }
+  - wait-serial: 'STATE light -> ON'
+  - wait-serial: 'SAFETY light AUTO on-time limit reached'
+  - wait-serial: 'STATE light -> OFF'
+  - delay: 10000ms
+  - wait-serial: 'Grow light: OFF'
+  - set-control: { part-id: ldr, control: lux, value: 1000 }
+  - delay: 15000ms
+  - set-control: { part-id: ldr, control: lux, value: 10 }
+  - wait-serial: 'STATE light -> ON'

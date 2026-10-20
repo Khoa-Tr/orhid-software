@@ -1,0 +1,20 @@
+name: 'Orchid week 7 - MQTT link loss returns to local AUTO'
+version: 1
+author: 'orhid'
+
+# Chay voi build esp32dev_fault_test. "FAULT MQTT DROP" dong TCP dot ngot nen broker phat LWT offline.
+steps:
+  - wait-serial: 'Orchid garden controller started'
+  - set-control: { part-id: dht, control: temperature, value: 28 }
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - set-control: { part-id: ldr, control: lux, value: 1000 }
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - wait-serial: 'MQTT connected; subscriptions=OK'
+  - delay: 5000ms
+
+  - write-serial: "FAULT MQTT DROP\n"
+  - wait-serial: 'TEST fault injection: FAULT MQTT DROP'
+  - wait-serial: 'MQTT disconnected; retrying'
+  - wait-serial: 'SAFETY MQTT link lost; manual overrides cleared -> AUTO'
+  - wait-serial: 'MQTT connected; subscriptions=OK'
+  - wait-serial: 'Mist: IDLE | Fan: OFF | Grow light: OFF'

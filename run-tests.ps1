@@ -49,31 +49,39 @@ foreach ($scenario in $scenarios) {
   Write-Host "PASS: $scenario" -ForegroundColor Green
 }
 
-$timerScenario = "scenarios/mist-timer.test.yaml"
-$timerLog = "test-results/mist-timer.serial.log"
 $wokwiConfigPath = Join-Path $PSScriptRoot "wokwi.toml"
 $originalWokwiConfig = [System.IO.File]::ReadAllText($wokwiConfigPath)
 
-Write-Host "== Build firmware timer-test (timer accelerated only for test) ==" -ForegroundColor Cyan
-py -m platformio run -e esp32dev_timer_test
-if ($LASTEXITCODE -ne 0) { Write-Host "Build timer-test loi" -ForegroundColor Red; exit 1 }
+# Chay scenario voi build test rieng (timer rut ngan / gia lap loi), roi tra wokwi.toml ve ban thuong.
+function Invoke-TestBuildScenario([string]$envName, [string]$scenario, [string]$log, [string]$label) {
+  Write-Host "== Build firmware $envName ($label, chi dung cho test) ==" -ForegroundColor Cyan
+  py -m platformio run -e $envName
+  if ($LASTEXITCODE -ne 0) { Write-Host "Build $envName loi" -ForegroundColor Red; exit 1 }
 
-try {
-  $timerWokwiConfig = $originalWokwiConfig.Replace(
-    ".pio/build/esp32dev/firmware.bin", ".pio/build/esp32dev_timer_test/firmware.bin").Replace(
-    ".pio/build/esp32dev/firmware.elf", ".pio/build/esp32dev_timer_test/firmware.elf")
-  [System.IO.File]::WriteAllText($wokwiConfigPath, $timerWokwiConfig, [System.Text.UTF8Encoding]::new($false))
+  try {
+    $testWokwiConfig = $originalWokwiConfig.Replace(
+      ".pio/build/esp32dev/firmware.bin", ".pio/build/$envName/firmware.bin").Replace(
+      ".pio/build/esp32dev/firmware.elf", ".pio/build/$envName/firmware.elf")
+    [System.IO.File]::WriteAllText($wokwiConfigPath, $testWokwiConfig, [System.Text.UTF8Encoding]::new($false))
 
-  Write-Host "== Chay $timerScenario voi timer test 15s/10s ==" -ForegroundColor Cyan
-  & $cli . --scenario $timerScenario --timeout 240000 --serial-log-file $timerLog
-  if ($LASTEXITCODE -ne 0) {
-    Write-Host "FAIL: $timerScenario (xem $timerLog)" -ForegroundColor Red
-    exit $LASTEXITCODE
+    Write-Host "== Chay $scenario voi $envName ==" -ForegroundColor Cyan
+    & $cli . --scenario $scenario --timeout 240000 --serial-log-file $log
+    if ($LASTEXITCODE -ne 0) {
+      Write-Host "FAIL: $scenario (xem $log)" -ForegroundColor Red
+      exit $LASTEXITCODE
+    }
+    Write-Host "PASS: $scenario ($label)" -ForegroundColor Green
+  } finally {
+    [System.IO.File]::WriteAllText($wokwiConfigPath, $originalWokwiConfig, [System.Text.UTF8Encoding]::new($false))
   }
-  Write-Host "PASS: $timerScenario (timer accelerated build)" -ForegroundColor Green
-} finally {
-  [System.IO.File]::WriteAllText($wokwiConfigPath, $originalWokwiConfig, [System.Text.UTF8Encoding]::new($false))
 }
+
+Invoke-TestBuildScenario "esp32dev_timer_test" "scenarios/mist-timer.test.yaml" `
+  "test-results/mist-timer.serial.log" "timer test 15s/10s"
+Invoke-TestBuildScenario "esp32dev_fault_test" "scenarios/safety-faults.test.yaml" `
+  "test-results/safety-faults.serial.log" "gia lap loi DHT/nuoc, den toi da 20s"
+Invoke-TestBuildScenario "esp32dev_fault_test" "scenarios/link-loss.test.yaml" `
+  "test-results/link-loss.serial.log" "gia lap mat MQTT"
 
 Get-ChildItem "test-results/*.serial.log" -ErrorAction SilentlyContinue |
   ForEach-Object { Get-Content $_.FullName } |

@@ -63,6 +63,17 @@ $env:WOKWI_CLI_TOKEN = "token-cua-ban"
 
 Không chia sẻ token hoặc ghi token vào file project. Kết quả từng phiên nằm trong `test-results/*.serial.log`; log tổng hợp nằm ở `test-results/serial.log`.
 
+Từ tuần 7, script chạy thêm hai scenario bất thường trên build `esp32dev_fault_test`. Build này dùng timer rút ngắn và có lệnh Serial `FAULT ...` để giả lập lỗi; không nạp nó vào ESP32 thật.
+
+- `scenarios/safety-faults.test.yaml`: DHT lỗi liên tiếp khi đang phun thì `SENSOR_FAULT` (relay tắt, không tự phun lại). Nước thấp trong lúc lỗi thì `WATER_LOCKOUT` được ưu tiên. DHT hồi phục thì `COOLDOWN` rồi mới phun lại. Kèm kiểm tra đèn AUTO bị giới hạn thời lượng (build test: 20 s).
+- `scenarios/link-loss.test.yaml`: đóng TCP đột ngột, firmware xóa override và quay về AUTO, rồi tự kết nối lại.
+
+Khi chạy Wokwi trong VS Code với build này, có thể gõ trực tiếp vào Serial Monitor:
+
+- `FAULT DHT ON` / `FAULT DHT OFF`
+- `FAULT CMD DROP ON` / `FAULT CMD DROP OFF` (bỏ lệnh không ACK, để thấy `NO_ACK` trên dashboard)
+- `FAULT MQTT DROP`
+
 ## Nạp chương trình vào ESP32 thật
 
 Cắm ESP32 qua USB rồi chạy:
@@ -82,8 +93,8 @@ Topic mặc định với device ID `orchid-01`:
 
 | Topic | Hướng | Nội dung |
 | --- | --- | --- |
-| `garden/orchid/orchid-01/telemetry` | ESP32 → broker | JSON cảm biến: `temperature_c`, `humidity_pct`, `light_adc`, `water_adc`, mỗi 2,5 giây |
-| `garden/orchid/orchid-01/state` | ESP32 → broker | JSON relay thực tế, `mist_state`, `water_lockout`, `mode`; trạng thái được retain |
+| `garden/orchid/orchid-01/telemetry` | ESP32 → broker | JSON cảm biến: `temperature_c`, `humidity_pct` (`null` khi DHT lỗi liên tiếp), `light_adc`, `water_adc`, `dht_fail_streak`, mỗi 2,5 giây |
+| `garden/orchid/orchid-01/state` | ESP32 → broker | JSON relay thực tế, `mist_state`, `water_lockout`, `dht_fault`, `mode` và `mist_mode`/`fan_mode`/`light_mode` (AUTO/MANUAL từng relay); trạng thái được retain |
 | `garden/orchid/orchid-01/availability` | ESP32 → broker | `online` và MQTT Last Will `offline` |
 | `garden/orchid/orchid-01/cmd/mist` | broker → ESP32 | Lệnh điều khiển phun sương |
 | `garden/orchid/orchid-01/cmd/fan` | broker → ESP32 | Lệnh điều khiển quạt |
@@ -96,7 +107,7 @@ Gửi lệnh MANUAL dưới dạng JSON, ví dụ tới `garden/orchid/orchid-01
 {"request_id":"req-001","mode":"MANUAL","state":"ON","ttl_s":60}
 ```
 
-Lệnh MANUAL yêu cầu `state` là `ON`/`OFF` và `ttl_s` từ 1 đến 3600. Hết TTL firmware tự trở về AUTO. Gửi `{"request_id":"req-002","mode":"AUTO"}` để xóa override sớm. ESP32 gửi ACK `APPLIED` hoặc `REJECTED`; lệnh bật phun sương bị từ chối khi thiếu nước, đang lockout hoặc cooldown. Interlock mực nước, thời gian phun tối đa và cooldown vẫn do firmware bảo vệ.
+Lệnh MANUAL yêu cầu `state` là `ON`/`OFF` và `ttl_s` từ 1 đến 3600. Hết TTL firmware tự trở về AUTO. Gửi `{"request_id":"req-002","mode":"AUTO"}` để xóa override sớm. ESP32 gửi ACK `APPLIED` hoặc `REJECTED`; lệnh bật phun sương bị từ chối (`WATER_LOCKOUT`, `SENSOR_FAULT`, `MIST_COOLDOWN`) khi thiếu nước, DHT lỗi hoặc đang cooldown. Interlock mực nước, thời gian phun tối đa và cooldown vẫn do firmware bảo vệ; xem thêm phần an toàn tuần 7 bên dưới.
 
 Trong MQTTX subscribe `garden/orchid/orchid-01/#` để xem dữ liệu, rồi publish lệnh lên topic `cmd/...`. Mỗi board cần ID riêng nếu cùng dùng broker public. Broker public không có xác thực cho các topic này: chỉ dùng mô phỏng/demo, không dùng điều khiển relay hoặc tải thật. Firmware thử kết nối lại theo chu kỳ và không dùng `delay()` trong loop; mỗi lần gọi kết nối MQTT được giới hạn timeout ngắn.
 
@@ -120,22 +131,52 @@ Flow export nằm ở `nodered/orchid-flow.json`. Ba tab đầu là middleware v
 2. **Climate and light threshold automation**: phát event khi nhiệt độ vượt 33°C, độ ẩm vượt 90%, hoặc LDR vượt 2200 ADC; ghi event clear khi nhiệt độ xuống dưới 31°C, độ ẩm xuống dưới 85%, hoặc LDR xuống dưới 1800 ADC.
 3. **Water and mist rules**: ghi event khóa nước khi ADC <1200, phục hồi khi ADC đạt >=1500; theo dõi điều kiện nhu cầu phun khi RH <65% và nước không khóa, giữ trạng thái đến khi RH đạt >=80% hoặc nước thấp.
 
-Các ngưỡng bám theo logic firmware của `orhid` (LDR tối làm ADC tăng). Automation chỉ tạo event/debug và ghi lịch sử `orchid-history.jsonl`; chúng **không publish lệnh điều khiển relay**. Broker demo là công khai, vì vậy flow giữ quyền điều khiển trong firmware và không đưa lệnh tải thật qua MQTT.
+Các ngưỡng bám theo logic firmware của `orhid` (LDR tối làm ADC tăng). Ba tab tuần 5 chỉ tạo event/debug và ghi lịch sử `orchid-history.jsonl`; chúng không publish lệnh. Lệnh điều khiển của tuần 6-7 chỉ đi qua **một cổng lệnh duy nhất** (Function `Command gateway + ACK tracker`), mô tả bên dưới.
 
-### Tuần 6 - Dashboard giám sát
+Phân chia trách nhiệm:
 
-Flow có thêm tab **Orchid - Week 6 dashboard** dùng FlowFuse Dashboard 2. Trang chỉ đọc hiển thị nhiệt độ, độ ẩm, ADC ánh sáng/nước, trạng thái phun/quạt/đèn, mode AUTO/MANUAL, trạng thái kết nối và biểu đồ lịch sử ngắn. Thiết bị được đánh dấu `STALE` nếu quá 15 giây không có telemetry. Mở dashboard tại <http://127.0.0.1:1880/dashboard/orchid> sau khi cài package và Deploy flow.
+- **Firmware** giữ an toàn thiết bị: khóa nước, giới hạn thời gian phun, cooldown, lỗi cảm biến, mất kết nối. Nó vẫn đúng khi Node-RED hoặc broker không chạy.
+- **Node-RED** giữ quyền truy cập (đăng nhập, AUTO/MANUAL, thiết bị online, một lệnh chờ ACK mỗi relay) và business rule theo giờ.
+- Mọi lệnh từ Node-RED đều có TTL, nên khi Node-RED dừng thì firmware tự trở về AUTO cục bộ.
 
-Tab này không có nút điều khiển, đăng nhập/phân quyền, Telegram hay MQTT Out; các phần đó không thuộc vai trò dashboard giám sát đang triển khai.
+### Tuần 6 - Dashboard giám sát và điều khiển
 
-### Tuần 7 - Business rules dạng đề xuất
+Tab **Orchid - Week 6 dashboard and control** (FlowFuse Dashboard 2) tại <http://127.0.0.1:1880/dashboard/orchid>:
 
-Tab **Orchid - Week 7 business rules** tạo event đề xuất, không tự tác động relay:
+- **Live status / Recent sensor history** (Người 1): nhiệt độ, độ ẩm, ADC ánh sáng/nước, trạng thái phun/quạt/đèn, `Firmware mode` (ghi rõ relay nào đang bị override), kết nối `ONLINE/OFFLINE/STALE` (STALE khi >15 s không có telemetry) và hai biểu đồ lịch sử 1 giờ. DHT lỗi hiển thị `DHT fault`/`—`, không hiện số 0 giả.
+- **Remote control** (Người 2): chọn `AUTO`/`MANUAL`, TTL lệnh tay (1–60 phút) và 6 nút Mist/Fan/Light ON/OFF.
+  - Ở `AUTO` mọi nút bị khóa. Chuyển về `AUTO` sẽ gửi `{"mode":"AUTO"}` cho cả ba relay để xóa override.
+  - Nút cũng bị khóa khi thiết bị không `ONLINE`, khi relay đó đang chờ ACK, và riêng `Mist ON` khi firmware báo `WATER_LOCKOUT`, `COOLDOWN` hoặc `SENSOR_FAULT`. Dòng `Locks` ghi lý do khóa.
+- Gateway gửi đúng topic `garden/orchid/orchid-01/cmd/<relay>` (QoS 1, **không retain**), đúng payload firmware `{"request_id","mode","state","ttl_s"}`, rồi chờ ACK theo `request_id`.
+  - Kết quả là `APPLIED`, `REJECTED (lý do của firmware)`, `NO_ACK` (quá 6 s) hoặc `BLOCKED (lý do cục bộ)`. Kết quả hiện ở `Last command`, popup cho đúng người bấm và bảng **Command history (ACK)** (nguồn, người dùng, độ trễ). Mọi lệnh và kết quả được ghi vào `orchid-history.jsonl`.
+  - Gateway kiểm tra lại quyền/chế độ ở phía server, nên gửi thẳng qua socket để vượt nút bị khóa cũng không có tác dụng.
+- **Đăng nhập** (Basic auth cho trang dashboard và socket.io, đăng nhập editor) với 3 vai trò: `admin` (editor + điều khiển), `operator` (điều khiển dashboard), `viewer` (chỉ xem; lệnh bị `BLOCKED FORBIDDEN`). Tài khoản lưu ngoài repo, mật khẩu băm scrypt (`nodered/orchid-auth.cjs`); cách tạo ở mục cài đặt bên dưới.
 
-- Lịch đèn demo 08:00–20:00: chỉ đề xuất bật trong khung giờ khi `light_adc > 2200`; ngoài giờ đề xuất tắt. Giờ và ngưỡng chỉ là mặc định để mô phỏng/test, không phải khuyến nghị trồng lan; cần nhóm hiệu chỉnh theo cảm biến và điều kiện thực tế.
-- Sau khi `mist_state` chuyển từ `RUNNING` sang `IDLE`/`COOLDOWN`, đề xuất bật quạt 180 giây rồi đề xuất tắt. Event chỉ ghi vào Debug và `orchid-history.jsonl`.
+### Tuần 7 - Business rules và tình huống bất thường
 
-Các đề xuất được phát khi trạng thái thay đổi, tránh ghi lặp cùng một khuyến nghị cho lịch đèn. Mọi automation vẫn ở chế độ monitor-only; không có MQTT Out và không tự động bật/tắt tải.
+Tab **Orchid - Week 7 business rules and safety** chỉ phát lệnh khi dashboard ở `AUTO` và thiết bị `ONLINE`. Cấu hình nằm trong inject `Rule config` (sửa JSON rồi bấm nút inject). Cấu hình sai bị từ chối và giữ bản cũ.
+
+Automation (Người 1):
+
+1. **Đèn theo khung giờ + ngưỡng sáng**: bật trong `06:00–20:00` khi tối (`light_adc > 2200`, tắt khi `< 1800`). Có giờ tắt `off_time`, và tổng thời lượng bật tối đa `daily_max_on_min` = 240 phút/ngày (tính từ trạng thái relay thật). Ngoài khung giờ, hoặc khi hết ngân sách, rule giữ đèn `OFF`, vì logic LDR của firmware sẽ bật suốt đêm. Lệnh `ON` mang TTL không vượt ngân sách còn lại và giờ tắt.
+2. **Quạt hỗ trợ sau chu kỳ phun**: khi relay phun chuyển `ON → OFF`, gửi `fan ON` với TTL 180 s (tối đa 24 lần/ngày). Firmware tự trả quạt về AUTO khi hết TTL, nên quạt không chạy cả đêm.
+
+Chăm sóc ban đêm và lỗi an toàn (Người 2):
+
+- **Chính sách ban đêm (mặc định, chờ nhóm xác nhận)**:
+  - Khung giờ chăm sóc là `06:00–18:00`. Ngoài khung này, Node-RED giữ lệnh `mist MANUAL OFF` (TTL 900 s, làm mới định kỳ). Firmware khi đó dừng hẳn chu trình phun AUTO, không chạy ngầm phía sau.
+  - Muốn cho phun AUTO ban đêm phải đặt `allow_auto_mist_at_night: true` kèm `team_confirmed: true` và `exception_note` (ngưỡng/ngoại lệ đã thống nhất cho loại lan). Thiếu một trong hai, cấu hình bị từ chối.
+  - Phun tay ban đêm của operator vẫn được phép như một ngoại lệ, và luôn được ghi `night_mist_observed`.
+  - Giờ và ngưỡng ở đây là mặc định để mô phỏng, không phải khuyến nghị trồng lan.
+- **Firmware** (`src/main.cpp`):
+  - DHT lỗi 3 lần liên tiếp thì vào `SENSOR_FAULT`: tắt phun ngay, không phun AUTO, từ chối `mist ON`, quạt giữ trạng thái cuối, telemetry gửi `null`. Khi DHT hồi phục, firmware vào `COOLDOWN` một chu kỳ rồi mới phun lại.
+  - Khóa nước vẫn ưu tiên cao nhất.
+  - Mất MQTT/Wi-Fi thì xóa mọi override, quay về AUTO cục bộ.
+  - Mỗi lần phun tay kết thúc đều vào cooldown. Thời gian phun tay tính từ lúc relay bật, nên gửi `ON` lặp lại không kéo dài được (trước đây lặp `ON` hoặc chờ hết TTL có thể phun liên tục).
+  - Đèn AUTO cục bộ bật liên tục tối đa 4 giờ, rồi chờ thấy trời sáng mới bật lại.
+- **Fault monitor**: phát `fault_active`/`fault_cleared` kèm `safe_state` cho các lỗi `dht_fault`, `water_low`, `link_offline`, `telemetry_stale`, `ack_missing` (lệnh `NO_ACK`). Nó cũng kiểm tra từ bên ngoài rằng firmware giữ khóa: báo `violation_*` mức critical nếu thấy phun khi khóa nước, khi DHT lỗi, hoặc quá 130 s. Trạng thái hiện ở nhóm **Safety and automation** và bảng **Automation and safety events**.
+
+Thử nhanh bằng **lịch rút ngắn**: bấm inject `Demo: compressed clock x60 from 05:50` (hoặc `from 17:55`) để 1 giây thật = 1 phút lịch. Ngân sách đèn demo là 60 phút, nên chạm giới hạn sau khoảng 1 phút. TTL gửi xuống firmware được quy đổi về giây thật. Bấm lại `Rule config (real clock)` để về giờ thật.
 
 ### Cài/chạy Node-RED trên Windows
 
@@ -143,26 +184,65 @@ Node.js đã cài trên máy thì mở PowerShell và chạy từ thư mục `or
 
 ```powershell
 npm install --prefix "$env:LOCALAPPDATA\OrchidNodeRED" --no-save node-red @flowfuse/node-red-dashboard
+node nodered\set-dashboard-password.cjs "$env:LOCALAPPDATA\OrchidNodeRED\data\orchid-auth.json" --user admin --role admin
+node nodered\set-dashboard-password.cjs "$env:LOCALAPPDATA\OrchidNodeRED\data\orchid-auth.json" --user op1 --role operator
 .\nodered\start-node-red.ps1
 ```
 
-Lệnh npm cần cài cả Node-RED và FlowFuse Dashboard 2. Khi terminal báo server đã chạy, mở <http://127.0.0.1:1880>. Script nạp flow lần đầu vào user data riêng bên ngoài project, nên không đụng firmware hoặc project phần cứng. Khi muốn đồng bộ bản flow trong project vào Node-RED đã cài, chạy `.\nodered\start-node-red.ps1 -SyncFlow`; script sẽ sao lưu flow đang dùng thành `flows.backup.<timestamp>.json` trước khi thay. Nếu không muốn thay file đang dùng, có thể nhập `nodered/orchid-flow.json` thủ công qua **Menu → Import → select a file**, rồi Deploy.
+Lệnh npm cần cài cả Node-RED và FlowFuse Dashboard 2. Lệnh `set-dashboard-password.cjs` hỏi mật khẩu (ẩn, tối thiểu 8 ký tự) và lưu tài khoản ngoài repo; chạy lại với `--user` khác để thêm `operator`/`viewer`, cùng tên để đổi mật khẩu. Node-RED không khởi động nếu chưa có tài khoản `admin`. Khi terminal báo server đã chạy, mở <http://127.0.0.1:1880> (editor, đăng nhập `admin`) và <http://127.0.0.1:1880/dashboard/orchid> (dashboard).
+
+Trên macOS/Linux dùng cùng các bước với `ORCHID_NODE_RED_HOME` mặc định `~/.orchid-node-red`:
+
+```bash
+npm install --prefix ~/.orchid-node-red --no-save node-red @flowfuse/node-red-dashboard
+node nodered/set-dashboard-password.cjs ~/.orchid-node-red/data/orchid-auth.json --user admin --role admin
+./nodered/start-node-red.sh            # --sync-flow de nap lai orchid-flow.json (co sao luu)
+``` Script nạp flow lần đầu vào user data riêng bên ngoài project, nên không đụng firmware hoặc project phần cứng. Khi muốn đồng bộ bản flow trong project vào Node-RED đã cài, chạy `.\nodered\start-node-red.ps1 -SyncFlow`; script sẽ sao lưu flow đang dùng thành `flows.backup.<timestamp>.json` trước khi thay. Nếu không muốn thay file đang dùng, có thể nhập `nodered/orchid-flow.json` thủ công qua **Menu → Import → select a file**, rồi Deploy.
 
 Node-RED chạy trong terminal của người dùng sẽ tiếp tục chạy khi chat bị ngắt, miễn là terminal và laptop vẫn hoạt động. Để dừng, nhấn `Ctrl+C` trong terminal chạy server hoặc chạy `.\nodered\stop-node-red.ps1`. Không cần để assistant giữ một tiến trình nền.
 
-Broker mặc định là `broker.emqx.io:1883`, topic dùng device ID `orchid-01`; nếu đổi `ORCHID_DEVICE_ID` thì cập nhật các MQTT input trong các tab. Mở Debug sidebar để xem dữ liệu và sự kiện. File `orchid-history.jsonl` được tạo trong thư mục data của Node-RED, không trong project phần cứng.
+Broker mặc định là `broker.emqx.io:1883`, topic dùng device ID `orchid-01`; nếu đổi `ORCHID_DEVICE_ID` thì cập nhật các MQTT input trong các tab và hằng `DEVICE_TOPIC` trong Function `Command gateway + ACK tracker`. Mở Debug sidebar để xem dữ liệu và sự kiện. File `orchid-history.jsonl` được tạo trong thư mục data của Node-RED, không trong project phần cứng.
 
-Có thể chạy kiểm tra cấu trúc và logic Function node (dashboard, lịch đèn, quạt sau phun, ngưỡng đúng 5 phút, không báo sớm và không lặp) mà không cần board:
+Có thể chạy kiểm tra cấu trúc và logic Function node mà không cần board. Test bao gồm dashboard, gateway/ACK/NO_ACK, khóa nút, phân quyền, lịch đèn và giới hạn ngày, quạt sau phun, chính sách ban đêm, fault monitor, ngưỡng đúng 5 phút, không báo sớm và không lặp:
 
 ```powershell
 node nodered/test-flow.cjs
 ```
 
+Để thử dashboard mà không cần Wokwi, chạy thiết bị mô phỏng. Nó nói đúng giao thức MQTT của firmware (telemetry/state/ACK/LWT) và có cùng các khóa an toàn. Đây **không** phải firmware; bằng chứng firmware là các scenario Wokwi ở trên.
+
+```powershell
+node nodered/sim-device.cjs --fast                          # broker.emqx.io, device orchid-01
+node nodered/sim-device.cjs --fast --scenario fault-demo    # tu chay kich ban loi
+```
+
+Khi đang chạy, gõ lệnh vào terminal:
+
+- `rh 60`
+- `light dark`
+- `water low` / `water ok`
+- `dht fault` / `dht ok`
+- `drop-cmd on` / `drop-cmd off` (lệnh không ACK)
+- `link drop 20` (đóng TCP đột ngột, broker phát LWT offline)
+
+Không chạy simulator cùng lúc với Wokwi khi dùng chung device ID.
+
+Bằng chứng lượt chạy end-to-end ngày 2026-10-16 nằm trong `nodered/test-results/week6-7-e2e/`. Lượt này chạy Node-RED 4.0.9 + Dashboard 2 v1.33.0 thật, với `settings.js` của repo, broker MQTT cục bộ và thiết bị mô phỏng `--fast`; các thao tác được bấm qua Chrome headless.
+
+- Ảnh `01`–`06` (tuần 6): AUTO khóa nút. Lệnh `APPLIED`. Firmware-mô phỏng trả `REJECTED (WATER_LOCKOUT)`. Phun tay hết thời gian thì `COOLDOWN` khóa nút. `NO_ACK` sau 6 s. Tài khoản `viewer` bị `FORBIDDEN`.
+- Ảnh `07`–`09` (tuần 7, lịch rút ngắn): đèn bật trong khung giờ rồi tắt khi hết 60 phút/ngày. Quạt hỗ trợ sau chu kỳ phun. Ban đêm giữ mist OFF dù RH 60 %.
+- Ảnh `10`–`13`: DHT lỗi khi đang phun, nước thấp được ưu tiên, mất kết nối (LWT), hồi phục; rule tự gửi lại lệnh giữ sau khi firmware bỏ override.
+- `node-red-history.jsonl` là event log của Node-RED (sự kiện sau dòng `MARK` trong `e2e-run.log` là lúc dừng simulator). `mqtt-wire.log` là lệnh/ACK trên broker; `sim-device.log` là log thiết bị mô phỏng.
+
 Để kiểm tra tích hợp sau khi deploy, publish payload JSON vào `garden/orchid/orchid-01/telemetry`. Ví dụ, đặt `temperature_c` lần lượt là 34, 32, 30 để thấy trạng thái nhiệt độ bật, giữ trong hysteresis, rồi clear; đặt `humidity_pct` lần lượt là 92, 87, 84 để kiểm tra rule độ ẩm. Với LDR, dùng `light_adc` 2400 rồi 1700 để tạo event bật/clear; với nước/phun, dùng `water_adc` 1100 rồi 1550 và `humidity_pct` 60 rồi 82. Xác nhận sự kiện xuất hiện trong Debug sidebar và file lịch sử sau từng chuyển trạng thái.
 
-Broker công khai không có xác thực và các topic có thể bị người khác publish; chỉ dùng flow này cho mô phỏng/demo. MQTT Out và nút điều khiển từ ZIP của Người 3 chưa được tích hợp: payload cần khớp giao thức firmware, đồng thời broker công khai không phù hợp để điều khiển tải thật. Dashboard và automation tuần 6-7 ở đây chỉ giám sát/phát đề xuất.
+Broker công khai `broker.emqx.io` không có xác thực: bất kỳ ai biết topic đều có thể publish lệnh trực tiếp tới `cmd/...`, bỏ qua đăng nhập dashboard. Đăng nhập chỉ bảo vệ dashboard/editor; an toàn thiết bị vẫn dựa vào firmware. Vì vậy chỉ dùng cấu hình này cho mô phỏng/demo, không điều khiển tải thật qua broker công khai (cần broker riêng có user/password + TLS).
 
-Các test tự động chạy Function node với payload tổng hợp, không phải số đo từ cảm biến/board thật. Sau khi Deploy flow, có thể kiểm tra giao diện bằng telemetry từ Wokwi/ESP32 hoặc publish dữ liệu thử, rồi chụp Dashboard và giữ event history làm bằng chứng. Chưa xác nhận một lượt kiểm thử end-to-end trên board thật.
+Chưa kiểm chứng:
+
+- Thay đổi firmware tuần 7 mới được build thành công (`esp32dev`, `esp32dev_timer_test`, `esp32dev_fault_test`); hai scenario Wokwi mới cần chạy bằng `run-tests.ps1` với `WOKWI_CLI_TOKEN`.
+- `src/s3_physical.cpp` (board S3 thật) chưa được cập nhật các khóa an toàn tuần 7. Dashboard vẫn chạy với board đó, nhưng không có `dht_fault` và `*_mode`.
+- Chưa có lượt end-to-end trên board thật.
 
 ## Sơ đồ chân
 
