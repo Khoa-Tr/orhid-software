@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1000" viewBox="0 0 1200 1000" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Kiến trúc 4 tầng Orchid-01 (bản cuối, tuần 9)</title>
+  <defs>
+    <marker id="up" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/>
+    </marker>
+    <marker id="down" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/>
+    </marker>
+    <marker id="flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="1000" fill="#ffffff"/>
+
+  <text x="600" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">Kiến trúc 4 tầng — Orchid-01 (bản cuối, tuần 9)</text>
+  <text x="600" y="62" text-anchor="middle" font-size="13" fill="#334155">Mũi tên xanh bên trái: uplink (dữ liệu đi lên) · Mũi tên cam bên phải: downlink (lệnh đi xuống, ACK quay lên)</text>
+
+  <!-- Uplink / downlink -->
+  <line x1="95" y1="955" x2="95" y2="100" stroke="#1d4ed8" stroke-width="4" marker-end="url(#up)"/>
+  <text transform="translate(78,528) rotate(-90)" text-anchor="middle" font-size="13" font-weight="700" fill="#1d4ed8">UPLINK: cảm biến → telemetry · state · availability · ack → Node-RED → dashboard, Telegram</text>
+  <line x1="1105" y1="100" x2="1105" y2="955" stroke="#c2410c" stroke-width="4" marker-end="url(#down)"/>
+  <text transform="translate(1128,528) rotate(90)" text-anchor="middle" font-size="13" font-weight="700" fill="#c2410c">DOWNLINK: nút dashboard / rule → gateway → cmd/&lt;relay&gt; → ESP32 → relay → ACK</text>
+
+  <!-- TANG 4 -->
+  <rect x="140" y="85" width="920" height="170" rx="10" fill="#eef2ff" stroke="#6366f1"/>
+  <text x="156" y="108" font-size="15" font-weight="700" fill="#3730a3">TẦNG 4 · ỨNG DỤNG &amp; CẢNH BÁO</text>
+  <rect x="160" y="120" width="360" height="122" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="172" y="141" font-size="13.5" font-weight="700" fill="#0f172a">Dashboard — FlowFuse Dashboard 2</text>
+  <text font-size="12" fill="#334155">
+    <tspan x="172" y="161">127.0.0.1:1880/dashboard/orchid</tspan>
+    <tspan x="172" y="179">Trạng thái live, 2 biểu đồ lịch sử 1 giờ</tspan>
+    <tspan x="172" y="197">AUTO/MANUAL, TTL, 6 nút Mist/Fan/Light ON/OFF</tspan>
+    <tspan x="172" y="215">Command history (ACK), sự kiện an toàn</tspan>
+    <tspan x="172" y="233">Lý do khóa nút (Locks), popup kết quả</tspan>
+  </text>
+  <rect x="540" y="120" width="230" height="122" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="552" y="141" font-size="13.5" font-weight="700" fill="#0f172a">Đăng nhập (Basic auth)</text>
+  <text font-size="12" fill="#334155">
+    <tspan x="552" y="161">admin: editor + điều khiển</tspan>
+    <tspan x="552" y="179">operator: điều khiển dashboard</tspan>
+    <tspan x="552" y="197">viewer: chỉ xem (lệnh FORBIDDEN)</tspan>
+    <tspan x="552" y="215">Mật khẩu băm scrypt, lưu</tspan>
+    <tspan x="552" y="233">ngoài repo</tspan>
+  </text>
+  <rect x="790" y="120" width="250" height="122" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="802" y="141" font-size="13.5" font-weight="700" fill="#0f172a">Telegram Bot (Người 3)</text>
+  <text font-size="12" fill="#334155">
+    <tspan x="802" y="161">HTTPS tới api.telegram.org</tspan>
+    <tspan x="802" y="179">Nước thấp, offline, nhiệt cao,</tspan>
+    <tspan x="802" y="197">DHT lỗi</tspan>
+    <tspan x="802" y="215">Whitelist chat ID nhóm</tspan>
+    <tspan x="802" y="233">Token lấy từ biến môi trường</tspan>
+  </text>
+
+  <!-- TANG 3 -->
+  <rect x="140" y="275" width="920" height="215" rx="10" fill="#ecfdf5" stroke="#10b981"/>
+  <text x="156" y="298" font-size="15" font-weight="700" fill="#065f46">TẦNG 3 · XỬ LÝ &amp; ĐIỀU PHỐI — Node-RED trên laptop (nodered/orchid-flow.json)</text>
+  <rect x="160" y="312" width="200" height="164" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="172" y="333" font-size="13.5" font-weight="700" fill="#0f172a">Monitor &amp; history</text>
+  <text font-size="12" fill="#334155">
+    <tspan x="172" y="353">Ghi orchid-history.jsonl</tspan>
+    <tspan x="172" y="371">Offline liên tục &gt; 5 phút</tspan>
+    <tspan x="172" y="389">Telemetry cũ &gt; 15 s</tspan>
+    <tspan x="172" y="407">Bộ điều phối cảnh báo</tspan>
+    <tspan x="172" y="425">→ Telegram (Người 3)</tspan>
+  </text>
+  <rect x="375" y="312" width="200" height="164" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="387" y="333" font-size="13.5" font-weight="700" fill="#0f172a">Rule tuần 5 (event)</text>
+  <text font-size="12" fill="#334155">
+    <tspan x="387" y="353">Nhiệt 33/31 °C, ẩm 90/85 %</tspan>
+    <tspan x="387" y="371">LDR 2200/1800 ADC</tspan>
+    <tspan x="387" y="389">Nước khóa &lt; 1200, mở ≥ 1500</tspan>
+    <tspan x="387" y="407">Chỉ ghi event + debug,</tspan>
+    <tspan x="387" y="425">không gửi lệnh</tspan>
+  </text>
+  <rect x="590" y="312" width="210" height="164" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="602" y="333" font-size="13.5" font-weight="700" fill="#0f172a">Business rules tuần 7</text>
+  <text font-size="12" fill="#334155">
+    <tspan x="602" y="353">Đèn 06:00–21:00 khi tối,</tspan>
+    <tspan x="602" y="371">tối đa 240 phút/ngày</tspan>
+    <tspan x="602" y="389">Quạt 60 s sau mỗi lần phun</tspan>
+    <tspan x="602" y="407">Ban đêm giữ mist OFF</tspan>
+    <tspan x="602" y="425">Fault monitor + safe state</tspan>
+    <tspan x="602" y="443">Chỉ chạy khi dashboard AUTO</tspan>
+  </text>
+  <line x1="800" y1="394" x2="813" y2="394" stroke="#475569" stroke-width="2" marker-end="url(#flow)"/>
+  <rect x="815" y="312" width="225" height="164" rx="6" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="827" y="333" font-size="13.5" font-weight="700" fill="#9a3412">Command gateway + ACK</text>
+  <text font-size="12" fill="#334155">
+    <tspan x="827" y="353">Cổng DUY NHẤT publish lệnh</tspan>
+    <tspan x="827" y="371">Kiểm tra quyền, AUTO/MANUAL,</tspan>
+    <tspan x="827" y="389">thiết bị ONLINE (có telemetry),</tspan>
+    <tspan x="827" y="407">1 lệnh chờ ACK mỗi relay</tspan>
+    <tspan x="827" y="425">Ghép ACK theo request_id</tspan>
+    <tspan x="827" y="443">Không ACK sau 6 s → NO_ACK</tspan>
+    <tspan x="827" y="461">Chặn cục bộ → BLOCKED</tspan>
+  </text>
+
+  <!-- TANG 2 -->
+  <rect x="140" y="510" width="920" height="150" rx="10" fill="#fff7ed" stroke="#f59e0b"/>
+  <text x="156" y="533" font-size="15" font-weight="700" fill="#92400e">TẦNG 2 · TRUYỀN THÔNG — Wi-Fi + MQTT 3.1.1, tiền tố topic garden/orchid/orchid-01/</text>
+  <rect x="160" y="545" width="880" height="102" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="600" y="566" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0f172a">Broker MQTT công khai broker.emqx.io:1883 (không xác thực, chỉ dùng cho mô phỏng/demo)</text>
+  <text font-size="12" fill="#334155">
+    <tspan x="176" y="588" font-weight="700" fill="#1d4ed8">Uplink (ESP32 → broker)</tspan>
+    <tspan x="176" y="603">telemetry: cảm biến đã lọc, mỗi 2,5 s</tspan>
+    <tspan x="176" y="620">state: relay thật + khóa an toàn + AUTO/MANUAL, retained</tspan>
+    <tspan x="176" y="637">availability: online · LWT offline (retained) · ack: kết quả lệnh</tspan>
+    <tspan x="640" y="588" font-weight="700" fill="#c2410c">Downlink (broker → ESP32)</tspan>
+    <tspan x="640" y="603">cmd/mist · cmd/fan · cmd/light: QoS 1, không retain</tspan>
+    <tspan x="640" y="620">{"request_id","mode","state","ttl_s"}</tspan>
+    <tspan x="640" y="637">config: đổi ngưỡng, chỉ nhận trong giới hạn an toàn</tspan>
+  </text>
+
+  <!-- TANG 1 -->
+  <rect x="140" y="680" width="920" height="290" rx="10" fill="#f1f5f9" stroke="#64748b"/>
+  <text x="156" y="703" font-size="15" font-weight="700" fill="#1e293b">TẦNG 1 · THIẾT BỊ — ESP32 DevKit V1, firmware src/main.cpp (mô phỏng Wokwi: diagram.json)</text>
+  <rect x="160" y="716" width="180" height="160" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="172" y="737" font-size="13.5" font-weight="700" fill="#0f172a">Cảm biến</text>
+  <text font-size="12" fill="#334155">
+    <tspan x="172" y="757">DHT22 → GPIO15</tspan>
+    <tspan x="172" y="775">LDR (AO) → GPIO34</tspan>
+    <tspan x="172" y="793">Biến trở nước → GPIO35</tspan>
+    <tspan x="172" y="817">ADC 0–4095:</tspan>
+    <tspan x="172" y="835">tối → LDR cao,</tspan>
+    <tspan x="172" y="853">cạn → nước thấp</tspan>
+  </text>
+  <line x1="340" y1="796" x2="356" y2="796" stroke="#475569" stroke-width="2" marker-end="url(#flow)"/>
+  <rect x="358" y="716" width="200" height="160" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="370" y="737" font-size="13.5" font-weight="700" fill="#0f172a">Lọc tín hiệu</text>
+  <text font-size="12" fill="#334155">
+    <tspan x="370" y="757">Loại spike (≤ 2 mẫu liên tiếp)</tspan>
+    <tspan x="370" y="775">Trung bình trượt 5 mẫu</tspan>
+    <tspan x="370" y="793">Chu kỳ 2,5 s</tspan>
+    <tspan x="370" y="817">DHT lỗi 3 lần liên tiếp</tspan>
+    <tspan x="370" y="835">→ SENSOR_FAULT,</tspan>
+    <tspan x="370" y="853">telemetry gửi null</tspan>
+  </text>
+  <line x1="558" y1="796" x2="574" y2="796" stroke="#475569" stroke-width="2" marker-end="url(#flow)"/>
+  <rect x="576" y="716" width="258" height="160" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="588" y="737" font-size="13.5" font-weight="700" fill="#0f172a">Luật AUTO cục bộ + lệnh tay</text>
+  <text font-size="12" fill="#334155">
+    <tspan x="588" y="757">FSM phun sương:</tspan>
+    <tspan x="588" y="775">IDLE · RUNNING · COOLDOWN</tspan>
+    <tspan x="588" y="793">WATER_LOCKOUT · SENSOR_FAULT</tspan>
+    <tspan x="588" y="817">Quạt, đèn: ngưỡng có hysteresis</tspan>
+    <tspan x="588" y="835">Lệnh MANUAL có TTL, hết TTL</tspan>
+    <tspan x="588" y="853">tự về AUTO; mọi lệnh đều có ACK</tspan>
+  </text>
+  <line x1="834" y1="796" x2="850" y2="796" stroke="#475569" stroke-width="2" marker-end="url(#flow)"/>
+  <rect x="852" y="716" width="188" height="160" rx="6" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="864" y="737" font-size="13.5" font-weight="700" fill="#0f172a">Relay (HIGH = bật)</text>
+  <text font-size="12" fill="#334155">
+    <tspan x="864" y="757">Phun sương ← GPIO25</tspan>
+    <tspan x="864" y="775">Quạt ← GPIO26</tspan>
+    <tspan x="864" y="793">Đèn trồng cây ← GPIO27</tspan>
+    <tspan x="864" y="817">Đổi trạng thái được</tspan>
+    <tspan x="864" y="835">in ra Serial:</tspan>
+    <tspan x="864" y="853">RELAY fan GPIO26 …</tspan>
+  </text>
+  <rect x="160" y="890" width="880" height="66" rx="6" fill="#fef2f2" stroke="#dc2626"/>
+  <text font-size="12" fill="#7f1d1d">
+    <tspan x="176" y="911" font-weight="700">Khóa an toàn nằm trong firmware, vẫn đúng khi Node-RED hoặc broker không chạy:</tspan>
+    <tspan x="176" y="929">nước &lt; 1200 ADC: cắt bơm, từ chối mist ON · phun tối đa 120 s rồi nghỉ 60 s · gửi ON lặp lại không kéo dài thời gian phun</tspan>
+    <tspan x="176" y="947">DHT lỗi: không phun AUTO · mất MQTT/Wi-Fi: xóa mọi override về AUTO, broker phát LWT offline · đèn AUTO tối đa 4 giờ liên tục</tspan>
+  </text>
+</svg>
