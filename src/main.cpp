@@ -21,17 +21,19 @@
 #endif
 
 // ============================================================================
-// TUẦN 1: CẤU HÌNH PHẦN CỨNG & SƠ ĐỒ CHÂN I/O (ESP32 MÔ PHỎNG WOKWI)
+// TUẦN 1: CẤU HÌNH PHẦN CỨNG & SƠ ĐỒ CHÂN I/O (ESP32 DevKit V1 MÔ PHỎNG WOKWI)
 // - Cảm biến: DHT22 (GPIO15), LDR Ánh sáng (GPIO34), Cảm biến mực nước (GPIO35)
-// - Relay chấp hành: Bơm phun sương (GPIO25), Quạt (GPIO26), Đèn sưởi (GPIO27)
+// - Relay chấp hành: Bơm phun sương (GPIO25), Quạt (GPIO26), Đèn trồng cây (GPIO27)
+// Khớp dây trong diagram.json. Board ESP32-S3 thật (src/s3_physical.cpp) dùng chân khác.
 // ============================================================================
 namespace Pins {
-constexpr uint8_t dht = 15;
-constexpr uint8_t ldr = 34;
-constexpr uint8_t water = 35;
-constexpr uint8_t mistRelay = 25;
-constexpr uint8_t fanRelay = 26;
-constexpr uint8_t lightRelay = 27;
+constexpr uint8_t dht = 15;         // DHT22 chân DATA (SDA trong Wokwi), nuôi 3V3
+// GPIO34/35 là ADC1, chỉ nhận vào: vẫn đọc được khi Wi-Fi bật (ADC2 bị Wi-Fi chiếm). Thang 0-4095.
+constexpr uint8_t ldr = 34;         // AO module quang trở: trời càng TỐI thì ADC càng CAO
+constexpr uint8_t water = 35;       // SIG biến trở mô phỏng mực nước: càng CẠN thì ADC càng THẤP
+constexpr uint8_t mistRelay = 25;   // IN relay bơm phun sương, HIGH = bật
+constexpr uint8_t fanRelay = 26;    // IN relay quạt thông gió, HIGH = bật
+constexpr uint8_t lightRelay = 27;  // IN relay đèn trồng cây, HIGH = bật
 }
 
 // ============================================================================
@@ -40,30 +42,34 @@ constexpr uint8_t lightRelay = 27;
 // - Tuần 7: Chuyển sang biến động để Node-RED có thể điều chỉnh qua MQTT topic /config
 // ============================================================================
 namespace Thresholds {
-float mistHumidityOn = 65.0f;
-float mistHumidityOff = 80.0f;
-float fanTemperatureOn = 33.0f;
-float fanTemperatureOff = 31.0f;
-float fanHumidityOn = 90.0f;
-float fanHumidityOff = 85.0f;
+// Mỗi cặp ngưỡng bật/tắt cách nhau một khoảng trễ (hysteresis) để relay không bật tắt liên tục.
+// Ngưỡng phun, nhiệt độ quạt, LDR và nước đổi được qua topic /config (trong giới hạn ConfigLimits);
+// hai ngưỡng độ ẩm của quạt và các thời gian thì cố định.
+float mistHumidityOn = 65.0f;     // %RH: dưới mức này bắt đầu phun (AUTO)
+float mistHumidityOff = 80.0f;    // %RH: từ mức này trở lên dừng phun
+float fanTemperatureOn = 33.0f;   // °C: trên mức này bật quạt (AUTO)
+float fanTemperatureOff = 31.0f;  // °C: quạt chỉ tắt khi dưới 31 °C VÀ độ ẩm dưới fanHumidityOff
+float fanHumidityOn = 90.0f;      // %RH: trên mức này cũng bật quạt (chống đọng nước trên lá)
+float fanHumidityOff = 85.0f;     // %RH: điều kiện tắt quạt, đi cùng fanTemperatureOff
 // LDR Wokwi: ADC cang CAO khi cang TOI (LDR noi tiep dien tro 10k, AO o giua)
 // Den bat khi ADC > lightOnAdc (troi toi), tat khi ADC < lightOffAdc (du sang)
-int lightOnAdc = 2200;
-int lightOffAdc = 1800;
-int waterLowAdc = 1200;
-int waterRefilledAdc = 1500;
+int lightOnAdc = 2200;            // ADC LDR: trên mức này (tối) bật đèn AUTO
+int lightOffAdc = 1800;           // ADC LDR: dưới mức này (đủ sáng) tắt đèn
+int waterLowAdc = 1200;           // ADC nước: dưới mức này -> WATER_LOCKOUT, cắt bơm, từ chối mist ON
+int waterRefilledAdc = 1500;      // ADC nước: từ mức này trở lên mới mở khóa bơm
 #ifdef ORCHID_TIMER_TEST
+// Chỉ build test (esp32dev_timer_test / esp32dev_fault_test): rút ngắn để scenario chạy trong giới hạn phiên Wokwi.
 constexpr unsigned long maxMistDurationMs = 15000UL;
 constexpr unsigned long mistCooldownMs = 10000UL;
 constexpr unsigned long maxAutoLightOnMs = 20000UL;
 #else
-constexpr unsigned long maxMistDurationMs = 120000UL;
-constexpr unsigned long mistCooldownMs = 60000UL;
+constexpr unsigned long maxMistDurationMs = 120000UL;  // phun liên tục tối đa 120 s (cả AUTO lẫn lệnh tay)
+constexpr unsigned long mistCooldownMs = 60000UL;      // nghỉ bắt buộc 60 s sau mỗi lần phun
 // Den AUTO cuc bo (khi Node-RED khong giu lich) bat lien tuc toi da 4 gio,
 // sau do tat va chi bat lai khi da thay troi sang -> khong bat suot dem.
 constexpr unsigned long maxAutoLightOnMs = 4UL * 60UL * 60UL * 1000UL;
 #endif
-constexpr unsigned long sampleIntervalMs = 2500UL;
+constexpr unsigned long sampleIntervalMs = 2500UL;  // chu kỳ đọc cảm biến, chạy luật, gửi telemetry + state
 }
 
 // ============================================================================
@@ -78,11 +84,11 @@ constexpr uint8_t dhtFaultAfterFailures = 3;
 }
 
 namespace Filtering {
-constexpr size_t windowSize = 5;
-constexpr float maxTemperatureJump = 8.0f;
-constexpr float maxHumidityJump = 20.0f;
-constexpr int maxAdcJump = 1200;
-constexpr uint8_t maxConsecutiveRejects = 3;
+constexpr size_t windowSize = 5;              // trung bình trượt 5 mẫu (~12,5 s ở chu kỳ 2,5 s)
+constexpr float maxTemperatureJump = 8.0f;    // °C: lệch hơn mức này so với mẫu trước -> coi là nhiễu
+constexpr float maxHumidityJump = 20.0f;      // %RH: như trên cho độ ẩm
+constexpr int maxAdcJump = 1200;              // ADC: như trên cho LDR và mực nước
+constexpr uint8_t maxConsecutiveRejects = 3;  // loại tối đa 2 mẫu liên tiếp; mẫu lệch thứ 3 thì chấp nhận là thay đổi thật
 }
 
 // ============================================================================
@@ -93,10 +99,10 @@ constexpr uint8_t maxConsecutiveRejects = 3;
 namespace NetworkConfig {
 constexpr char brokerHost[] = "broker.emqx.io";
 constexpr uint16_t brokerPort = 1883;
-constexpr unsigned long wifiRetryIntervalMs = 10000UL;
-constexpr unsigned long mqttRetryIntervalMs = 5000UL;
-constexpr uint32_t maxManualTtlSeconds = 3600;
-constexpr size_t commandBufferSize = 256;
+constexpr unsigned long wifiRetryIntervalMs = 10000UL;  // thử nối lại Wi-Fi mỗi 10 s
+constexpr unsigned long mqttRetryIntervalMs = 5000UL;   // thử nối lại MQTT mỗi 5 s (không chặn loop)
+constexpr uint32_t maxManualTtlSeconds = 3600;          // ttl_s hợp lệ của lệnh MANUAL: 1-3600 s
+constexpr size_t commandBufferSize = 256;               // payload lệnh/config từ 256 byte trở lên bị bỏ, không ACK
 // Goi MQTT gom header + topic + payload; state JSON day du can hon 256 byte.
 constexpr size_t mqttPacketBufferSize = 512;
 }
@@ -169,6 +175,8 @@ unsigned long manualMistRunStartedAt = 0;
 // Chi co trong build test: lenh Serial "FAULT ..." gia lap loi de chay scenario Wokwi.
 bool injectedDhtFault = false;
 bool injectedCommandDrop = false;
+bool injectedWaterLow = false;
+constexpr int injectedWaterLowAdc = 600;  // nhu keo bien tro nuoc xuong muc can
 #endif
 
 // ============================================================================
@@ -217,6 +225,12 @@ void setRelay(uint8_t pin, bool on) {
   digitalWrite(pin, on ? HIGH : LOW);
 }
 
+void logRelayChange(const char* name, uint8_t pin, bool on, bool& lastLogged) {
+  if (on == lastLogged) return;
+  Serial.printf("RELAY %s GPIO%u %s -> %s\n", name, pin, lastLogged ? "ON" : "OFF", on ? "ON" : "OFF");
+  lastLogged = on;
+}
+
 // ============================================================================
 // TUẦN 3: THUẬT TOÁN LỌC NHIỄU CẢM BIẾN (SPIKE REJECTION & RUNNING AVERAGE)
 // - Loại bỏ mẫu nhiễu (nhảy đột biến). Nếu bị loại liên tiếp maxConsecutiveRejects lần
@@ -252,6 +266,7 @@ FilteredSensors readFilteredSensors() {
     temperatureRaw = NAN;
     humidityRaw = NAN;
   }
+  if (injectedWaterLow) sensors.waterRaw = injectedWaterLowAdc;
 #endif
 
   sensors.temperatureRaw = temperatureRaw;
@@ -326,6 +341,8 @@ void publishJson(const char* topic, JsonDocument& document, bool retained = fals
 
 void publishAck(const char* requestId, const char* result, const char* reason = "") {
   if (!mqttClient.connected()) return;
+  // Log downlink buoc 3/3: ACK gui nguoc len (ca APPLIED lan REJECTED).
+  Serial.printf("ACK %s result=%s%s%s\n", requestId, result, reason[0] != '\0' ? " reason=" : "", reason);
   JsonDocument document;
   document["request_id"] = requestId;
   document["result"] = result;
@@ -397,6 +414,14 @@ void applyRelayOutputs() {
   setRelay(Pins::mistRelay, mistRelayOn);
   setRelay(Pins::fanRelay, fanRelayOn);
   setRelay(Pins::lightRelay, lightRelayOn);
+
+  // Log downlink buoc 2/3: chan relay doi trang thai that (chi in khi co thay doi).
+  static bool loggedMist = false;
+  static bool loggedFan = false;
+  static bool loggedLight = false;
+  logRelayChange("mist", Pins::mistRelay, mistRelayOn, loggedMist);
+  logRelayChange("fan", Pins::fanRelay, fanRelayOn, loggedFan);
+  logRelayChange("light", Pins::lightRelay, lightRelayOn, loggedLight);
 }
 
 // ============================================================================
@@ -546,6 +571,8 @@ void handleMqttMessage(char* topic, byte* payload, unsigned int length) {
     Serial.printf("MQTT command rejected: invalid payload length=%u\n", length);
     return;
   }
+  // Log downlink buoc 1/3: firmware nhan lenh (topic + payload nguyen van).
+  Serial.printf("CMD rx %s %.*s\n", topic, static_cast<int>(length), reinterpret_cast<const char*>(payload));
 
   JsonDocument document;
   const DeserializationError error = deserializeJson(document, payload, length);
@@ -818,6 +845,8 @@ void serviceFaultInjection() {
     else if (strcmp(line, "FAULT DHT OFF") == 0) injectedDhtFault = false;
     else if (strcmp(line, "FAULT CMD DROP ON") == 0) injectedCommandDrop = true;
     else if (strcmp(line, "FAULT CMD DROP OFF") == 0) injectedCommandDrop = false;
+    else if (strcmp(line, "FAULT WATER LOW") == 0) injectedWaterLow = true;
+    else if (strcmp(line, "FAULT WATER OFF") == 0) injectedWaterLow = false;
     else if (strcmp(line, "FAULT MQTT DROP") == 0) networkSocket.stop();  // dong TCP dot ngot -> broker phat LWT
     else {
       Serial.printf("TEST unknown fault command: %s\n", line);
@@ -867,7 +896,7 @@ void setup() {
   Serial.println("MQTT topics: telemetry/state/availability/cmd/{mist,fan,light}/ack");
   Serial.println("MQTT Wi-Fi defaults to Wokwi-GUEST; configure orchid_secrets.h for a local network");
 #ifdef ORCHID_FAULT_INJECTION
-  Serial.println("TEST build: serial FAULT DHT ON|OFF, FAULT CMD DROP ON|OFF, FAULT MQTT DROP");
+  Serial.println("TEST build: serial FAULT DHT ON|OFF, FAULT CMD DROP ON|OFF, FAULT WATER LOW|OFF, FAULT MQTT DROP");
 #endif
 }
 

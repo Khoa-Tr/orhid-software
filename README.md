@@ -2,6 +2,65 @@
 
 Bộ điều khiển vườn lan dùng ESP32. Chương trình đọc cảm biến DHT22, cảm biến ánh sáng và biến trở mô phỏng mực nước, sau đó điều khiển ba relay cho máy phun sương, quạt thông gió và đèn trồng cây.
 
+Tài liệu kỹ thuật bản cuối (kiến trúc 4 tầng, sơ đồ đấu dây, bảng topic và payload MQTT, flow Node-RED, GPIO và ngưỡng): [`docs/tai-lieu-ky-thuat.md`](docs/tai-lieu-ky-thuat.md).
+
+## Chạy lại từ đầu trên máy sạch
+
+Các bước dưới đây dựng lại toàn bộ hệ thống (firmware trên Wokwi, MQTT, Node-RED, dashboard) trên một máy chưa cài gì. Đã chạy lại theo đúng các bước này trên macOS ngày 2026-10-21. Lệnh Windows (PowerShell) ghi bên cạnh.
+
+**1. Cài phần mềm.** Bản đã thử ghi trong ngoặc.
+
+- Git, Python 3 (3.11), Node.js 18 trở lên (24.14).
+- Visual Studio Code với extension **PlatformIO IDE** (3.3) và **Wokwi Simulator** (4.0). Wokwi cần kích hoạt license cá nhân miễn phí khi chạy lần đầu.
+- Trình duyệt để mở dashboard.
+
+**2. Lấy code.** Trên Windows, đặt project ở đường dẫn không có dấu tiếng Việt hoặc khoảng trắng (ví dụ `C:\orchid`), vì toolchain ESP32 báo lỗi `Invalid argument` với đường dẫn có dấu.
+
+```bash
+git clone https://github.com/Khoa-Tr/orhid-software.git
+cd orhid-software
+```
+
+**3. Build firmware.**
+
+```bash
+python3 -m pip install -r requirements.txt        # Windows: py -m pip install -r requirements.txt
+python3 -m platformio run -e esp32dev             # Windows: py -m platformio run -e esp32dev
+```
+
+Kết quả phải có `SUCCESS`. Firmware nằm ở `.pio/build/esp32dev/firmware.bin`, đúng file mà `wokwi.toml` trỏ tới.
+
+**4. Cài Node-RED và tạo tài khoản dashboard.** Node-RED được cài vào thư mục riêng ngoài project. Mỗi lệnh `set-dashboard-password` hỏi mật khẩu (tối thiểu 8 ký tự).
+
+```bash
+# macOS/Linux
+npm install --prefix ~/.orchid-node-red --no-save node-red@5.0.8 @flowfuse/node-red-dashboard@1.33.0
+node nodered/set-dashboard-password.cjs ~/.orchid-node-red/data/orchid-auth.json --user admin --role admin
+node nodered/set-dashboard-password.cjs ~/.orchid-node-red/data/orchid-auth.json --user op1 --role operator
+./nodered/start-node-red.sh
+```
+
+```powershell
+# Windows
+npm install --prefix "$env:LOCALAPPDATA\OrchidNodeRED" --no-save node-red@5.0.8 @flowfuse/node-red-dashboard@1.33.0
+node nodered\set-dashboard-password.cjs "$env:LOCALAPPDATA\OrchidNodeRED\data\orchid-auth.json" --user admin --role admin
+node nodered\set-dashboard-password.cjs "$env:LOCALAPPDATA\OrchidNodeRED\data\orchid-auth.json" --user op1 --role operator
+.\nodered\start-node-red.ps1
+```
+
+Giữ terminal này mở. Khi thấy `Connected to broker: mqtt://broker.emqx.io:1883` là Node-RED đã sẵn sàng. Flow đã thử với Node-RED 5.0.8 và 4.0.9, cùng FlowFuse Dashboard 1.33.0.
+
+**5. Chạy firmware trên Wokwi.** Trong VS Code, chọn **File → Open Folder…** và mở đúng thư mục `orhid-software` (không mở thư mục cha). Bấm `Ctrl/Cmd+Shift+P` rồi chọn **Wokwi: Start Simulator**, và để tab mô phỏng luôn hiện trên màn hình (bị che thì mô phỏng tạm dừng). Serial Monitor phải in `MQTT connected; subscriptions=OK`.
+
+**6. Kiểm tra hai chiều.** Mở <http://127.0.0.1:1880/dashboard/orchid> và đăng nhập `op1`.
+
+- Uplink: sau vài giây `Device link` là `ONLINE`, nhiệt độ và độ ẩm hiện 28 °C và 72 % (giá trị đầu trong `diagram.json`). Kéo thanh nhiệt độ của DHT22 trong Wokwi thì số trên dashboard đổi theo.
+- Downlink: chọn `MANUAL`, bấm `Fan ON`. `Last command` báo `APPLIED`, relay quạt trong Wokwi bật, và Serial in lần lượt `CMD rx …`, `RELAY fan GPIO26 OFF -> ON`, `ACK … result=APPLIED`. Chọn lại `AUTO` để trả quyền cho firmware.
+
+**7. Test tự động không cần board** (tùy chọn): `node nodered/test-flow.cjs` (logic flow) và `node nodered/test-mqtt-broker.cjs` (kết nối broker). Cả hai phải in `PASS`.
+
+Dừng hệ thống: `Ctrl+C` ở terminal Node-RED và đóng tab Wokwi. Nếu cổng 1880 đã có ứng dụng khác dùng, đặt biến `ORCHID_NODE_RED_PORT` trước khi chạy script khởi động.
+
 ## Yêu cầu
 
 - Python 3
@@ -38,9 +97,7 @@ Nếu thành công, kết quả cuối sẽ có chữ `SUCCESS`. Firmware đư�
 ## Mô phỏng Wokwi trong VS Code
 
 1. Cài extension **Wokwi Simulator for VS Code**.
-2. Mở đúng thư mục project này, không mở thư mục cha:
-
-   `C:\Users\ACER\OneDrive\Documents\PlatformIO\Projects\orhid`
+2. Mở đúng thư mục project này (thư mục chứa `wokwi.toml`), không mở thư mục cha.
 
 3. Biên dịch project bằng lệnh `py -m platformio run`.
 4. Mở Command Palette bằng `Ctrl+Shift+P`.
@@ -72,7 +129,10 @@ Khi chạy Wokwi trong VS Code với build này, có thể gõ trực tiếp và
 
 - `FAULT DHT ON` / `FAULT DHT OFF`
 - `FAULT CMD DROP ON` / `FAULT CMD DROP OFF` (bỏ lệnh không ACK, để thấy `NO_ACK` trên dashboard)
+- `FAULT WATER LOW` / `FAULT WATER OFF` (giả lập nước cạn như kéo biến trở xuống 600 ADC, để thử `WATER_LOCKOUT`)
 - `FAULT MQTT DROP`
+
+Muốn chạy build này trong VS Code, đổi hai dòng `firmware`/`elf` trong `wokwi.toml` sang `.pio/build/esp32dev_fault_test/…`, nhớ đổi lại sau khi thử. `wokwi.toml` mở sẵn cổng RFC2217 `4000`, nên script trên máy tính có thể đọc và ghi Serial của mô phỏng (xem `test-results/week8-downlink/`).
 
 ## Nạp chương trình vào ESP32 thật
 
@@ -100,6 +160,9 @@ Topic mặc định với device ID `orchid-01`:
 | `garden/orchid/orchid-01/cmd/fan` | broker → ESP32 | Lệnh điều khiển quạt |
 | `garden/orchid/orchid-01/cmd/light` | broker → ESP32 | Lệnh điều khiển đèn |
 | `garden/orchid/orchid-01/ack` | ESP32 → broker | Kết quả lệnh theo `request_id` |
+| `garden/orchid/orchid-01/config` | broker → ESP32 | Đổi ngưỡng từ xa, chỉ nhận trong giới hạn an toàn (từ tuần 7) |
+
+Bảng topic và payload bản cuối, đủ từng trường, QoS/retain và mã lỗi ACK: [`docs/tai-lieu-ky-thuat.md` mục 3](docs/tai-lieu-ky-thuat.md#3-topic-map-và-payload-bản-cuối).
 
 Gửi lệnh MANUAL dưới dạng JSON, ví dụ tới `garden/orchid/orchid-01/cmd/fan`:
 
@@ -186,7 +249,7 @@ Thử nhanh bằng **lịch rút ngắn**: bấm inject `Demo: compressed clock 
 Node.js đã cài trên máy thì mở PowerShell và chạy từ thư mục `orhid`:
 
 ```powershell
-npm install --prefix "$env:LOCALAPPDATA\OrchidNodeRED" --no-save node-red @flowfuse/node-red-dashboard
+npm install --prefix "$env:LOCALAPPDATA\OrchidNodeRED" --no-save node-red@5.0.8 @flowfuse/node-red-dashboard@1.33.0
 node nodered\set-dashboard-password.cjs "$env:LOCALAPPDATA\OrchidNodeRED\data\orchid-auth.json" --user admin --role admin
 node nodered\set-dashboard-password.cjs "$env:LOCALAPPDATA\OrchidNodeRED\data\orchid-auth.json" --user op1 --role operator
 .\nodered\start-node-red.ps1
@@ -197,10 +260,12 @@ Lệnh npm cần cài cả Node-RED và FlowFuse Dashboard 2. Lệnh `set-dashbo
 Trên macOS/Linux dùng cùng các bước với `ORCHID_NODE_RED_HOME` mặc định `~/.orchid-node-red`:
 
 ```bash
-npm install --prefix ~/.orchid-node-red --no-save node-red @flowfuse/node-red-dashboard
+npm install --prefix ~/.orchid-node-red --no-save node-red@5.0.8 @flowfuse/node-red-dashboard@1.33.0
 node nodered/set-dashboard-password.cjs ~/.orchid-node-red/data/orchid-auth.json --user admin --role admin
 ./nodered/start-node-red.sh            # --sync-flow de nap lai orchid-flow.json (co sao luu)
-``` Script nạp flow lần đầu vào user data riêng bên ngoài project, nên không đụng firmware hoặc project phần cứng. Khi muốn đồng bộ bản flow trong project vào Node-RED đã cài, chạy `.\nodered\start-node-red.ps1 -SyncFlow`; script sẽ sao lưu flow đang dùng thành `flows.backup.<timestamp>.json` trước khi thay. Nếu không muốn thay file đang dùng, có thể nhập `nodered/orchid-flow.json` thủ công qua **Menu → Import → select a file**, rồi Deploy.
+```
+
+Script nạp flow lần đầu vào user data riêng bên ngoài project, nên không đụng firmware hoặc project phần cứng. Khi muốn đồng bộ bản flow trong project vào Node-RED đã cài, chạy `.\nodered\start-node-red.ps1 -SyncFlow`; script sẽ sao lưu flow đang dùng thành `flows.backup.<timestamp>.json` trước khi thay. Nếu không muốn thay file đang dùng, có thể nhập `nodered/orchid-flow.json` thủ công qua **Menu → Import → select a file**, rồi Deploy.
 
 Node-RED chạy trong terminal của người dùng sẽ tiếp tục chạy khi chat bị ngắt, miễn là terminal và laptop vẫn hoạt động. Để dừng, nhấn `Ctrl+C` trong terminal chạy server hoặc chạy `.\nodered\stop-node-red.ps1`. Không cần để assistant giữ một tiến trình nền.
 
@@ -259,6 +324,8 @@ Chưa kiểm chứng:
 | Relay đèn trồng cây | GPIO 27 |
 
 Trong sơ đồ Wokwi [`diagram.json`](./diagram.json), ba relay được xếp từ trên xuống: **bơm/phun sương (GPIO25)**, **quạt (GPIO26)**, **đèn trồng cây (GPIO27)**. Đây là pinout của project phần mềm/mô phỏng `orhid`; project phần cứng riêng có pinout khác, nên hãy đối chiếu đúng project trước khi đấu dây.
+
+Ảnh đấu dây vẽ lại từ `diagram.json` (nguồn, GND, tín hiệu): [`docs/wiring-diagram.svg`](docs/wiring-diagram.svg). Chú thích từng chân và ngưỡng nằm ngay trong `namespace Pins` và `namespace Thresholds` của `src/main.cpp`.
 
 ## Tuần 3 - Calibration và lọc tín hiệu
 

@@ -251,6 +251,22 @@ result = dashboard({ topic: `${DEVICE}/availability`, payload: "offline" });
 assert.equal(result[7].payload, "OFFLINE");
 assert.equal(dashboardFlow.get("orchidDashboardConnection"), "OFFLINE");
 
+// Tuan 8: tin "online" retained cu tren broker (thiet bi khong chay) khong duoc mo khoa lenh.
+const freshDashboard = createRunner("orchid-dashboard-render", createContext(), createContext());
+setNow(timestamp + 60000);
+result = freshDashboard({ topic: `${DEVICE}/availability`, payload: "online" });
+assert.equal(result[7].payload, "WAITING", "Retained 'online' without fresh telemetry must not count as ONLINE");
+setNow(timestamp + 60000 + 15001);
+result = freshDashboard({ topic: "dashboard/refresh", payload: {} });
+assert.equal(result[7].payload, "STALE", "No telemetry 15 s after 'online' must be marked stale");
+result = freshDashboard({ topic: `${DEVICE}/telemetry`, payload: { temperature_c: 28, humidity_pct: 72, light_adc: 900, water_adc: 2400 } });
+assert.equal(result[7].payload, "ONLINE", "Fresh telemetry after 'online' marks the device ONLINE");
+result = freshDashboard({ topic: `${DEVICE}/availability`, payload: "offline" });
+assert.equal(result[7].payload, "OFFLINE");
+setNow(timestamp + 60000 + 20000);
+result = freshDashboard({ topic: `${DEVICE}/availability`, payload: "online" });
+assert.equal(result[7].payload, "WAITING", "After reconnect, wait for new telemetry before ONLINE");
+
 // ---------------- Week 6: control widgets, gateway, ACK ----------------
 const sessions = new Map([
   ["sock-op", { user: "alice", role: "operator" }],
