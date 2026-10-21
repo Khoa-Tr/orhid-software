@@ -340,3 +340,21 @@ Flow Node-RED tại `nodered/orchid-flow.json` đã tích hợp thêm tab riêng
    - Script test tự động toàn bộ 10 kịch bản: `py test-results/run_e2e_test_suite.py` (đạt 10/10 PASS).
    - Script test MQTT trực tiếp: `py test-results/run_mqtt_test.py`.
    - Báo cáo nghiệm thu và ma trận hồi quy: `test-results/tuan6-e2e-integration.md`, `test-results/tuan7-test-matrix.md`, và kịch bản demo `test-results/demo-guide-video.md`.
+
+
+---
+
+## Người 3 - Tuần 8 & Tuần 9: End-to-End Integration (M4), Báo cáo & Tài liệu nghiệm thu
+
+1. **Tuần 8 — Demo E2E và Thử nghiệm Mất kết nối (Cột mốc M4, 15%):**
+   - **Luồng 2 chiều 4 tầng:** Sensor (ESP32) ➔ MQTT Broker (`broker.emqx.io`) ➔ Node-RED ➔ Dashboard & Telegram Bot.
+   - **Độ lặp lại M4 (Repeatability):** Chạy 5 chu kỳ liên tiếp luồng 2 chiều bằng script tự động `test-results/run_m4_reconnection_test.py` (đạt 5/5 chu kỳ PASS 100%, thời gian phản hồi trung bình 0.74s).
+   - **Kiểm thử mất mạng (LWT) & Tự phục hồi:** Broker phát Last Will `offline` khi cắt kết nối; sau khi nối lại, ESP32 tự động reconnect non-blocking, đồng bộ lại trạng thái `state` (retained) mà không bị treo vòng lặp.
+   - **Danh sách lỗi tích hợp (Integration Bug Tracker):** Đã lập bảng theo dõi và phân công 5 lỗi tích hợp (BUG-01 đến BUG-05) cho Người 1 (Firmware/Uplink) và Người 2 (Downlink/Dashboard). Chi tiết tại `test-results/tuan8-e2e-integration-m4.md`.
+
+2. **Tuần 9 — System Test, Báo cáo Tổng kết & Checklist:**
+   - **Kịch bản Video Demo chính thức:** `test-results/demo-guide-video.md` (timeline 2-3 phút, kịch bản thao tác 4 tầng, lời thuyết minh chuẩn).
+   - **Bản nháp Báo cáo đồ án tổng kết:** `test-results/tuan9-bao-cao-do-an-nhap.md` (cấu trúc bài bản 9 phần, phân tích kiến trúc, máy trạng thái FSM, bản đồ topic và bảng tổng hợp M1-M4).
+   - **Dàn ý Slide thuyết trình bảo vệ đồ án:** `test-results/tuan9-slide-thuyet-trinh.md` (12 slide súc tích, mạch lạc phục vụ báo cáo trước hội đồng).
+   - **Checklist nghiệm thu toàn nhóm:** `test-results/checklist-deliverables.md` (rà soát đầy đủ deliverables của Người 1, Người 2, Người 3 từ Tuần 1 đến Tuần 9).
+   - **Kiểm thử tái hiện trên môi trường sạch:** Script `test-results/verify_clean_install.py` (kiểm tra toàn bộ cấu trúc file, cú pháp JSON, kết nối broker và thư viện Python, đạt chuẩn 100%).
