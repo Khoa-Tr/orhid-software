@@ -9,8 +9,7 @@ module.exports = {
   flowFile: "flows.json",
   credentialSecret: "orchid-local-demo-only",
   adminAuth: guard.adminAuth,
-  // httpNodeMiddleware chi ap cho node HTTP In; Dashboard 2 can middleware rieng cho trang va socket.io.
-  httpNodeMiddleware: guard.http,
+  // httpNodeMiddleware: guard.http, // Cho phep public webhook HTTP In (nhu Q5 ReqBin)
   dashboard: {
     middleware: guard.http,
     ioMiddleware: guard.socket

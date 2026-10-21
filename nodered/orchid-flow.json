@@ -284,7 +284,7 @@
     "type": "function",
     "z": "orchid-tab-water",
     "name": "Water lockout and mist-demand rules",
-    "func": "let data = msg.payload;\nif (Buffer.isBuffer(data)) data = data.toString();\nif (typeof data === 'string') { try { data = JSON.parse(data); } catch (err) { node.warn('Invalid telemetry JSON'); return null; } }\nif (!data || typeof data !== 'object') return null;\nconst now = new Date().toISOString();\nconst events = [];\nfunction numeric(value) {\n  if (value === null || value === undefined || value === '') return NaN;\n  const parsed = Number(value);\n  return Number.isFinite(parsed) ? parsed : NaN;\n}\nconst water = numeric(data.water_adc);\nconst humidity = numeric(data.humidity_pct);\nlet waterLow = flow.get('orchidWaterLow');\nif (Number.isFinite(water)) {\n  if (waterLow === undefined) {\n    waterLow = water < 1200;\n    if (waterLow) events.push({event:'water_lockout', water_adc:water, threshold:1200, at:now});\n  } else {\n    const nextWaterLow = waterLow ? water < 1500 : water < 1200;\n    if (nextWaterLow !== waterLow) events.push({event:nextWaterLow ? 'water_lockout' : 'water_recovered', water_adc:water, threshold:nextWaterLow ? 1200 : 1500, at:now});\n    waterLow = nextWaterLow;\n  }\n  flow.set('orchidWaterLow', waterLow);\n}\nif (Number.isFinite(humidity) && Number.isFinite(water)) {\n  const previousDemand = flow.get('orchidMistDemand') === true;\n  const mistDemand = waterLow ? false : previousDemand ? humidity < 80 : humidity < 65;\n  if (mistDemand !== previousDemand) {\n    flow.set('orchidMistDemand', mistDemand);\n    events.push({event:mistDemand ? 'mist_demand_observed' : 'mist_demand_cleared', humidity_pct:humidity, water_adc:water, at:now});\n  }\n}\nreturn events.length ? [{payload:events.map(e => JSON.stringify(e)+'\\n').join(''), events}] : null;",
+    "func": "if (global.get('orchidBypassWater') === true) flow.set('orchidWaterLow', false);\nlet data = msg.payload;\nif (Buffer.isBuffer(data)) data = data.toString();\nif (typeof data === 'string') { try { data = JSON.parse(data); } catch (err) { node.warn('Invalid telemetry JSON'); return null; } }\nif (!data || typeof data !== 'object') return null;\nconst now = new Date().toISOString();\nconst events = [];\nfunction numeric(value) {\n  if (value === null || value === undefined || value === '') return NaN;\n  const parsed = Number(value);\n  return Number.isFinite(parsed) ? parsed : NaN;\n}\nconst water = numeric(data.water_adc);\nconst humidity = numeric(data.humidity_pct);\nlet waterLow = flow.get('orchidWaterLow');\nif (Number.isFinite(water)) {\n  if (waterLow === undefined) {\n    waterLow = water < 1200;\n    if (waterLow) events.push({event:'water_lockout', water_adc:water, threshold:1200, at:now});\n  } else {\n    const nextWaterLow = waterLow ? water < 1500 : water < 1200;\n    if (nextWaterLow !== waterLow) events.push({event:nextWaterLow ? 'water_lockout' : 'water_recovered', water_adc:water, threshold:nextWaterLow ? 1200 : 1500, at:now});\n    waterLow = nextWaterLow;\n  }\n  flow.set('orchidWaterLow', waterLow);\n}\nif (Number.isFinite(humidity) && Number.isFinite(water)) {\n  const previousDemand = flow.get('orchidMistDemand') === true;\n  const mistDemand = waterLow ? false : previousDemand ? humidity < 80 : humidity < 65;\n  if (mistDemand !== previousDemand) {\n    flow.set('orchidMistDemand', mistDemand);\n    events.push({event:mistDemand ? 'mist_demand_observed' : 'mist_demand_cleared', humidity_pct:humidity, water_adc:water, at:now});\n  }\n}\nreturn events.length ? [{payload:events.map(e => JSON.stringify(e)+'\\n').join(''), events}] : null;",
     "outputs": 1,
     "timeout": 0,
     "noerr": 0,
@@ -496,7 +496,7 @@
     "type": "function",
     "z": "orchid-tab-dashboard",
     "name": "Prepare live dashboard values",
-    "func": "const inputTopic = msg.topic || '';\nlet data = msg.payload;\nif (inputTopic !== 'dashboard/refresh') {\n  if (data && typeof data === 'object' && data.data !== undefined) data = data.data;\n  if (Buffer.isBuffer(data)) data = data.toString();\n  if (typeof data === 'string' && !inputTopic.endsWith('/availability')) {\n    try { data = JSON.parse(data); } catch (err) { node.warn('Invalid dashboard MQTT JSON'); return null; }\n  }\n}\nconst snapshot = flow.get('orchidDashboardSnapshot') || {\n  temperature_c: null, humidity_pct: null, light_adc: null, water_adc: null,\n  mist: '—', fan: '—', light: '—', mist_state: '—', mode: '—', availability: 'unknown',\n  water_lockout: false, dht_fault: false, mist_mode: null, fan_mode: null, light_mode: null\n};\n// null tu firmware (DHT loi) phai hien thi la thieu du lieu, khong phai 0.\nconst numberOrNull = value => value === null || value === '' || !Number.isFinite(Number(value)) ? null : Number(value);\nlet telemetryUpdate = false;\nif (inputTopic.endsWith('/telemetry') && data && typeof data === 'object') {\n  for (const key of ['temperature_c','humidity_pct','light_adc','water_adc']) {\n    if (data[key] !== undefined) snapshot[key] = numberOrNull(data[key]);\n  }\n  flow.set('orchidDashboardTelemetryAt', Date.now());\n  snapshot.availability = 'online';\n  telemetryUpdate = true;\n} else if (inputTopic.endsWith('/state') && data && typeof data === 'object') {\n  for (const key of ['mist','fan','light','mist_state','mode','mist_mode','fan_mode','light_mode']) {\n    if (data[key] !== undefined) snapshot[key] = String(data[key]);\n  }\n  if (typeof data.water_lockout === 'boolean') snapshot.water_lockout = data.water_lockout;\n  if (typeof data.dht_fault === 'boolean') snapshot.dht_fault = data.dht_fault;\n  if (data.water_lockout === true) snapshot.mist_state = 'WATER_LOCKOUT';\n} else if (inputTopic.endsWith('/availability')) {\n  const availability = typeof data === 'string' ? data : String(data);\n  if (availability === 'online' || availability === 'offline') snapshot.availability = availability;\n}\nflow.set('orchidDashboardSnapshot', snapshot);\nconst lastTelemetry = flow.get('orchidDashboardTelemetryAt') || 0;\nconst isStale = lastTelemetry > 0 && Date.now() - lastTelemetry > 15000;\nconst connection = snapshot.availability === 'offline' ? 'OFFLINE' : isStale ? 'STALE' : snapshot.availability === 'online' ? 'ONLINE' : 'WAITING';\nflow.set('orchidDashboardConnection', connection);\nconst show = (value, suffix) => value === null ? '—' : `${value}${suffix}`;\nconst climate = (value, suffix) => snapshot.dht_fault ? 'DHT fault' : show(value, suffix);\nconst manualRelays = ['mist','fan','light'].filter(relay => snapshot[`${relay}_mode`] === 'MANUAL');\nconst modeText = snapshot.mode === 'MANUAL' && manualRelays.length ? `MANUAL (${manualRelays.join(', ')})` : snapshot.mode;\nconst climateHistory = telemetryUpdate ? [\n  {topic:'Temperature °C', payload:snapshot.temperature_c},\n  {topic:'Humidity %', payload:snapshot.humidity_pct}\n].filter(point => Number.isFinite(point.payload)) : null;\nconst adcHistory = telemetryUpdate ? [\n  {topic:'Light ADC', payload:snapshot.light_adc},\n  {topic:'Water ADC', payload:snapshot.water_adc}\n].filter(point => Number.isFinite(point.payload)) : null;\nreturn [\n  {payload:climate(snapshot.temperature_c, ' °C')},\n  {payload:climate(snapshot.humidity_pct, ' %')},\n  {payload:show(snapshot.light_adc, '')},\n  {payload:show(snapshot.water_adc, '')},\n  {payload:snapshot.mist_state},\n  {payload:snapshot.fan},\n  {payload:snapshot.light},\n  {payload:connection},\n  {payload:modeText},\n  climateHistory,\n  adcHistory,\n  {topic:'dashboard/snapshot', payload:{...snapshot, connection}}\n];",
+    "func": "const inputTopic = msg.topic || '';\nlet data = msg.payload;\nif (inputTopic !== 'dashboard/refresh') {\n  if (data && typeof data === 'object' && data.data !== undefined) data = data.data;\n  if (Buffer.isBuffer(data)) data = data.toString();\n  if (typeof data === 'string' && !inputTopic.endsWith('/availability')) {\n    try { data = JSON.parse(data); } catch (err) { node.warn('Invalid dashboard MQTT JSON'); return null; }\n  }\n}\nconst snapshot = flow.get('orchidDashboardSnapshot') || {\n  temperature_c: null, humidity_pct: null, light_adc: null, water_adc: null,\n  mist: '—', fan: '—', light: '—', mist_state: '—', mode: '—', availability: 'unknown',\n  water_lockout: false, dht_fault: false, mist_mode: null, fan_mode: null, light_mode: null\n};\n// null tu firmware (DHT loi) phai hien thi la thieu du lieu, khong phai 0.\nconst numberOrNull = value => value === null || value === '' || !Number.isFinite(Number(value)) ? null : Number(value);\nlet telemetryUpdate = false;\nif (inputTopic.endsWith('/telemetry') && data && typeof data === 'object') {\n  for (const key of ['temperature_c','humidity_pct','light_adc','water_adc']) {\n    if (data[key] !== undefined) snapshot[key] = numberOrNull(data[key]);\n  }\n  flow.set('orchidDashboardTelemetryAt', Date.now());\n  snapshot.availability = 'online';\n  telemetryUpdate = true;\n} else if (inputTopic.endsWith('/state') && data && typeof data === 'object') {\n  for (const key of ['mist','fan','light','mist_state','mode','mist_mode','fan_mode','light_mode']) {\n    if (data[key] !== undefined) snapshot[key] = String(data[key]);\n  }\n  if (typeof data.water_lockout === 'boolean') snapshot.water_lockout = data.water_lockout;\n  if (typeof data.dht_fault === 'boolean') snapshot.dht_fault = data.dht_fault;\n  if (data.water_lockout === true) snapshot.mist_state = 'WATER_LOCKOUT';\n  if (global.get('orchidBypassWater') === true) {\n    snapshot.water_lockout = false;\n    if (snapshot.mist_state === 'WATER_LOCKOUT') snapshot.mist_state = snapshot.mist === 'ON' ? 'RUNNING' : 'IDLE';\n  }\n  if (global.get('orchidBypassWater') === true) {\n    snapshot.water_lockout = false;\n    if (snapshot.mist_state === 'WATER_LOCKOUT') snapshot.mist_state = snapshot.mist === 'ON' ? 'RUNNING' : 'IDLE';\n  }\n} else if (inputTopic.endsWith('/availability')) {\n  const availability = typeof data === 'string' ? data : String(data);\n  if (availability === 'online' || availability === 'offline') snapshot.availability = availability;\n}\nflow.set('orchidDashboardSnapshot', snapshot);\nconst lastTelemetry = flow.get('orchidDashboardTelemetryAt') || 0;\nconst isStale = lastTelemetry > 0 && Date.now() - lastTelemetry > 15000;\nconst connection = snapshot.availability === 'offline' ? 'OFFLINE' : isStale ? 'STALE' : snapshot.availability === 'online' ? 'ONLINE' : 'WAITING';\nflow.set('orchidDashboardConnection', connection);\nconst show = (value, suffix) => value === null ? '—' : `${value}${suffix}`;\nconst climate = (value, suffix) => snapshot.dht_fault ? 'DHT fault' : show(value, suffix);\nconst manualRelays = ['mist','fan','light'].filter(relay => snapshot[`${relay}_mode`] === 'MANUAL');\nconst modeText = snapshot.mode === 'MANUAL' && manualRelays.length ? `MANUAL (${manualRelays.join(', ')})` : snapshot.mode;\nconst climateHistory = telemetryUpdate ? [\n  {topic:'Temperature °C', payload:snapshot.temperature_c},\n  {topic:'Humidity %', payload:snapshot.humidity_pct}\n].filter(point => Number.isFinite(point.payload)) : null;\nconst adcHistory = telemetryUpdate ? [\n  {topic:'Light ADC', payload:snapshot.light_adc},\n  {topic:'Water ADC', payload:snapshot.water_adc}\n].filter(point => Number.isFinite(point.payload)) : null;\nreturn [\n  {payload:climate(snapshot.temperature_c, ' °C')},\n  {payload:climate(snapshot.humidity_pct, ' %')},\n  {payload:show(snapshot.light_adc, '')},\n  {payload:show(snapshot.water_adc, '')},\n  {payload:snapshot.mist_state},\n  {payload:snapshot.fan},\n  {payload:snapshot.light},\n  {payload:connection},\n  {payload:modeText},\n  climateHistory,\n  adcHistory,\n  {topic:'dashboard/snapshot', payload:{...snapshot, connection}}\n];",
     "outputs": 12,
     "timeout": 0,
     "noerr": 0,
@@ -1437,7 +1437,7 @@
     "type": "function",
     "z": "orchid-tab-dashboard",
     "name": "Command gateway + ACK tracker",
-    "func": "// Cong lenh duy nhat toi firmware: kiem tra quyen/che do/ket noi, gui dung topic + payload,\n// theo doi ACK theo request_id, het han NO_ACK va ghi lich su. An toan thiet bi van do firmware quyet.\nconst DEVICE_TOPIC = 'garden/orchid/orchid-01';\nconst RELAYS = ['mist', 'fan', 'light'];\nconst ACK_TIMEOUT_MS = 6000;\nconst HISTORY_LIMIT = 25;\nconst now = Date.now();\nconst at = new Date(now).toISOString();\nconst topic = msg.topic || '';\nconst pending = flow.get('orchidPendingCommands') || {};\nconst timedOut = flow.get('orchidTimedOutCommands') || {};\nlet history = flow.get('orchidCommandHistory') || [];\nconst mqtt = [];\nconst events = [];\nconst notifications = [];\nconst results = [];\nlet lastText = null;\nlet historyChanged = false;\n\nconst describe = command => command.mode === 'AUTO' ? 'AUTO' : `MANUAL ${command.state} ${command.ttl_s}s`;\nconst sourceLabel = command => command.source === 'dashboard' ? `dashboard (${command.user || '?'})` : command.source;\nconst clock = time => new Date(time).toLocaleTimeString('en-GB', {hour12: false});\n\nfunction upsertHistory(command, result, detail, latency) {\n  const key = command.request_id || command.local_id;\n  const row = {\n    key,\n    time: clock(command.sent_at || now),\n    source: sourceLabel(command),\n    relay: command.relay,\n    command: describe(command),\n    result,\n    detail: detail || '',\n    latency: latency === undefined ? '' : `${latency} ms`\n  };\n  const index = history.findIndex(item => item.key === key);\n  if (index >= 0) history[index] = row; else history.unshift(row);\n  history = history.slice(0, HISTORY_LIMIT);\n  historyChanged = true;\n}\n\nfunction finish(command, result, reason, latency) {\n  const outcome = {\n    request_id: command.request_id || null, ref: command.ref || null, relay: command.relay,\n    mode: command.mode, state: command.state, ttl_s: command.ttl_s, source: command.source,\n    user: command.user || null, result, reason: reason || null, latency_ms: latency, at\n  };\n  results.push({topic: 'orchid/command_result', payload: outcome});\n  events.push({event: 'command_result', ...outcome});\n  upsertHistory(command, result, reason, latency);\n  const text = `${command.relay} ${describe(command)} → ${result}${reason ? ` (${reason})` : ''}${latency === undefined ? '' : `, ${latency} ms`}`;\n  if (command.source === 'dashboard') lastText = text;\n  // Thong bao cho dung client da bam nut; lenh automation chi bao khi that bai.\n  if (command.source === 'dashboard' || result !== 'APPLIED') {\n    const color = result === 'APPLIED' ? '#26734d' : result === 'NO_ACK' ? '#b7791f' : '#c53030';\n    notifications.push({payload: text, ui_update: {color}, _client: command.client || undefined});\n  }\n}\n\nif (topic === 'orchid/command') {\n  const request = msg.payload || {};\n  const command = {\n    relay: request.relay, mode: request.mode,\n    state: request.mode === 'MANUAL' ? request.state : undefined,\n    ttl_s: request.mode === 'MANUAL' ? request.ttl_s : undefined,\n    source: String(request.source || 'unknown'), user: request.user || null,\n    client: request.client || null, ref: request.ref || null, reason: request.reason || null\n  };\n  const controlMode = global.get('orchidControlMode') || 'AUTO';\n  const connection = flow.get('orchidDashboardConnection') || 'WAITING';\n  const isDashboard = command.source === 'dashboard';\n  const isAutomation = command.source.startsWith('automation:');\n  let reject = null;\n  if (!RELAYS.includes(command.relay)) reject = 'INVALID_RELAY';\n  else if (command.mode !== 'AUTO' && command.mode !== 'MANUAL') reject = 'INVALID_MODE';\n  else if (command.mode === 'MANUAL' && command.state !== 'ON' && command.state !== 'OFF') reject = 'INVALID_STATE';\n  else if (command.mode === 'MANUAL' && !(Number.isInteger(command.ttl_s) && command.ttl_s >= 1 && command.ttl_s <= 3600)) reject = 'INVALID_TTL';\n  else if (!isDashboard && !isAutomation) reject = 'UNKNOWN_SOURCE';\n  else if (isDashboard && request.role !== 'admin' && request.role !== 'operator') reject = 'FORBIDDEN';\n  else if (isDashboard && command.mode === 'MANUAL' && controlMode !== 'MANUAL') reject = 'LOCKED_AUTO_MODE';\n  else if (isAutomation && controlMode !== 'AUTO') reject = 'AUTOMATION_SUSPENDED';\n  else if (connection !== 'ONLINE') reject = `DEVICE_${connection}`;\n  else if (Object.values(pending).some(item => item.relay === command.relay)) reject = 'BUSY';\n\n  if (reject) {\n    command.local_id = `local-${now.toString(36)}-${Math.random().toString(36).slice(2, 6)}`;\n    command.sent_at = now;\n    finish(command, 'BLOCKED', reject);\n  } else {\n    const sequence = (flow.get('orchidCommandSeq') || 0) + 1;\n    flow.set('orchidCommandSeq', sequence);\n    command.request_id = `${isDashboard ? 'dash' : 'auto'}-${now.toString(36)}-${sequence}`;\n    command.sent_at = now;\n    const payload = command.mode === 'AUTO'\n      ? {request_id: command.request_id, mode: 'AUTO'}\n      : {request_id: command.request_id, mode: 'MANUAL', state: command.state, ttl_s: command.ttl_s};\n    pending[command.request_id] = command;\n    mqtt.push({topic: `${DEVICE_TOPIC}/cmd/${command.relay}`, payload: JSON.stringify(payload), qos: 1, retain: false});\n    events.push({event: 'command_sent', request_id: command.request_id, ref: command.ref, relay: command.relay,\n      payload, source: command.source, user: command.user, reason: command.reason, at});\n    upsertHistory(command, 'PENDING', 'waiting for ACK');\n    if (isDashboard) lastText = `${command.relay} ${describe(command)} → sent, waiting for ACK`;\n  }\n} else if (topic.endsWith('/ack')) {\n  let body = msg.payload;\n  if (Buffer.isBuffer(body)) body = body.toString();\n  if (typeof body === 'string') { try { body = JSON.parse(body); } catch (err) { node.warn('Invalid ACK JSON'); return null; } }\n  const requestId = body && body.request_id;\n  const command = requestId ? pending[requestId] : null;\n  if (!command) {\n    if (requestId && timedOut[requestId]) events.push({event: 'command_late_ack', request_id: requestId, result: body.result, reason: body.reason || null, at});\n    else return null;\n  } else {\n    delete pending[requestId];\n    const result = body.result === 'APPLIED' || body.result === 'REJECTED' ? body.result : 'INVALID_ACK';\n    finish(command, result, body.reason || null, now - command.sent_at);\n  }\n} else if (topic === 'gateway/tick') {\n  for (const [requestId, command] of Object.entries(pending)) {\n    if (now - command.sent_at >= ACK_TIMEOUT_MS) {\n      delete pending[requestId];\n      timedOut[requestId] = now;\n      finish(command, 'NO_ACK', `no ACK within ${ACK_TIMEOUT_MS / 1000}s`);\n    }\n  }\n  for (const [requestId, time] of Object.entries(timedOut)) if (now - time > 60000) delete timedOut[requestId];\n} else {\n  return null;\n}\n\nflow.set('orchidPendingCommands', pending);\nflow.set('orchidTimedOutCommands', timedOut);\nflow.set('orchidCommandHistory', history);\nconst lines = events.map(event => ({payload: JSON.stringify(event) + '\\n'}));\nconst tableRows = history.map(({key, ...row}) => row);\nconst outputs = [\n  mqtt.length ? mqtt : null,\n  historyChanged ? {payload: tableRows} : null,\n  lastText ? {payload: lastText} : null,\n  notifications.length ? notifications : null,\n  lines.length ? lines : null,\n  results.length || mqtt.length ? [...results, {topic: 'control/refresh'}] : null\n];\nreturn outputs.some(Boolean) ? outputs : null;",
+    "func": "// Cong lenh duy nhat toi firmware: kiem tra quyen/che do/ket noi, gui dung topic + payload,\n// theo doi ACK theo request_id, het han NO_ACK va ghi lich su. An toan thiet bi van do firmware quyet.\nconst DEVICE_TOPIC = 'garden/orchid/orchid-01';\nconst RELAYS = ['mist', 'fan', 'light'];\nconst ACK_TIMEOUT_MS = 6000;\nconst HISTORY_LIMIT = 25;\nconst now = Date.now();\nconst at = new Date(now).toISOString();\nconst topic = msg.topic || '';\nconst pending = flow.get('orchidPendingCommands') || {};\nconst timedOut = flow.get('orchidTimedOutCommands') || {};\nlet history = flow.get('orchidCommandHistory') || [];\nconst mqtt = [];\nconst events = [];\nconst notifications = [];\nconst results = [];\nlet lastText = null;\nlet historyChanged = false;\n\nconst describe = command => command.mode === 'AUTO' ? 'AUTO' : `MANUAL ${command.state} ${command.ttl_s}s`;\nconst sourceLabel = command => command.source === 'dashboard' ? `dashboard (${command.user || '?'})` : command.source;\nconst clock = time => new Date(time).toLocaleTimeString('en-GB', {hour12: false});\n\nfunction upsertHistory(command, result, detail, latency) {\n  const key = command.request_id || command.local_id;\n  const row = {\n    key,\n    time: clock(command.sent_at || now),\n    source: sourceLabel(command),\n    relay: command.relay,\n    command: describe(command),\n    result,\n    detail: detail || '',\n    latency: latency === undefined ? '' : `${latency} ms`\n  };\n  const index = history.findIndex(item => item.key === key);\n  if (index >= 0) history[index] = row; else history.unshift(row);\n  history = history.slice(0, HISTORY_LIMIT);\n  historyChanged = true;\n}\n\nfunction finish(command, result, reason, latency) {\n  const outcome = {\n    request_id: command.request_id || null, ref: command.ref || null, relay: command.relay,\n    mode: command.mode, state: command.state, ttl_s: command.ttl_s, source: command.source,\n    user: command.user || null, result, reason: reason || null, latency_ms: latency, at\n  };\n  results.push({topic: 'orchid/command_result', payload: outcome});\n  events.push({event: 'command_result', ...outcome});\n  upsertHistory(command, result, reason, latency);\n  const text = `${command.relay} ${describe(command)} → ${result}${reason ? ` (${reason})` : ''}${latency === undefined ? '' : `, ${latency} ms`}`;\n  if (command.source === 'dashboard') lastText = text;\n  // Thong bao cho dung client da bam nut; lenh automation chi bao khi that bai.\n  if (command.source === 'dashboard' || result !== 'APPLIED') {\n    const color = result === 'APPLIED' ? '#26734d' : result === 'NO_ACK' ? '#b7791f' : '#c53030';\n    notifications.push({payload: text, ui_update: {color}, _client: command.client || undefined});\n  }\n}\n\nif (topic === 'orchid/command') {\n  const request = msg.payload || {};\n  if (request.type === 'config' && request.config) {\n    const seq = (flow.get('orchidCommandSeq') || 0) + 1;\n    flow.set('orchidCommandSeq', seq);\n    const cfgReqId = 'cfg-' + now.toString(36) + '-' + seq;\n    const cfgPayload = { request_id: cfgReqId, ...request.config };\n    mqtt.push({ topic: DEVICE_TOPIC + '/config', payload: JSON.stringify(cfgPayload), qos: 1, retain: false });\n    events.push({ event: 'config_sent', request_id: cfgReqId, payload: cfgPayload, at });\n    lastText = 'Config sent: ' + JSON.stringify(request.config);\n    // let flow proceed to normal return outputs\n  }\n  const command = {\n    relay: request.relay, mode: request.mode,\n    state: request.mode === 'MANUAL' ? request.state : undefined,\n    ttl_s: request.mode === 'MANUAL' ? request.ttl_s : undefined,\n    source: String(request.source || 'unknown'), user: request.user || null,\n    client: request.client || null, ref: request.ref || null, reason: request.reason || null\n  };\n  const controlMode = global.get('orchidControlMode') || 'AUTO';\n  const connection = flow.get('orchidDashboardConnection') || 'WAITING';\n  const isDashboard = command.source === 'dashboard';\n  const isAutomation = command.source.startsWith('automation:');\n  let reject = null;\n  if (!RELAYS.includes(command.relay)) reject = 'INVALID_RELAY';\n  else if (command.mode !== 'AUTO' && command.mode !== 'MANUAL') reject = 'INVALID_MODE';\n  else if (command.mode === 'MANUAL' && command.state !== 'ON' && command.state !== 'OFF') reject = 'INVALID_STATE';\n  else if (command.mode === 'MANUAL' && !(Number.isInteger(command.ttl_s) && command.ttl_s >= 1 && command.ttl_s <= 3600)) reject = 'INVALID_TTL';\n  else if (!isDashboard && !isAutomation) reject = 'UNKNOWN_SOURCE';\n  else if (isDashboard && request.role !== 'admin' && request.role !== 'operator') reject = 'FORBIDDEN';\n  else if (isDashboard && command.mode === 'MANUAL' && controlMode !== 'MANUAL') reject = 'LOCKED_AUTO_MODE';\n  else if (isAutomation && controlMode !== 'AUTO') reject = 'AUTOMATION_SUSPENDED';\n  else if (connection !== 'ONLINE' && !global.get('orchidBypassOffline')) reject = `DEVICE_${connection}`;\n  else if (Object.values(pending).some(item => item.relay === command.relay)) reject = 'BUSY';\n\n  if (reject) {\n    command.local_id = `local-${now.toString(36)}-${Math.random().toString(36).slice(2, 6)}`;\n    command.sent_at = now;\n    finish(command, 'BLOCKED', reject);\n  } else {\n    const sequence = (flow.get('orchidCommandSeq') || 0) + 1;\n    flow.set('orchidCommandSeq', sequence);\n    command.request_id = `${isDashboard ? 'dash' : 'auto'}-${now.toString(36)}-${sequence}`;\n    command.sent_at = now;\n    const payload = command.mode === 'AUTO'\n      ? {request_id: command.request_id, mode: 'AUTO'}\n      : {request_id: command.request_id, mode: 'MANUAL', state: command.state, ttl_s: command.ttl_s};\n    pending[command.request_id] = command;\n    mqtt.push({topic: `${DEVICE_TOPIC}/cmd/${command.relay}`, payload: JSON.stringify(payload), qos: 1, retain: false});\n    events.push({event: 'command_sent', request_id: command.request_id, ref: command.ref, relay: command.relay,\n      payload, source: command.source, user: command.user, reason: command.reason, at});\n    upsertHistory(command, 'PENDING', 'waiting for ACK');\n    if (isDashboard) lastText = `${command.relay} ${describe(command)} → sent, waiting for ACK`;\n  }\n} else if (topic.endsWith('/ack')) {\n  let body = msg.payload;\n  if (Buffer.isBuffer(body)) body = body.toString();\n  if (typeof body === 'string') { try { body = JSON.parse(body); } catch (err) { node.warn('Invalid ACK JSON'); return null; } }\n  const requestId = body && body.request_id;\n  const command = requestId ? pending[requestId] : null;\n  if (!command) {\n    if (requestId && timedOut[requestId]) events.push({event: 'command_late_ack', request_id: requestId, result: body.result, reason: body.reason || null, at});\n    else return null;\n  } else {\n    delete pending[requestId];\n    const result = body.result === 'APPLIED' || body.result === 'REJECTED' ? body.result : 'INVALID_ACK';\n    finish(command, result, body.reason || null, now - command.sent_at);\n  }\n} else if (topic === 'gateway/tick') {\n  for (const [requestId, command] of Object.entries(pending)) {\n    if (now - command.sent_at >= ACK_TIMEOUT_MS) {\n      delete pending[requestId];\n      timedOut[requestId] = now;\n      finish(command, 'NO_ACK', `no ACK within ${ACK_TIMEOUT_MS / 1000}s`);\n    }\n  }\n  for (const [requestId, time] of Object.entries(timedOut)) if (now - time > 60000) delete timedOut[requestId];\n} else {\n  return null;\n}\n\nflow.set('orchidPendingCommands', pending);\nflow.set('orchidTimedOutCommands', timedOut);\nflow.set('orchidCommandHistory', history);\nconst lines = events.map(event => ({payload: JSON.stringify(event) + '\\n'}));\nconst tableRows = history.map(({key, ...row}) => row);\nconst outputs = [\n  mqtt.length ? mqtt : null,\n  historyChanged ? {payload: tableRows} : null,\n  lastText ? {payload: lastText} : null,\n  notifications.length ? notifications : null,\n  lines.length ? lines : null,\n  results.length || mqtt.length ? [...results, {topic: 'control/refresh'}] : null\n];\nreturn outputs.some(Boolean) ? outputs : null;",
     "outputs": 6,
     "timeout": 0,
     "noerr": 0,
@@ -1655,7 +1655,7 @@
     "type": "function",
     "z": "orchid-tab-dashboard",
     "name": "Button locks (mode / link / ACK / firmware state)",
-    "func": "// Tinh trang thai khoa cua 6 nut tu che do dashboard, ket noi, trang thai firmware va lenh dang cho ACK.\nconst BUTTONS = ['mist:ON', 'mist:OFF', 'fan:ON', 'fan:OFF', 'light:ON', 'light:OFF'];\nconst snapshot = flow.get('orchidDashboardSnapshot') || {};\nconst connection = flow.get('orchidDashboardConnection') || 'WAITING';\nconst mode = global.get('orchidControlMode') || 'AUTO';\nconst pendingRelays = new Set(Object.values(flow.get('orchidPendingCommands') || {}).map(command => command.relay));\nconst reasons = [];\nlet allowed = true;\nif (mode !== 'MANUAL') { allowed = false; reasons.push('AUTO mode: manual buttons locked'); }\nif (connection !== 'ONLINE') { allowed = false; reasons.push(`Device ${connection}: commands blocked`); }\nconst mistOnBlock = snapshot.dht_fault ? 'SENSOR_FAULT'\n  : snapshot.water_lockout ? 'WATER_LOCKOUT'\n  : ['COOLDOWN', 'WATER_LOCKOUT', 'SENSOR_FAULT'].includes(snapshot.mist_state) ? snapshot.mist_state : null;\nif (allowed && mistOnBlock) reasons.push(`Mist ON blocked by firmware state ${mistOnBlock}`);\nfor (const relay of pendingRelays) reasons.push(`Waiting for ACK: ${relay}`);\nconst enabled = {};\nfor (const key of BUTTONS) {\n  const [relay, state] = key.split(':');\n  enabled[key] = allowed && !pendingRelays.has(relay) && !(relay === 'mist' && state === 'ON' && mistOnBlock);\n}\nconst lockText = reasons.length ? reasons.join(' · ') : 'Ready: manual commands enabled';\n// Sau deploy widget co the mat trang thai -> lan init gui lai toan bo.\nconst previous = msg.topic === 'control/init' ? {} : flow.get('orchidControlLastUi') || {};\nflow.set('orchidControlLastUi', {...enabled, lockText});\nreturn [\n  ...BUTTONS.map(key => previous[key] === enabled[key] ? null : {enabled: enabled[key]}),\n  previous.lockText === lockText ? null : {payload: lockText}\n];",
+    "func": "// Tinh trang thai khoa cua 6 nut tu che do dashboard, ket noi, trang thai firmware va lenh dang cho ACK.\nconst BUTTONS = ['mist:ON', 'mist:OFF', 'fan:ON', 'fan:OFF', 'light:ON', 'light:OFF'];\nconst snapshot = flow.get('orchidDashboardSnapshot') || {};\nconst connection = flow.get('orchidDashboardConnection') || 'WAITING';\nconst mode = global.get('orchidControlMode') || 'AUTO';\nconst bypassOffline = global.get('orchidBypassOffline') === true;\nconst bypassWater = global.get('orchidBypassWater') === true;\nconst pendingRelays = new Set(Object.values(flow.get('orchidPendingCommands') || {}).map(command => command.relay));\nconst reasons = [];\nlet allowed = true;\nif (mode !== 'MANUAL') { allowed = false; reasons.push('AUTO mode: manual buttons locked'); }\nif (connection !== 'ONLINE' && !bypassOffline) { allowed = false; reasons.push(`Device ${connection}: commands blocked`); }\nconst mistOnBlock = snapshot.dht_fault ? 'SENSOR_FAULT'\n  : (!bypassWater && snapshot.water_lockout) ? 'WATER_LOCKOUT'\n  : (!bypassWater && ['COOLDOWN', 'WATER_LOCKOUT', 'SENSOR_FAULT'].includes(snapshot.mist_state)) ? snapshot.mist_state : null;\nif (allowed && mistOnBlock) reasons.push(`Mist ON blocked by firmware state ${mistOnBlock}`);\nfor (const relay of pendingRelays) reasons.push(`Waiting for ACK: ${relay}`);\nconst enabled = {};\nfor (const key of BUTTONS) {\n  const [relay, state] = key.split(':');\n  enabled[key] = allowed && !pendingRelays.has(relay) && !(relay === 'mist' && state === 'ON' && mistOnBlock);\n}\nconst lockText = reasons.length ? reasons.join(' · ') : 'Ready: manual commands enabled';\nconst previous = msg.topic === 'control/init' ? {} : flow.get('orchidControlLastUi') || {};\nflow.set('orchidControlLastUi', {...enabled, lockText});\nreturn [\n  ...BUTTONS.map(key => previous[key] === enabled[key] ? null : {enabled: enabled[key]}),\n  previous.lockText === lockText ? null : {payload: lockText}\n];",
     "outputs": 7,
     "timeout": 0,
     "noerr": 0,
@@ -2956,6 +2956,170 @@
     "wires": [
       [
         "nguoi3-orchid-cmd-formatter"
+      ]
+    ]
+  },
+  {
+    "id": "orchid-dashboard-test-group",
+    "type": "ui-group",
+    "name": "Cấu hình ngưỡng & Chế độ Test phòng",
+    "page": "orchid-dashboard-page",
+    "width": 6,
+    "height": 1,
+    "order": 4,
+    "showGroupName": true
+  },
+  {
+    "id": "orchid-sw-water-bypass",
+    "type": "ui-switch",
+    "z": "orchid-tab-dashboard",
+    "group": "orchid-dashboard-test-group",
+    "name": "Bỏ qua rule mực nước",
+    "label": "BỎ QUA RULE MỰC NƯỚC (TEST KHÔNG CẦN CẢM BIẾN NƯỚC)",
+    "order": 1,
+    "width": 6,
+    "height": 1,
+    "passthru": true,
+    "topic": "config/water_bypass",
+    "topicType": "str",
+    "style": "",
+    "onvalue": "true",
+    "onvalueType": "bool",
+    "onicon": "",
+    "oncolor": "#26734d",
+    "offvalue": "false",
+    "offvalueType": "bool",
+    "officon": "",
+    "offcolor": "#a0aec0",
+    "x": 200,
+    "y": 900,
+    "wires": [
+      [
+        "orchid-fn-config-dispatch"
+      ]
+    ]
+  },
+  {
+    "id": "orchid-sw-offline-bypass",
+    "type": "ui-switch",
+    "z": "orchid-tab-dashboard",
+    "group": "orchid-dashboard-test-group",
+    "name": "Bỏ qua khoá Offline",
+    "label": "MỞ KHOÁ LỆNH KHI THIẾT BỊ OFFLINE (BẤM NÚT TRỰC TIẾP)",
+    "order": 2,
+    "width": 6,
+    "height": 1,
+    "passthru": true,
+    "topic": "config/offline_bypass",
+    "topicType": "str",
+    "style": "",
+    "onvalue": "true",
+    "onvalueType": "bool",
+    "onicon": "",
+    "oncolor": "#26734d",
+    "offvalue": "false",
+    "offvalueType": "bool",
+    "officon": "",
+    "offcolor": "#a0aec0",
+    "x": 200,
+    "y": 940,
+    "wires": [
+      [
+        "orchid-fn-config-dispatch"
+      ]
+    ]
+  },
+  {
+    "id": "orchid-dd-mist-rh",
+    "type": "ui-dropdown",
+    "z": "orchid-tab-dashboard",
+    "group": "orchid-dashboard-test-group",
+    "name": "Ngưỡng ẩm phun sương",
+    "label": "Ngưỡng ẩm kích hoạt Bơm sương (Mist RH)",
+    "order": 3,
+    "width": 6,
+    "height": 1,
+    "passthru": true,
+    "multiple": false,
+    "topic": "config/mist_rh",
+    "topicType": "str",
+    "options": [
+      {
+        "value": "85_90",
+        "label": "Test phòng: Bật khi < 85%, Tắt khi > 90%"
+      },
+      {
+        "value": "75_85",
+        "label": "Nhạy vừa: Bật khi < 75%, Tắt khi > 85%"
+      },
+      {
+        "value": "65_80",
+        "label": "Mặc định chuẩn: Bật khi < 65%, Tắt khi > 80%"
+      }
+    ],
+    "x": 200,
+    "y": 980,
+    "wires": [
+      [
+        "orchid-fn-config-dispatch"
+      ]
+    ]
+  },
+  {
+    "id": "orchid-dd-fan-temp",
+    "type": "ui-dropdown",
+    "z": "orchid-tab-dashboard",
+    "group": "orchid-dashboard-test-group",
+    "name": "Ngưỡng nhiệt bật quạt",
+    "label": "Ngưỡng nhiệt độ kích hoạt Quạt (Fan Temp)",
+    "order": 4,
+    "width": 6,
+    "height": 1,
+    "passthru": true,
+    "multiple": false,
+    "topic": "config/fan_temp",
+    "topicType": "str",
+    "options": [
+      {
+        "value": "28_26",
+        "label": "Test phòng: Bật khi > 28°C, Tắt khi < 26°C"
+      },
+      {
+        "value": "30_28",
+        "label": "Nhạy vừa: Bật khi > 30°C, Tắt khi < 28°C"
+      },
+      {
+        "value": "33_31",
+        "label": "Mặc định chuẩn: Bật khi > 33°C, Tắt khi < 31°C"
+      }
+    ],
+    "x": 200,
+    "y": 1020,
+    "wires": [
+      [
+        "orchid-fn-config-dispatch"
+      ]
+    ]
+  },
+  {
+    "id": "orchid-fn-config-dispatch",
+    "type": "function",
+    "z": "orchid-tab-dashboard",
+    "name": "Apply threshold & bypass configs",
+    "func": "const topic = msg.topic;\nconst val = msg.payload;\nlet notifyText = '';\nconst outCommands = [];\nconst DEVICE_TOPIC = 'garden/orchid/orchid-01';\n\nif (topic === 'config/water_bypass') {\n  const bypass = val === true || val === 'true';\n  global.set('orchidBypassWater', bypass);\n  flow.set('orchidWaterLow', false);\n  notifyText = bypass ? 'ĐÃ BẬT: Bỏ qua kiểm tra mực nước (Bơm có thể chạy khi cạn nước)' : 'ĐÃ TẮT: Áp dụng lại bảo vệ mực nước';\n  outCommands.push({\n    topic: 'orchid/command',\n    payload: {\n      type: 'config',\n      config: {\n        water_low_adc: bypass ? -1 : 1200,\n        water_refilled_adc: bypass ? 0 : 1500\n      }\n    }\n  });\n} else if (topic === 'config/offline_bypass') {\n  const bypass = val === true || val === 'true';\n  global.set('orchidBypassOffline', bypass);\n  notifyText = bypass ? 'ĐÃ BẬT: Mở khoá lệnh khi Offline (Cho phép bấm nút gửi lệnh ngay)' : 'ĐÃ TẮT: Khôi phục khoá nút khi thiết bị Offline';\n} else if (topic === 'config/mist_rh') {\n  const [onStr, offStr] = String(val).split('_');\n  const mistOn = Number(onStr) || 65;\n  const mistOff = Number(offStr) || 80;\n  flow.set('orchidMistRhOn', mistOn);\n  flow.set('orchidMistRhOff', mistOff);\n  notifyText = 'Đã áp dụng ngưỡng ẩm: Bật khi < ' + mistOn + '%, Tắt khi > ' + mistOff + '%';\n  outCommands.push({\n    topic: 'orchid/command',\n    payload: {\n      type: 'config',\n      config: {\n        mist_rh_on: mistOn,\n        mist_rh_off: mistOff\n      }\n    }\n  });\n} else if (topic === 'config/fan_temp') {\n  const [onStr, offStr] = String(val).split('_');\n  const fanOn = Number(onStr) || 33;\n  const fanOff = Number(offStr) || 31;\n  flow.set('orchidFanTempOn', fanOn);\n  flow.set('orchidFanTempOff', fanOff);\n  notifyText = 'Đã áp dụng ngưỡng nhiệt độ quạt: Bật khi > ' + fanOn + '°C, Tắt khi < ' + fanOff + '°C';\n  outCommands.push({\n    topic: 'orchid/command',\n    payload: {\n      type: 'config',\n      config: {\n        fan_temp_on: fanOn,\n        fan_temp_off: fanOff\n      }\n    }\n  });\n}\n\nreturn [\n  outCommands.length ? outCommands : null,\n  { payload: notifyText, ui_update: { color: '#26734d' } },\n  { topic: 'control/refresh' }\n];",
+    "outputs": 3,
+    "x": 480,
+    "y": 960,
+    "wires": [
+      [
+        "orchid-gateway"
+      ],
+      [
+        "orchid-control-notify"
+      ],
+      [
+        "orchid-control-state",
+        "orchid-dashboard-render"
       ]
     ]
   }
