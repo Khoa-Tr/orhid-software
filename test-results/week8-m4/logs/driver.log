@@ -1,0 +1,196 @@
+2026-10-22T05:43:05.119Z PHASE 0 waiting for the real firmware on Wokwi (Serial "MQTT connected") and dashboard ONLINE
+2026-10-22T05:43:05.120Z OK  Wokwi firmware connected to broker.emqx.io
+2026-10-22T05:43:05.753Z OK  dashboard shows ONLINE from fresh telemetry
+2026-10-22T05:43:06.460Z SHOT w8-01-online-auto.jpg
+2026-10-22T05:43:06.460Z PHASE U uplink 720s: sample dashboard every 5 s
+2026-10-22T05:46:06.640Z SERIAL TX FAULT WATER LOW
+2026-10-22T05:47:06.702Z SERIAL TX FAULT WATER OFF
+2026-10-22T05:47:07.456Z SHOT w8-02-uplink-4min.jpg
+2026-10-22T05:50:07.772Z SERIAL TX FAULT DHT ON
+2026-10-22T05:50:37.802Z SERIAL TX FAULT DHT OFF
+2026-10-22T05:51:08.618Z SHOT w8-02-uplink-8min.jpg
+2026-10-22T05:55:09.748Z SHOT w8-03-uplink-end.jpg
+2026-10-22T05:55:09.749Z PHASE D downlink tests
+2026-10-22T05:55:09.772Z CLICK MANUAL
+2026-10-22T05:55:40.060Z FAIL Error: Timed out: MANUAL unlocks the relay buttons
+    at waitFor (/private/tmp/claude-501/-Users-mac-Downloads-orhid-orhid-software/cd895f13-b563-4bec-9745-4f1b2960d7ee/scratchpad/w8/driver-w8.cjs:38:45)
+    at async /private/tmp/claude-501/-Users-mac-Downloads-orhid-orhid-software/cd895f13-b563-4bec-9745-4f1b2960d7ee/scratchpad/w8/driver-w8.cjs:122:3
+2026-10-22T05:58:23.834Z PHASE 0 waiting for the real firmware on Wokwi (Serial "MQTT connected") and dashboard ONLINE
+2026-10-22T05:58:23.836Z OK  Wokwi firmware connected to broker.emqx.io
+2026-10-22T05:58:23.838Z OK  dashboard shows ONLINE from fresh telemetry
+2026-10-22T05:58:23.838Z PHASE D downlink tests
+2026-10-22T05:58:23.847Z CLICK MANUAL
+2026-10-22T05:58:24.150Z OK  MANUAL unlocks the relay buttons
+2026-10-22T05:58:24.172Z CLICK Fan ON
+2026-10-22T05:58:25.076Z OK  D1 Fan ON from dashboard -> APPLIED
+2026-10-22T05:58:25.076Z OK  D1 Serial shows relay fan GPIO26 -> ON
+2026-10-22T05:58:25.781Z SHOT w8-04-fan-on-applied.jpg
+2026-10-22T05:58:25.781Z OK  Fan OFF button ready
+2026-10-22T05:58:25.805Z CLICK Fan OFF
+2026-10-22T05:58:26.709Z OK  D2 Fan OFF from dashboard -> APPLIED
+2026-10-22T05:58:26.721Z CLICK Light ON
+2026-10-22T05:58:27.625Z OK  D3 Light ON from dashboard -> APPLIED
+2026-10-22T05:58:27.640Z CLICK AUTO
+2026-10-22T05:58:28.845Z OK  D4 AUTO: three AUTO commands APPLIED
+2026-10-22T05:58:28.845Z OK  D4 firmware reports mode AUTO for every relay
+2026-10-22T05:58:29.539Z SHOT w8-05-back-to-auto.jpg
+2026-10-22T05:58:29.556Z CLICK MANUAL
+2026-10-22T05:58:29.859Z OK  MANUAL again
+2026-10-22T05:58:29.863Z INJECT editor test button ON fan (60s)
+2026-10-22T05:58:30.766Z OK  D5 Fan ON ttl 60 s -> APPLIED
+2026-10-22T05:59:50.992Z FAIL Error: Timed out: D5 firmware expires the override after 60 s
+    at waitFor (/private/tmp/claude-501/-Users-mac-Downloads-orhid-orhid-software/cd895f13-b563-4bec-9745-4f1b2960d7ee/scratchpad/w8/driver-w8.cjs:38:45)
+    at async /private/tmp/claude-501/-Users-mac-Downloads-orhid-orhid-software/cd895f13-b563-4bec-9745-4f1b2960d7ee/scratchpad/w8/driver-w8.cjs:170:3
+2026-10-22T06:00:32.633Z PHASE 0 waiting for the real firmware on Wokwi (Serial "MQTT connected") and dashboard ONLINE
+2026-10-22T06:00:32.636Z OK  Wokwi firmware connected to broker.emqx.io
+2026-10-22T06:00:32.638Z OK  dashboard shows ONLINE from fresh telemetry
+2026-10-22T06:00:32.638Z PHASE D downlink tests
+2026-10-22T06:00:32.648Z CLICK MANUAL
+2026-10-22T06:00:32.649Z OK  MANUAL unlocks the relay buttons
+2026-10-22T06:00:32.658Z CLICK Fan ON
+2026-10-22T06:00:33.561Z OK  D1 Fan ON from dashboard -> APPLIED
+2026-10-22T06:00:33.562Z OK  D1 Serial shows relay fan GPIO26 -> ON
+2026-10-22T06:00:34.276Z SHOT w8-04-fan-on-applied.jpg
+2026-10-22T06:00:34.277Z OK  Fan OFF button ready
+2026-10-22T06:00:34.290Z CLICK Fan OFF
+2026-10-22T06:00:35.193Z OK  D2 Fan OFF from dashboard -> APPLIED
+2026-10-22T06:00:35.206Z CLICK Light ON
+2026-10-22T06:00:36.111Z OK  D3 Light ON from dashboard -> APPLIED
+2026-10-22T06:00:36.125Z CLICK AUTO
+2026-10-22T06:00:37.635Z OK  D4 AUTO: three AUTO commands APPLIED
+2026-10-22T06:00:37.635Z OK  D4 firmware reports mode AUTO for every relay
+2026-10-22T06:00:38.323Z SHOT w8-05-back-to-auto.jpg
+2026-10-22T06:00:38.342Z CLICK MANUAL
+2026-10-22T06:00:38.644Z OK  MANUAL again
+2026-10-22T06:00:38.647Z INJECT editor test button ON fan (60s)
+2026-10-22T06:00:39.552Z OK  D5 Fan ON ttl 60 s -> APPLIED
+2026-10-22T06:01:59.689Z FAIL Error: Timed out: D5 firmware expires the override after 60 s
+    at waitFor (/private/tmp/claude-501/-Users-mac-Downloads-orhid-orhid-software/cd895f13-b563-4bec-9745-4f1b2960d7ee/scratchpad/w8/driver-w8.cjs:57:33)
+    at async /private/tmp/claude-501/-Users-mac-Downloads-orhid-orhid-software/cd895f13-b563-4bec-9745-4f1b2960d7ee/scratchpad/w8/driver-w8.cjs:191:3
+2026-10-22T06:02:24.936Z PHASE 0 waiting for the real firmware on Wokwi (Serial "MQTT connected") and dashboard ONLINE
+2026-10-22T06:02:24.938Z OK  Wokwi firmware connected to broker.emqx.io
+2026-10-22T06:02:24.939Z OK  dashboard shows ONLINE from fresh telemetry
+2026-10-22T06:02:24.939Z PHASE D downlink tests
+2026-10-22T06:02:24.948Z CLICK MANUAL
+2026-10-22T06:02:24.949Z OK  MANUAL unlocks the relay buttons
+2026-10-22T06:02:24.972Z CLICK Fan ON
+2026-10-22T06:02:25.877Z OK  D1 Fan ON from dashboard -> APPLIED
+2026-10-22T06:02:25.877Z OK  D1 Serial shows relay fan GPIO26 -> ON
+2026-10-22T06:02:26.576Z SHOT w8-04-fan-on-applied.jpg
+2026-10-22T06:02:26.577Z OK  Fan OFF button ready
+2026-10-22T06:02:26.588Z CLICK Fan OFF
+2026-10-22T06:02:27.492Z OK  D2 Fan OFF from dashboard -> APPLIED
+2026-10-22T06:02:27.504Z CLICK Light ON
+2026-10-22T06:02:28.408Z OK  D3 Light ON from dashboard -> APPLIED
+2026-10-22T06:02:28.423Z CLICK AUTO
+2026-10-22T06:02:29.628Z OK  D4 AUTO: three AUTO commands APPLIED
+2026-10-22T06:02:29.629Z OK  D4 firmware reports mode AUTO for every relay
+2026-10-22T06:02:30.336Z SHOT w8-05-back-to-auto.jpg
+2026-10-22T06:02:30.355Z CLICK MANUAL
+2026-10-22T06:02:30.657Z OK  MANUAL again
+2026-10-22T06:02:30.661Z INJECT editor test button ON fan (60s)
+2026-10-22T06:02:31.564Z OK  D5 Fan ON ttl 60 s -> APPLIED
+2026-10-22T06:03:53.205Z OK  D5 firmware expires the override after 60 s
+2026-10-22T06:03:53.207Z SERIAL TX FAULT WATER LOW
+2026-10-22T06:04:12.645Z OK  D6 dashboard shows WATER_LOCKOUT
+2026-10-22T06:04:12.656Z OK  D6 Mist ON button locked during lockout
+2026-10-22T06:04:13.372Z SHOT w8-06-lockout-button-locked.jpg
+2026-10-22T06:04:13.376Z INJECT editor test button ON mist (60s) while LOCKOUT
+2026-10-22T06:05:01.000Z ABORT run paused by Wokwi (tab hidden) during D6; restarting downlink later
+2026-10-22T06:05:08.083Z FAIL Error: Timed out: D6 forced Mist ON -> firmware REJECTED WATER_LOCKOUT
+    at waitFor (/private/tmp/claude-501/-Users-mac-Downloads-orhid-orhid-software/cd895f13-b563-4bec-9745-4f1b2960d7ee/scratchpad/w8/driver-w8.cjs:57:33)
+    at async /private/tmp/claude-501/-Users-mac-Downloads-orhid-orhid-software/cd895f13-b563-4bec-9745-4f1b2960d7ee/scratchpad/w8/driver-w8.cjs:201:20
+2026-10-22T06:05:44.802Z PHASE 0 waiting for the real firmware on Wokwi (Serial "MQTT connected") and dashboard ONLINE
+2026-10-22T06:05:44.804Z OK  Wokwi firmware connected to broker.emqx.io
+2026-10-22T06:05:44.806Z OK  dashboard shows ONLINE from fresh telemetry
+2026-10-22T06:05:44.806Z PHASE D downlink tests
+2026-10-22T06:05:44.815Z CLICK MANUAL
+2026-10-22T06:05:44.817Z OK  MANUAL unlocks the relay buttons
+2026-10-22T06:05:44.837Z CLICK Fan ON
+2026-10-22T06:05:45.742Z OK  D1 Fan ON from dashboard -> APPLIED
+2026-10-22T06:05:45.744Z OK  D1 Serial shows relay fan GPIO26 -> ON
+2026-10-22T06:05:46.446Z SHOT w8-04-fan-on-applied.jpg
+2026-10-22T06:05:46.477Z OK  Fan OFF button ready
+2026-10-22T06:05:46.570Z CLICK Fan OFF
+2026-10-22T06:05:47.475Z OK  D2 Fan OFF from dashboard -> APPLIED
+2026-10-22T06:05:47.486Z CLICK Light ON
+2026-10-22T06:05:48.390Z OK  D3 Light ON from dashboard -> APPLIED
+2026-10-22T06:05:48.405Z CLICK AUTO
+2026-10-22T06:05:49.611Z OK  D4 AUTO: three AUTO commands APPLIED
+2026-10-22T06:05:49.611Z OK  D4 firmware reports mode AUTO for every relay
+2026-10-22T06:05:50.355Z SHOT w8-05-back-to-auto.jpg
+2026-10-22T06:05:50.372Z CLICK MANUAL
+2026-10-22T06:05:50.675Z OK  MANUAL again
+2026-10-22T06:05:50.678Z INJECT editor test button ON fan (60s)
+2026-10-22T06:05:51.581Z OK  D5 Fan ON ttl 60 s -> APPLIED
+2026-10-22T06:09:49.878Z FAIL Error: Timed out: D5 firmware expires the override after 60 s
+    at waitFor (/private/tmp/claude-501/-Users-mac-Downloads-orhid-orhid-software/cd895f13-b563-4bec-9745-4f1b2960d7ee/scratchpad/w8/driver-w8.cjs:57:33)
+    at async /private/tmp/claude-501/-Users-mac-Downloads-orhid-orhid-software/cd895f13-b563-4bec-9745-4f1b2960d7ee/scratchpad/w8/driver-w8.cjs:205:3
+2026-10-22T06:10:58.983Z PHASE 0 waiting for the real firmware on Wokwi (Serial "MQTT connected") and dashboard ONLINE
+2026-10-22T06:10:58.986Z OK  Wokwi firmware connected to broker.emqx.io
+2026-10-22T06:12:42.544Z OK  dashboard shows ONLINE from fresh telemetry (Wokwi paused 101 s meanwhile)
+2026-10-22T06:12:42.545Z PHASE D downlink tests
+2026-10-22T06:12:42.574Z CLICK MANUAL
+2026-10-22T06:12:42.574Z OK  MANUAL unlocks the relay buttons
+2026-10-22T06:12:42.589Z CLICK Fan ON
+2026-10-22T06:12:43.191Z OK  D1 Fan ON from dashboard -> APPLIED
+2026-10-22T06:12:43.192Z OK  D1 Serial shows relay fan GPIO26 -> ON
+2026-10-22T06:12:43.891Z SHOT w8-04-fan-on-applied.jpg
+2026-10-22T06:12:43.893Z OK  Fan OFF button ready
+2026-10-22T06:12:43.904Z CLICK Fan OFF
+2026-10-22T06:12:44.507Z OK  D2 Fan OFF from dashboard -> APPLIED
+2026-10-22T06:12:44.521Z CLICK Light ON
+2026-10-22T06:12:45.125Z OK  D3 Light ON from dashboard -> APPLIED
+2026-10-22T06:12:45.139Z CLICK AUTO
+2026-10-22T06:12:46.346Z OK  D4 AUTO: three AUTO commands APPLIED
+2026-10-22T06:12:46.346Z OK  D4 firmware reports mode AUTO for every relay
+2026-10-22T06:12:47.041Z SHOT w8-05-back-to-auto.jpg
+2026-10-22T06:12:47.056Z CLICK MANUAL
+2026-10-22T06:12:47.358Z OK  MANUAL again
+2026-10-22T06:12:47.362Z INJECT editor test button ON fan (60s)
+2026-10-22T06:12:47.966Z OK  D5 Fan ON ttl 60 s -> APPLIED
+2026-10-22T06:14:08.705Z OK  D5 firmware expires the override after 60 s
+2026-10-22T06:14:08.706Z SERIAL TX FAULT WATER LOW
+2026-10-22T06:14:27.727Z OK  D6 dashboard shows WATER_LOCKOUT
+2026-10-22T06:14:27.728Z OK  D6 Mist ON button locked during lockout
+2026-10-22T06:14:28.418Z SHOT w8-06-lockout-button-locked.jpg
+2026-10-22T06:14:28.421Z INJECT editor test button ON mist (60s) while LOCKOUT
+2026-10-22T06:14:29.024Z OK  D6 forced Mist ON -> firmware REJECTED WATER_LOCKOUT
+2026-10-22T06:14:29.025Z     reason=WATER_LOCKOUT
+2026-10-22T06:14:29.025Z OK  D6 mist relay never switched on during lockout
+2026-10-22T06:14:29.025Z SERIAL TX FAULT WATER OFF
+2026-10-22T06:14:41.106Z OK  D6 water refilled, lockout cleared
+2026-10-22T06:14:41.107Z OK  Mist ON button ready
+2026-10-22T06:14:41.117Z CLICK Mist ON
+2026-10-22T06:14:41.722Z OK  D7 Mist ON -> APPLIED
+2026-10-22T06:14:44.726Z INJECT repeat Mist ON #1
+2026-10-22T06:14:47.728Z INJECT repeat Mist ON #2
+2026-10-22T06:14:50.797Z INJECT repeat Mist ON #3
+2026-10-22T06:14:53.800Z INJECT repeat Mist ON #4
+2026-10-22T06:14:56.803Z INJECT repeat Mist ON #5
+2026-10-22T06:14:59.806Z INJECT repeat Mist ON #6
+2026-10-22T06:15:02.809Z INJECT repeat Mist ON #7
+2026-10-22T06:15:02.810Z OK  D7 firmware still cuts the mist at the run limit
+2026-10-22T06:15:06.812Z     repeated mist results: APPLIED, APPLIED, APPLIED, APPLIED, APPLIED, APPLIED, APPLIED, REJECTED(MIST_COOLDOWN)
+2026-10-22T06:15:06.814Z INJECT duplicate Fan ON #1
+2026-10-22T06:15:06.815Z INJECT duplicate Fan ON #2
+2026-10-22T06:15:07.418Z OK  D8 one Fan ON applied, the duplicate BLOCKED BUSY
+2026-10-22T06:15:07.419Z SERIAL TX FAULT CMD DROP ON
+2026-10-22T06:15:08.922Z OK  Light ON button ready
+2026-10-22T06:15:08.931Z CLICK Light ON
+2026-10-22T06:15:15.263Z OK  D9 dropped command -> NO_ACK after 6 s
+2026-10-22T06:15:15.263Z OK  D9 light relay unchanged
+2026-10-22T06:15:15.966Z SHOT w8-07-no-ack.jpg
+2026-10-22T06:15:15.966Z SERIAL TX FAULT CMD DROP OFF
+2026-10-22T06:15:17.468Z SERIAL TX FAULT MQTT DROP
+2026-10-22T06:15:18.072Z OK  D10 firmware clears overrides on link loss
+2026-10-22T06:15:18.073Z OK  D10 dashboard OFFLINE (LWT)
+2026-10-22T06:15:18.764Z SHOT w8-08-offline.jpg
+2026-10-22T06:15:24.186Z OK  D10 firmware reconnects
+2026-10-22T06:15:26.601Z OK  D10 dashboard ONLINE again
+2026-10-22T06:15:26.602Z OK  Fan ON button ready after reconnect
+2026-10-22T06:15:26.616Z CLICK Fan ON
+2026-10-22T06:15:27.520Z OK  D10 command after reconnect -> APPLIED
+2026-10-22T06:15:27.532Z CLICK AUTO
+2026-10-22T06:15:32.202Z SHOT w8-09-final.jpg
+2026-10-22T06:15:32.202Z PASS week 8 run (waited for Wokwi to resume 0 time(s), 101 s paused in total)

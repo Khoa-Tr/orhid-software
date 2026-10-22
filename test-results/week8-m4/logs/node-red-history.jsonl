@@ -1,0 +1,436 @@
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-22T05:40:07.828Z"}
+{"event":"telemetry_stale","age_s":17,"at":"2026-10-22T05:40:08.826Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 17 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":17,"at":"2026-10-22T05:40:08.826Z"},"at":"2026-10-22T05:40:08.826Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T05:40:48.453Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T05:40:48.454Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-22T05:40:48.454Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-22T05:40:48.454Z"},"at":"2026-10-22T05:40:48.454Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"OFFLINE","safe_state":null,"at":"2026-10-22T05:40:48.454Z"}
+{"event":"device_offline","at":"2026-10-22T05:40:48.839Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-22T05:40:48.839Z"},"at":"2026-10-22T05:40:48.839Z"}
+{"event":"availability","state":"online","at":"2026-10-22T05:43:04.621Z"}
+{"event":"availability","state":"online","at":"2026-10-22T05:43:04.621Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-22T05:43:04.621Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-22T05:43:04.621Z"},"at":"2026-10-22T05:43:04.621Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:43:05","at":"2026-10-22T05:43:05.696Z"}
+{"event":"command_sent","request_id":"auto-mvj47g0z-31","ref":"light-31","relay":"light","payload":{"request_id":"auto-mvj47g0z-31","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:43:05.699Z"}
+{"event":"ack_received","request_id":"auto-mvj47g0z-31","result":"APPLIED","reason":"","at":"2026-10-22T05:43:06.450Z"}
+{"event":"command_result","request_id":"auto-mvj47g0z-31","ref":"light-31","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":751,"at":"2026-10-22T05:43:06.450Z"}
+{"event":"ack_received","request_id":"auto-mvj47g0z-31","result":"APPLIED","reason":"","at":"2026-10-22T05:43:06.451Z"}
+{"event":"water_lockout","water_adc":1136,"threshold":1200,"at":"2026-10-22T05:46:24.091Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOW","severity":"CRITICAL","title":"CẢNH BÁO CẠN NƯỚC","message":"Mực nước bình chứa đang ở mức THẤP (ADC: 1136 < 1200)! Phun sương bị khóa an toàn (WATER_LOCKOUT).","water_adc":1136,"at":"2026-10-22T05:46:24.091Z"},"at":"2026-10-22T05:46:24.091Z"}
+{"event":"fault_active","fault":"water_low","severity":"fault","water_adc":1136,"mist_state":"WATER_LOCKOUT","safe_state":"Firmware WATER_LOCKOUT: mist relay locked until water ADC >= 1500","at":"2026-10-22T05:46:24.479Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOCKOUT","severity":"CRITICAL","title":"KHÓA NƯỚC AN TOÀN (WATER LOCKOUT)","message":"Firmware ESP32 đã kích hoạt cờ WATER_LOCKOUT. Bơm phun sương bị cưỡng bức ngắt hoàn toàn.","at":"2026-10-22T05:46:24.479Z"},"at":"2026-10-22T05:46:24.479Z"}
+{"event":"water_recovered","water_adc":1672,"threshold":1500,"at":"2026-10-22T05:47:17.382Z"}
+{"event":"system_alert","alert":{"type":"WATER_REFILLED","severity":"INFO","title":"MỰC NƯỚC ĐÃ PHỤC HỒI","message":"Bình chứa đã được châm nước đầy (ADC: 1672). Hệ thống sẵn sàng hoạt động trở lại.","at":"2026-10-22T05:47:17.382Z"},"at":"2026-10-22T05:47:17.382Z"}
+{"event":"fault_cleared","fault":"water_low","severity":"fault","water_adc":1672,"mist_state":"IDLE","safe_state":null,"at":"2026-10-22T05:47:17.806Z"}
+{"event":"fault_active","fault":"dht_fault","severity":"fault","dht_fail_streak":3,"mist_state":"IDLE","safe_state":"Firmware SENSOR_FAULT: AUTO misting stopped, mist ON rejected; fan holds last state; light unaffected","at":"2026-10-22T05:50:16.882Z"}
+{"event":"system_alert","alert":{"type":"DHT_FAULT","severity":"HIGH","title":"LỖI CẢM BIẾN DHT22","message":"Cảm biến DHT22 không trả về dữ liệu (null/NaN) liên tiếp 3 chu kỳ! Hệ thống chuyển sang chế độ phòng vệ.","at":"2026-10-22T05:50:20.244Z"},"at":"2026-10-22T05:50:20.244Z"}
+{"event":"command_sent","request_id":"auto-mvj4h49y-32","ref":"light-32","relay":"light","payload":{"request_id":"auto-mvj4h49y-32","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:50:37.030Z"}
+{"event":"ack_received","request_id":"auto-mvj4h49y-32","result":"APPLIED","reason":"","at":"2026-10-22T05:50:37.745Z"}
+{"event":"command_result","request_id":"auto-mvj4h49y-32","ref":"light-32","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":715,"at":"2026-10-22T05:50:37.745Z"}
+{"event":"ack_received","request_id":"auto-mvj4h49y-32","result":"APPLIED","reason":"","at":"2026-10-22T05:50:37.746Z"}
+{"event":"fault_cleared","fault":"dht_fault","severity":"fault","dht_fail_streak":0,"mist_state":"COOLDOWN","safe_state":null,"at":"2026-10-22T05:50:40.807Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-22T05:54:22.991Z"}
+{"event":"telemetry_stale","age_s":16,"at":"2026-10-22T05:54:24.001Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 16 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":16,"at":"2026-10-22T05:54:24.001Z"},"at":"2026-10-22T05:54:24.001Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-22T05:54:45.432Z"}
+{"event":"telemetry_stale","age_s":15,"at":"2026-10-22T05:55:19.011Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 15 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":15,"at":"2026-10-22T05:55:19.011Z"},"at":"2026-10-22T05:55:19.011Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-22T05:55:22.997Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-22T05:55:32.314Z"}
+{"event":"command_sent","request_id":"auto-mvj4qs9n-33","ref":"light-33","relay":"light","payload":{"request_id":"auto-mvj4qs9n-33","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:58:08.027Z"}
+{"event":"ack_received","request_id":"auto-mvj4qs9n-33","result":"APPLIED","reason":"","at":"2026-10-22T05:58:09.222Z"}
+{"event":"command_result","request_id":"auto-mvj4qs9n-33","ref":"light-33","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1195,"at":"2026-10-22T05:58:09.222Z"}
+{"event":"ack_received","request_id":"auto-mvj4qs9n-33","result":"APPLIED","reason":"","at":"2026-10-22T05:58:09.223Z"}
+{"event":"control_mode_changed","from":"AUTO","to":"MANUAL","user":"op1","at":"2026-10-22T05:58:23.847Z"}
+{"event":"command_sent","request_id":"dash-mvj4r4q4-34","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj4r4q4-34","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T05:58:24.172Z"}
+{"event":"ack_received","request_id":"dash-mvj4r4q4-34","result":"APPLIED","reason":"","at":"2026-10-22T05:58:24.795Z"}
+{"event":"command_result","request_id":"dash-mvj4r4q4-34","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":623,"at":"2026-10-22T05:58:24.795Z"}
+{"event":"ack_received","request_id":"dash-mvj4r4q4-34","result":"APPLIED","reason":"","at":"2026-10-22T05:58:24.796Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T05:58:25.194Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T05:58:25.195Z"}
+{"event":"command_sent","request_id":"dash-mvj4r5zh-35","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj4r5zh-35","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T05:58:25.805Z"}
+{"event":"ack_received","request_id":"dash-mvj4r5zh-35","result":"APPLIED","reason":"","at":"2026-10-22T05:58:26.643Z"}
+{"event":"command_result","request_id":"dash-mvj4r5zh-35","ref":null,"relay":"fan","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":838,"at":"2026-10-22T05:58:26.643Z"}
+{"event":"ack_received","request_id":"dash-mvj4r5zh-35","result":"APPLIED","reason":"","at":"2026-10-22T05:58:26.644Z"}
+{"event":"command_sent","request_id":"dash-mvj4r6oy-36","ref":null,"relay":"light","payload":{"request_id":"dash-mvj4r6oy-36","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T05:58:26.722Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T05:58:26.785Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T05:58:26.785Z"}
+{"event":"ack_received","request_id":"dash-mvj4r6oy-36","result":"APPLIED","reason":"","at":"2026-10-22T05:58:27.368Z"}
+{"event":"command_result","request_id":"dash-mvj4r6oy-36","ref":null,"relay":"light","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":646,"at":"2026-10-22T05:58:27.368Z"}
+{"event":"ack_received","request_id":"dash-mvj4r6oy-36","result":"APPLIED","reason":"","at":"2026-10-22T05:58:27.369Z"}
+{"event":"control_mode_changed","from":"MANUAL","to":"AUTO","user":"op1","at":"2026-10-22T05:58:27.639Z"}
+{"event":"command_sent","request_id":"dash-mvj4r7ef-37","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj4r7ef-37","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T05:58:27.639Z"}
+{"event":"command_sent","request_id":"dash-mvj4r7eg-38","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj4r7eg-38","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T05:58:27.640Z"}
+{"event":"command_sent","request_id":"dash-mvj4r7eg-39","ref":null,"relay":"light","payload":{"request_id":"dash-mvj4r7eg-39","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T05:58:27.640Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T05:58:27.755Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T05:58:27.755Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"desired_changed","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:58:27","at":"2026-10-22T05:58:27.755Z"}
+{"event":"command_result","request_id":null,"ref":"light-34","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"BLOCKED","reason":"BUSY","at":"2026-10-22T05:58:27.757Z"}
+{"event":"ack_received","request_id":"dash-mvj4r7ef-37","result":"APPLIED","reason":"AUTO","at":"2026-10-22T05:58:28.286Z"}
+{"event":"command_result","request_id":"dash-mvj4r7ef-37","ref":null,"relay":"mist","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":647,"at":"2026-10-22T05:58:28.286Z"}
+{"event":"ack_received","request_id":"dash-mvj4r7ef-37","result":"APPLIED","reason":"AUTO","at":"2026-10-22T05:58:28.288Z"}
+{"event":"ack_received","request_id":"dash-mvj4r7eg-38","result":"APPLIED","reason":"AUTO","at":"2026-10-22T05:58:28.584Z"}
+{"event":"command_result","request_id":"dash-mvj4r7eg-38","ref":null,"relay":"fan","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":944,"at":"2026-10-22T05:58:28.584Z"}
+{"event":"ack_received","request_id":"dash-mvj4r7eg-38","result":"APPLIED","reason":"AUTO","at":"2026-10-22T05:58:28.585Z"}
+{"event":"ack_received","request_id":"dash-mvj4r7eg-39","result":"APPLIED","reason":"AUTO","at":"2026-10-22T05:58:28.720Z"}
+{"event":"command_result","request_id":"dash-mvj4r7eg-39","ref":null,"relay":"light","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":1080,"at":"2026-10-22T05:58:28.720Z"}
+{"event":"ack_received","request_id":"dash-mvj4r7eg-39","result":"APPLIED","reason":"AUTO","at":"2026-10-22T05:58:28.722Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T05:58:28.861Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T05:58:28.862Z"}
+{"event":"control_mode_changed","from":"AUTO","to":"MANUAL","user":"op1","at":"2026-10-22T05:58:29.556Z"}
+{"event":"command_sent","request_id":"dash-mvj4r947-40","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj4r947-40","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T05:58:29.863Z"}
+{"event":"ack_received","request_id":"dash-mvj4r947-40","result":"APPLIED","reason":"","at":"2026-10-22T05:58:30.481Z"}
+{"event":"command_result","request_id":"dash-mvj4r947-40","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"APPLIED","reason":null,"latency_ms":618,"at":"2026-10-22T05:58:30.481Z"}
+{"event":"ack_received","request_id":"dash-mvj4r947-40","result":"APPLIED","reason":"","at":"2026-10-22T05:58:30.483Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T05:58:30.869Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T05:58:30.869Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-22T05:59:18.041Z"}
+{"event":"telemetry_stale","age_s":19,"at":"2026-10-22T05:59:19.048Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 19 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":19,"at":"2026-10-22T05:59:19.051Z"},"at":"2026-10-22T05:59:19.051Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T05:59:46.770Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T05:59:46.770Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-22T05:59:46.770Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-22T05:59:46.770Z"},"at":"2026-10-22T05:59:46.770Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"OFFLINE","safe_state":null,"at":"2026-10-22T05:59:46.770Z"}
+{"event":"device_offline","at":"2026-10-22T05:59:49.055Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-22T05:59:49.056Z"},"at":"2026-10-22T05:59:49.056Z"}
+{"event":"availability","state":"online","at":"2026-10-22T06:00:06.474Z"}
+{"event":"availability","state":"online","at":"2026-10-22T06:00:06.474Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-22T06:00:06.474Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-22T06:00:06.474Z"},"at":"2026-10-22T06:00:06.474Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:00:06.786Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:00:06.786Z"}
+{"event":"command_sent","request_id":"dash-mvj4tvv6-41","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj4tvv6-41","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:00:32.658Z"}
+{"event":"ack_received","request_id":"dash-mvj4tvv6-41","result":"APPLIED","reason":"","at":"2026-10-22T06:00:33.323Z"}
+{"event":"command_result","request_id":"dash-mvj4tvv6-41","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":665,"at":"2026-10-22T06:00:33.323Z"}
+{"event":"ack_received","request_id":"dash-mvj4tvv6-41","result":"APPLIED","reason":"","at":"2026-10-22T06:00:33.332Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:00:33.760Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:00:33.760Z"}
+{"event":"command_sent","request_id":"dash-mvj4tx4i-42","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj4tx4i-42","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:00:34.290Z"}
+{"event":"ack_received","request_id":"dash-mvj4tx4i-42","result":"APPLIED","reason":"","at":"2026-10-22T06:00:35.151Z"}
+{"event":"command_result","request_id":"dash-mvj4tx4i-42","ref":null,"relay":"fan","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":861,"at":"2026-10-22T06:00:35.151Z"}
+{"event":"ack_received","request_id":"dash-mvj4tx4i-42","result":"APPLIED","reason":"","at":"2026-10-22T06:00:35.173Z"}
+{"event":"command_sent","request_id":"dash-mvj4txty-43","ref":null,"relay":"light","payload":{"request_id":"dash-mvj4txty-43","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:00:35.206Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:00:35.296Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:00:35.297Z"}
+{"event":"ack_received","request_id":"dash-mvj4txty-43","result":"APPLIED","reason":"","at":"2026-10-22T06:00:35.876Z"}
+{"event":"command_result","request_id":"dash-mvj4txty-43","ref":null,"relay":"light","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":670,"at":"2026-10-22T06:00:35.876Z"}
+{"event":"ack_received","request_id":"dash-mvj4txty-43","result":"APPLIED","reason":"","at":"2026-10-22T06:00:35.876Z"}
+{"event":"control_mode_changed","from":"MANUAL","to":"AUTO","user":"op1","at":"2026-10-22T06:00:36.125Z"}
+{"event":"command_sent","request_id":"dash-mvj4tyjh-44","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj4tyjh-44","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:00:36.125Z"}
+{"event":"command_sent","request_id":"dash-mvj4tyjh-45","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj4tyjh-45","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:00:36.125Z"}
+{"event":"command_sent","request_id":"dash-mvj4tyjh-46","ref":null,"relay":"light","payload":{"request_id":"dash-mvj4tyjh-46","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:00:36.125Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T06:00:36.311Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T06:00:36.311Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"desired_changed","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 13:00:36","at":"2026-10-22T06:00:36.311Z"}
+{"event":"command_result","request_id":null,"ref":"light-35","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"BLOCKED","reason":"BUSY","at":"2026-10-22T06:00:36.313Z"}
+{"event":"ack_received","request_id":"dash-mvj4tyjh-44","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:00:36.846Z"}
+{"event":"command_result","request_id":"dash-mvj4tyjh-44","ref":null,"relay":"mist","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":721,"at":"2026-10-22T06:00:36.846Z"}
+{"event":"ack_received","request_id":"dash-mvj4tyjh-44","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:00:36.847Z"}
+{"event":"ack_received","request_id":"dash-mvj4tyjh-46","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:00:37.228Z"}
+{"event":"command_result","request_id":"dash-mvj4tyjh-46","ref":null,"relay":"light","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":1103,"at":"2026-10-22T06:00:37.228Z"}
+{"event":"ack_received","request_id":"dash-mvj4tyjh-46","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:00:37.228Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T06:00:37.358Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T06:00:37.358Z"}
+{"event":"command_result","request_id":"dash-mvj4tyjh-45","ref":null,"relay":"fan","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":1233,"at":"2026-10-22T06:00:37.358Z"}
+{"event":"ack_received","request_id":"dash-mvj4tyjh-45","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:00:37.358Z"}
+{"event":"ack_received","request_id":"dash-mvj4tyjh-45","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:00:37.368Z"}
+{"event":"control_mode_changed","from":"AUTO","to":"MANUAL","user":"op1","at":"2026-10-22T06:00:38.341Z"}
+{"event":"command_sent","request_id":"dash-mvj4u0hj-47","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj4u0hj-47","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:00:38.647Z"}
+{"event":"ack_received","request_id":"dash-mvj4u0hj-47","result":"APPLIED","reason":"","at":"2026-10-22T06:00:39.375Z"}
+{"event":"command_result","request_id":"dash-mvj4u0hj-47","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"APPLIED","reason":null,"latency_ms":728,"at":"2026-10-22T06:00:39.375Z"}
+{"event":"ack_received","request_id":"dash-mvj4u0hj-47","result":"APPLIED","reason":"","at":"2026-10-22T06:00:39.376Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:00:39.770Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:00:39.771Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:02:04.015Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:02:04.015Z"}
+{"event":"command_sent","request_id":"dash-mvj4waj0-48","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj4waj0-48","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:02:24.972Z"}
+{"event":"ack_received","request_id":"dash-mvj4waj0-48","result":"APPLIED","reason":"","at":"2026-10-22T06:02:25.629Z"}
+{"event":"command_result","request_id":"dash-mvj4waj0-48","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":657,"at":"2026-10-22T06:02:25.629Z"}
+{"event":"ack_received","request_id":"dash-mvj4waj0-48","result":"APPLIED","reason":"","at":"2026-10-22T06:02:25.629Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:02:26.017Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:02:26.017Z"}
+{"event":"command_sent","request_id":"dash-mvj4wbrw-49","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj4wbrw-49","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:02:26.588Z"}
+{"event":"ack_received","request_id":"dash-mvj4wbrw-49","result":"APPLIED","reason":"","at":"2026-10-22T06:02:27.253Z"}
+{"event":"command_result","request_id":"dash-mvj4wbrw-49","ref":null,"relay":"fan","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":665,"at":"2026-10-22T06:02:27.253Z"}
+{"event":"ack_received","request_id":"dash-mvj4wbrw-49","result":"APPLIED","reason":"","at":"2026-10-22T06:02:27.255Z"}
+{"event":"command_sent","request_id":"dash-mvj4wchc-50","ref":null,"relay":"light","payload":{"request_id":"dash-mvj4wchc-50","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:02:27.504Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:02:27.648Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:02:27.648Z"}
+{"event":"ack_received","request_id":"dash-mvj4wchc-50","result":"APPLIED","reason":"","at":"2026-10-22T06:02:28.148Z"}
+{"event":"command_result","request_id":"dash-mvj4wchc-50","ref":null,"relay":"light","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":644,"at":"2026-10-22T06:02:28.148Z"}
+{"event":"ack_received","request_id":"dash-mvj4wchc-50","result":"APPLIED","reason":"","at":"2026-10-22T06:02:28.150Z"}
+{"event":"control_mode_changed","from":"MANUAL","to":"AUTO","user":"op1","at":"2026-10-22T06:02:28.422Z"}
+{"event":"command_sent","request_id":"dash-mvj4wd6u-51","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj4wd6u-51","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:02:28.422Z"}
+{"event":"command_sent","request_id":"dash-mvj4wd6u-52","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj4wd6u-52","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:02:28.422Z"}
+{"event":"command_sent","request_id":"dash-mvj4wd6u-53","ref":null,"relay":"light","payload":{"request_id":"dash-mvj4wd6u-53","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:02:28.422Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T06:02:28.535Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T06:02:28.535Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"desired_changed","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 13:02:28","at":"2026-10-22T06:02:28.535Z"}
+{"event":"command_result","request_id":null,"ref":"light-36","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"BLOCKED","reason":"BUSY","at":"2026-10-22T06:02:28.536Z"}
+{"event":"ack_received","request_id":"dash-mvj4wd6u-51","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:02:29.045Z"}
+{"event":"command_result","request_id":"dash-mvj4wd6u-51","ref":null,"relay":"mist","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":623,"at":"2026-10-22T06:02:29.045Z"}
+{"event":"ack_received","request_id":"dash-mvj4wd6u-51","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:02:29.046Z"}
+{"event":"ack_received","request_id":"dash-mvj4wd6u-53","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:02:29.386Z"}
+{"event":"command_result","request_id":"dash-mvj4wd6u-53","ref":null,"relay":"light","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":964,"at":"2026-10-22T06:02:29.386Z"}
+{"event":"ack_received","request_id":"dash-mvj4wd6u-53","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:02:29.387Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T06:02:29.524Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T06:02:29.524Z"}
+{"event":"ack_received","request_id":"dash-mvj4wd6u-52","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:02:29.525Z"}
+{"event":"command_result","request_id":"dash-mvj4wd6u-52","ref":null,"relay":"fan","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":1103,"at":"2026-10-22T06:02:29.525Z"}
+{"event":"ack_received","request_id":"dash-mvj4wd6u-52","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:02:29.525Z"}
+{"event":"control_mode_changed","from":"AUTO","to":"MANUAL","user":"op1","at":"2026-10-22T06:02:30.354Z"}
+{"event":"command_sent","request_id":"dash-mvj4wex0-54","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj4wex0-54","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:02:30.660Z"}
+{"event":"ack_received","request_id":"dash-mvj4wex0-54","result":"APPLIED","reason":"","at":"2026-10-22T06:02:31.323Z"}
+{"event":"command_result","request_id":"dash-mvj4wex0-54","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"APPLIED","reason":null,"latency_ms":663,"at":"2026-10-22T06:02:31.323Z"}
+{"event":"ack_received","request_id":"dash-mvj4wex0-54","result":"APPLIED","reason":"","at":"2026-10-22T06:02:31.325Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:02:31.726Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:02:31.726Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:03:55.792Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:03:55.793Z"}
+{"event":"water_lockout","water_adc":1136,"threshold":1200,"at":"2026-10-22T06:04:12.093Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOW","severity":"CRITICAL","title":"CẢNH BÁO CẠN NƯỚC","message":"Mực nước bình chứa đang ở mức THẤP (ADC: 1136 < 1200)! Phun sương bị khóa an toàn (WATER_LOCKOUT).","water_adc":1136,"at":"2026-10-22T06:04:12.093Z"},"at":"2026-10-22T06:04:12.093Z"}
+{"event":"fault_active","fault":"water_low","severity":"fault","water_adc":1136,"mist_state":"WATER_LOCKOUT","safe_state":"Firmware WATER_LOCKOUT: mist relay locked until water ADC >= 1500","at":"2026-10-22T06:04:12.492Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOCKOUT","severity":"CRITICAL","title":"KHÓA NƯỚC AN TOÀN (WATER LOCKOUT)","message":"Firmware ESP32 đã kích hoạt cờ WATER_LOCKOUT. Bơm phun sương bị cưỡng bức ngắt hoàn toàn.","at":"2026-10-22T06:04:12.492Z"},"at":"2026-10-22T06:04:12.492Z"}
+{"event":"command_sent","request_id":"dash-mvj4ym68-55","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj4ym68-55","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:04:13.376Z"}
+{"event":"command_result","request_id":"dash-mvj4ym68-55","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"NO_ACK","reason":"no ACK within 6s","at":"2026-10-22T06:04:19.490Z"}
+{"event":"fault_command_no_ack","relay":"mist","request_id":"dash-mvj4ym68-55","source":"dashboard","safe_state":"Command not confirmed by firmware: trust device state only; check link before retrying","at":"2026-10-22T06:04:19.496Z"}
+{"event":"fault_active","fault":"ack_missing","severity":"warning","relays":["mist"],"safe_state":"Command not confirmed by firmware: trust device state only; check link before retrying","at":"2026-10-22T06:04:19.496Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-22T06:04:28.098Z"}
+{"event":"telemetry_stale","age_s":17,"at":"2026-10-22T06:04:29.111Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 17 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":17,"at":"2026-10-22T06:04:29.111Z"},"at":"2026-10-22T06:04:29.111Z"}
+{"event":"ack_received","request_id":"dash-mvj4ym68-55","result":"REJECTED","reason":"WATER_LOCKOUT","at":"2026-10-22T06:04:57.641Z"}
+{"event":"command_late_ack","request_id":"dash-mvj4ym68-55","result":"REJECTED","reason":"WATER_LOCKOUT","at":"2026-10-22T06:04:57.641Z"}
+{"event":"system_alert","alert":{"type":"COMMAND_REJECTED","severity":"WARNING","title":"LỆNH BỊ TỪ CHỐI (REJECTED)","message":"Lệnh [dash-mvj4ym68-55] bị ESP32 từ chối vì lý do an toàn: WATER_LOCKOUT","request_id":"dash-mvj4ym68-55","reason":"WATER_LOCKOUT","at":"2026-10-22T06:04:57.641Z"},"at":"2026-10-22T06:04:57.641Z"}
+{"event":"ack_received","request_id":"dash-mvj4ym68-55","result":"REJECTED","reason":"WATER_LOCKOUT","at":"2026-10-22T06:04:57.642Z"}
+{"event":"command_late_ack","request_id":"dash-mvj4ym68-55","result":"REJECTED","reason":"WATER_LOCKOUT","at":"2026-10-22T06:04:57.642Z"}
+{"event":"system_alert","alert":{"type":"COMMAND_REJECTED","severity":"WARNING","title":"LỆNH BỊ TỪ CHỐI (REJECTED)","message":"Lệnh [dash-mvj4ym68-55] bị ESP32 từ chối vì lý do an toàn: WATER_LOCKOUT","request_id":"dash-mvj4ym68-55","reason":"WATER_LOCKOUT","at":"2026-10-22T06:04:57.642Z"},"at":"2026-10-22T06:04:57.642Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-22T06:04:59.891Z"}
+{"event":"water_recovered","water_adc":1672,"threshold":1500,"at":"2026-10-22T06:05:13.178Z"}
+{"event":"system_alert","alert":{"type":"WATER_REFILLED","severity":"INFO","title":"MỰC NƯỚC ĐÃ PHỤC HỒI","message":"Bình chứa đã được châm nước đầy (ADC: 1672). Hệ thống sẵn sàng hoạt động trở lại.","at":"2026-10-22T06:05:13.178Z"},"at":"2026-10-22T06:05:13.178Z"}
+{"event":"fault_cleared","fault":"water_low","severity":"fault","water_adc":1672,"mist_state":"IDLE","safe_state":null,"at":"2026-10-22T06:05:13.547Z"}
+{"event":"command_sent","request_id":"dash-mvj50kqu-56","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj50kqu-56","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:05:44.838Z"}
+{"event":"ack_received","request_id":"dash-mvj50kqu-56","result":"APPLIED","reason":"","at":"2026-10-22T06:05:45.489Z"}
+{"event":"command_result","request_id":"dash-mvj50kqu-56","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":651,"at":"2026-10-22T06:05:45.489Z"}
+{"event":"ack_received","request_id":"dash-mvj50kqu-56","result":"APPLIED","reason":"","at":"2026-10-22T06:05:45.491Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:05:45.877Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:05:45.877Z"}
+{"event":"command_sent","request_id":"dash-mvj50m2y-57","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj50m2y-57","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:05:46.570Z"}
+{"event":"ack_received","request_id":"dash-mvj50m2y-57","result":"APPLIED","reason":"","at":"2026-10-22T06:05:47.214Z"}
+{"event":"command_result","request_id":"dash-mvj50m2y-57","ref":null,"relay":"fan","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":644,"at":"2026-10-22T06:05:47.214Z"}
+{"event":"ack_received","request_id":"dash-mvj50m2y-57","result":"APPLIED","reason":"","at":"2026-10-22T06:05:47.216Z"}
+{"event":"command_sent","request_id":"dash-mvj50mse-58","ref":null,"relay":"light","payload":{"request_id":"dash-mvj50mse-58","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:05:47.486Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:05:47.613Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:05:47.613Z"}
+{"event":"ack_received","request_id":"dash-mvj50mse-58","result":"APPLIED","reason":"","at":"2026-10-22T06:05:48.126Z"}
+{"event":"command_result","request_id":"dash-mvj50mse-58","ref":null,"relay":"light","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":640,"at":"2026-10-22T06:05:48.126Z"}
+{"event":"ack_received","request_id":"dash-mvj50mse-58","result":"APPLIED","reason":"","at":"2026-10-22T06:05:48.126Z"}
+{"event":"control_mode_changed","from":"MANUAL","to":"AUTO","user":"op1","at":"2026-10-22T06:05:48.404Z"}
+{"event":"command_sent","request_id":"dash-mvj50nhw-59","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj50nhw-59","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:05:48.404Z"}
+{"event":"command_sent","request_id":"dash-mvj50nhw-60","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj50nhw-60","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:05:48.404Z"}
+{"event":"command_sent","request_id":"dash-mvj50nhw-61","ref":null,"relay":"light","payload":{"request_id":"dash-mvj50nhw-61","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:05:48.404Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T06:05:48.514Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T06:05:48.514Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"desired_changed","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 13:05:48","at":"2026-10-22T06:05:48.514Z"}
+{"event":"command_result","request_id":null,"ref":"light-37","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"BLOCKED","reason":"BUSY","at":"2026-10-22T06:05:48.516Z"}
+{"event":"ack_received","request_id":"dash-mvj50nhw-59","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:05:49.025Z"}
+{"event":"command_result","request_id":"dash-mvj50nhw-59","ref":null,"relay":"mist","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":621,"at":"2026-10-22T06:05:49.025Z"}
+{"event":"ack_received","request_id":"dash-mvj50nhw-59","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:05:49.026Z"}
+{"event":"fault_cleared","fault":"ack_missing","severity":"warning","relays":[],"safe_state":null,"at":"2026-10-22T06:05:49.027Z"}
+{"event":"ack_received","request_id":"dash-mvj50nhw-60","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:05:49.347Z"}
+{"event":"command_result","request_id":"dash-mvj50nhw-60","ref":null,"relay":"fan","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":943,"at":"2026-10-22T06:05:49.347Z"}
+{"event":"ack_received","request_id":"dash-mvj50nhw-60","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:05:49.349Z"}
+{"event":"ack_received","request_id":"dash-mvj50nhw-61","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:05:49.484Z"}
+{"event":"command_result","request_id":"dash-mvj50nhw-61","ref":null,"relay":"light","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":1080,"at":"2026-10-22T06:05:49.484Z"}
+{"event":"ack_received","request_id":"dash-mvj50nhw-61","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:05:49.486Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T06:05:49.621Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T06:05:49.621Z"}
+{"event":"control_mode_changed","from":"AUTO","to":"MANUAL","user":"op1","at":"2026-10-22T06:05:50.372Z"}
+{"event":"command_sent","request_id":"dash-mvj50p92-62","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj50p92-62","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:05:50.678Z"}
+{"event":"ack_received","request_id":"dash-mvj50p92-62","result":"APPLIED","reason":"","at":"2026-10-22T06:05:51.389Z"}
+{"event":"command_result","request_id":"dash-mvj50p92-62","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"APPLIED","reason":null,"latency_ms":711,"at":"2026-10-22T06:05:51.389Z"}
+{"event":"ack_received","request_id":"dash-mvj50p92-62","result":"APPLIED","reason":"","at":"2026-10-22T06:05:51.389Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:05:51.846Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:05:51.847Z"}
+{"event":"telemetry_stale","age_s":15,"at":"2026-10-22T06:06:19.149Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 15 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":15,"at":"2026-10-22T06:06:19.154Z"},"at":"2026-10-22T06:06:19.154Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-22T06:06:23.124Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T06:06:52.615Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T06:06:52.616Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-22T06:06:52.616Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-22T06:06:52.616Z"},"at":"2026-10-22T06:06:52.616Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"OFFLINE","safe_state":null,"at":"2026-10-22T06:06:52.616Z"}
+{"event":"device_offline","at":"2026-10-22T06:06:54.159Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-22T06:06:54.159Z"},"at":"2026-10-22T06:06:54.159Z"}
+{"event":"availability","state":"online","at":"2026-10-22T06:07:24.117Z"}
+{"event":"availability","state":"online","at":"2026-10-22T06:07:24.117Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-22T06:07:24.117Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-22T06:07:24.117Z"},"at":"2026-10-22T06:07:24.117Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:07:24.358Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:07:24.358Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-22T06:08:13.144Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-22T06:08:14.004Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-22T06:10:53.184Z"}
+{"event":"telemetry_stale","age_s":18,"at":"2026-10-22T06:10:54.205Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 18 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":18,"at":"2026-10-22T06:10:54.205Z"},"at":"2026-10-22T06:10:54.205Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T06:11:26.244Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T06:11:26.244Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-22T06:11:26.244Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-22T06:11:26.244Z"},"at":"2026-10-22T06:11:26.244Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"OFFLINE","safe_state":null,"at":"2026-10-22T06:11:26.244Z"}
+{"event":"device_offline","at":"2026-10-22T06:11:29.213Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-22T06:11:29.213Z"},"at":"2026-10-22T06:11:29.213Z"}
+{"event":"availability","state":"online","at":"2026-10-22T06:12:41.006Z"}
+{"event":"availability","state":"online","at":"2026-10-22T06:12:41.006Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-22T06:12:41.006Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-22T06:12:41.006Z"},"at":"2026-10-22T06:12:41.006Z"}
+{"event":"command_sent","request_id":"dash-mvj59j31-63","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj59j31-63","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:12:42.589Z"}
+{"event":"ack_received","request_id":"dash-mvj59j31-63","result":"APPLIED","reason":"","at":"2026-10-22T06:12:43.180Z"}
+{"event":"command_result","request_id":"dash-mvj59j31-63","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":591,"at":"2026-10-22T06:12:43.180Z"}
+{"event":"ack_received","request_id":"dash-mvj59j31-63","result":"APPLIED","reason":"","at":"2026-10-22T06:12:43.180Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:12:43.524Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:12:43.525Z"}
+{"event":"command_sent","request_id":"dash-mvj59k3l-64","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj59k3l-64","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:12:43.905Z"}
+{"event":"ack_received","request_id":"dash-mvj59k3l-64","result":"APPLIED","reason":"","at":"2026-10-22T06:12:44.393Z"}
+{"event":"command_result","request_id":"dash-mvj59k3l-64","ref":null,"relay":"fan","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":488,"at":"2026-10-22T06:12:44.393Z"}
+{"event":"ack_received","request_id":"dash-mvj59k3l-64","result":"APPLIED","reason":"","at":"2026-10-22T06:12:44.393Z"}
+{"event":"command_sent","request_id":"dash-mvj59kkq-65","ref":null,"relay":"light","payload":{"request_id":"dash-mvj59kkq-65","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:12:44.522Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:12:44.745Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:12:44.745Z"}
+{"event":"ack_received","request_id":"dash-mvj59kkq-65","result":"APPLIED","reason":"","at":"2026-10-22T06:12:45.001Z"}
+{"event":"command_result","request_id":"dash-mvj59kkq-65","ref":null,"relay":"light","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":479,"at":"2026-10-22T06:12:45.001Z"}
+{"event":"ack_received","request_id":"dash-mvj59kkq-65","result":"APPLIED","reason":"","at":"2026-10-22T06:12:45.001Z"}
+{"event":"control_mode_changed","from":"MANUAL","to":"AUTO","user":"op1","at":"2026-10-22T06:12:45.139Z"}
+{"event":"command_sent","request_id":"dash-mvj59l1v-66","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj59l1v-66","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:12:45.139Z"}
+{"event":"command_sent","request_id":"dash-mvj59l1v-67","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj59l1v-67","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:12:45.139Z"}
+{"event":"command_sent","request_id":"dash-mvj59l1v-68","ref":null,"relay":"light","payload":{"request_id":"dash-mvj59l1v-68","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:12:45.139Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T06:12:45.356Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T06:12:45.356Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"desired_changed","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 13:12:45","at":"2026-10-22T06:12:45.356Z"}
+{"event":"command_result","request_id":null,"ref":"light-38","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"BLOCKED","reason":"BUSY","at":"2026-10-22T06:12:45.357Z"}
+{"event":"ack_received","request_id":"dash-mvj59l1v-66","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:12:45.622Z"}
+{"event":"command_result","request_id":"dash-mvj59l1v-66","ref":null,"relay":"mist","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":484,"at":"2026-10-22T06:12:45.623Z"}
+{"event":"ack_received","request_id":"dash-mvj59l1v-66","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:12:45.623Z"}
+{"event":"ack_received","request_id":"dash-mvj59l1v-67","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:12:46.075Z"}
+{"event":"command_result","request_id":"dash-mvj59l1v-67","ref":null,"relay":"fan","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":936,"at":"2026-10-22T06:12:46.075Z"}
+{"event":"ack_received","request_id":"dash-mvj59l1v-67","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:12:46.076Z"}
+{"event":"ack_received","request_id":"dash-mvj59l1v-68","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:12:46.207Z"}
+{"event":"command_result","request_id":"dash-mvj59l1v-68","ref":null,"relay":"light","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":1068,"at":"2026-10-22T06:12:46.207Z"}
+{"event":"ack_received","request_id":"dash-mvj59l1v-68","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:12:46.207Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T06:12:46.329Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T06:12:46.329Z"}
+{"event":"control_mode_changed","from":"AUTO","to":"MANUAL","user":"op1","at":"2026-10-22T06:12:47.055Z"}
+{"event":"command_sent","request_id":"dash-mvj59mrl-69","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj59mrl-69","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:12:47.361Z"}
+{"event":"ack_received","request_id":"dash-mvj59mrl-69","result":"APPLIED","reason":"","at":"2026-10-22T06:12:47.856Z"}
+{"event":"command_result","request_id":"dash-mvj59mrl-69","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"APPLIED","reason":null,"latency_ms":495,"at":"2026-10-22T06:12:47.856Z"}
+{"event":"ack_received","request_id":"dash-mvj59mrl-69","result":"APPLIED","reason":"","at":"2026-10-22T06:12:47.856Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:12:48.206Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:12:48.206Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:14:11.005Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:14:11.005Z"}
+{"event":"water_lockout","water_adc":1136,"threshold":1200,"at":"2026-10-22T06:14:27.177Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOW","severity":"CRITICAL","title":"CẢNH BÁO CẠN NƯỚC","message":"Mực nước bình chứa đang ở mức THẤP (ADC: 1136 < 1200)! Phun sương bị khóa an toàn (WATER_LOCKOUT).","water_adc":1136,"at":"2026-10-22T06:14:27.177Z"},"at":"2026-10-22T06:14:27.177Z"}
+{"event":"fault_active","fault":"water_low","severity":"fault","water_adc":1136,"mist_state":"WATER_LOCKOUT","safe_state":"Firmware WATER_LOCKOUT: mist relay locked until water ADC >= 1500","at":"2026-10-22T06:14:27.535Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOCKOUT","severity":"CRITICAL","title":"KHÓA NƯỚC AN TOÀN (WATER LOCKOUT)","message":"Firmware ESP32 đã kích hoạt cờ WATER_LOCKOUT. Bơm phun sương bị cưỡng bức ngắt hoàn toàn.","at":"2026-10-22T06:14:27.535Z"},"at":"2026-10-22T06:14:27.535Z"}
+{"event":"command_sent","request_id":"dash-mvj5bsqt-70","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj5bsqt-70","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:14:28.421Z"}
+{"event":"ack_received","request_id":"dash-mvj5bsqt-70","result":"REJECTED","reason":"WATER_LOCKOUT","at":"2026-10-22T06:14:28.933Z"}
+{"event":"command_result","request_id":"dash-mvj5bsqt-70","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"REJECTED","reason":"WATER_LOCKOUT","latency_ms":512,"at":"2026-10-22T06:14:28.933Z"}
+{"event":"ack_received","request_id":"dash-mvj5bsqt-70","result":"REJECTED","reason":"WATER_LOCKOUT","at":"2026-10-22T06:14:28.933Z"}
+{"event":"system_alert","alert":{"type":"COMMAND_REJECTED","severity":"WARNING","title":"LỆNH BỊ TỪ CHỐI (REJECTED)","message":"Lệnh [dash-mvj5bsqt-70] bị ESP32 từ chối vì lý do an toàn: WATER_LOCKOUT","request_id":"dash-mvj5bsqt-70","reason":"WATER_LOCKOUT","at":"2026-10-22T06:14:28.933Z"},"at":"2026-10-22T06:14:28.933Z"}
+{"event":"system_alert","alert":{"type":"COMMAND_REJECTED","severity":"WARNING","title":"LỆNH BỊ TỪ CHỐI (REJECTED)","message":"Lệnh [dash-mvj5bsqt-70] bị ESP32 từ chối vì lý do an toàn: WATER_LOCKOUT","request_id":"dash-mvj5bsqt-70","reason":"WATER_LOCKOUT","at":"2026-10-22T06:14:28.933Z"},"at":"2026-10-22T06:14:28.933Z"}
+{"event":"water_recovered","water_adc":1672,"threshold":1500,"at":"2026-10-22T06:14:40.575Z"}
+{"event":"system_alert","alert":{"type":"WATER_REFILLED","severity":"INFO","title":"MỰC NƯỚC ĐÃ PHỤC HỒI","message":"Bình chứa đã được châm nước đầy (ADC: 1672). Hệ thống sẵn sàng hoạt động trở lại.","at":"2026-10-22T06:14:40.575Z"},"at":"2026-10-22T06:14:40.575Z"}
+{"event":"fault_cleared","fault":"water_low","severity":"fault","water_adc":1672,"mist_state":"IDLE","safe_state":null,"at":"2026-10-22T06:14:40.918Z"}
+{"event":"command_sent","request_id":"dash-mvj5c2jh-71","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj5c2jh-71","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:14:41.117Z"}
+{"event":"ack_received","request_id":"dash-mvj5c2jh-71","result":"APPLIED","reason":"","at":"2026-10-22T06:14:41.603Z"}
+{"event":"command_result","request_id":"dash-mvj5c2jh-71","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":486,"at":"2026-10-22T06:14:41.603Z"}
+{"event":"ack_received","request_id":"dash-mvj5c2jh-71","result":"APPLIED","reason":"","at":"2026-10-22T06:14:41.603Z"}
+{"event":"relay_change","relay":"mist","from":"OFF","to":"ON","at":"2026-10-22T06:14:41.940Z"}
+{"event":"relay_change","relay":"mist","from":"OFF","to":"ON","at":"2026-10-22T06:14:41.940Z"}
+{"event":"command_sent","request_id":"dash-mvj5c5bq-72","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj5c5bq-72","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:14:44.726Z"}
+{"event":"ack_received","request_id":"dash-mvj5c5bq-72","result":"APPLIED","reason":"","at":"2026-10-22T06:14:45.217Z"}
+{"event":"command_result","request_id":"dash-mvj5c5bq-72","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"APPLIED","reason":null,"latency_ms":491,"at":"2026-10-22T06:14:45.217Z"}
+{"event":"ack_received","request_id":"dash-mvj5c5bq-72","result":"APPLIED","reason":"","at":"2026-10-22T06:14:45.217Z"}
+{"event":"command_sent","request_id":"dash-mvj5c7n4-73","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj5c7n4-73","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:14:47.728Z"}
+{"event":"ack_received","request_id":"dash-mvj5c7n4-73","result":"APPLIED","reason":"","at":"2026-10-22T06:14:48.220Z"}
+{"event":"command_result","request_id":"dash-mvj5c7n4-73","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"APPLIED","reason":null,"latency_ms":492,"at":"2026-10-22T06:14:48.220Z"}
+{"event":"ack_received","request_id":"dash-mvj5c7n4-73","result":"APPLIED","reason":"","at":"2026-10-22T06:14:48.220Z"}
+{"event":"command_sent","request_id":"dash-mvj5ca0d-74","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj5ca0d-74","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:14:50.797Z"}
+{"event":"ack_received","request_id":"dash-mvj5ca0d-74","result":"APPLIED","reason":"","at":"2026-10-22T06:14:51.297Z"}
+{"event":"command_result","request_id":"dash-mvj5ca0d-74","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"APPLIED","reason":null,"latency_ms":500,"at":"2026-10-22T06:14:51.297Z"}
+{"event":"ack_received","request_id":"dash-mvj5ca0d-74","result":"APPLIED","reason":"","at":"2026-10-22T06:14:51.297Z"}
+{"event":"command_sent","request_id":"dash-mvj5ccbs-75","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj5ccbs-75","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:14:53.800Z"}
+{"event":"ack_received","request_id":"dash-mvj5ccbs-75","result":"APPLIED","reason":"","at":"2026-10-22T06:14:54.446Z"}
+{"event":"command_result","request_id":"dash-mvj5ccbs-75","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"APPLIED","reason":null,"latency_ms":646,"at":"2026-10-22T06:14:54.446Z"}
+{"event":"ack_received","request_id":"dash-mvj5ccbs-75","result":"APPLIED","reason":"","at":"2026-10-22T06:14:54.447Z"}
+{"event":"command_sent","request_id":"dash-mvj5cen7-76","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj5cen7-76","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:14:56.803Z"}
+{"event":"ack_received","request_id":"dash-mvj5cen7-76","result":"APPLIED","reason":"","at":"2026-10-22T06:14:57.305Z"}
+{"event":"command_result","request_id":"dash-mvj5cen7-76","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"APPLIED","reason":null,"latency_ms":502,"at":"2026-10-22T06:14:57.305Z"}
+{"event":"ack_received","request_id":"dash-mvj5cen7-76","result":"APPLIED","reason":"","at":"2026-10-22T06:14:57.305Z"}
+{"event":"command_sent","request_id":"dash-mvj5cgym-77","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj5cgym-77","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:14:59.806Z"}
+{"event":"ack_received","request_id":"dash-mvj5cgym-77","result":"APPLIED","reason":"","at":"2026-10-22T06:15:00.394Z"}
+{"event":"command_result","request_id":"dash-mvj5cgym-77","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"APPLIED","reason":null,"latency_ms":588,"at":"2026-10-22T06:15:00.394Z"}
+{"event":"ack_received","request_id":"dash-mvj5cgym-77","result":"APPLIED","reason":"","at":"2026-10-22T06:15:00.394Z"}
+{"event":"command_sent","request_id":"dash-mvj5cja1-78","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj5cja1-78","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:15:02.809Z"}
+{"event":"ack_received","request_id":"dash-mvj5cja1-78","result":"REJECTED","reason":"MIST_COOLDOWN","at":"2026-10-22T06:15:03.331Z"}
+{"event":"command_result","request_id":"dash-mvj5cja1-78","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"REJECTED","reason":"MIST_COOLDOWN","latency_ms":522,"at":"2026-10-22T06:15:03.331Z"}
+{"event":"ack_received","request_id":"dash-mvj5cja1-78","result":"REJECTED","reason":"MIST_COOLDOWN","at":"2026-10-22T06:15:03.331Z"}
+{"event":"system_alert","alert":{"type":"COMMAND_REJECTED","severity":"WARNING","title":"LỆNH BỊ TỪ CHỐI (REJECTED)","message":"Lệnh [dash-mvj5cja1-78] bị ESP32 từ chối vì lý do an toàn: MIST_COOLDOWN","request_id":"dash-mvj5cja1-78","reason":"MIST_COOLDOWN","at":"2026-10-22T06:15:03.331Z"},"at":"2026-10-22T06:15:03.331Z"}
+{"event":"system_alert","alert":{"type":"COMMAND_REJECTED","severity":"WARNING","title":"LỆNH BỊ TỪ CHỐI (REJECTED)","message":"Lệnh [dash-mvj5cja1-78] bị ESP32 từ chối vì lý do an toàn: MIST_COOLDOWN","request_id":"dash-mvj5cja1-78","reason":"MIST_COOLDOWN","at":"2026-10-22T06:15:03.331Z"},"at":"2026-10-22T06:15:03.331Z"}
+{"event":"relay_change","relay":"mist","from":"ON","to":"OFF","at":"2026-10-22T06:15:05.353Z"}
+{"event":"relay_change","relay":"mist","from":"ON","to":"OFF","at":"2026-10-22T06:15:05.353Z"}
+{"event":"automation_skipped","rule":"fan_after_mist","reason":"dashboard_manual_mode","assists_today":0,"rule_time":"2026-10-22 13:15:05","at":"2026-10-22T06:15:05.353Z"}
+{"event":"command_sent","request_id":"dash-mvj5cmdb-79","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj5cmdb-79","mode":"MANUAL","state":"ON","ttl_s":60},"source":"dashboard","user":"editor","reason":"editor_test_button","at":"2026-10-22T06:15:06.815Z"}
+{"event":"command_result","request_id":null,"ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"BLOCKED","reason":"BUSY","at":"2026-10-22T06:15:06.815Z"}
+{"event":"ack_received","request_id":"dash-mvj5cmdb-79","result":"APPLIED","reason":"","at":"2026-10-22T06:15:07.317Z"}
+{"event":"command_result","request_id":"dash-mvj5cmdb-79","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":60,"source":"dashboard","user":"editor","result":"APPLIED","reason":null,"latency_ms":502,"at":"2026-10-22T06:15:07.317Z"}
+{"event":"ack_received","request_id":"dash-mvj5cmdb-79","result":"APPLIED","reason":"","at":"2026-10-22T06:15:07.317Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:15:07.680Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:15:07.680Z"}
+{"event":"command_sent","request_id":"dash-mvj5co04-80","ref":null,"relay":"light","payload":{"request_id":"dash-mvj5co04-80","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:15:08.932Z"}
+{"event":"command_result","request_id":"dash-mvj5co04-80","ref":null,"relay":"light","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"NO_ACK","reason":"no ACK within 6s","at":"2026-10-22T06:15:15.189Z"}
+{"event":"fault_command_no_ack","relay":"light","request_id":"dash-mvj5co04-80","source":"dashboard","safe_state":"Command not confirmed by firmware: trust device state only; check link before retrying","at":"2026-10-22T06:15:15.190Z"}
+{"event":"fault_active","fault":"ack_missing","severity":"warning","relays":["light"],"safe_state":"Command not confirmed by firmware: trust device state only; check link before retrying","at":"2026-10-22T06:15:15.190Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T06:15:17.997Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T06:15:17.997Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-22T06:15:17.997Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-22T06:15:17.997Z"},"at":"2026-10-22T06:15:17.997Z"}
+{"event":"device_offline","at":"2026-10-22T06:15:19.258Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-22T06:15:19.258Z"},"at":"2026-10-22T06:15:19.258Z"}
+{"event":"availability","state":"online","at":"2026-10-22T06:15:24.343Z"}
+{"event":"availability","state":"online","at":"2026-10-22T06:15:24.344Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-22T06:15:24.344Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-22T06:15:24.344Z"},"at":"2026-10-22T06:15:24.344Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:15:24.598Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:15:24.598Z"}
+{"event":"command_sent","request_id":"dash-mvj5d1nc-81","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj5d1nc-81","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"op1","reason":"operator_button","at":"2026-10-22T06:15:26.616Z"}
+{"event":"ack_received","request_id":"dash-mvj5d1nc-81","result":"APPLIED","reason":"","at":"2026-10-22T06:15:27.283Z"}
+{"event":"command_result","request_id":"dash-mvj5d1nc-81","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"op1","result":"APPLIED","reason":null,"latency_ms":667,"at":"2026-10-22T06:15:27.283Z"}
+{"event":"ack_received","request_id":"dash-mvj5d1nc-81","result":"APPLIED","reason":"","at":"2026-10-22T06:15:27.284Z"}
+{"event":"control_mode_changed","from":"MANUAL","to":"AUTO","user":"op1","at":"2026-10-22T06:15:27.532Z"}
+{"event":"command_sent","request_id":"dash-mvj5d2cs-82","ref":null,"relay":"mist","payload":{"request_id":"dash-mvj5d2cs-82","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:15:27.532Z"}
+{"event":"command_sent","request_id":"dash-mvj5d2cs-83","ref":null,"relay":"fan","payload":{"request_id":"dash-mvj5d2cs-83","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:15:27.532Z"}
+{"event":"command_sent","request_id":"dash-mvj5d2cs-84","ref":null,"relay":"light","payload":{"request_id":"dash-mvj5d2cs-84","mode":"AUTO"},"source":"dashboard","user":"op1","reason":"mode_auto","at":"2026-10-22T06:15:27.532Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:15:27.677Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T06:15:27.677Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"desired_changed","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 13:15:27","at":"2026-10-22T06:15:27.677Z"}
+{"event":"command_result","request_id":null,"ref":"light-39","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"BLOCKED","reason":"BUSY","at":"2026-10-22T06:15:27.678Z"}
+{"event":"ack_received","request_id":"dash-mvj5d2cs-82","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:15:28.204Z"}
+{"event":"command_result","request_id":"dash-mvj5d2cs-82","ref":null,"relay":"mist","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":672,"at":"2026-10-22T06:15:28.204Z"}
+{"event":"ack_received","request_id":"dash-mvj5d2cs-82","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:15:28.204Z"}
+{"event":"ack_received","request_id":"dash-mvj5d2cs-83","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:15:28.498Z"}
+{"event":"command_result","request_id":"dash-mvj5d2cs-83","ref":null,"relay":"fan","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":966,"at":"2026-10-22T06:15:28.498Z"}
+{"event":"ack_received","request_id":"dash-mvj5d2cs-83","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:15:28.500Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:15:28.637Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T06:15:28.637Z"}
+{"event":"command_result","request_id":"dash-mvj5d2cs-84","ref":null,"relay":"light","mode":"AUTO","source":"dashboard","user":"op1","result":"APPLIED","reason":"AUTO","latency_ms":1105,"at":"2026-10-22T06:15:28.637Z"}
+{"event":"ack_received","request_id":"dash-mvj5d2cs-84","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:15:28.637Z"}
+{"event":"ack_received","request_id":"dash-mvj5d2cs-84","result":"APPLIED","reason":"AUTO","at":"2026-10-22T06:15:28.639Z"}
+{"event":"fault_cleared","fault":"ack_missing","severity":"warning","relays":[],"safe_state":null,"at":"2026-10-22T06:15:28.640Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"desired_changed","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 13:15:33","at":"2026-10-22T06:15:33.153Z"}
+{"event":"command_sent","request_id":"auto-mvj5d6p0-85","ref":"light-40","relay":"light","payload":{"request_id":"auto-mvj5d6p0-85","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T06:15:33.156Z"}
+{"event":"ack_received","request_id":"auto-mvj5d6p0-85","result":"APPLIED","reason":"","at":"2026-10-22T06:15:33.858Z"}
+{"event":"command_result","request_id":"auto-mvj5d6p0-85","ref":"light-40","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":702,"at":"2026-10-22T06:15:33.858Z"}
+{"event":"ack_received","request_id":"auto-mvj5d6p0-85","result":"APPLIED","reason":"","at":"2026-10-22T06:15:33.858Z"}

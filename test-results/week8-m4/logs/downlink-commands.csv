@@ -1,0 +1,56 @@
+sent_utc,source,user,relay,command,request_id,wire_ms,rx_ms,relay_change,ack_ms,result,gateway_latency_ms,phase
+2026-10-22T05:43:05.699Z,automation:light_schedule,,light,OFF ttl 900s,auto-mvj47g0z-31,267,564,"không đổi",564,"APPLIED",751,uplink
+2026-10-22T05:50:37.030Z,automation:light_schedule,,light,OFF ttl 900s,auto-mvj4h49y-32,265,551,"không đổi",551,"APPLIED",715,uplink
+2026-10-22T05:58:08.027Z,automation:light_schedule,,light,OFF ttl 900s,auto-mvj4qs9n-33,811,992,"không đổi",992,"APPLIED",1195,uplink
+2026-10-22T05:58:24.172Z,dashboard,op1,fan,ON ttl 300s,dash-mvj4r4q4-34,258,341,"GPIO26 OFF -> ON",341,"APPLIED",623,uplink
+2026-10-22T05:58:25.805Z,dashboard,op1,fan,OFF ttl 300s,dash-mvj4r5zh-35,263,337,"GPIO26 ON -> OFF",542,"APPLIED",838,uplink
+2026-10-22T05:58:26.722Z,dashboard,op1,light,ON ttl 300s,dash-mvj4r6oy-36,265,444,"GPIO27 OFF -> ON",444,"APPLIED",646,uplink
+2026-10-22T05:58:27.639Z,dashboard,op1,mist,AUTO,dash-mvj4r7ef-37,263,538,"không đổi",539,"APPLIED (AUTO)",647,uplink
+2026-10-22T05:58:27.640Z,dashboard,op1,fan,AUTO,dash-mvj4r7eg-38,372,538,"không đổi",538,"APPLIED (AUTO)",944,uplink
+2026-10-22T05:58:27.640Z,dashboard,op1,light,AUTO,dash-mvj4r7eg-39,372,739,"GPIO27 ON -> OFF",739,"APPLIED (AUTO)",1080,uplink
+2026-10-22T05:58:29.863Z,dashboard,editor,fan,ON ttl 60s,dash-mvj4r947-40,258,356,"GPIO26 OFF -> ON",356,"APPLIED",618,uplink
+2026-10-22T06:00:32.658Z,dashboard,op1,fan,ON ttl 300s,dash-mvj4tvv6-41,264,428,"GPIO26 OFF -> ON",428,"APPLIED",665,uplink
+2026-10-22T06:00:34.290Z,dashboard,op1,fan,OFF ttl 300s,dash-mvj4tx4i-42,273,429,"GPIO26 ON -> OFF",429,"APPLIED",861,uplink
+2026-10-22T06:00:35.206Z,dashboard,op1,light,ON ttl 300s,dash-mvj4txty-43,269,321,"GPIO27 OFF -> ON",321,"APPLIED",670,uplink
+2026-10-22T06:00:36.125Z,dashboard,op1,mist,AUTO,dash-mvj4tyjh-44,348,419,"không đổi",419,"APPLIED (AUTO)",721,uplink
+2026-10-22T06:00:36.125Z,dashboard,op1,fan,AUTO,dash-mvj4tyjh-45,459,620,"không đổi",620,"APPLIED (AUTO)",1233,uplink
+2026-10-22T06:00:36.125Z,dashboard,op1,light,AUTO,dash-mvj4tyjh-46,460,619,"GPIO27 ON -> OFF",620,"APPLIED (AUTO)",1103,uplink
+2026-10-22T06:00:38.647Z,dashboard,editor,fan,ON ttl 60s,dash-mvj4u0hj-47,293,544,"GPIO26 OFF -> ON",544,"APPLIED",728,uplink
+2026-10-22T06:02:24.972Z,dashboard,op1,fan,ON ttl 300s,dash-mvj4waj0-48,261,379,"GPIO26 OFF -> ON",379,"APPLIED",657,uplink
+2026-10-22T06:02:26.588Z,dashboard,op1,fan,OFF ttl 300s,dash-mvj4wbrw-49,261,387,"GPIO26 ON -> OFF",387,"APPLIED",665,uplink
+2026-10-22T06:02:27.504Z,dashboard,op1,light,ON ttl 300s,dash-mvj4wchc-50,264,486,"GPIO27 OFF -> ON",486,"APPLIED",644,uplink
+2026-10-22T06:02:28.422Z,dashboard,op1,mist,AUTO,dash-mvj4wd6u-51,261,381,"không đổi",382,"APPLIED (AUTO)",623,uplink
+2026-10-22T06:02:28.422Z,dashboard,op1,fan,AUTO,dash-mvj4wd6u-52,383,587,"không đổi",587,"APPLIED (AUTO)",1103,uplink
+2026-10-22T06:02:28.422Z,dashboard,op1,light,AUTO,dash-mvj4wd6u-53,383,587,"GPIO27 ON -> OFF",587,"APPLIED (AUTO)",964,uplink
+2026-10-22T06:02:30.660Z,dashboard,editor,fan,ON ttl 60s,dash-mvj4wex0-54,268,389,"GPIO26 OFF -> ON",389,"APPLIED",663,uplink
+2026-10-22T06:04:13.376Z,dashboard,editor,mist,ON ttl 60s,dash-mvj4ym68-55,300,43961,"không đổi",43961,"NO_ACK (no ACK within 6s)",,uplink
+2026-10-22T06:05:44.838Z,dashboard,op1,fan,ON ttl 300s,dash-mvj50kqu-56,276,398,"GPIO26 OFF -> ON",398,"APPLIED",651,uplink
+2026-10-22T06:05:46.570Z,dashboard,op1,fan,OFF ttl 300s,dash-mvj50m2y-57,259,497,"GPIO26 ON -> OFF",497,"APPLIED",644,uplink
+2026-10-22T06:05:47.486Z,dashboard,op1,light,ON ttl 300s,dash-mvj50mse-58,258,395,"GPIO27 OFF -> ON",396,"APPLIED",640,uplink
+2026-10-22T06:05:48.404Z,dashboard,op1,mist,AUTO,dash-mvj50nhw-59,260,496,"không đổi",496,"APPLIED (AUTO)",621,uplink
+2026-10-22T06:05:48.404Z,dashboard,op1,fan,AUTO,dash-mvj50nhw-60,369,496,"không đổi",496,"APPLIED (AUTO)",943,uplink
+2026-10-22T06:05:48.404Z,dashboard,op1,light,AUTO,dash-mvj50nhw-61,369,701,"GPIO27 ON -> OFF",701,"APPLIED (AUTO)",1080,uplink
+2026-10-22T06:05:50.678Z,dashboard,editor,fan,ON ttl 60s,dash-mvj50p92-62,266,470,"GPIO26 OFF -> ON",471,"APPLIED",711,uplink
+2026-10-22T06:12:42.589Z,dashboard,op1,fan,ON ttl 300s,dash-mvj59j31-63,261,442,"GPIO26 OFF -> ON",442,"APPLIED",591,downlink
+2026-10-22T06:12:43.905Z,dashboard,op1,fan,OFF ttl 300s,dash-mvj59k3l-64,265,347,"GPIO26 ON -> OFF",347,"APPLIED",488,downlink
+2026-10-22T06:12:44.522Z,dashboard,op1,light,ON ttl 300s,dash-mvj59kkq-65,261,340,"GPIO27 OFF -> ON",340,"APPLIED",479,downlink
+2026-10-22T06:12:45.139Z,dashboard,op1,mist,AUTO,dash-mvj59l1v-66,259,337,"không đổi",337,"APPLIED (AUTO)",484,downlink
+2026-10-22T06:12:45.139Z,dashboard,op1,fan,AUTO,dash-mvj59l1v-67,475,747,"không đổi",747,"APPLIED (AUTO)",936,downlink
+2026-10-22T06:12:45.139Z,dashboard,op1,light,AUTO,dash-mvj59l1v-68,475,747,"GPIO27 ON -> OFF",747,"APPLIED (AUTO)",1068,downlink
+2026-10-22T06:12:47.361Z,dashboard,editor,fan,ON ttl 60s,dash-mvj59mrl-69,258,418,"GPIO26 OFF -> ON",419,"APPLIED",495,downlink
+2026-10-22T06:14:28.421Z,dashboard,editor,mist,ON ttl 60s,dash-mvj5bsqt-70,274,419,"không đổi",419,"REJECTED (WATER_LOCKOUT)",512,downlink
+2026-10-22T06:14:41.117Z,dashboard,op1,mist,ON ttl 300s,dash-mvj5c2jh-71,271,371,"GPIO25 OFF -> ON",371,"APPLIED",486,downlink
+2026-10-22T06:14:44.726Z,dashboard,editor,mist,ON ttl 60s,dash-mvj5c5bq-72,261,431,"không đổi",432,"APPLIED",491,downlink
+2026-10-22T06:14:47.728Z,dashboard,editor,mist,ON ttl 60s,dash-mvj5c7n4-73,261,492,"không đổi",492,"APPLIED",492,downlink
+2026-10-22T06:14:50.797Z,dashboard,editor,mist,ON ttl 60s,dash-mvj5ca0d-74,258,474,"không đổi",475,"APPLIED",500,downlink
+2026-10-22T06:14:53.800Z,dashboard,editor,mist,ON ttl 60s,dash-mvj5ccbs-75,261,334,"không đổi",334,"APPLIED",646,downlink
+2026-10-22T06:14:56.803Z,dashboard,editor,mist,ON ttl 60s,dash-mvj5cen7-76,259,382,"không đổi",382,"APPLIED",502,downlink
+2026-10-22T06:14:59.806Z,dashboard,editor,mist,ON ttl 60s,dash-mvj5cgym-77,269,434,"không đổi",434,"APPLIED",588,downlink
+2026-10-22T06:15:02.809Z,dashboard,editor,mist,ON ttl 60s,dash-mvj5cja1-78,268,494,"không đổi",494,"REJECTED (MIST_COOLDOWN)",522,downlink
+2026-10-22T06:15:06.815Z,dashboard,editor,fan,ON ttl 60s,dash-mvj5cmdb-79,265,373,"GPIO26 OFF -> ON",374,"APPLIED",502,downlink
+2026-10-22T06:15:08.932Z,dashboard,op1,light,ON ttl 300s,dash-mvj5co04-80,264,,"(lệnh bị bỏ – giả lập mất lệnh)",,"NO_ACK (no ACK within 6s)",,downlink
+2026-10-22T06:15:26.616Z,dashboard,op1,fan,ON ttl 300s,dash-mvj5d1nc-81,264,531,"GPIO26 OFF -> ON",531,"APPLIED",667,downlink
+2026-10-22T06:15:27.532Z,dashboard,op1,mist,AUTO,dash-mvj5d2cs-82,277,426,"không đổi",426,"APPLIED (AUTO)",672,downlink
+2026-10-22T06:15:27.532Z,dashboard,op1,fan,AUTO,dash-mvj5d2cs-83,402,631,"GPIO26 ON -> OFF",631,"APPLIED (AUTO)",966,downlink
+2026-10-22T06:15:27.532Z,dashboard,op1,light,AUTO,dash-mvj5d2cs-84,402,631,"không đổi",631,"APPLIED (AUTO)",1105,downlink
+2026-10-22T06:15:33.156Z,automation:light_schedule,,light,OFF ttl 900s,auto-mvj5d6p0-85,257,508,"không đổi",508,"APPLIED",702,downlink

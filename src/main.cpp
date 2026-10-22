@@ -221,6 +221,15 @@ bool lightRelayOn = false;
 // ============================================================================
 // TUẦN 1: ĐIỀU KHIỂN XUẤT TÍN HIỆU GPIO RELAY CHẤP HÀNH
 // ============================================================================
+// Thoi gian da troi qua tu moc 'since' toi 'now'. 'now' lay o dau vong loop(), con lenh MQTT xu ly
+// trong cung vong loop dat moc bang millis() (muon hon 'now'); khi do 'now - since' am se tran thanh
+// so rat lon (unsigned) va lenh MANUAL bi coi la het TTL ngay. Moc nam sau 'now' thi tinh la 0 ms.
+// Van dung khi millis() quay vong sau ~49 ngay.
+unsigned long elapsedMs(unsigned long now, unsigned long since) {
+  const unsigned long diff = now - since;
+  return diff > 0x7FFFFFFFUL ? 0UL : diff;
+}
+
 void setRelay(uint8_t pin, bool on) {
   digitalWrite(pin, on ? HIGH : LOW);
 }
@@ -444,14 +453,14 @@ void expireManualOverrides(unsigned long now) {
   const char* names[] = {"mist", "fan", "light"};
   for (size_t index = 0; index < sizeof(overrides) / sizeof(overrides[0]); index++) {
     RelayOverride& relayOverride = *overrides[index];
-    if (relayOverride.active && now - relayOverride.startedAt >= relayOverride.ttlMs) {
+    if (relayOverride.active && elapsedMs(now, relayOverride.startedAt) >= relayOverride.ttlMs) {
       relayOverride.active = false;
       Serial.printf("MQTT override expired: %s -> AUTO\n", names[index]);
     }
   }
 
   // Tinh tu luc relay bat that, khong tu lenh moi nhat: lenh ON lap lai khong keo dai thoi gian phun.
-  if (manualMistRunActive && now - manualMistRunStartedAt >= Thresholds::maxMistDurationMs) {
+  if (manualMistRunActive && elapsedMs(now, manualMistRunStartedAt) >= Thresholds::maxMistDurationMs) {
     mistOverride.active = false;
     setMistState(MistState::Cooldown, now);
     Serial.println("MQTT mist safety limit reached; entering cooldown");
@@ -460,7 +469,7 @@ void expireManualOverrides(unsigned long now) {
   if (mistOverride.active && mistOverride.on &&
       (waterLockoutActive() || mistState == MistState::SensorFault)) {
     mistOverride.active = false;
-    if (now - lastManualSafetyWarningAt >= 1000UL) {
+    if (elapsedMs(now, lastManualSafetyWarningAt) >= 1000UL) {
       Serial.printf("MQTT mist override cancelled: %s\n",
                     mistState == MistState::SensorFault ? "SENSOR_FAULT" : "WATER_LOCKOUT");
       lastManualSafetyWarningAt = now;
@@ -769,7 +778,7 @@ void updateMist(unsigned long now, bool climateValid, float humidity, int waterA
   const bool waterRefilled = waterAdc >= Thresholds::waterRefilledAdc;
   // Lenh MANUAL OFF (vd. Node-RED chan phun ban dem) giu chu trinh AUTO, khong chay ngam phia sau.
   const bool autoMistHeld = mistOverride.active && !mistOverride.on;
-  const unsigned long elapsed = now - mistStateSince;
+  const unsigned long elapsed = elapsedMs(now, mistStateSince);
 
   switch (mistState) {
     case MistState::Idle:
@@ -820,7 +829,7 @@ void updateLight(unsigned long now, int lightAdc) {
     lightOnSince = now;
   } else if (lightState == SwitchState::On && lightAdc < Thresholds::lightOffAdc) {
     lightState = SwitchState::Off;
-  } else if (lightState == SwitchState::On && now - lightOnSince >= Thresholds::maxAutoLightOnMs) {
+  } else if (lightState == SwitchState::On && elapsedMs(now, lightOnSince) >= Thresholds::maxAutoLightOnMs) {
     lightState = SwitchState::Off;
     lightWaitingForDaylight = true;
     Serial.println("SAFETY light AUTO on-time limit reached; off until daylight is seen");

@@ -132,7 +132,7 @@ Khi chạy Wokwi trong VS Code với build này, có thể gõ trực tiếp và
 - `FAULT WATER LOW` / `FAULT WATER OFF` (giả lập nước cạn như kéo biến trở xuống 600 ADC, để thử `WATER_LOCKOUT`)
 - `FAULT MQTT DROP`
 
-Muốn chạy build này trong VS Code, đổi hai dòng `firmware`/`elf` trong `wokwi.toml` sang `.pio/build/esp32dev_fault_test/…`, nhớ đổi lại sau khi thử. `wokwi.toml` mở sẵn cổng RFC2217 `4000`, nên script trên máy tính có thể đọc và ghi Serial của mô phỏng (xem `test-results/week8-downlink/`).
+Muốn chạy build này trong VS Code, đổi hai dòng `firmware`/`elf` trong `wokwi.toml` sang `.pio/build/esp32dev_fault_test/…`, nhớ đổi lại sau khi thử. `wokwi.toml` mở sẵn cổng RFC2217 `4000`, nên script trên máy tính có thể đọc và ghi Serial của mô phỏng (xem `test-results/week8-m4/`).
 
 ## Nạp chương trình vào ESP32 thật
 

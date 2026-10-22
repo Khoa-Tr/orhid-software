@@ -540,6 +540,11 @@ assert.equal(eventsOf(result).find((event) => event.event === "night_mist_observ
 night(ruleMsg("state", at("18:03"), { state: { mist: "OFF", mist_mode: "MANUAL" } }));
 result = night(ruleMsg("state", at("22:00"), { state: { mist: "ON", mist_mode: "MANUAL" } }, { controlMode: "MANUAL" }));
 assert(eventsOf(result).some((event) => event.event === "night_mist_observed" && event.note === "operator exception during night"));
+// Firmware lai bo lenh giu ngay (vd. board chua nap ban sua) -> khong gui lai doi, cho 30 s.
+night(ruleMsg("command_result", at("18:04"), {}, { payload: { relay: "mist", ref: "night-2", result: "APPLIED", source: "automation:night_mist_policy" } }));
+result = night(ruleMsg("state", at("18:05"), { state: { mist: "OFF", mist_mode: "AUTO" }, stateAt: currentTime + 4000 }));
+assert.equal(commandsOf(result).length, 0, "Repeated override loss must back off for 30 s instead of resending every tick");
+setNow(currentTime + 31000);
 result = night(ruleMsg("tick", at("06:00", "2026-10-17"), { state: { mist: "OFF", mist_mode: "MANUAL" } }, { modeChanged: false }));
 assert.deepEqual(commandsOf(result)[0], { relay: "mist", mode: "AUTO", source: "automation:night_mist_policy", ref: "night-3", reason: "care_window" },
   "Morning releases the night hold back to firmware AUTO");

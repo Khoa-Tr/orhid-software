@@ -223,6 +223,14 @@ void updateDisplay(const FilteredSensors& sensors) {
                    lightRelayOn ? ST77XX_GREEN : ST77XX_CYAN);
 }
 
+// Thoi gian da troi qua tu moc 'since' toi 'now'. Lenh MQTT xu ly trong cung vong loop() dat moc
+// bang millis() (muon hon 'now' lay o dau vong); 'now - since' am se tran thanh so rat lon (unsigned)
+// va lenh MANUAL bi coi la het TTL ngay. Moc nam sau 'now' thi tinh la 0 ms.
+unsigned long elapsedMs(unsigned long now, unsigned long since) {
+  const unsigned long diff = now - since;
+  return diff > 0x7FFFFFFFUL ? 0UL : diff;
+}
+
 void setRelay(uint8_t pin, bool on) {
   digitalWrite(pin, on ? HIGH : LOW);
 }
@@ -352,14 +360,14 @@ void expireManualOverrides(unsigned long now) {
   const char* names[] = {"mist", "fan", "light"};
   for (size_t index = 0; index < sizeof(overrides) / sizeof(overrides[0]); index++) {
     RelayOverride& relayOverride = *overrides[index];
-    if (relayOverride.active && now - relayOverride.startedAt >= relayOverride.ttlMs) {
+    if (relayOverride.active && elapsedMs(now, relayOverride.startedAt) >= relayOverride.ttlMs) {
       relayOverride.active = false;
       Serial.printf("MQTT override expired: %s -> AUTO\n", names[index]);
     }
   }
 
   if (mistOverride.active && mistOverride.on &&
-      now - mistOverride.startedAt >= Thresholds::maxMistDurationMs) {
+      elapsedMs(now, mistOverride.startedAt) >= Thresholds::maxMistDurationMs) {
     mistOverride.active = false;
     setMistState(MistState::Cooldown, now);
     Serial.println("MQTT mist safety limit reached; entering cooldown");
@@ -528,7 +536,7 @@ void setMistState(MistState next, unsigned long now) {
 
 void updateMist(unsigned long now, float humidity, int waterAdc) {
   const bool waterLow = waterAdc < Thresholds::waterLowAdc;
-  const unsigned long elapsed = now - mistStateSince;
+  const unsigned long elapsed = elapsedMs(now, mistStateSince);
   switch (mistState) {
     case MistState::Idle:
       if (waterLow) setMistState(MistState::WaterLockout, now);

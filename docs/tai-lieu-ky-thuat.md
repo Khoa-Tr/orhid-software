@@ -40,7 +40,7 @@ sequenceDiagram
     G-->>D: Last command "APPLIED, … ms", mở khóa nút, ghi Command history
 ```
 
-Nếu firmware từ chối (ví dụ `WATER_LOCKOUT`), relay không đổi và ACK là `REJECTED` kèm lý do. Nếu không có ACK trong 6 s, gateway báo `NO_ACK`. Log chạy thật trên Wokwi của tuần 8 sẽ được thêm vào `test-results/` sau lượt chạy firmware trên Wokwi (chưa có tại thời điểm viết tài liệu này).
+Nếu firmware từ chối (ví dụ `WATER_LOCKOUT`), relay không đổi và ACK là `REJECTED` kèm lý do. Nếu không có ACK trong 6 s, gateway báo `NO_ACK`. Log chạy thật trên Wokwi của tuần 8 (firmware thật, build `esp32dev_fault_test`, broker `broker.emqx.io`) nằm trong [`test-results/week8-m4/`](../test-results/week8-m4/README.md): 10 ca downlink kèm log từng lệnh (gửi → broker → `CMD rx` → `RELAY` → `ACK` → dashboard) và đối chiếu uplink Serial ↔ MQTT ↔ dashboard.
 
 ## 2. Sơ đồ đấu dây (Wokwi, `diagram.json`)
 
