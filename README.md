@@ -14,7 +14,7 @@ Các bước dưới đây dựng lại toàn bộ hệ thống (firmware trên 
 - Visual Studio Code với extension **PlatformIO IDE** (3.3) và **Wokwi Simulator** (4.0). Wokwi cần kích hoạt license cá nhân miễn phí khi chạy lần đầu.
 - Trình duyệt để mở dashboard.
 
-**2. Lấy code.** Trên Windows, đặt project ở đường dẫn không có dấu tiếng Việt hoặc khoảng trắng (ví dụ `C:\orchid`), vì toolchain ESP32 báo lỗi `Invalid argument` với đường dẫn có dấu.
+**2. Lấy code.** Trên Windows, đặt project ở đường dẫn không có dấu tiếng Việt hoặc khoảng trắng (ví dụ `C:\orchid`), vì toolchain ESP32 báo lỗi `Invalid argument` với đường dẫn có dấu. Nếu không muốn chuyển thư mục, tạo một junction trỏ tới thư mục hiện tại rồi mở project qua đường dẫn mới (BUG-05), ví dụ trong PowerShell: `cmd /c mklink /J C:\orchid "D:\Máy tính\orhid_người3\orhid-software"`.
 
 ```bash
 git clone https://github.com/Khoa-Tr/orhid-software.git
@@ -107,7 +107,7 @@ Mô phỏng sử dụng sơ đồ trong `diagram.json` và firmware được ch�
 
 ## Chạy test tự động tuần 3
 
-Wokwi CI có thể ngắt một phiên mô phỏng kéo dài quá khoảng 5 phút. Vì vậy `run-tests.ps1` chia kiểm thử thành các phiên riêng: phun/nước, quạt/đèn, lọc spike và timer/cooldown. Test timer dùng riêng build `esp32dev_timer_test` với thời gian tăng tốc (phun 15 giây, cooldown 10 giây) để kiểm tra các chuyển state trong giới hạn phiên CI. Firmware thường vẫn giữ thời gian phun 120 giây và cooldown 60 giây; build timer-test chỉ phục vụ kiểm tra chuyển trạng thái, không dùng để nạp vào ESP32 thật.
+Wokwi CI có thể ngắt một phiên mô phỏng kéo dài quá khoảng 5 phút. Vì vậy `run-tests.ps1` (Windows) và `run-tests.sh` (macOS/Linux) chia kiểm thử thành các phiên riêng: phun theo độ ẩm, khóa nước, quạt theo nhiệt độ, quạt theo độ ẩm, đèn, lọc spike và timer/cooldown. Test timer dùng riêng build `esp32dev_timer_test` với thời gian tăng tốc (phun 15 giây, cooldown 10 giây) để kiểm tra các chuyển state trong giới hạn phiên CI. Firmware thường vẫn giữ thời gian phun 120 giây và cooldown 60 giây; build timer-test chỉ phục vụ kiểm tra chuyển trạng thái, không dùng để nạp vào ESP32 thật.
 
 1. Cài Wokwi CLI theo hướng dẫn Windows tại <https://docs.wokwi.com/wokwi-ci/cli-installation>.
 2. Tạo CI token tại <https://wokwi.com/dashboard/ci>.
@@ -118,11 +118,24 @@ $env:WOKWI_CLI_TOKEN = "token-cua-ban"
 .\run-tests.ps1
 ```
 
-Không chia sẻ token hoặc ghi token vào file project. Kết quả từng phiên nằm trong `test-results/*.serial.log`; log tổng hợp nằm ở `test-results/serial.log`.
+Trên macOS/Linux (cài CLI bằng hướng dẫn cùng trang, hoặc tải file `wokwi-cli` vào `~/.wokwi/bin`):
 
-Từ tuần 7, script chạy thêm hai scenario bất thường trên build `esp32dev_fault_test`. Build này dùng timer rút ngắn và có lệnh Serial `FAULT ...` để giả lập lỗi; không nạp nó vào ESP32 thật.
+```bash
+export WOKWI_CLI_TOKEN=token-cua-ban
+./run-tests.sh                                   # hoặc ./run-tests.sh water để chạy một scenario
+LOG_DIR=test-results/week9-rerun ./run-tests.sh  # ghi log vào thư mục khác
+```
 
-- `scenarios/safety-faults.test.yaml`: DHT lỗi liên tiếp khi đang phun thì `SENSOR_FAULT` (relay tắt, không tự phun lại). Nước thấp trong lúc lỗi thì `WATER_LOCKOUT` được ưu tiên. DHT hồi phục thì `COOLDOWN` rồi mới phun lại. Kèm kiểm tra đèn AUTO bị giới hạn thời lượng (build test: 20 s).
+**Tắt Node-RED trước khi chạy test.** Firmware trong scenario kết nối thật tới `broker.emqx.io` với device `orchid-01`, nên rule tự động của một Node-RED đang chạy (của bất kỳ ai trong nhóm) sẽ gửi lệnh xuống và làm sai kết quả. Script coi scenario là FAIL nếu firmware nhận bất kỳ lệnh MQTT nào (`CMD rx`).
+
+Không chia sẻ token hoặc ghi token vào file project. Kết quả từng phiên nằm trong `test-results/*.serial.log` (`run-tests.sh` lưu thêm `*.console.log` có từng bước "Expected text matched"); log tổng hợp nằm ở `test-results/serial.log`.
+
+Kết quả chạy lại toàn bộ test tuần 3, 7, 8 (tuần 9, kèm bằng chứng từng dòng): [`test-results/tuan9-test-report-nguoi1.md`](test-results/tuan9-test-report-nguoi1.md).
+
+Từ tuần 7, script chạy thêm ba scenario bất thường trên build `esp32dev_fault_test`. Build này dùng timer rút ngắn và có lệnh Serial `FAULT ...` để giả lập lỗi; không nạp nó vào ESP32 thật.
+
+- `scenarios/safety-faults.test.yaml`: DHT lỗi liên tiếp khi đang phun thì `SENSOR_FAULT` (relay tắt, không tự phun lại). Nước thấp trong lúc lỗi thì `WATER_LOCKOUT` được ưu tiên. DHT hồi phục thì `COOLDOWN` rồi mới phun lại.
+- `scenarios/light-cap.test.yaml`: đèn AUTO bị giới hạn thời lượng (build test: 20 s), chỉ bật lại sau khi đã thấy trời sáng.
 - `scenarios/link-loss.test.yaml`: đóng TCP đột ngột, firmware xóa override và quay về AUTO, rồi tự kết nối lại.
 
 Khi chạy Wokwi trong VS Code với build này, có thể gõ trực tiếp vào Serial Monitor:

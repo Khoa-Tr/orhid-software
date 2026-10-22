@@ -1,6 +1,7 @@
-name: 'Orchid week 3 - fan and light'
+name: 'Orchid week 3 - fan by temperature'
 version: 1
 author: 'orhid'
+# Tach tu fan-light.test.yaml de moi phien Wokwi CI duoi 5 phut (gioi han goi mien phi).
 
 steps:
   - wait-serial: 'Orchid garden controller started'
@@ -10,7 +11,7 @@ steps:
   - set-control: { part-id: water, control: position, value: 0.6 }
   - delay: 15000ms
   - wait-serial: 'Mist: IDLE | Fan: OFF | Grow light: OFF'
-
+  # C1-C3: nhiet do cao bat quat, vung tre giu nguyen, du mat thi tat
   - set-control: { part-id: dht, control: temperature, value: 34 }
   - wait-serial: 'STATE fan -> ON'
   - set-control: { part-id: dht, control: temperature, value: 32 }
@@ -18,21 +19,3 @@ steps:
   - wait-serial: 'Fan: ON'
   - set-control: { part-id: dht, control: temperature, value: 30 }
   - wait-serial: 'STATE fan -> OFF'
-
-  - set-control: { part-id: dht, control: humidity, value: 93 }
-  - wait-serial: 'STATE fan -> ON'
-  - set-control: { part-id: dht, control: humidity, value: 87 }
-  - delay: 15000ms
-  - wait-serial: 'Fan: ON'
-  - set-control: { part-id: dht, control: humidity, value: 80 }
-  - wait-serial: 'STATE fan -> OFF'
-  - set-control: { part-id: dht, control: humidity, value: 72 }
-  - delay: 15000ms
-
-  - set-control: { part-id: ldr, control: lux, value: 10 }
-  - wait-serial: 'STATE light -> ON'
-  - set-control: { part-id: ldr, control: lux, value: 110 }
-  - delay: 15000ms
-  - wait-serial: 'Grow light: ON'
-  - set-control: { part-id: ldr, control: lux, value: 1000 }
-  - wait-serial: 'STATE light -> OFF'

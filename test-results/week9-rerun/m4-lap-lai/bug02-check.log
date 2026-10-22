@@ -1,0 +1,9 @@
+2026-10-22T08:24:53.304Z R1 send garden/orchid/orchid-01/cmd/fan 300 bytes request_id=big300-mvj9zhsx
+2026-10-22T08:24:54.346Z R1 PASS ack={"request_id":"big300-mvj9zhsx","result":"APPLIED"} after 805 ms
+2026-10-22T08:24:54.347Z R2 send garden/orchid/orchid-01/config 297 bytes request_id=cfgbig-mvj9zhsx
+2026-10-22T08:24:55.156Z R2 PASS ack={"request_id":"cfgbig-mvj9zhsx","result":"APPLIED","reason":"CONFIG"} after 603 ms
+2026-10-22T08:24:55.156Z R3 send garden/orchid/orchid-01/cmd/fan 420 bytes request_id=big420-mvj9zhsx
+2026-10-22T08:24:55.965Z R3 PASS ack={"request_id":"big420-mvj9zhsx","result":"REJECTED","reason":"PAYLOAD_TOO_LARGE"} after 603 ms
+2026-10-22T08:24:55.965Z R4 send garden/orchid/orchid-01/cmd/fan 44 bytes request_id=auto-mvj9zhsx
+2026-10-22T08:24:56.975Z R4 PASS ack={"request_id":"auto-mvj9zhsx","result":"APPLIED","reason":"AUTO"} after 803 ms
+2026-10-22T08:24:56.976Z BUG-02 check PASS

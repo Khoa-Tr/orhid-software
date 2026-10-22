@@ -8,7 +8,14 @@ const serial = read(path.join(OUT, "serial.log")).map((line) => ({ at: Date.pars
 const wire = read(path.join(OUT, "mqtt-wire.log")).map((line) => ({ at: Date.parse(line.slice(0, 24)), text: line.slice(25) }));
 const history = read(process.env.W8_HISTORY || path.join(process.env.W8_DIR || __dirname, "data", "orchid-history.jsonl")).map((line) => JSON.parse(line));
 const driverLines = read(path.join(OUT, "driver.log"));
-const downStart = Date.parse(driverLines.findLast((line) => line.includes("PHASE D downlink")).slice(0, 24));
+// Moi lan chay driver in mot dong "PHASE D downlink". W8_RUN=n (1, 2, ...) chon lan chay thu n; mac dinh lan cuoi.
+const phaseLines = driverLines.filter((line) => line.includes("PHASE D downlink"));
+const runIndex = process.env.W8_RUN ? Number(process.env.W8_RUN) - 1 : phaseLines.length - 1;
+const downStart = Date.parse(phaseLines[runIndex].slice(0, 24));
+// Ket thuc lan chay: dong PASS/FAIL dau tien sau do (+10 s cho ACK cuoi), neu khong thi lan chay ke tiep.
+const endLine = driverLines.find((line) => /^\S+ (PASS week|FAIL )/.test(line) && Date.parse(line.slice(0, 24)) > downStart);
+const nextStart = runIndex + 1 < phaseLines.length ? Date.parse(phaseLines[runIndex + 1].slice(0, 24)) : Infinity;
+const downEnd = Math.min(nextStart, endLine ? Date.parse(endLine.slice(0, 24)) + 10000 : Infinity);
 
 const sent = history.filter((event) => event.event === "command_sent");
 const results = new Map(history.filter((event) => event.event === "command_result").map((event) => [event.request_id || event.at, event]));
@@ -36,7 +43,7 @@ for (const command of sent) {
     sent: sentAt, wire: onWire && onWire.at, rx: received && received.at, relay_change: relayLine ? relayLine.text.replace(/^RELAY \S+ /, "") : dropped ? "(lệnh bị bỏ – giả lập mất lệnh)" : "không đổi",
     ack: ackSerial && ackSerial.at, ack_wire: ackWire && ackWire.at,
     result: result ? `${result.result}${result.reason ? ` (${result.reason})` : ""}` : "?", latency: result && result.latency_ms,
-    phase: sentAt >= downStart ? "downlink" : "uplink",
+    phase: sentAt >= downStart && sentAt < downEnd ? "downlink" : "other",
   });
 }
 
@@ -46,7 +53,7 @@ for (const row of rows.filter((item) => item.phase === "downlink")) {
   const source = row.source === "dashboard" ? `dashboard (${row.user})` : row.source.replace("automation:", "rule ");
   table.push(`| ${clock(row.sent)} | ${source} | ${row.relay} | ${row.command} | \`${row.id}\` | +${ms(row.sent, row.wire)} ms | ${row.rx ? `+${ms(row.sent, row.rx)} ms` : "—"} | ${row.relay_change} | ${row.ack ? `+${ms(row.sent, row.ack)} ms` : "—"} | ${row.result}${row.latency ? `, ${row.latency} ms` : ""} |`);
 }
-const blockedRows = blocked.filter((event) => Date.parse(event.at) >= downStart).map((event) => `| ${clock(Date.parse(event.at))} | ${event.source === "dashboard" ? `dashboard (${event.user})` : event.source} | ${event.relay} | ${event.mode === "AUTO" ? "AUTO" : `${event.state} ttl ${event.ttl_s}s`} | — | không gửi | — | không đổi | — | BLOCKED (${event.reason}) |`);
+const blockedRows = blocked.filter((event) => Date.parse(event.at) >= downStart && Date.parse(event.at) < downEnd).map((event) => `| ${clock(Date.parse(event.at))} | ${event.source === "dashboard" ? `dashboard (${event.user})` : event.source} | ${event.relay} | ${event.mode === "AUTO" ? "AUTO" : `${event.state} ttl ${event.ttl_s}s`} | — | không gửi | — | không đổi | — | BLOCKED (${event.reason}) |`);
 fs.writeFileSync(path.join(OUT, "downlink-table.md"), [...table, ...blockedRows].join("\n") + "\n");
 
 const csv = ["sent_utc,source,user,relay,command,request_id,wire_ms,rx_ms,relay_change,ack_ms,result,gateway_latency_ms,phase"];
@@ -55,7 +62,6 @@ fs.writeFileSync(path.join(OUT, "downlink-commands.csv"), csv.join("\n") + "\n")
 
 const all = rows.filter((row) => row.phase === "downlink");
 const counts = all.reduce((acc, row) => ({ ...acc, [row.result.split(" ")[0]]: (acc[row.result.split(" ")[0]] || 0) + 1 }), {});
-const uplinkAuto = rows.filter((row) => row.phase === "uplink");
-console.log(`downlink commands sent: ${all.length} ${JSON.stringify(counts)}; blocked locally: ${blockedRows.length}; automation commands during uplink: ${uplinkAuto.length} (${uplinkAuto.filter((row) => row.result.startsWith("APPLIED")).length} APPLIED)`);
+console.log(`run ${runIndex + 1}/${phaseLines.length}: downlink commands sent: ${all.length} ${JSON.stringify(counts)}; blocked locally: ${blockedRows.length}`);
 const missingRx = all.filter((row) => !row.rx && !row.result.startsWith("NO_ACK"));
 if (missingRx.length) console.log("NO CMD rx for", missingRx.map((row) => row.id).join(", "));

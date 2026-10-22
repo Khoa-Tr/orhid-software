@@ -177,7 +177,13 @@ const waitResult = (description, relay, sinceMs, predicate, timeout = 15000) =>
     }
     return 0;
   };
+  // CASES=D1,D2,... chi chay cac ca nay (mac dinh: tat ca). Dung khi moi phien mo phong bi gioi han thoi gian.
+  const onlyCases = process.env.CASES ? process.env.CASES.split(",").map((item) => item.trim()) : null;
   async function step(name, body) {
+    if (onlyCases && /^D\d+$/.test(name) && !onlyCases.includes(name)) {
+      log(`SKIP ${name} (CASES=${process.env.CASES})`);
+      return undefined;
+    }
     for (let attempt = 1; ; attempt += 1) {
       const offset = serialText().length;
       const startedAt = Date.now();
@@ -229,10 +235,14 @@ const waitResult = (description, relay, sinceMs, predicate, timeout = 15000) =>
     await shot(page, "w8-05-back-to-auto.jpg");
   });
 
-  // TTL: lenh 60 s tu nut test (di qua gateway) -> firmware tu het han ve AUTO.
-  await step("D5", async () => {
+  // Cac ca sau can che do MANUAL tren dashboard (nut test trong editor cung bi chan khi dang AUTO).
+  await step("MANUAL again", async () => {
     await click(page, "MANUAL");
     await waitFor("MANUAL again", async () => (await buttonDisabled(page, "Fan ON")) === false, 120000);
+  });
+
+  // TTL: lenh 60 s tu nut test (di qua gateway) -> firmware tu het han ve AUTO.
+  await step("D5", async () => {
     const since = Date.now();
     const offset = serialText().length;
     await inject("nguoi3-orchid-btn-fan-on", "editor test button ON fan (60s)");
