@@ -396,3 +396,236 @@
 {"event":"device_offline_over_5m","duration_s":301,"at":"2026-10-17T04:19:56.220Z"}
 {"event":"system_alert","alert":{"type":"OFFLINE_5MIN","severity":"CRITICAL","title":"BÁO ĐỘNG KHẨN CẤP: MẤT KẾT NỐI QUÁ 5 PHÚT","message":"Thiết bị ESP32 (orchid-01) đã mất kết nối liên tục hơn 5 phút. Vui lòng kiểm tra trạm ngay lập tức!","at":"2026-10-17T04:20:44.807Z"},"at":"2026-10-17T04:20:44.807Z"}
 {"event":"care_window_changed","rule":"night_mist_policy","phase":"NIGHT","auto_mist":"BLOCKED","care_window":"06:00-18:00","rule_time":"2026-10-17 21:14:03","at":"2026-10-17T14:14:03.566Z"}
+{"event":"rule_config_loaded","version":1,"clock":{"speed":1,"start_local":""},"rule_time":"2026-10-21T14:41:06.736Z","at":"2026-10-21T14:41:06.736Z"}
+{"event":"availability","state":"offline","at":"2026-10-21T14:41:08.209Z"}
+{"event":"availability","state":"offline","at":"2026-10-21T14:41:08.210Z"}
+{"event":"care_window_changed","rule":"night_mist_policy","phase":"NIGHT","auto_mist":"BLOCKED","care_window":"06:00-18:00","rule_time":"2026-10-21 21:41:08","at":"2026-10-21T14:41:08.210Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-21T14:41:08.210Z"},"at":"2026-10-21T14:41:08.210Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-21T14:41:08.210Z"}
+{"event":"device_offline","at":"2026-10-21T14:41:09.215Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-21T14:41:09.231Z"},"at":"2026-10-21T14:41:09.231Z"}
+{"event":"device_offline_over_5m","duration_s":301,"at":"2026-10-21T14:46:09.660Z"}
+{"event":"system_alert","alert":{"type":"OFFLINE_5MIN","severity":"CRITICAL","title":"BÁO ĐỘNG KHẨN CẤP: MẤT KẾT NỐI QUÁ 5 PHÚT","message":"Thiết bị ESP32 (orchid-01) đã mất kết nối liên tục hơn 5 phút. Vui lòng kiểm tra trạm ngay lập tức!","at":"2026-10-21T14:46:16.266Z"},"at":"2026-10-21T14:46:16.266Z"}
+{"event":"command_result","request_id":null,"ref":null,"source":"unknown","user":null,"result":"BLOCKED","reason":"INVALID_RELAY","at":"2026-10-21T14:51:43.041Z"}
+{"event":"availability","state":"online","at":"2026-10-21T14:52:51.018Z"}
+{"event":"availability","state":"online","at":"2026-10-21T14:52:51.019Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-21T14:52:51.018Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-21T14:52:51.019Z"},"at":"2026-10-21T14:52:51.019Z"}
+{"event":"threshold_active","rule":"orchidLightDemand","metric":"light_adc","value":2497,"threshold":2200,"at":"2026-10-21T14:52:51.254Z"}
+{"event":"water_lockout","water_adc":22,"threshold":1200,"at":"2026-10-21T14:52:51.254Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"outside_schedule","trigger":"desired_changed","ttl_s":900,"light_adc":2497,"on_today_min":0,"rule_time":"2026-10-21 21:52:51","at":"2026-10-21T14:52:51.254Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOW","severity":"CRITICAL","title":"CẢNH BÁO CẠN NƯỚC","message":"Mực nước bình chứa đang ở mức THẤP (ADC: 22 < 1200)! Phun sương bị khóa an toàn (WATER_LOCKOUT).","water_adc":22,"at":"2026-10-21T14:52:51.254Z"},"at":"2026-10-21T14:52:51.254Z"}
+{"event":"automation_action","rule":"night_mist_policy","action":"HOLD_MIST_OFF","trigger":"night_started","ttl_s":900,"phase":"NIGHT","rule_time":"2026-10-21 21:52:51","at":"2026-10-21T14:52:51.254Z"}
+{"event":"command_sent","request_id":"auto-mvi8el75-1","ref":"light-1","relay":"light","payload":{"request_id":"auto-mvi8el75-1","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"outside_schedule","at":"2026-10-21T14:52:51.281Z"}
+{"event":"command_sent","request_id":"auto-mvi8el76-2","ref":"night-1","relay":"mist","payload":{"request_id":"auto-mvi8el76-2","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:night_mist_policy","user":null,"reason":"night_no_auto_mist","at":"2026-10-21T14:52:51.282Z"}
+{"event":"ack_received","request_id":"auto-mvi8el75-1","result":"APPLIED","reason":"","at":"2026-10-21T14:52:51.831Z"}
+{"event":"command_result","request_id":"auto-mvi8el75-1","ref":"light-1","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":551,"at":"2026-10-21T14:52:51.832Z"}
+{"event":"ack_received","request_id":"auto-mvi8el75-1","result":"APPLIED","reason":"","at":"2026-10-21T14:52:51.832Z"}
+{"event":"ack_received","request_id":"auto-mvi8el76-2","result":"APPLIED","reason":"","at":"2026-10-21T14:52:52.249Z"}
+{"event":"command_result","request_id":"auto-mvi8el76-2","ref":"night-1","relay":"mist","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:night_mist_policy","user":null,"result":"APPLIED","reason":null,"latency_ms":967,"at":"2026-10-21T14:52:52.249Z"}
+{"event":"ack_received","request_id":"auto-mvi8el76-2","result":"APPLIED","reason":"","at":"2026-10-21T14:52:52.249Z"}
+{"event":"system_alert","alert":{"type":"DHT_FAULT","severity":"HIGH","title":"LỖI CẢM BIẾN DHT22","message":"Cảm biến DHT22 không trả về dữ liệu (null/NaN) liên tiếp 3 chu kỳ! Hệ thống chuyển sang chế độ phòng vệ.","at":"2026-10-21T14:52:52.697Z"},"at":"2026-10-21T14:52:52.697Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-21T14:53:00.571Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-21T14:53:00.571Z"}
+{"event":"fault_active","fault":"water_low","severity":"fault","water_adc":19,"mist_state":"WATER_LOCKOUT","safe_state":"Firmware WATER_LOCKOUT: mist relay locked until water ADC >= 1500","at":"2026-10-21T14:53:00.571Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOCKOUT","severity":"CRITICAL","title":"KHÓA NƯỚC AN TOÀN (WATER LOCKOUT)","message":"Firmware ESP32 đã kích hoạt cờ WATER_LOCKOUT. Bơm phun sương bị cưỡng bức ngắt hoàn toàn.","at":"2026-10-21T14:53:00.571Z"},"at":"2026-10-21T14:53:00.571Z"}
+{"event":"command_result","request_id":null,"ref":null,"source":"unknown","user":null,"result":"BLOCKED","reason":"INVALID_RELAY","at":"2026-10-21T14:53:18.608Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-21T14:53:59.553Z"}
+{"event":"telemetry_stale","age_s":17,"at":"2026-10-21T14:54:00.314Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 17 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":17,"at":"2026-10-21T14:54:00.376Z"},"at":"2026-10-21T14:54:00.376Z"}
+{"event":"availability","state":"offline","at":"2026-10-21T14:54:37.093Z"}
+{"event":"availability","state":"offline","at":"2026-10-21T14:54:37.094Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-21T14:54:37.094Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-21T14:54:37.094Z"},"at":"2026-10-21T14:54:37.094Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"OFFLINE","safe_state":null,"at":"2026-10-21T14:54:37.094Z"}
+{"event":"device_offline","at":"2026-10-21T14:54:40.376Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-21T14:54:40.437Z"},"at":"2026-10-21T14:54:40.437Z"}
+{"event":"device_offline_over_5m","duration_s":303,"at":"2026-10-21T14:59:40.791Z"}
+{"event":"system_alert","alert":{"type":"OFFLINE_5MIN","severity":"CRITICAL","title":"BÁO ĐỘNG KHẨN CẤP: MẤT KẾT NỐI QUÁ 5 PHÚT","message":"Thiết bị ESP32 (orchid-01) đã mất kết nối liên tục hơn 5 phút. Vui lòng kiểm tra trạm ngay lập tức!","at":"2026-10-21T15:00:16.384Z"},"at":"2026-10-21T15:00:16.384Z"}
+{"event":"rule_config_loaded","version":1,"clock":{"speed":1,"start_local":""},"rule_time":"2026-10-22T14:19:57.155Z","at":"2026-10-22T14:19:57.154Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T14:19:57.524Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T14:19:57.526Z"}
+{"event":"care_window_changed","rule":"night_mist_policy","phase":"NIGHT","auto_mist":"BLOCKED","care_window":"06:00-18:00","rule_time":"2026-10-22 21:19:57","at":"2026-10-22T14:19:57.525Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-22T14:19:57.526Z"},"at":"2026-10-22T14:19:57.526Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-22T14:19:57.525Z"}
+{"event":"device_offline","at":"2026-10-22T14:19:59.624Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-22T14:19:59.655Z"},"at":"2026-10-22T14:19:59.655Z"}
+{"event":"device_offline_over_5m","duration_s":302,"at":"2026-10-22T14:25:00.095Z"}
+{"event":"system_alert","alert":{"type":"OFFLINE_5MIN","severity":"CRITICAL","title":"BÁO ĐỘNG KHẨN CẤP: MẤT KẾT NỐI QUÁ 5 PHÚT","message":"Thiết bị ESP32 (orchid-01) đã mất kết nối liên tục hơn 5 phút. Vui lòng kiểm tra trạm ngay lập tức!","at":"2026-10-22T14:25:06.717Z"},"at":"2026-10-22T14:25:06.717Z"}
+{"event":"rule_config_loaded","version":1,"clock":{"speed":1,"start_local":""},"rule_time":"2026-10-22T14:35:43.902Z","at":"2026-10-22T14:35:43.901Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T14:35:44.322Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T14:35:44.324Z"}
+{"event":"care_window_changed","rule":"night_mist_policy","phase":"NIGHT","auto_mist":"BLOCKED","care_window":"06:00-18:00","rule_time":"2026-10-22 21:35:44","at":"2026-10-22T14:35:44.323Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-22T14:35:44.324Z"},"at":"2026-10-22T14:35:44.324Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-22T14:35:44.323Z"}
+{"event":"device_offline","at":"2026-10-22T14:35:46.363Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-22T14:35:46.410Z"},"at":"2026-10-22T14:35:46.410Z"}
+{"event":"control_mode_changed","from":"AUTO","to":"MANUAL","user":"operator","at":"2026-10-22T14:37:31.671Z"}
+{"event":"availability","state":"online","at":"2026-10-22T14:40:45.106Z"}
+{"event":"availability","state":"online","at":"2026-10-22T14:40:45.107Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-22T14:40:45.107Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-22T14:40:45.107Z"},"at":"2026-10-22T14:40:45.107Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:40:45.397Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:40:45.397Z"}
+{"event":"threshold_active","rule":"orchidLightDemand","metric":"light_adc","value":2960,"threshold":2200,"at":"2026-10-22T14:40:45.398Z"}
+{"event":"water_lockout","water_adc":53,"threshold":1200,"at":"2026-10-22T14:40:45.398Z"}
+{"event":"fault_active","fault":"water_low","severity":"fault","water_adc":null,"mist_state":"WATER_LOCKOUT","safe_state":"Firmware WATER_LOCKOUT: mist relay locked until water ADC >= 1500","at":"2026-10-22T14:40:45.397Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOCKOUT","severity":"CRITICAL","title":"KHÓA NƯỚC AN TOÀN (WATER LOCKOUT)","message":"Firmware ESP32 đã kích hoạt cờ WATER_LOCKOUT. Bơm phun sương bị cưỡng bức ngắt hoàn toàn.","at":"2026-10-22T14:40:45.397Z"},"at":"2026-10-22T14:40:45.397Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOW","severity":"CRITICAL","title":"CẢNH BÁO CẠN NƯỚC","message":"Mực nước bình chứa đang ở mức THẤP (ADC: 53 < 1200)! Phun sương bị khóa an toàn (WATER_LOCKOUT).","water_adc":53,"at":"2026-10-22T14:40:45.397Z"},"at":"2026-10-22T14:40:45.397Z"}
+{"event":"command_result","request_id":null,"ref":null,"source":"unknown","user":null,"result":"BLOCKED","reason":"INVALID_RELAY","at":"2026-10-22T14:40:51.357Z"}
+{"event":"command_result","request_id":null,"ref":null,"source":"unknown","user":null,"result":"BLOCKED","reason":"INVALID_RELAY","at":"2026-10-22T14:40:53.412Z"}
+{"event":"command_result","request_id":null,"ref":null,"source":"unknown","user":null,"result":"BLOCKED","reason":"INVALID_RELAY","at":"2026-10-22T14:40:54.548Z"}
+{"event":"command_result","request_id":null,"ref":null,"source":"unknown","user":null,"result":"BLOCKED","reason":"INVALID_RELAY","at":"2026-10-22T14:40:57.516Z"}
+{"event":"command_result","request_id":null,"ref":null,"source":"unknown","user":null,"result":"BLOCKED","reason":"INVALID_RELAY","at":"2026-10-22T14:41:03.756Z"}
+{"event":"command_result","request_id":null,"ref":null,"source":"unknown","user":null,"result":"BLOCKED","reason":"INVALID_RELAY","at":"2026-10-22T14:41:08.989Z"}
+{"event":"command_result","request_id":null,"ref":null,"source":"unknown","user":null,"result":"BLOCKED","reason":"INVALID_RELAY","at":"2026-10-22T14:41:12.613Z"}
+{"event":"command_sent","request_id":"dash-mvjng993-1","ref":null,"relay":"mist","payload":{"request_id":"dash-mvjng993-1","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:41:49.527Z"}
+{"event":"command_sent","request_id":"dash-mvjngamu-2","ref":null,"relay":"fan","payload":{"request_id":"dash-mvjngamu-2","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:41:51.318Z"}
+{"event":"ack_received","request_id":"dash-mvjng993-1","result":"REJECTED","reason":"WATER_LOCKOUT","at":"2026-10-22T14:41:52.004Z"}
+{"event":"command_result","request_id":"dash-mvjng993-1","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"operator","result":"REJECTED","reason":"WATER_LOCKOUT","latency_ms":2477,"at":"2026-10-22T14:41:52.004Z"}
+{"event":"ack_received","request_id":"dash-mvjng993-1","result":"REJECTED","reason":"WATER_LOCKOUT","at":"2026-10-22T14:41:52.005Z"}
+{"event":"system_alert","alert":{"type":"COMMAND_REJECTED","severity":"WARNING","title":"LỆNH BỊ TỪ CHỐI (REJECTED)","message":"Lệnh [dash-mvjng993-1] bị ESP32 từ chối vì lý do an toàn: WATER_LOCKOUT","request_id":"dash-mvjng993-1","reason":"WATER_LOCKOUT","at":"2026-10-22T14:41:52.004Z"},"at":"2026-10-22T14:41:52.004Z"}
+{"event":"system_alert","alert":{"type":"COMMAND_REJECTED","severity":"WARNING","title":"LỆNH BỊ TỪ CHỐI (REJECTED)","message":"Lệnh [dash-mvjng993-1] bị ESP32 từ chối vì lý do an toàn: WATER_LOCKOUT","request_id":"dash-mvjng993-1","reason":"WATER_LOCKOUT","at":"2026-10-22T14:41:52.005Z"},"at":"2026-10-22T14:41:52.005Z"}
+{"event":"ack_received","request_id":"dash-mvjngamu-2","result":"APPLIED","reason":"","at":"2026-10-22T14:41:52.710Z"}
+{"event":"command_result","request_id":"dash-mvjngamu-2","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":1392,"at":"2026-10-22T14:41:52.710Z"}
+{"event":"ack_received","request_id":"dash-mvjngamu-2","result":"APPLIED","reason":"","at":"2026-10-22T14:41:52.712Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T14:41:52.847Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T14:41:52.847Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T14:41:54.643Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T14:41:54.644Z"}
+{"event":"command_sent","request_id":"dash-mvjngl35-3","ref":null,"relay":"light","payload":{"request_id":"dash-mvjngl35-3","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:42:04.865Z"}
+{"event":"ack_received","request_id":"dash-mvjngl35-3","result":"APPLIED","reason":"","at":"2026-10-22T14:42:05.315Z"}
+{"event":"command_result","request_id":"dash-mvjngl35-3","ref":null,"relay":"light","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":450,"at":"2026-10-22T14:42:05.315Z"}
+{"event":"ack_received","request_id":"dash-mvjngl35-3","result":"APPLIED","reason":"","at":"2026-10-22T14:42:05.315Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:42:05.669Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:42:05.669Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:42:07.188Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:42:07.189Z"}
+{"event":"command_sent","request_id":"dash-mvjngngn-4","ref":null,"relay":"light","payload":{"request_id":"dash-mvjngngn-4","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:42:07.943Z"}
+{"event":"ack_received","request_id":"dash-mvjngngn-4","result":"APPLIED","reason":"","at":"2026-10-22T14:42:08.400Z"}
+{"event":"command_result","request_id":"dash-mvjngngn-4","ref":null,"relay":"light","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":458,"at":"2026-10-22T14:42:08.401Z"}
+{"event":"ack_received","request_id":"dash-mvjngngn-4","result":"APPLIED","reason":"","at":"2026-10-22T14:42:08.401Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:42:08.754Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:42:08.754Z"}
+{"event":"command_sent","request_id":"dash-mvjngo6t-5","ref":null,"relay":"light","payload":{"request_id":"dash-mvjngo6t-5","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:42:08.885Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:42:09.744Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:42:09.745Z"}
+{"event":"ack_received","request_id":"dash-mvjngo6t-5","result":"APPLIED","reason":"","at":"2026-10-22T14:42:09.915Z"}
+{"event":"command_result","request_id":"dash-mvjngo6t-5","ref":null,"relay":"light","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":1030,"at":"2026-10-22T14:42:09.915Z"}
+{"event":"ack_received","request_id":"dash-mvjngo6t-5","result":"APPLIED","reason":"","at":"2026-10-22T14:42:09.916Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:42:10.056Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:42:10.056Z"}
+{"event":"command_sent","request_id":"dash-mvjngph1-6","ref":null,"relay":"light","payload":{"request_id":"dash-mvjngph1-6","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:42:10.549Z"}
+{"event":"ack_received","request_id":"dash-mvjngph1-6","result":"APPLIED","reason":"","at":"2026-10-22T14:42:11.140Z"}
+{"event":"command_result","request_id":"dash-mvjngph1-6","ref":null,"relay":"light","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":591,"at":"2026-10-22T14:42:11.140Z"}
+{"event":"ack_received","request_id":"dash-mvjngph1-6","result":"APPLIED","reason":"","at":"2026-10-22T14:42:11.141Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:42:12.104Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:42:12.104Z"}
+{"event":"command_sent","request_id":"dash-mvjngqv9-7","ref":null,"relay":"light","payload":{"request_id":"dash-mvjngqv9-7","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:42:12.357Z"}
+{"event":"ack_received","request_id":"dash-mvjngqv9-7","result":"APPLIED","reason":"","at":"2026-10-22T14:42:12.804Z"}
+{"event":"command_result","request_id":"dash-mvjngqv9-7","ref":null,"relay":"light","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":447,"at":"2026-10-22T14:42:12.804Z"}
+{"event":"ack_received","request_id":"dash-mvjngqv9-7","result":"APPLIED","reason":"","at":"2026-10-22T14:42:12.805Z"}
+{"event":"command_sent","request_id":"dash-mvjnhg9w-8","ref":null,"relay":"mist","payload":{"request_id":"dash-mvjnhg9w-8","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:42:45.284Z"}
+{"event":"ack_received","request_id":"dash-mvjnhg9w-8","result":"REJECTED","reason":"WATER_LOCKOUT","at":"2026-10-22T14:42:45.751Z"}
+{"event":"command_result","request_id":"dash-mvjnhg9w-8","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"operator","result":"REJECTED","reason":"WATER_LOCKOUT","latency_ms":467,"at":"2026-10-22T14:42:45.751Z"}
+{"event":"ack_received","request_id":"dash-mvjnhg9w-8","result":"REJECTED","reason":"WATER_LOCKOUT","at":"2026-10-22T14:42:45.752Z"}
+{"event":"system_alert","alert":{"type":"COMMAND_REJECTED","severity":"WARNING","title":"LỆNH BỊ TỪ CHỐI (REJECTED)","message":"Lệnh [dash-mvjnhg9w-8] bị ESP32 từ chối vì lý do an toàn: WATER_LOCKOUT","request_id":"dash-mvjnhg9w-8","reason":"WATER_LOCKOUT","at":"2026-10-22T14:42:45.751Z"},"at":"2026-10-22T14:42:45.751Z"}
+{"event":"system_alert","alert":{"type":"COMMAND_REJECTED","severity":"WARNING","title":"LỆNH BỊ TỪ CHỐI (REJECTED)","message":"Lệnh [dash-mvjnhg9w-8] bị ESP32 từ chối vì lý do an toàn: WATER_LOCKOUT","request_id":"dash-mvjnhg9w-8","reason":"WATER_LOCKOUT","at":"2026-10-22T14:42:45.752Z"},"at":"2026-10-22T14:42:45.752Z"}
+{"event":"command_sent","request_id":"dash-mvjnhmdp-9","ref":null,"relay":"light","payload":{"request_id":"dash-mvjnhmdp-9","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:42:53.197Z"}
+{"event":"ack_received","request_id":"dash-mvjnhmdp-9","result":"APPLIED","reason":"","at":"2026-10-22T14:42:53.644Z"}
+{"event":"command_result","request_id":"dash-mvjnhmdp-9","ref":null,"relay":"light","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":447,"at":"2026-10-22T14:42:53.644Z"}
+{"event":"ack_received","request_id":"dash-mvjnhmdp-9","result":"APPLIED","reason":"","at":"2026-10-22T14:42:53.645Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:42:53.999Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:42:53.999Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:42:54.596Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:42:54.596Z"}
+{"event":"command_sent","request_id":"dash-mvjnhnu4-10","ref":null,"relay":"light","payload":{"request_id":"dash-mvjnhnu4-10","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:42:55.084Z"}
+{"event":"ack_received","request_id":"dash-mvjnhnu4-10","result":"APPLIED","reason":"","at":"2026-10-22T14:42:55.613Z"}
+{"event":"command_result","request_id":"dash-mvjnhnu4-10","ref":null,"relay":"light","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":530,"at":"2026-10-22T14:42:55.614Z"}
+{"event":"ack_received","request_id":"dash-mvjnhnu4-10","result":"APPLIED","reason":"","at":"2026-10-22T14:42:55.614Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:42:55.970Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:42:55.970Z"}
+{"event":"command_sent","request_id":"dash-mvjnhot1-11","ref":null,"relay":"light","payload":{"request_id":"dash-mvjnhot1-11","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:42:56.341Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:42:57.106Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:42:57.106Z"}
+{"event":"command_result","request_id":"dash-mvjnhot1-11","ref":null,"relay":"light","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":766,"at":"2026-10-22T14:42:57.107Z"}
+{"event":"ack_received","request_id":"dash-mvjnhot1-11","result":"APPLIED","reason":"","at":"2026-10-22T14:42:57.107Z"}
+{"event":"ack_received","request_id":"dash-mvjnhot1-11","result":"APPLIED","reason":"","at":"2026-10-22T14:42:57.108Z"}
+{"event":"command_sent","request_id":"dash-mvjnhq07-12","ref":null,"relay":"light","payload":{"request_id":"dash-mvjnhq07-12","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:42:57.895Z"}
+{"event":"ack_received","request_id":"dash-mvjnhq07-12","result":"APPLIED","reason":"","at":"2026-10-22T14:42:58.351Z"}
+{"event":"command_result","request_id":"dash-mvjnhq07-12","ref":null,"relay":"light","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":456,"at":"2026-10-22T14:42:58.351Z"}
+{"event":"ack_received","request_id":"dash-mvjnhq07-12","result":"APPLIED","reason":"","at":"2026-10-22T14:42:58.351Z"}
+{"event":"rule_config_loaded","version":1,"clock":{"speed":1,"start_local":""},"rule_time":"2026-10-22T14:43:10.253Z","at":"2026-10-22T14:43:10.253Z"}
+{"event":"availability","state":"online","at":"2026-10-22T14:43:10.627Z"}
+{"event":"availability","state":"online","at":"2026-10-22T14:43:10.628Z"}
+{"event":"care_window_changed","rule":"night_mist_policy","phase":"NIGHT","auto_mist":"BLOCKED","care_window":"06:00-18:00","rule_time":"2026-10-22 21:43:10","at":"2026-10-22T14:43:10.628Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-22T14:43:10.628Z"},"at":"2026-10-22T14:43:10.628Z"}
+{"event":"fault_active","fault":"water_low","severity":"fault","water_adc":null,"mist_state":"WATER_LOCKOUT","safe_state":"Firmware WATER_LOCKOUT: mist relay locked until water ADC >= 1500","at":"2026-10-22T14:43:10.629Z"}
+{"event":"water_lockout","water_adc":93,"threshold":1200,"at":"2026-10-22T14:43:15.003Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"outside_schedule","trigger":"desired_changed","ttl_s":900,"light_adc":1905,"on_today_min":0,"rule_time":"2026-10-22 21:43:15","at":"2026-10-22T14:43:15.002Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOW","severity":"CRITICAL","title":"CẢNH BÁO CẠN NƯỚC","message":"Mực nước bình chứa đang ở mức THẤP (ADC: 93 < 1200)! Phun sương bị khóa an toàn (WATER_LOCKOUT).","water_adc":93,"at":"2026-10-22T14:43:15.003Z"},"at":"2026-10-22T14:43:15.003Z"}
+{"event":"automation_action","rule":"night_mist_policy","action":"HOLD_MIST_OFF","trigger":"night_started","ttl_s":900,"phase":"NIGHT","rule_time":"2026-10-22 21:43:15","at":"2026-10-22T14:43:15.002Z"}
+{"event":"command_sent","request_id":"auto-mvjni38a-1","ref":"light-1","relay":"light","payload":{"request_id":"auto-mvjni38a-1","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"outside_schedule","at":"2026-10-22T14:43:15.034Z"}
+{"event":"command_sent","request_id":"auto-mvjni38b-2","ref":"night-1","relay":"mist","payload":{"request_id":"auto-mvjni38b-2","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:night_mist_policy","user":null,"reason":"night_no_auto_mist","at":"2026-10-22T14:43:15.035Z"}
+{"event":"ack_received","request_id":"auto-mvjni38a-1","result":"APPLIED","reason":"","at":"2026-10-22T14:43:16.003Z"}
+{"event":"command_result","request_id":"auto-mvjni38a-1","ref":"light-1","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":969,"at":"2026-10-22T14:43:16.003Z"}
+{"event":"ack_received","request_id":"auto-mvjni38a-1","result":"APPLIED","reason":"","at":"2026-10-22T14:43:16.004Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:43:16.448Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:43:16.448Z"}
+{"event":"command_result","request_id":"auto-mvjni38b-2","ref":"night-1","relay":"mist","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:night_mist_policy","user":null,"result":"APPLIED","reason":null,"latency_ms":1414,"at":"2026-10-22T14:43:16.449Z"}
+{"event":"ack_received","request_id":"auto-mvjni38b-2","result":"APPLIED","reason":"","at":"2026-10-22T14:43:16.449Z"}
+{"event":"ack_received","request_id":"auto-mvjni38b-2","result":"APPLIED","reason":"","at":"2026-10-22T14:43:16.450Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:43:16.588Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:43:16.589Z"}
+{"event":"control_mode_changed","from":"AUTO","to":"MANUAL","user":"operator","at":"2026-10-22T14:44:03.730Z"}
+{"event":"command_sent","request_id":"dash-mvjnjf8u-3","ref":null,"relay":"fan","payload":{"request_id":"dash-mvjnjf8u-3","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:44:17.262Z"}
+{"event":"ack_received","request_id":"dash-mvjnjf8u-3","result":"APPLIED","reason":"","at":"2026-10-22T14:44:17.796Z"}
+{"event":"command_result","request_id":"dash-mvjnjf8u-3","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":534,"at":"2026-10-22T14:44:17.796Z"}
+{"event":"ack_received","request_id":"dash-mvjnjf8u-3","result":"APPLIED","reason":"","at":"2026-10-22T14:44:17.797Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T14:44:18.204Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T14:44:18.204Z"}
+{"event":"command_sent","request_id":"dash-mvjnjgdq-4","ref":null,"relay":"fan","payload":{"request_id":"dash-mvjnjgdq-4","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:44:18.734Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T14:44:19.656Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T14:44:19.656Z"}
+{"event":"command_result","request_id":"dash-mvjnjgdq-4","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":922,"at":"2026-10-22T14:44:19.656Z"}
+{"event":"ack_received","request_id":"dash-mvjnjgdq-4","result":"APPLIED","reason":"","at":"2026-10-22T14:44:19.656Z"}
+{"event":"ack_received","request_id":"dash-mvjnjgdq-4","result":"APPLIED","reason":"","at":"2026-10-22T14:44:19.657Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T14:44:19.799Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T14:44:19.800Z"}
+{"event":"command_sent","request_id":"dash-mvjnjif0-5","ref":null,"relay":"light","payload":{"request_id":"dash-mvjnjif0-5","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:44:21.372Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T14:44:22.098Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T14:44:22.099Z"}
+{"event":"command_result","request_id":"dash-mvjnjif0-5","ref":null,"relay":"light","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":728,"at":"2026-10-22T14:44:22.100Z"}
+{"event":"ack_received","request_id":"dash-mvjnjif0-5","result":"APPLIED","reason":"","at":"2026-10-22T14:44:22.100Z"}
+{"event":"ack_received","request_id":"dash-mvjnjif0-5","result":"APPLIED","reason":"","at":"2026-10-22T14:44:22.130Z"}
+{"event":"command_sent","request_id":"dash-mvjnjkdh-6","ref":null,"relay":"light","payload":{"request_id":"dash-mvjnjkdh-6","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:44:23.909Z"}
+{"event":"ack_received","request_id":"dash-mvjnjkdh-6","result":"APPLIED","reason":"","at":"2026-10-22T14:44:25.383Z"}
+{"event":"command_result","request_id":"dash-mvjnjkdh-6","ref":null,"relay":"light","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":1474,"at":"2026-10-22T14:44:25.383Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:44:25.384Z"}
+{"event":"ack_received","request_id":"dash-mvjnjkdh-6","result":"APPLIED","reason":"","at":"2026-10-22T14:44:25.384Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:44:25.385Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:44:27.104Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:44:27.105Z"}
+{"event":"threshold_active","rule":"orchidLightDemand","metric":"light_adc","value":2225,"threshold":2200,"at":"2026-10-22T14:45:34.237Z"}
+{"event":"rule_config_loaded","version":1,"clock":{"speed":1,"start_local":""},"rule_time":"2026-10-22T14:45:51.409Z","at":"2026-10-22T14:45:51.408Z"}
+{"event":"availability","state":"online","at":"2026-10-22T14:45:51.925Z"}
+{"event":"availability","state":"online","at":"2026-10-22T14:45:51.927Z"}
+{"event":"care_window_changed","rule":"night_mist_policy","phase":"NIGHT","auto_mist":"BLOCKED","care_window":"06:00-18:00","rule_time":"2026-10-22 21:45:51","at":"2026-10-22T14:45:51.927Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-22T14:45:51.927Z"},"at":"2026-10-22T14:45:51.927Z"}
+{"event":"fault_active","fault":"water_low","severity":"fault","water_adc":null,"mist_state":"WATER_LOCKOUT","safe_state":"Firmware WATER_LOCKOUT: mist relay locked until water ADC >= 1500","at":"2026-10-22T14:45:51.930Z"}
+{"event":"water_lockout","water_adc":102,"threshold":1200,"at":"2026-10-22T14:45:54.234Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"outside_schedule","trigger":"desired_changed","ttl_s":900,"light_adc":1915,"on_today_min":0,"rule_time":"2026-10-22 21:45:54","at":"2026-10-22T14:45:54.233Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOW","severity":"CRITICAL","title":"CẢNH BÁO CẠN NƯỚC","message":"Mực nước bình chứa đang ở mức THẤP (ADC: 102 < 1200)! Phun sương bị khóa an toàn (WATER_LOCKOUT).","water_adc":102,"at":"2026-10-22T14:45:54.234Z"},"at":"2026-10-22T14:45:54.234Z"}
+{"event":"automation_action","rule":"night_mist_policy","action":"HOLD_MIST_OFF","trigger":"night_started","ttl_s":900,"phase":"NIGHT","rule_time":"2026-10-22 21:45:54","at":"2026-10-22T14:45:54.233Z"}
+{"event":"command_sent","request_id":"auto-mvjnli3c-1","ref":"light-1","relay":"light","payload":{"request_id":"auto-mvjnli3c-1","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"outside_schedule","at":"2026-10-22T14:45:54.264Z"}
+{"event":"command_sent","request_id":"auto-mvjnli3d-2","ref":"night-1","relay":"mist","payload":{"request_id":"auto-mvjnli3d-2","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:night_mist_policy","user":null,"reason":"night_no_auto_mist","at":"2026-10-22T14:45:54.265Z"}
+{"event":"ack_received","request_id":"auto-mvjnli3c-1","result":"APPLIED","reason":"","at":"2026-10-22T14:45:54.823Z"}
+{"event":"command_result","request_id":"auto-mvjnli3c-1","ref":"light-1","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":559,"at":"2026-10-22T14:45:54.823Z"}
+{"event":"ack_received","request_id":"auto-mvjnli3c-1","result":"APPLIED","reason":"","at":"2026-10-22T14:45:54.829Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:45:55.179Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:45:55.180Z"}
+{"event":"ack_received","request_id":"auto-mvjnli3d-2","result":"APPLIED","reason":"","at":"2026-10-22T14:45:55.255Z"}
+{"event":"command_result","request_id":"auto-mvjnli3d-2","ref":"night-1","relay":"mist","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:night_mist_policy","user":null,"result":"APPLIED","reason":null,"latency_ms":990,"at":"2026-10-22T14:45:55.255Z"}
+{"event":"ack_received","request_id":"auto-mvjnli3d-2","result":"APPLIED","reason":"","at":"2026-10-22T14:45:55.260Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:45:55.393Z"}
+{"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:45:55.393Z"}
