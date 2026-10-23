@@ -21,17 +21,19 @@
 #endif
 
 // ============================================================================
-// TUẦN 1: CẤU HÌNH PHẦN CỨNG & SƠ ĐỒ CHÂN I/O (ESP32 MÔ PHỎNG WOKWI)
+// TUẦN 1: CẤU HÌNH PHẦN CỨNG & SƠ ĐỒ CHÂN I/O (ESP32 DevKit V1 MÔ PHỎNG WOKWI)
 // - Cảm biến: DHT22 (GPIO15), LDR Ánh sáng (GPIO34), Cảm biến mực nước (GPIO35)
-// - Relay chấp hành: Bơm phun sương (GPIO25), Quạt (GPIO26), Đèn sưởi (GPIO27)
+// - Relay chấp hành: Bơm phun sương (GPIO25), Quạt (GPIO26), Đèn trồng cây (GPIO27)
+// Khớp dây trong diagram.json. Board ESP32-S3 thật (src/s3_physical.cpp) dùng chân khác.
 // ============================================================================
 namespace Pins {
-constexpr uint8_t dht = 15;
-constexpr uint8_t ldr = 34;
-constexpr uint8_t water = 35;
-constexpr uint8_t mistRelay = 25;
-constexpr uint8_t fanRelay = 26;
-constexpr uint8_t lightRelay = 27;
+constexpr uint8_t dht = 15;         // DHT22 chân DATA (SDA trong Wokwi), nuôi 3V3
+// GPIO34/35 là ADC1, chỉ nhận vào: vẫn đọc được khi Wi-Fi bật (ADC2 bị Wi-Fi chiếm). Thang 0-4095.
+constexpr uint8_t ldr = 34;         // AO module quang trở: trời càng TỐI thì ADC càng CAO
+constexpr uint8_t water = 35;       // SIG biến trở mô phỏng mực nước: càng CẠN thì ADC càng THẤP
+constexpr uint8_t mistRelay = 25;   // IN relay bơm phun sương, HIGH = bật
+constexpr uint8_t fanRelay = 26;    // IN relay quạt thông gió, HIGH = bật
+constexpr uint8_t lightRelay = 27;  // IN relay đèn trồng cây, HIGH = bật
 }
 
 // ============================================================================
@@ -40,30 +42,34 @@ constexpr uint8_t lightRelay = 27;
 // - Tuần 7: Chuyển sang biến động để Node-RED có thể điều chỉnh qua MQTT topic /config
 // ============================================================================
 namespace Thresholds {
-float mistHumidityOn = 65.0f;
-float mistHumidityOff = 80.0f;
-float fanTemperatureOn = 33.0f;
-float fanTemperatureOff = 31.0f;
-float fanHumidityOn = 90.0f;
-float fanHumidityOff = 85.0f;
+// Mỗi cặp ngưỡng bật/tắt cách nhau một khoảng trễ (hysteresis) để relay không bật tắt liên tục.
+// Ngưỡng phun, nhiệt độ quạt, LDR và nước đổi được qua topic /config (trong giới hạn ConfigLimits);
+// hai ngưỡng độ ẩm của quạt và các thời gian thì cố định.
+float mistHumidityOn = 65.0f;     // %RH: dưới mức này bắt đầu phun (AUTO)
+float mistHumidityOff = 80.0f;    // %RH: từ mức này trở lên dừng phun
+float fanTemperatureOn = 33.0f;   // °C: trên mức này bật quạt (AUTO)
+float fanTemperatureOff = 31.0f;  // °C: quạt chỉ tắt khi dưới 31 °C VÀ độ ẩm dưới fanHumidityOff
+float fanHumidityOn = 90.0f;      // %RH: trên mức này cũng bật quạt (chống đọng nước trên lá)
+float fanHumidityOff = 85.0f;     // %RH: điều kiện tắt quạt, đi cùng fanTemperatureOff
 // LDR Wokwi: ADC cang CAO khi cang TOI (LDR noi tiep dien tro 10k, AO o giua)
 // Den bat khi ADC > lightOnAdc (troi toi), tat khi ADC < lightOffAdc (du sang)
-int lightOnAdc = 2200;
-int lightOffAdc = 1800;
-int waterLowAdc = 1200;
-int waterRefilledAdc = 1500;
+int lightOnAdc = 2200;            // ADC LDR: trên mức này (tối) bật đèn AUTO
+int lightOffAdc = 1800;           // ADC LDR: dưới mức này (đủ sáng) tắt đèn
+int waterLowAdc = 1200;           // ADC nước: dưới mức này -> WATER_LOCKOUT, cắt bơm, từ chối mist ON
+int waterRefilledAdc = 1500;      // ADC nước: từ mức này trở lên mới mở khóa bơm
 #ifdef ORCHID_TIMER_TEST
+// Chỉ build test (esp32dev_timer_test / esp32dev_fault_test): rút ngắn để scenario chạy trong giới hạn phiên Wokwi.
 constexpr unsigned long maxMistDurationMs = 15000UL;
 constexpr unsigned long mistCooldownMs = 10000UL;
 constexpr unsigned long maxAutoLightOnMs = 20000UL;
 #else
-constexpr unsigned long maxMistDurationMs = 120000UL;
-constexpr unsigned long mistCooldownMs = 60000UL;
+constexpr unsigned long maxMistDurationMs = 120000UL;  // phun liên tục tối đa 120 s (cả AUTO lẫn lệnh tay)
+constexpr unsigned long mistCooldownMs = 60000UL;      // nghỉ bắt buộc 60 s sau mỗi lần phun
 // Den AUTO cuc bo (khi Node-RED khong giu lich) bat lien tuc toi da 4 gio,
 // sau do tat va chi bat lai khi da thay troi sang -> khong bat suot dem.
 constexpr unsigned long maxAutoLightOnMs = 4UL * 60UL * 60UL * 1000UL;
 #endif
-constexpr unsigned long sampleIntervalMs = 2500UL;
+constexpr unsigned long sampleIntervalMs = 2500UL;  // chu kỳ đọc cảm biến, chạy luật, gửi telemetry + state
 }
 
 // ============================================================================
@@ -78,11 +84,11 @@ constexpr uint8_t dhtFaultAfterFailures = 3;
 }
 
 namespace Filtering {
-constexpr size_t windowSize = 5;
-constexpr float maxTemperatureJump = 8.0f;
-constexpr float maxHumidityJump = 20.0f;
-constexpr int maxAdcJump = 1200;
-constexpr uint8_t maxConsecutiveRejects = 3;
+constexpr size_t windowSize = 5;              // trung bình trượt 5 mẫu (~12,5 s ở chu kỳ 2,5 s)
+constexpr float maxTemperatureJump = 8.0f;    // °C: lệch hơn mức này so với mẫu trước -> coi là nhiễu
+constexpr float maxHumidityJump = 20.0f;      // %RH: như trên cho độ ẩm
+constexpr int maxAdcJump = 1200;              // ADC: như trên cho LDR và mực nước
+constexpr uint8_t maxConsecutiveRejects = 3;  // loại tối đa 2 mẫu liên tiếp; mẫu lệch thứ 3 thì chấp nhận là thay đổi thật
 }
 
 // ============================================================================
@@ -93,10 +99,11 @@ constexpr uint8_t maxConsecutiveRejects = 3;
 namespace NetworkConfig {
 constexpr char brokerHost[] = "broker.emqx.io";
 constexpr uint16_t brokerPort = 1883;
-constexpr unsigned long wifiRetryIntervalMs = 10000UL;
-constexpr unsigned long mqttRetryIntervalMs = 5000UL;
-constexpr uint32_t maxManualTtlSeconds = 3600;
-constexpr size_t commandBufferSize = 256;
+constexpr unsigned long wifiRetryIntervalMs = 10000UL;  // thử nối lại Wi-Fi mỗi 10 s
+constexpr unsigned long mqttRetryIntervalMs = 5000UL;   // thử nối lại MQTT mỗi 5 s (không chặn loop)
+constexpr uint32_t maxManualTtlSeconds = 3600;          // ttl_s hợp lệ của lệnh MANUAL: 1-3600 s
+constexpr size_t commandBufferSize = 384;               // payload lệnh/config tối đa 383 byte; dài hơn -> ACK REJECTED PAYLOAD_TOO_LARGE
+constexpr size_t maxAckRequestIdLength = 96;            // request_id dài hơn thì không ACK được (gói ACK vượt bộ đệm MQTT)
 // Goi MQTT gom header + topic + payload; state JSON day du can hon 256 byte.
 constexpr size_t mqttPacketBufferSize = 512;
 }
@@ -169,6 +176,8 @@ unsigned long manualMistRunStartedAt = 0;
 // Chi co trong build test: lenh Serial "FAULT ..." gia lap loi de chay scenario Wokwi.
 bool injectedDhtFault = false;
 bool injectedCommandDrop = false;
+bool injectedWaterLow = false;
+constexpr int injectedWaterLowAdc = 600;  // nhu keo bien tro nuoc xuong muc can
 #endif
 
 // ============================================================================
@@ -213,8 +222,23 @@ bool lightRelayOn = false;
 // ============================================================================
 // TUẦN 1: ĐIỀU KHIỂN XUẤT TÍN HIỆU GPIO RELAY CHẤP HÀNH
 // ============================================================================
+// Thoi gian da troi qua tu moc 'since' toi 'now'. 'now' lay o dau vong loop(), con lenh MQTT xu ly
+// trong cung vong loop dat moc bang millis() (muon hon 'now'); khi do 'now - since' am se tran thanh
+// so rat lon (unsigned) va lenh MANUAL bi coi la het TTL ngay. Moc nam sau 'now' thi tinh la 0 ms.
+// Van dung khi millis() quay vong sau ~49 ngay.
+unsigned long elapsedMs(unsigned long now, unsigned long since) {
+  const unsigned long diff = now - since;
+  return diff > 0x7FFFFFFFUL ? 0UL : diff;
+}
+
 void setRelay(uint8_t pin, bool on) {
   digitalWrite(pin, on ? HIGH : LOW);
+}
+
+void logRelayChange(const char* name, uint8_t pin, bool on, bool& lastLogged) {
+  if (on == lastLogged) return;
+  Serial.printf("RELAY %s GPIO%u %s -> %s\n", name, pin, lastLogged ? "ON" : "OFF", on ? "ON" : "OFF");
+  lastLogged = on;
 }
 
 // ============================================================================
@@ -252,6 +276,7 @@ FilteredSensors readFilteredSensors() {
     temperatureRaw = NAN;
     humidityRaw = NAN;
   }
+  if (injectedWaterLow) sensors.waterRaw = injectedWaterLowAdc;
 #endif
 
   sensors.temperatureRaw = temperatureRaw;
@@ -326,6 +351,8 @@ void publishJson(const char* topic, JsonDocument& document, bool retained = fals
 
 void publishAck(const char* requestId, const char* result, const char* reason = "") {
   if (!mqttClient.connected()) return;
+  // Log downlink buoc 3/3: ACK gui nguoc len (ca APPLIED lan REJECTED).
+  Serial.printf("ACK %s result=%s%s%s\n", requestId, result, reason[0] != '\0' ? " reason=" : "", reason);
   JsonDocument document;
   document["request_id"] = requestId;
   document["result"] = result;
@@ -397,6 +424,14 @@ void applyRelayOutputs() {
   setRelay(Pins::mistRelay, mistRelayOn);
   setRelay(Pins::fanRelay, fanRelayOn);
   setRelay(Pins::lightRelay, lightRelayOn);
+
+  // Log downlink buoc 2/3: chan relay doi trang thai that (chi in khi co thay doi).
+  static bool loggedMist = false;
+  static bool loggedFan = false;
+  static bool loggedLight = false;
+  logRelayChange("mist", Pins::mistRelay, mistRelayOn, loggedMist);
+  logRelayChange("fan", Pins::fanRelay, fanRelayOn, loggedFan);
+  logRelayChange("light", Pins::lightRelay, lightRelayOn, loggedLight);
 }
 
 // ============================================================================
@@ -419,14 +454,14 @@ void expireManualOverrides(unsigned long now) {
   const char* names[] = {"mist", "fan", "light"};
   for (size_t index = 0; index < sizeof(overrides) / sizeof(overrides[0]); index++) {
     RelayOverride& relayOverride = *overrides[index];
-    if (relayOverride.active && now - relayOverride.startedAt >= relayOverride.ttlMs) {
+    if (relayOverride.active && elapsedMs(now, relayOverride.startedAt) >= relayOverride.ttlMs) {
       relayOverride.active = false;
       Serial.printf("MQTT override expired: %s -> AUTO\n", names[index]);
     }
   }
 
   // Tinh tu luc relay bat that, khong tu lenh moi nhat: lenh ON lap lai khong keo dai thoi gian phun.
-  if (manualMistRunActive && now - manualMistRunStartedAt >= Thresholds::maxMistDurationMs) {
+  if (manualMistRunActive && elapsedMs(now, manualMistRunStartedAt) >= Thresholds::maxMistDurationMs) {
     mistOverride.active = false;
     setMistState(MistState::Cooldown, now);
     Serial.println("MQTT mist safety limit reached; entering cooldown");
@@ -435,12 +470,101 @@ void expireManualOverrides(unsigned long now) {
   if (mistOverride.active && mistOverride.on &&
       (waterLockoutActive() || mistState == MistState::SensorFault)) {
     mistOverride.active = false;
-    if (now - lastManualSafetyWarningAt >= 1000UL) {
+    if (elapsedMs(now, lastManualSafetyWarningAt) >= 1000UL) {
       Serial.printf("MQTT mist override cancelled: %s\n",
                     mistState == MistState::SensorFault ? "SENSOR_FAULT" : "WATER_LOCKOUT");
       lastManualSafetyWarningAt = now;
     }
   }
+}
+
+// ============================================================================
+// TUẦN 7: CẤU HÌNH NGƯỠNG QUA TOPIC /config CÓ GIỚI HẠN AN TOÀN
+// Broker công khai không xác thực, nên firmware chỉ nhận ngưỡng trong phạm vi an toàn,
+// giữ khoảng hysteresis tối thiểu, và KHÔNG cho hạ ngưỡng khoá nước dưới mặc định.
+// Một trường sai thì từ chối cả gói (không áp dụng từng phần).
+// ============================================================================
+namespace ConfigLimits {
+constexpr float mistRhOnMin = 40.0f;
+constexpr float mistRhOnMax = 90.0f;
+constexpr float mistRhOffMax = 95.0f;
+constexpr float mistRhMinGap = 5.0f;
+constexpr float fanTempOnMin = 25.0f;
+constexpr float fanTempOnMax = 45.0f;
+constexpr float fanTempOffMin = 20.0f;
+constexpr float fanTempMinGap = 1.0f;
+constexpr int lightOnAdcMin = 500;
+constexpr int lightOnAdcMax = 4000;
+constexpr int lightOffAdcMin = 300;
+constexpr int adcMinGap = 200;
+constexpr int waterLowAdcFloor = 1200;  // = ngưỡng mặc định: chỉ được nâng lên, không được hạ
+constexpr int waterLowAdcMax = 3500;
+constexpr int waterRefilledAdcMax = 4000;
+}
+
+// Trường không gửi thì giữ giá trị hiện tại; gửi sai kiểu (không phải số) thì trả false.
+template <typename T>
+bool readConfigNumber(JsonDocument& document, const char* key, T& value) {
+  JsonVariant field = document[key];
+  if (field.isNull()) return true;
+  if (!field.is<float>()) return false;
+  value = field.as<T>();
+  return true;
+}
+
+void handleConfigMessage(JsonDocument& document) {
+  const char* requestId = document["request_id"] | "cfg";
+  float mistOn = Thresholds::mistHumidityOn;
+  float mistOff = Thresholds::mistHumidityOff;
+  float fanOn = Thresholds::fanTemperatureOn;
+  float fanOff = Thresholds::fanTemperatureOff;
+  int lightOn = Thresholds::lightOnAdc;
+  int lightOff = Thresholds::lightOffAdc;
+  int waterLow = Thresholds::waterLowAdc;
+  int waterRefilled = Thresholds::waterRefilledAdc;
+
+  const bool typesOk = readConfigNumber(document, "mist_rh_on", mistOn) &&
+      readConfigNumber(document, "mist_rh_off", mistOff) &&
+      readConfigNumber(document, "fan_temp_on", fanOn) &&
+      readConfigNumber(document, "fan_temp_off", fanOff) &&
+      readConfigNumber(document, "light_on_adc", lightOn) &&
+      readConfigNumber(document, "light_off_adc", lightOff) &&
+      readConfigNumber(document, "water_low_adc", waterLow) &&
+      readConfigNumber(document, "water_refilled_adc", waterRefilled);
+  if (!typesOk) {
+    Serial.println("CONFIG rejected: values must be numbers");
+    publishAck(requestId, "REJECTED", "INVALID_CONFIG");
+    return;
+  }
+
+  using namespace ConfigLimits;
+  const char* problem = nullptr;
+  if (mistOn < mistRhOnMin || mistOn > mistRhOnMax) problem = "mist_rh_on";
+  else if (mistOff < mistOn + mistRhMinGap || mistOff > mistRhOffMax) problem = "mist_rh_off";
+  else if (fanOn < fanTempOnMin || fanOn > fanTempOnMax) problem = "fan_temp_on";
+  else if (fanOff < fanTempOffMin || fanOff > fanOn - fanTempMinGap) problem = "fan_temp_off";
+  else if (lightOn < lightOnAdcMin || lightOn > lightOnAdcMax) problem = "light_on_adc";
+  else if (lightOff < lightOffAdcMin || lightOff > lightOn - adcMinGap) problem = "light_off_adc";
+  else if (waterLow < waterLowAdcFloor || waterLow > waterLowAdcMax) problem = "water_low_adc";
+  else if (waterRefilled < waterLow + adcMinGap || waterRefilled > waterRefilledAdcMax) problem = "water_refilled_adc";
+  if (problem != nullptr) {
+    Serial.printf("CONFIG rejected: %s out of safe range; thresholds unchanged\n", problem);
+    publishAck(requestId, "REJECTED", "CONFIG_OUT_OF_RANGE");
+    return;
+  }
+
+  Thresholds::mistHumidityOn = mistOn;
+  Thresholds::mistHumidityOff = mistOff;
+  Thresholds::fanTemperatureOn = fanOn;
+  Thresholds::fanTemperatureOff = fanOff;
+  Thresholds::lightOnAdc = lightOn;
+  Thresholds::lightOffAdc = lightOff;
+  Thresholds::waterLowAdc = waterLow;
+  Thresholds::waterRefilledAdc = waterRefilled;
+  Serial.printf("CONFIG updated: mist_rh_on=%.1f mist_rh_off=%.1f fan_temp_on=%.1f light_on=%d water_low=%d\n",
+                mistOn, mistOff, fanOn, lightOn, waterLow);
+  publishAck(requestId, "APPLIED", "CONFIG");
+  publishState();
 }
 
 // ============================================================================
@@ -453,10 +577,27 @@ void handleMqttMessage(char* topic, byte* payload, unsigned int length) {
     return;
   }
 #endif
-  if (length == 0 || length >= NetworkConfig::commandBufferSize) {
-    Serial.printf("MQTT command rejected: invalid payload length=%u\n", length);
+  if (length == 0) {
+    Serial.println("MQTT command rejected: empty payload");
     return;
   }
+  if (length >= NetworkConfig::commandBufferSize) {
+    // BUG-02: khong bo lenh lang le. Doc rieng request_id (bo loc ArduinoJson, it RAM) roi ACK REJECTED
+    // de dashboard biet ly do thay vi chi thay NO_ACK.
+    Serial.printf("MQTT command rejected: payload too large length=%u (max %u)\n", length,
+                  static_cast<unsigned>(NetworkConfig::commandBufferSize - 1));
+    JsonDocument filter;
+    filter["request_id"] = true;
+    JsonDocument idOnly;
+    if (deserializeJson(idOnly, payload, length, DeserializationOption::Filter(filter))) return;
+    const char* requestId = idOnly["request_id"] | (strcmp(topic, configTopic) == 0 ? "cfg" : "");
+    if (requestId[0] != '\0' && strlen(requestId) <= NetworkConfig::maxAckRequestIdLength) {
+      publishAck(requestId, "REJECTED", "PAYLOAD_TOO_LARGE");
+    }
+    return;
+  }
+  // Log downlink buoc 1/3: firmware nhan lenh (topic + payload nguyen van).
+  Serial.printf("CMD rx %s %.*s\n", topic, static_cast<int>(length), reinterpret_cast<const char*>(payload));
 
   JsonDocument document;
   const DeserializationError error = deserializeJson(document, payload, length);
@@ -466,20 +607,7 @@ void handleMqttMessage(char* topic, byte* payload, unsigned int length) {
   }
 
   if (strcmp(topic, configTopic) == 0) {
-    if (!document["mist_rh_on"].isNull()) Thresholds::mistHumidityOn = document["mist_rh_on"].as<float>();
-    if (!document["mist_rh_off"].isNull()) Thresholds::mistHumidityOff = document["mist_rh_off"].as<float>();
-    if (!document["fan_temp_on"].isNull()) Thresholds::fanTemperatureOn = document["fan_temp_on"].as<float>();
-    if (!document["fan_temp_off"].isNull()) Thresholds::fanTemperatureOff = document["fan_temp_off"].as<float>();
-    if (!document["light_on_adc"].isNull()) Thresholds::lightOnAdc = document["light_on_adc"].as<int>();
-    if (!document["light_off_adc"].isNull()) Thresholds::lightOffAdc = document["light_off_adc"].as<int>();
-    if (!document["water_low_adc"].isNull()) Thresholds::waterLowAdc = document["water_low_adc"].as<int>();
-    if (!document["water_refilled_adc"].isNull()) Thresholds::waterRefilledAdc = document["water_refilled_adc"].as<int>();
-    Serial.printf("CONFIG updated: mist_rh_on=%.1f mist_rh_off=%.1f fan_temp_on=%.1f light_on=%d\n",
-                  Thresholds::mistHumidityOn, Thresholds::mistHumidityOff,
-                  Thresholds::fanTemperatureOn, Thresholds::lightOnAdc);
-    const char* reqId = document["request_id"] | "cfg";
-    publishAck(reqId, "APPLIED", "CONFIG");
-    publishState();
+    handleConfigMessage(document);
     return;
   }
 
@@ -666,7 +794,7 @@ void updateMist(unsigned long now, bool climateValid, float humidity, int waterA
   const bool waterRefilled = waterAdc >= Thresholds::waterRefilledAdc;
   // Lenh MANUAL OFF (vd. Node-RED chan phun ban dem) giu chu trinh AUTO, khong chay ngam phia sau.
   const bool autoMistHeld = mistOverride.active && !mistOverride.on;
-  const unsigned long elapsed = now - mistStateSince;
+  const unsigned long elapsed = elapsedMs(now, mistStateSince);
 
   switch (mistState) {
     case MistState::Idle:
@@ -717,7 +845,7 @@ void updateLight(unsigned long now, int lightAdc) {
     lightOnSince = now;
   } else if (lightState == SwitchState::On && lightAdc < Thresholds::lightOffAdc) {
     lightState = SwitchState::Off;
-  } else if (lightState == SwitchState::On && now - lightOnSince >= Thresholds::maxAutoLightOnMs) {
+  } else if (lightState == SwitchState::On && elapsedMs(now, lightOnSince) >= Thresholds::maxAutoLightOnMs) {
     lightState = SwitchState::Off;
     lightWaitingForDaylight = true;
     Serial.println("SAFETY light AUTO on-time limit reached; off until daylight is seen");
@@ -742,6 +870,8 @@ void serviceFaultInjection() {
     else if (strcmp(line, "FAULT DHT OFF") == 0) injectedDhtFault = false;
     else if (strcmp(line, "FAULT CMD DROP ON") == 0) injectedCommandDrop = true;
     else if (strcmp(line, "FAULT CMD DROP OFF") == 0) injectedCommandDrop = false;
+    else if (strcmp(line, "FAULT WATER LOW") == 0) injectedWaterLow = true;
+    else if (strcmp(line, "FAULT WATER OFF") == 0) injectedWaterLow = false;
     else if (strcmp(line, "FAULT MQTT DROP") == 0) networkSocket.stop();  // dong TCP dot ngot -> broker phat LWT
     else {
       Serial.printf("TEST unknown fault command: %s\n", line);
@@ -791,7 +921,7 @@ void setup() {
   Serial.println("MQTT topics: telemetry/state/availability/cmd/{mist,fan,light}/ack");
   Serial.println("MQTT Wi-Fi defaults to Wokwi-GUEST; configure orchid_secrets.h for a local network");
 #ifdef ORCHID_FAULT_INJECTION
-  Serial.println("TEST build: serial FAULT DHT ON|OFF, FAULT CMD DROP ON|OFF, FAULT MQTT DROP");
+  Serial.println("TEST build: serial FAULT DHT ON|OFF, FAULT CMD DROP ON|OFF, FAULT WATER LOW|OFF, FAULT MQTT DROP");
 #endif
 }
 

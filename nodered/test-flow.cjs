@@ -35,7 +35,8 @@ for (const node of nodes) {
 }
 
 // Week 6: chi mot cong lenh, khong retain, topic dong do gateway dat.
-const mqttOut = nodes.filter((node) => node.type === "mqtt out" && node.z !== "orchid-tab-nguoi3");
+// Node bi tat (d: true) khong chay, nen chi xet node dang bat.
+const mqttOut = nodes.filter((node) => node.type === "mqtt out" && node.d !== true);
 assert.equal(mqttOut.length, 1, "Only the command gateway may publish MQTT");
 assert.equal(mqttOut[0].qos, "1");
 assert.equal(mqttOut[0].retain, "false", "Commands must never be retained");
@@ -249,6 +250,22 @@ assert.equal(result[7].payload, "STALE", "Telemetry older than 15 seconds must b
 result = dashboard({ topic: `${DEVICE}/availability`, payload: "offline" });
 assert.equal(result[7].payload, "OFFLINE");
 assert.equal(dashboardFlow.get("orchidDashboardConnection"), "OFFLINE");
+
+// Tuan 8: tin "online" retained cu tren broker (thiet bi khong chay) khong duoc mo khoa lenh.
+const freshDashboard = createRunner("orchid-dashboard-render", createContext(), createContext());
+setNow(timestamp + 60000);
+result = freshDashboard({ topic: `${DEVICE}/availability`, payload: "online" });
+assert.equal(result[7].payload, "WAITING", "Retained 'online' without fresh telemetry must not count as ONLINE");
+setNow(timestamp + 60000 + 15001);
+result = freshDashboard({ topic: "dashboard/refresh", payload: {} });
+assert.equal(result[7].payload, "STALE", "No telemetry 15 s after 'online' must be marked stale");
+result = freshDashboard({ topic: `${DEVICE}/telemetry`, payload: { temperature_c: 28, humidity_pct: 72, light_adc: 900, water_adc: 2400 } });
+assert.equal(result[7].payload, "ONLINE", "Fresh telemetry after 'online' marks the device ONLINE");
+result = freshDashboard({ topic: `${DEVICE}/availability`, payload: "offline" });
+assert.equal(result[7].payload, "OFFLINE");
+setNow(timestamp + 60000 + 20000);
+result = freshDashboard({ topic: `${DEVICE}/availability`, payload: "online" });
+assert.equal(result[7].payload, "WAITING", "After reconnect, wait for new telemetry before ONLINE");
 
 // ---------------- Week 6: control widgets, gateway, ACK ----------------
 const sessions = new Map([
@@ -478,9 +495,9 @@ assert(eventsOf(result).some((event) => event.event === "light_daily_total" && e
 assert.equal(commandsOf(result)[0].state, "ON", "A new day restores the budget");
 
 const offTime = createRunner("orchid-week7-light-rule");
-result = offTime(ruleMsg("tick", at("19:55"), darkDevice));
+result = offTime(ruleMsg("tick", at("20:55"), darkDevice));
 assert.equal(commandsOf(result)[0].ttl_s, 300, "ON hold never outlives the off time");
-result = offTime(ruleMsg("tick", at("20:00"), darkDevice));
+result = offTime(ruleMsg("tick", at("21:00"), darkDevice));
 assert.equal(commandsOf(result)[0].state, "OFF", "Light goes off at the configured off time");
 assert.equal(commandsOf(result)[0].reason, "outside_schedule");
 const suspended = createRunner("orchid-week7-light-rule");
@@ -495,11 +512,11 @@ const fan = createRunner("orchid-week7-fan-rule");
 setNow(Date.parse("2026-10-16T05:00:00.000Z"));
 assert.equal(commandsOf(fan(ruleMsg("state", at("12:00"), { state: { mist: "ON", fan: "OFF" } }))).length, 0);
 result = fan(ruleMsg("state", at("12:01"), { state: { mist: "OFF", fan: "OFF" } }));
-assert.deepEqual(commandsOf(result)[0], { relay: "fan", mode: "MANUAL", state: "ON", ttl_s: 180, source: "automation:fan_after_mist", ref: "fan-1", reason: "mist_cycle_finished" });
-assert.equal(eventsOf(result)[0].duration_s, 180);
-assert.equal(eventsOf(fan(ruleMsg("tick", at("12:01") + 179000, { state: { mist: "OFF" } }))).length, 0, "Fan assist must not end early");
-result = fan(ruleMsg("tick", at("12:01") + 180000, { state: { mist: "OFF" } }));
-assert.equal(eventsOf(result)[0].action, "RELEASE", "Fan assist ends after 180 s (firmware TTL)");
+assert.deepEqual(commandsOf(result)[0], { relay: "fan", mode: "MANUAL", state: "ON", ttl_s: 60, source: "automation:fan_after_mist", ref: "fan-1", reason: "mist_cycle_finished" });
+assert.equal(eventsOf(result)[0].duration_s, 60);
+assert.equal(eventsOf(fan(ruleMsg("tick", at("12:01") + 59000, { state: { mist: "OFF" } }))).length, 0, "Fan assist must not end early");
+result = fan(ruleMsg("tick", at("12:01") + 60000, { state: { mist: "OFF" } }));
+assert.equal(eventsOf(result)[0].action, "RELEASE", "Fan assist ends after 60 s (firmware TTL)");
 fan(ruleMsg("state", at("12:10"), { state: { mist: "ON" } }));
 result = fan(ruleMsg("state", at("12:12"), { state: { mist: "OFF" } }, { controlMode: "MANUAL" }));
 assert.equal(commandsOf(result).length, 0);
@@ -523,6 +540,11 @@ assert.equal(eventsOf(result).find((event) => event.event === "night_mist_observ
 night(ruleMsg("state", at("18:03"), { state: { mist: "OFF", mist_mode: "MANUAL" } }));
 result = night(ruleMsg("state", at("22:00"), { state: { mist: "ON", mist_mode: "MANUAL" } }, { controlMode: "MANUAL" }));
 assert(eventsOf(result).some((event) => event.event === "night_mist_observed" && event.note === "operator exception during night"));
+// Firmware lai bo lenh giu ngay (vd. board chua nap ban sua) -> khong gui lai doi, cho 30 s.
+night(ruleMsg("command_result", at("18:04"), {}, { payload: { relay: "mist", ref: "night-2", result: "APPLIED", source: "automation:night_mist_policy" } }));
+result = night(ruleMsg("state", at("18:05"), { state: { mist: "OFF", mist_mode: "AUTO" }, stateAt: currentTime + 4000 }));
+assert.equal(commandsOf(result).length, 0, "Repeated override loss must back off for 30 s instead of resending every tick");
+setNow(currentTime + 31000);
 result = night(ruleMsg("tick", at("06:00", "2026-10-17"), { state: { mist: "OFF", mist_mode: "MANUAL" } }, { modeChanged: false }));
 assert.deepEqual(commandsOf(result)[0], { relay: "mist", mode: "AUTO", source: "automation:night_mist_policy", ref: "night-3", reason: "care_window" },
   "Morning releases the night hold back to firmware AUTO");
@@ -554,6 +576,24 @@ faults(ruleMsg("availability", 0, { connection: "ONLINE", state: { mist: "ON" } 
 setNow(currentTime + 131000);
 result = faults(ruleMsg("state", 0, { connection: "ONLINE", state: { mist: "ON" } }));
 assert(faultEvents(result).some((event) => event.fault === "violation_mist_runtime"), "Mist ON beyond the firmware limit must be flagged");
+
+// Gop rule: tab Nguoi 3 khong con rule/MQTT Out rieng; nut test di qua gateway.
+assert.equal(defaultConfig.light.off_time, "21:00", "Team-agreed light off time");
+assert.equal(defaultConfig.fan_assist.duration_s, 60, "Team-agreed fan assist duration");
+for (const id of ["nguoi3-orchid-rule-light", "nguoi3-orchid-rule-light-tick", "nguoi3-orchid-rule-fan", "nguoi3-orchid-cmd-formatter", "nguoi3-orchid-mqtt-out-dynamic"]) {
+  assert.equal(byId(id).d, true, `${id} must stay disabled (duplicate of the Week 7 rules / gateway)`);
+}
+const testButtons = nodes.filter((node) => node.id.startsWith("nguoi3-orchid-btn-"));
+assert.equal(testButtons.length, 9);
+for (const button of testButtons) assert.deepEqual(button.wires, [["nguoi3-orchid-to-gateway"]], `${button.id} must go through the gateway`);
+assert.deepEqual(byId("nguoi3-orchid-to-gateway").wires, [["nguoi3-orchid-gateway-out"]]);
+assert(byId("orchid-gateway-in").links.includes("nguoi3-orchid-gateway-out"));
+const editorButtons = createRunner("nguoi3-orchid-to-gateway");
+const mistOnButton = byId("nguoi3-orchid-btn-mist-on");
+result = editorButtons({ payload: JSON.parse(mistOnButton.payload), relay: "mist", topic: "" });
+assert.deepEqual(result.payload, { relay: "mist", mode: "MANUAL", source: "dashboard", user: "editor", role: "admin", reason: "editor_test_button", state: "ON", ttl_s: 60 });
+result = editorButtons({ payload: { mode: "AUTO" }, relay: "fan", topic: "" });
+assert.deepEqual(result.payload, { relay: "fan", mode: "AUTO", source: "dashboard", user: "editor", role: "admin", reason: "editor_test_button" });
 
 const table = createRunner("orchid-week7-event-table");
 result = table({ topic: "week7/event", event: { event: "automation_action", rule: "light_schedule", action: "ON", at: "2026-10-16T06:00:00.000Z", rule_time: "2026-10-16 06:00:00" } });

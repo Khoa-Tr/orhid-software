@@ -1,0 +1,174 @@
+{"event":"rule_config_loaded","version":1,"clock":{"speed":1,"start_local":""},"rule_time":"2026-10-22T05:33:11.243Z","at":"2026-10-22T05:33:11.242Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T05:33:11.584Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T05:33:11.585Z"}
+{"event":"care_window_changed","rule":"night_mist_policy","phase":"CARE_WINDOW","auto_mist":"ALLOWED","care_window":"06:00-18:00","rule_time":"2026-10-22 12:33:11","at":"2026-10-22T05:33:11.585Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-22T05:33:11.585Z"},"at":"2026-10-22T05:33:11.585Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-22T05:33:11.585Z"}
+{"event":"fault_active","fault":"water_low","severity":"fault","water_adc":null,"mist_state":"WATER_LOCKOUT","safe_state":"Firmware WATER_LOCKOUT: mist relay locked until water ADC >= 1500","at":"2026-10-22T05:33:11.585Z"}
+{"event":"device_offline","at":"2026-10-22T05:33:13.737Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-22T05:33:13.745Z"},"at":"2026-10-22T05:33:13.745Z"}
+{"event":"availability","state":"online","at":"2026-10-22T05:34:21.267Z"}
+{"event":"availability","state":"online","at":"2026-10-22T05:34:21.268Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-22T05:34:21.267Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-22T05:34:21.268Z"},"at":"2026-10-22T05:34:21.268Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T05:34:21.516Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T05:34:21.516Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"desired_changed","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:34:21","at":"2026-10-22T05:34:21.516Z"}
+{"event":"fault_cleared","fault":"water_low","severity":"fault","water_adc":null,"mist_state":"IDLE","safe_state":null,"at":"2026-10-22T05:34:21.516Z"}
+{"event":"command_sent","request_id":"auto-mvj3w7kh-1","ref":"light-1","relay":"light","payload":{"request_id":"auto-mvj3w7kh-1","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:34:21.521Z"}
+{"event":"ack_received","request_id":"auto-mvj3w7kh-1","result":"APPLIED","reason":"","at":"2026-10-22T05:34:22.166Z"}
+{"event":"command_result","request_id":"auto-mvj3w7kh-1","ref":"light-1","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":645,"at":"2026-10-22T05:34:22.166Z"}
+{"event":"ack_received","request_id":"auto-mvj3w7kh-1","result":"APPLIED","reason":"","at":"2026-10-22T05:34:22.166Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:34:27","at":"2026-10-22T05:34:27.179Z"}
+{"event":"command_sent","request_id":"auto-mvj3wbxp-2","ref":"light-2","relay":"light","payload":{"request_id":"auto-mvj3wbxp-2","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:34:27.181Z"}
+{"event":"ack_received","request_id":"auto-mvj3wbxp-2","result":"APPLIED","reason":"","at":"2026-10-22T05:34:27.820Z"}
+{"event":"command_result","request_id":"auto-mvj3wbxp-2","ref":"light-2","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":639,"at":"2026-10-22T05:34:27.820Z"}
+{"event":"ack_received","request_id":"auto-mvj3wbxp-2","result":"APPLIED","reason":"","at":"2026-10-22T05:34:27.822Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:34:33","at":"2026-10-22T05:34:33.904Z"}
+{"event":"command_sent","request_id":"auto-mvj3wh4s-3","ref":"light-3","relay":"light","payload":{"request_id":"auto-mvj3wh4s-3","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:34:33.916Z"}
+{"event":"ack_received","request_id":"auto-mvj3wh4s-3","result":"APPLIED","reason":"","at":"2026-10-22T05:34:34.564Z"}
+{"event":"command_result","request_id":"auto-mvj3wh4s-3","ref":"light-3","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":648,"at":"2026-10-22T05:34:34.564Z"}
+{"event":"ack_received","request_id":"auto-mvj3wh4s-3","result":"APPLIED","reason":"","at":"2026-10-22T05:34:34.565Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:34:40","at":"2026-10-22T05:34:40.416Z"}
+{"event":"command_sent","request_id":"auto-mvj3wm5d-4","ref":"light-4","relay":"light","payload":{"request_id":"auto-mvj3wm5d-4","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:34:40.417Z"}
+{"event":"ack_received","request_id":"auto-mvj3wm5d-4","result":"APPLIED","reason":"","at":"2026-10-22T05:34:41.141Z"}
+{"event":"command_result","request_id":"auto-mvj3wm5d-4","ref":"light-4","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":724,"at":"2026-10-22T05:34:41.141Z"}
+{"event":"ack_received","request_id":"auto-mvj3wm5d-4","result":"APPLIED","reason":"","at":"2026-10-22T05:34:41.143Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:34:46","at":"2026-10-22T05:34:46.912Z"}
+{"event":"command_sent","request_id":"auto-mvj3wr5u-5","ref":"light-5","relay":"light","payload":{"request_id":"auto-mvj3wr5u-5","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:34:46.914Z"}
+{"event":"ack_received","request_id":"auto-mvj3wr5u-5","result":"APPLIED","reason":"","at":"2026-10-22T05:34:47.569Z"}
+{"event":"command_result","request_id":"auto-mvj3wr5u-5","ref":"light-5","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":655,"at":"2026-10-22T05:34:47.569Z"}
+{"event":"ack_received","request_id":"auto-mvj3wr5u-5","result":"APPLIED","reason":"","at":"2026-10-22T05:34:47.570Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:34:53","at":"2026-10-22T05:34:53.343Z"}
+{"event":"command_sent","request_id":"auto-mvj3ww4g-6","ref":"light-6","relay":"light","payload":{"request_id":"auto-mvj3ww4g-6","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:34:53.344Z"}
+{"event":"ack_received","request_id":"auto-mvj3ww4g-6","result":"APPLIED","reason":"","at":"2026-10-22T05:34:53.964Z"}
+{"event":"command_result","request_id":"auto-mvj3ww4g-6","ref":"light-6","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":620,"at":"2026-10-22T05:34:53.964Z"}
+{"event":"ack_received","request_id":"auto-mvj3ww4g-6","result":"APPLIED","reason":"","at":"2026-10-22T05:34:53.965Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:34:59","at":"2026-10-22T05:34:59.794Z"}
+{"event":"command_sent","request_id":"auto-mvj3x13o-7","ref":"light-7","relay":"light","payload":{"request_id":"auto-mvj3x13o-7","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:34:59.796Z"}
+{"event":"ack_received","request_id":"auto-mvj3x13o-7","result":"APPLIED","reason":"","at":"2026-10-22T05:35:00.579Z"}
+{"event":"command_result","request_id":"auto-mvj3x13o-7","ref":"light-7","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":783,"at":"2026-10-22T05:35:00.579Z"}
+{"event":"ack_received","request_id":"auto-mvj3x13o-7","result":"APPLIED","reason":"","at":"2026-10-22T05:35:00.580Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:35:06","at":"2026-10-22T05:35:06.279Z"}
+{"event":"command_sent","request_id":"auto-mvj3x63t-8","ref":"light-8","relay":"light","payload":{"request_id":"auto-mvj3x63t-8","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:35:06.281Z"}
+{"event":"ack_received","request_id":"auto-mvj3x63t-8","result":"APPLIED","reason":"","at":"2026-10-22T05:35:06.922Z"}
+{"event":"command_result","request_id":"auto-mvj3x63t-8","ref":"light-8","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":641,"at":"2026-10-22T05:35:06.922Z"}
+{"event":"ack_received","request_id":"auto-mvj3x63t-8","result":"APPLIED","reason":"","at":"2026-10-22T05:35:06.923Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:35:12","at":"2026-10-22T05:35:12.751Z"}
+{"event":"command_sent","request_id":"auto-mvj3xb3l-9","ref":"light-9","relay":"light","payload":{"request_id":"auto-mvj3xb3l-9","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:35:12.753Z"}
+{"event":"ack_received","request_id":"auto-mvj3xb3l-9","result":"APPLIED","reason":"","at":"2026-10-22T05:35:13.375Z"}
+{"event":"command_result","request_id":"auto-mvj3xb3l-9","ref":"light-9","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":622,"at":"2026-10-22T05:35:13.375Z"}
+{"event":"ack_received","request_id":"auto-mvj3xb3l-9","result":"APPLIED","reason":"","at":"2026-10-22T05:35:13.377Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:35:19","at":"2026-10-22T05:35:19.198Z"}
+{"event":"command_sent","request_id":"auto-mvj3xg2n-10","ref":"light-10","relay":"light","payload":{"request_id":"auto-mvj3xg2n-10","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:35:19.199Z"}
+{"event":"ack_received","request_id":"auto-mvj3xg2n-10","result":"APPLIED","reason":"","at":"2026-10-22T05:35:19.824Z"}
+{"event":"command_result","request_id":"auto-mvj3xg2n-10","ref":"light-10","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":625,"at":"2026-10-22T05:35:19.824Z"}
+{"event":"ack_received","request_id":"auto-mvj3xg2n-10","result":"APPLIED","reason":"","at":"2026-10-22T05:35:19.825Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:35:25","at":"2026-10-22T05:35:25.700Z"}
+{"event":"command_sent","request_id":"auto-mvj3xl39-11","ref":"light-11","relay":"light","payload":{"request_id":"auto-mvj3xl39-11","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:35:25.701Z"}
+{"event":"ack_received","request_id":"auto-mvj3xl39-11","result":"APPLIED","reason":"","at":"2026-10-22T05:35:26.340Z"}
+{"event":"command_result","request_id":"auto-mvj3xl39-11","ref":"light-11","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":639,"at":"2026-10-22T05:35:26.340Z"}
+{"event":"ack_received","request_id":"auto-mvj3xl39-11","result":"APPLIED","reason":"","at":"2026-10-22T05:35:26.345Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:35:32","at":"2026-10-22T05:35:32.205Z"}
+{"event":"command_sent","request_id":"auto-mvj3xq3y-12","ref":"light-12","relay":"light","payload":{"request_id":"auto-mvj3xq3y-12","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:35:32.206Z"}
+{"event":"ack_received","request_id":"auto-mvj3xq3y-12","result":"APPLIED","reason":"","at":"2026-10-22T05:35:32.836Z"}
+{"event":"command_result","request_id":"auto-mvj3xq3y-12","ref":"light-12","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":630,"at":"2026-10-22T05:35:32.836Z"}
+{"event":"ack_received","request_id":"auto-mvj3xq3y-12","result":"APPLIED","reason":"","at":"2026-10-22T05:35:32.838Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:35:38","at":"2026-10-22T05:35:38.713Z"}
+{"event":"command_sent","request_id":"auto-mvj3xv4q-13","ref":"light-13","relay":"light","payload":{"request_id":"auto-mvj3xv4q-13","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:35:38.714Z"}
+{"event":"ack_received","request_id":"auto-mvj3xv4q-13","result":"APPLIED","reason":"","at":"2026-10-22T05:35:39.357Z"}
+{"event":"command_result","request_id":"auto-mvj3xv4q-13","ref":"light-13","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":643,"at":"2026-10-22T05:35:39.357Z"}
+{"event":"ack_received","request_id":"auto-mvj3xv4q-13","result":"APPLIED","reason":"","at":"2026-10-22T05:35:39.359Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:35:45","at":"2026-10-22T05:35:45.164Z"}
+{"event":"command_sent","request_id":"auto-mvj3y03x-14","ref":"light-14","relay":"light","payload":{"request_id":"auto-mvj3y03x-14","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:35:45.165Z"}
+{"event":"ack_received","request_id":"auto-mvj3y03x-14","result":"APPLIED","reason":"","at":"2026-10-22T05:35:45.903Z"}
+{"event":"command_result","request_id":"auto-mvj3y03x-14","ref":"light-14","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":738,"at":"2026-10-22T05:35:45.903Z"}
+{"event":"ack_received","request_id":"auto-mvj3y03x-14","result":"APPLIED","reason":"","at":"2026-10-22T05:35:45.904Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:35:51","at":"2026-10-22T05:35:51.612Z"}
+{"event":"command_sent","request_id":"auto-mvj3y532-15","ref":"light-15","relay":"light","payload":{"request_id":"auto-mvj3y532-15","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:35:51.614Z"}
+{"event":"ack_received","request_id":"auto-mvj3y532-15","result":"APPLIED","reason":"","at":"2026-10-22T05:35:52.235Z"}
+{"event":"command_result","request_id":"auto-mvj3y532-15","ref":"light-15","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":621,"at":"2026-10-22T05:35:52.235Z"}
+{"event":"ack_received","request_id":"auto-mvj3y532-15","result":"APPLIED","reason":"","at":"2026-10-22T05:35:52.235Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:35:58","at":"2026-10-22T05:35:58.074Z"}
+{"event":"command_sent","request_id":"auto-mvj3ya2j-16","ref":"light-16","relay":"light","payload":{"request_id":"auto-mvj3ya2j-16","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:35:58.075Z"}
+{"event":"ack_received","request_id":"auto-mvj3ya2j-16","result":"APPLIED","reason":"","at":"2026-10-22T05:35:58.703Z"}
+{"event":"command_result","request_id":"auto-mvj3ya2j-16","ref":"light-16","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":628,"at":"2026-10-22T05:35:58.703Z"}
+{"event":"ack_received","request_id":"auto-mvj3ya2j-16","result":"APPLIED","reason":"","at":"2026-10-22T05:35:58.704Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:36:04","at":"2026-10-22T05:36:04.550Z"}
+{"event":"command_sent","request_id":"auto-mvj3yf2g-17","ref":"light-17","relay":"light","payload":{"request_id":"auto-mvj3yf2g-17","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:36:04.552Z"}
+{"event":"ack_received","request_id":"auto-mvj3yf2g-17","result":"APPLIED","reason":"","at":"2026-10-22T05:36:05.207Z"}
+{"event":"command_result","request_id":"auto-mvj3yf2g-17","ref":"light-17","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":656,"at":"2026-10-22T05:36:05.208Z"}
+{"event":"ack_received","request_id":"auto-mvj3yf2g-17","result":"APPLIED","reason":"","at":"2026-10-22T05:36:05.209Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:36:11","at":"2026-10-22T05:36:11.013Z"}
+{"event":"command_sent","request_id":"auto-mvj3yk1y-18","ref":"light-18","relay":"light","payload":{"request_id":"auto-mvj3yk1y-18","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:36:11.014Z"}
+{"event":"ack_received","request_id":"auto-mvj3yk1y-18","result":"APPLIED","reason":"","at":"2026-10-22T05:36:11.633Z"}
+{"event":"command_result","request_id":"auto-mvj3yk1y-18","ref":"light-18","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":619,"at":"2026-10-22T05:36:11.633Z"}
+{"event":"ack_received","request_id":"auto-mvj3yk1y-18","result":"APPLIED","reason":"","at":"2026-10-22T05:36:11.635Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:36:17","at":"2026-10-22T05:36:17.484Z"}
+{"event":"command_sent","request_id":"auto-mvj3yp1p-19","ref":"light-19","relay":"light","payload":{"request_id":"auto-mvj3yp1p-19","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:36:17.485Z"}
+{"event":"ack_received","request_id":"auto-mvj3yp1p-19","result":"APPLIED","reason":"","at":"2026-10-22T05:36:18.103Z"}
+{"event":"command_result","request_id":"auto-mvj3yp1p-19","ref":"light-19","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":618,"at":"2026-10-22T05:36:18.103Z"}
+{"event":"ack_received","request_id":"auto-mvj3yp1p-19","result":"APPLIED","reason":"","at":"2026-10-22T05:36:18.104Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:36:23","at":"2026-10-22T05:36:23.947Z"}
+{"event":"command_sent","request_id":"auto-mvj3yu18-20","ref":"light-20","relay":"light","payload":{"request_id":"auto-mvj3yu18-20","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:36:23.948Z"}
+{"event":"ack_received","request_id":"auto-mvj3yu18-20","result":"APPLIED","reason":"","at":"2026-10-22T05:36:24.566Z"}
+{"event":"command_result","request_id":"auto-mvj3yu18-20","ref":"light-20","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":618,"at":"2026-10-22T05:36:24.566Z"}
+{"event":"ack_received","request_id":"auto-mvj3yu18-20","result":"APPLIED","reason":"","at":"2026-10-22T05:36:24.566Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:36:30","at":"2026-10-22T05:36:30.383Z"}
+{"event":"command_sent","request_id":"auto-mvj3yz01-21","ref":"light-21","relay":"light","payload":{"request_id":"auto-mvj3yz01-21","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:36:30.385Z"}
+{"event":"ack_received","request_id":"auto-mvj3yz01-21","result":"APPLIED","reason":"","at":"2026-10-22T05:36:31.010Z"}
+{"event":"command_result","request_id":"auto-mvj3yz01-21","ref":"light-21","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":625,"at":"2026-10-22T05:36:31.010Z"}
+{"event":"ack_received","request_id":"auto-mvj3yz01-21","result":"APPLIED","reason":"","at":"2026-10-22T05:36:31.011Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:36:36","at":"2026-10-22T05:36:36.840Z"}
+{"event":"command_sent","request_id":"auto-mvj3z3zd-22","ref":"light-22","relay":"light","payload":{"request_id":"auto-mvj3z3zd-22","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:36:36.841Z"}
+{"event":"ack_received","request_id":"auto-mvj3z3zd-22","result":"APPLIED","reason":"","at":"2026-10-22T05:36:37.463Z"}
+{"event":"command_result","request_id":"auto-mvj3z3zd-22","ref":"light-22","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":622,"at":"2026-10-22T05:36:37.463Z"}
+{"event":"ack_received","request_id":"auto-mvj3z3zd-22","result":"APPLIED","reason":"","at":"2026-10-22T05:36:37.464Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:36:43","at":"2026-10-22T05:36:43.286Z"}
+{"event":"command_sent","request_id":"auto-mvj3z8yg-23","ref":"light-23","relay":"light","payload":{"request_id":"auto-mvj3z8yg-23","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:36:43.288Z"}
+{"event":"ack_received","request_id":"auto-mvj3z8yg-23","result":"APPLIED","reason":"","at":"2026-10-22T05:36:43.916Z"}
+{"event":"command_result","request_id":"auto-mvj3z8yg-23","ref":"light-23","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":628,"at":"2026-10-22T05:36:43.916Z"}
+{"event":"ack_received","request_id":"auto-mvj3z8yg-23","result":"APPLIED","reason":"","at":"2026-10-22T05:36:43.917Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:36:49","at":"2026-10-22T05:36:49.733Z"}
+{"event":"command_sent","request_id":"auto-mvj3zdxi-24","ref":"light-24","relay":"light","payload":{"request_id":"auto-mvj3zdxi-24","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:36:49.734Z"}
+{"event":"ack_received","request_id":"auto-mvj3zdxi-24","result":"APPLIED","reason":"","at":"2026-10-22T05:36:50.354Z"}
+{"event":"command_result","request_id":"auto-mvj3zdxi-24","ref":"light-24","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":620,"at":"2026-10-22T05:36:50.354Z"}
+{"event":"ack_received","request_id":"auto-mvj3zdxi-24","result":"APPLIED","reason":"","at":"2026-10-22T05:36:50.355Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:36:56","at":"2026-10-22T05:36:56.209Z"}
+{"event":"command_sent","request_id":"auto-mvj3zixe-25","ref":"light-25","relay":"light","payload":{"request_id":"auto-mvj3zixe-25","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:36:56.210Z"}
+{"event":"ack_received","request_id":"auto-mvj3zixe-25","result":"APPLIED","reason":"","at":"2026-10-22T05:36:56.839Z"}
+{"event":"command_result","request_id":"auto-mvj3zixe-25","ref":"light-25","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":629,"at":"2026-10-22T05:36:56.839Z"}
+{"event":"ack_received","request_id":"auto-mvj3zixe-25","result":"APPLIED","reason":"","at":"2026-10-22T05:36:56.839Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:37:02","at":"2026-10-22T05:37:02.669Z"}
+{"event":"command_sent","request_id":"auto-mvj3znwu-26","ref":"light-26","relay":"light","payload":{"request_id":"auto-mvj3znwu-26","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:37:02.670Z"}
+{"event":"ack_received","request_id":"auto-mvj3znwu-26","result":"APPLIED","reason":"","at":"2026-10-22T05:37:03.300Z"}
+{"event":"command_result","request_id":"auto-mvj3znwu-26","ref":"light-26","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":630,"at":"2026-10-22T05:37:03.300Z"}
+{"event":"ack_received","request_id":"auto-mvj3znwu-26","result":"APPLIED","reason":"","at":"2026-10-22T05:37:03.303Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:37:09","at":"2026-10-22T05:37:09.298Z"}
+{"event":"command_sent","request_id":"auto-mvj3zt0z-27","ref":"light-27","relay":"light","payload":{"request_id":"auto-mvj3zt0z-27","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:37:09.299Z"}
+{"event":"ack_received","request_id":"auto-mvj3zt0z-27","result":"APPLIED","reason":"","at":"2026-10-22T05:37:10.620Z"}
+{"event":"command_result","request_id":"auto-mvj3zt0z-27","ref":"light-27","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1321,"at":"2026-10-22T05:37:10.620Z"}
+{"event":"ack_received","request_id":"auto-mvj3zt0z-27","result":"APPLIED","reason":"","at":"2026-10-22T05:37:10.621Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:37:15","at":"2026-10-22T05:37:15.774Z"}
+{"event":"command_sent","request_id":"auto-mvj3zy0v-28","ref":"light-28","relay":"light","payload":{"request_id":"auto-mvj3zy0v-28","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:37:15.775Z"}
+{"event":"ack_received","request_id":"auto-mvj3zy0v-28","result":"APPLIED","reason":"","at":"2026-10-22T05:37:16.498Z"}
+{"event":"command_result","request_id":"auto-mvj3zy0v-28","ref":"light-28","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":723,"at":"2026-10-22T05:37:16.498Z"}
+{"event":"ack_received","request_id":"auto-mvj3zy0v-28","result":"APPLIED","reason":"","at":"2026-10-22T05:37:16.498Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:37:22","at":"2026-10-22T05:37:22.455Z"}
+{"event":"command_sent","request_id":"auto-mvj4036g-29","ref":"light-29","relay":"light","payload":{"request_id":"auto-mvj4036g-29","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:37:22.456Z"}
+{"event":"ack_received","request_id":"auto-mvj4036g-29","result":"APPLIED","reason":"","at":"2026-10-22T05:37:23.316Z"}
+{"event":"command_result","request_id":"auto-mvj4036g-29","ref":"light-29","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":860,"at":"2026-10-22T05:37:23.316Z"}
+{"event":"ack_received","request_id":"auto-mvj4036g-29","result":"APPLIED","reason":"","at":"2026-10-22T05:37:23.317Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T05:37:31.154Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T05:37:31.154Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-22T05:37:31.154Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-22T05:37:31.154Z"},"at":"2026-10-22T05:37:31.154Z"}
+{"event":"availability","state":"online","at":"2026-10-22T05:37:31.641Z"}
+{"event":"availability","state":"online","at":"2026-10-22T05:37:31.641Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-22T05:37:31.641Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-22T05:37:31.641Z"},"at":"2026-10-22T05:37:31.641Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-22 12:37:31","at":"2026-10-22T05:37:31.909Z"}
+{"event":"command_sent","request_id":"auto-mvj40ah9-30","ref":"light-30","relay":"light","payload":{"request_id":"auto-mvj40ah9-30","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-22T05:37:31.917Z"}
+{"event":"ack_received","request_id":"auto-mvj40ah9-30","result":"APPLIED","reason":"","at":"2026-10-22T05:37:32.487Z"}
+{"event":"command_result","request_id":"auto-mvj40ah9-30","ref":"light-30","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":570,"at":"2026-10-22T05:37:32.487Z"}
+{"event":"ack_received","request_id":"auto-mvj40ah9-30","result":"APPLIED","reason":"","at":"2026-10-22T05:37:32.488Z"}

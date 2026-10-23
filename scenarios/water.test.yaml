@@ -1,0 +1,24 @@
+name: 'Orchid week 3 - water lockout'
+version: 1
+author: 'orhid'
+# Tach tu mist-water.test.yaml de moi phien Wokwi CI duoi 5 phut (gioi han goi mien phi).
+
+steps:
+  - wait-serial: 'Orchid garden controller started'
+  - set-control: { part-id: dht, control: temperature, value: 28 }
+  - set-control: { part-id: dht, control: humidity, value: 72 }
+  - set-control: { part-id: ldr, control: lux, value: 1000 }
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - delay: 15000ms
+  - wait-serial: 'Mist: IDLE | Fan: OFF | Grow light: OFF'
+  # B1-B4: dang phun ma can nuoc thi khoa, vung tre giu khoa, do nuoc lai thi mo khoa va phun lai
+  - set-control: { part-id: dht, control: humidity, value: 60 }
+  - wait-serial: 'STATE mist IDLE -> RUNNING'
+  - set-control: { part-id: water, control: position, value: 0.1 }
+  - wait-serial: 'STATE mist RUNNING -> WATER_LOCKOUT'
+  - set-control: { part-id: water, control: position, value: 0.33 }
+  - delay: 25000ms
+  - wait-serial: 'Mist: WATER_LOCKOUT'
+  - set-control: { part-id: water, control: position, value: 0.6 }
+  - wait-serial: 'STATE mist WATER_LOCKOUT -> IDLE'
+  - wait-serial: 'STATE mist IDLE -> RUNNING'

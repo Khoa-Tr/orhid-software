@@ -496,7 +496,7 @@
     "type": "function",
     "z": "orchid-tab-dashboard",
     "name": "Prepare live dashboard values",
-    "func": "const inputTopic = msg.topic || '';\nlet data = msg.payload;\nif (inputTopic !== 'dashboard/refresh') {\n  if (data && typeof data === 'object' && data.data !== undefined) data = data.data;\n  if (Buffer.isBuffer(data)) data = data.toString();\n  if (typeof data === 'string' && !inputTopic.endsWith('/availability')) {\n    try { data = JSON.parse(data); } catch (err) { node.warn('Invalid dashboard MQTT JSON'); return null; }\n  }\n}\nconst snapshot = flow.get('orchidDashboardSnapshot') || {\n  temperature_c: null, humidity_pct: null, light_adc: null, water_adc: null,\n  mist: '—', fan: '—', light: '—', mist_state: '—', mode: '—', availability: 'unknown',\n  water_lockout: false, dht_fault: false, mist_mode: null, fan_mode: null, light_mode: null\n};\n// null tu firmware (DHT loi) phai hien thi la thieu du lieu, khong phai 0.\nconst numberOrNull = value => value === null || value === '' || !Number.isFinite(Number(value)) ? null : Number(value);\nlet telemetryUpdate = false;\nif (inputTopic.endsWith('/telemetry') && data && typeof data === 'object') {\n  for (const key of ['temperature_c','humidity_pct','light_adc','water_adc']) {\n    if (data[key] !== undefined) snapshot[key] = numberOrNull(data[key]);\n  }\n  flow.set('orchidDashboardTelemetryAt', Date.now());\n  snapshot.availability = 'online';\n  telemetryUpdate = true;\n} else if (inputTopic.endsWith('/state') && data && typeof data === 'object') {\n  for (const key of ['mist','fan','light','mist_state','mode','mist_mode','fan_mode','light_mode']) {\n    if (data[key] !== undefined) snapshot[key] = String(data[key]);\n  }\n  if (typeof data.water_lockout === 'boolean') snapshot.water_lockout = data.water_lockout;\n  if (typeof data.dht_fault === 'boolean') snapshot.dht_fault = data.dht_fault;\n  if (data.water_lockout === true) snapshot.mist_state = 'WATER_LOCKOUT';\n} else if (inputTopic.endsWith('/availability')) {\n  const availability = typeof data === 'string' ? data : String(data);\n  if (availability === 'online' || availability === 'offline') snapshot.availability = availability;\n}\nflow.set('orchidDashboardSnapshot', snapshot);\nconst lastTelemetry = flow.get('orchidDashboardTelemetryAt') || 0;\nconst isStale = lastTelemetry > 0 && Date.now() - lastTelemetry > 15000;\nconst connection = snapshot.availability === 'offline' ? 'OFFLINE' : isStale ? 'STALE' : snapshot.availability === 'online' ? 'ONLINE' : 'WAITING';\nflow.set('orchidDashboardConnection', connection);\nconst show = (value, suffix) => value === null ? '—' : `${value}${suffix}`;\nconst climate = (value, suffix) => snapshot.dht_fault ? 'DHT fault' : show(value, suffix);\nconst manualRelays = ['mist','fan','light'].filter(relay => snapshot[`${relay}_mode`] === 'MANUAL');\nconst modeText = snapshot.mode === 'MANUAL' && manualRelays.length ? `MANUAL (${manualRelays.join(', ')})` : snapshot.mode;\nconst climateHistory = telemetryUpdate ? [\n  {topic:'Temperature °C', payload:snapshot.temperature_c},\n  {topic:'Humidity %', payload:snapshot.humidity_pct}\n].filter(point => Number.isFinite(point.payload)) : null;\nconst adcHistory = telemetryUpdate ? [\n  {topic:'Light ADC', payload:snapshot.light_adc},\n  {topic:'Water ADC', payload:snapshot.water_adc}\n].filter(point => Number.isFinite(point.payload)) : null;\nreturn [\n  {payload:climate(snapshot.temperature_c, ' °C')},\n  {payload:climate(snapshot.humidity_pct, ' %')},\n  {payload:show(snapshot.light_adc, '')},\n  {payload:show(snapshot.water_adc, '')},\n  {payload:snapshot.mist_state},\n  {payload:snapshot.fan},\n  {payload:snapshot.light},\n  {payload:connection},\n  {payload:modeText},\n  climateHistory,\n  adcHistory,\n  {topic:'dashboard/snapshot', payload:{...snapshot, connection}}\n];",
+    "func": "const inputTopic = msg.topic || '';\nlet data = msg.payload;\nif (inputTopic !== 'dashboard/refresh') {\n  if (data && typeof data === 'object' && data.data !== undefined) data = data.data;\n  if (Buffer.isBuffer(data)) data = data.toString();\n  if (typeof data === 'string' && !inputTopic.endsWith('/availability')) {\n    try { data = JSON.parse(data); } catch (err) { node.warn('Invalid dashboard MQTT JSON'); return null; }\n  }\n}\nconst snapshot = flow.get('orchidDashboardSnapshot') || {\n  temperature_c: null, humidity_pct: null, light_adc: null, water_adc: null,\n  mist: '—', fan: '—', light: '—', mist_state: '—', mode: '—', availability: 'unknown',\n  water_lockout: false, dht_fault: false, mist_mode: null, fan_mode: null, light_mode: null\n};\n// null tu firmware (DHT loi) phai hien thi la thieu du lieu, khong phai 0.\nconst numberOrNull = value => value === null || value === '' || !Number.isFinite(Number(value)) ? null : Number(value);\nlet telemetryUpdate = false;\nif (inputTopic.endsWith('/telemetry') && data && typeof data === 'object') {\n  for (const key of ['temperature_c','humidity_pct','light_adc','water_adc']) {\n    if (data[key] !== undefined) snapshot[key] = numberOrNull(data[key]);\n  }\n  flow.set('orchidDashboardTelemetryAt', Date.now());\n  snapshot.availability = 'online';\n  telemetryUpdate = true;\n} else if (inputTopic.endsWith('/state') && data && typeof data === 'object') {\n  for (const key of ['mist','fan','light','mist_state','mode','mist_mode','fan_mode','light_mode']) {\n    if (data[key] !== undefined) snapshot[key] = String(data[key]);\n  }\n  if (typeof data.water_lockout === 'boolean') snapshot.water_lockout = data.water_lockout;\n  if (typeof data.dht_fault === 'boolean') snapshot.dht_fault = data.dht_fault;\n  if (data.water_lockout === true) snapshot.mist_state = 'WATER_LOCKOUT';\n} else if (inputTopic.endsWith('/availability')) {\n  const availability = typeof data === 'string' ? data : String(data);\n  if (availability === 'online' && snapshot.availability !== 'online') flow.set('orchidDashboardOnlineAt', Date.now());\n  if (availability === 'online' || availability === 'offline') snapshot.availability = availability;\n}\nflow.set('orchidDashboardSnapshot', snapshot);\nconst lastTelemetry = flow.get('orchidDashboardTelemetryAt') || 0;\n// 'online' (co the la tin retained cu tren broker) chua du: phai co telemetry moi sau luc online,\n// neu khong thi WAITING roi STALE sau 15 s -> gateway khong gui lenh toi thiet bi khong ton tai.\nconst onlineAt = flow.get('orchidDashboardOnlineAt') || 0;\nconst lastSign = Math.max(lastTelemetry, onlineAt);\nconst connection = snapshot.availability === 'offline' ? 'OFFLINE'\n  : !lastSign ? 'WAITING'\n  : Date.now() - lastSign > 15000 ? 'STALE'\n  : snapshot.availability === 'online' && lastTelemetry >= onlineAt ? 'ONLINE' : 'WAITING';\nflow.set('orchidDashboardConnection', connection);\nconst show = (value, suffix) => value === null ? '—' : `${value}${suffix}`;\nconst climate = (value, suffix) => snapshot.dht_fault ? 'DHT fault' : show(value, suffix);\nconst manualRelays = ['mist','fan','light'].filter(relay => snapshot[`${relay}_mode`] === 'MANUAL');\nconst modeText = snapshot.mode === 'MANUAL' && manualRelays.length ? `MANUAL (${manualRelays.join(', ')})` : snapshot.mode;\nconst climateHistory = telemetryUpdate ? [\n  {topic:'Temperature °C', payload:snapshot.temperature_c},\n  {topic:'Humidity %', payload:snapshot.humidity_pct}\n].filter(point => Number.isFinite(point.payload)) : null;\nconst adcHistory = telemetryUpdate ? [\n  {topic:'Light ADC', payload:snapshot.light_adc},\n  {topic:'Water ADC', payload:snapshot.water_adc}\n].filter(point => Number.isFinite(point.payload)) : null;\nreturn [\n  {payload:climate(snapshot.temperature_c, ' °C')},\n  {payload:climate(snapshot.humidity_pct, ' %')},\n  {payload:show(snapshot.light_adc, '')},\n  {payload:show(snapshot.water_adc, '')},\n  {payload:snapshot.mist_state},\n  {payload:snapshot.fan},\n  {payload:snapshot.light},\n  {payload:connection},\n  {payload:modeText},\n  climateHistory,\n  adcHistory,\n  {topic:'dashboard/snapshot', payload:{...snapshot, connection}}\n];",
     "outputs": 12,
     "timeout": 0,
     "noerr": 0,
@@ -879,7 +879,7 @@
     "type": "tab",
     "label": "Orchid - Week 7 business rules and safety",
     "disabled": false,
-    "info": "Acting automation rules (light schedule with daily limit, fan assist after a mist cycle, night mist policy) and the abnormal-situation monitor. Rules only command relays while the dashboard is in AUTO; every command carries a firmware TTL so the device falls back to local AUTO if Node-RED stops."
+    "info": "Bộ automation duy nhất của dự án (rule đèn theo khung giờ + giới hạn/ngày, quạt hỗ trợ sau chu kỳ phun, chính sách phun ban đêm) và fault monitor. Rule chỉ ra lệnh khi dashboard ở AUTO, mọi lệnh đi qua gateway và có TTL nên thiết bị tự về AUTO cục bộ nếu Node-RED dừng. Giá trị mặc định theo thống nhất của nhóm: đèn 06:00-21:00, quạt 60 s."
   },
   {
     "id": "orchid-dashboard-control-group",
@@ -1370,9 +1370,10 @@
     "id": "orchid-gateway-in",
     "type": "link in",
     "z": "orchid-tab-dashboard",
-    "name": "Automation commands",
+    "name": "Automation + nút test → gateway",
     "links": [
-      "orchid-week7-to-gateway"
+      "orchid-week7-to-gateway",
+      "nguoi3-orchid-gateway-out"
     ],
     "x": 465,
     "y": 860,
@@ -1745,7 +1746,7 @@
     "once": true,
     "onceDelay": "0.5",
     "topic": "week7/config",
-    "payload": "{\n  \"clock\": {\n    \"speed\": 1,\n    \"start_local\": \"\"\n  },\n  \"light\": {\n    \"enabled\": true,\n    \"window_start\": \"06:00\",\n    \"off_time\": \"20:00\",\n    \"dark_on_adc\": 2200,\n    \"bright_off_adc\": 1800,\n    \"daily_max_on_min\": 240,\n    \"hold_ttl_s\": 900\n  },\n  \"fan_assist\": {\n    \"enabled\": true,\n    \"duration_s\": 180,\n    \"max_per_day\": 24\n  },\n  \"night_policy\": {\n    \"care_start\": \"06:00\",\n    \"care_end\": \"18:00\",\n    \"allow_auto_mist_at_night\": false,\n    \"team_confirmed\": false,\n    \"exception_note\": \"\",\n    \"hold_ttl_s\": 900\n  }\n}",
+    "payload": "{\n  \"clock\": {\n    \"speed\": 1,\n    \"start_local\": \"\"\n  },\n  \"light\": {\n    \"enabled\": true,\n    \"window_start\": \"06:00\",\n    \"off_time\": \"21:00\",\n    \"dark_on_adc\": 2200,\n    \"bright_off_adc\": 1800,\n    \"daily_max_on_min\": 240,\n    \"hold_ttl_s\": 900\n  },\n  \"fan_assist\": {\n    \"enabled\": true,\n    \"duration_s\": 60,\n    \"max_per_day\": 24\n  },\n  \"night_policy\": {\n    \"care_start\": \"06:00\",\n    \"care_end\": \"18:00\",\n    \"allow_auto_mist_at_night\": false,\n    \"team_confirmed\": false,\n    \"exception_note\": \"\",\n    \"hold_ttl_s\": 900\n  }\n}",
     "payloadType": "json",
     "x": 210,
     "y": 60,
@@ -1774,7 +1775,7 @@
     "once": false,
     "onceDelay": "0.1",
     "topic": "week7/config",
-    "payload": "{\n  \"clock\": {\n    \"speed\": 60,\n    \"start_local\": \"05:50\"\n  },\n  \"light\": {\n    \"enabled\": true,\n    \"window_start\": \"06:00\",\n    \"off_time\": \"20:00\",\n    \"dark_on_adc\": 2200,\n    \"bright_off_adc\": 1800,\n    \"daily_max_on_min\": 60,\n    \"hold_ttl_s\": 900\n  },\n  \"fan_assist\": {\n    \"enabled\": true,\n    \"duration_s\": 180,\n    \"max_per_day\": 24\n  },\n  \"night_policy\": {\n    \"care_start\": \"06:00\",\n    \"care_end\": \"18:00\",\n    \"allow_auto_mist_at_night\": false,\n    \"team_confirmed\": false,\n    \"exception_note\": \"\",\n    \"hold_ttl_s\": 900\n  }\n}",
+    "payload": "{\n  \"clock\": {\n    \"speed\": 60,\n    \"start_local\": \"05:50\"\n  },\n  \"light\": {\n    \"enabled\": true,\n    \"window_start\": \"06:00\",\n    \"off_time\": \"21:00\",\n    \"dark_on_adc\": 2200,\n    \"bright_off_adc\": 1800,\n    \"daily_max_on_min\": 60,\n    \"hold_ttl_s\": 900\n  },\n  \"fan_assist\": {\n    \"enabled\": true,\n    \"duration_s\": 60,\n    \"max_per_day\": 24\n  },\n  \"night_policy\": {\n    \"care_start\": \"06:00\",\n    \"care_end\": \"18:00\",\n    \"allow_auto_mist_at_night\": false,\n    \"team_confirmed\": false,\n    \"exception_note\": \"\",\n    \"hold_ttl_s\": 900\n  }\n}",
     "payloadType": "json",
     "x": 210,
     "y": 100,
@@ -1803,7 +1804,7 @@
     "once": false,
     "onceDelay": "0.1",
     "topic": "week7/config",
-    "payload": "{\n  \"clock\": {\n    \"speed\": 60,\n    \"start_local\": \"17:55\"\n  },\n  \"light\": {\n    \"enabled\": true,\n    \"window_start\": \"06:00\",\n    \"off_time\": \"20:00\",\n    \"dark_on_adc\": 2200,\n    \"bright_off_adc\": 1800,\n    \"daily_max_on_min\": 60,\n    \"hold_ttl_s\": 900\n  },\n  \"fan_assist\": {\n    \"enabled\": true,\n    \"duration_s\": 180,\n    \"max_per_day\": 24\n  },\n  \"night_policy\": {\n    \"care_start\": \"06:00\",\n    \"care_end\": \"18:00\",\n    \"allow_auto_mist_at_night\": false,\n    \"team_confirmed\": false,\n    \"exception_note\": \"\",\n    \"hold_ttl_s\": 900\n  }\n}",
+    "payload": "{\n  \"clock\": {\n    \"speed\": 60,\n    \"start_local\": \"17:55\"\n  },\n  \"light\": {\n    \"enabled\": true,\n    \"window_start\": \"06:00\",\n    \"off_time\": \"21:00\",\n    \"dark_on_adc\": 2200,\n    \"bright_off_adc\": 1800,\n    \"daily_max_on_min\": 60,\n    \"hold_ttl_s\": 900\n  },\n  \"fan_assist\": {\n    \"enabled\": true,\n    \"duration_s\": 60,\n    \"max_per_day\": 24\n  },\n  \"night_policy\": {\n    \"care_start\": \"06:00\",\n    \"care_end\": \"18:00\",\n    \"allow_auto_mist_at_night\": false,\n    \"team_confirmed\": false,\n    \"exception_note\": \"\",\n    \"hold_ttl_s\": 900\n  }\n}",
     "payloadType": "json",
     "x": 210,
     "y": 140,
@@ -1930,7 +1931,7 @@
     "type": "function",
     "z": "orchid-tab-week7-rules",
     "name": "Rule 1: light schedule + daily on-time limit",
-    "func": "// Rule 1 - den theo khung gio + nguong sang, co gio tat va gioi han tong thoi luong bat trong ngay.\n// Chi phat lenh khi dashboard o AUTO; lenh ON co TTL <= ngan sach con lai nen firmware tu nha neu Node-RED dung.\nconst RULE = 'light_schedule';\nconst SOURCE = `automation:${RULE}`;\nconst cfg = msg.config.light;\nconst {realNow, ruleNow, speed, device} = msg;\nlet st = flow.get('orchidW7Light');\nif (!st || st.version !== msg.config.version) {\n  st = {version: msg.config.version, day: null, onMs: 0, lastAt: null, lastOn: false, dark: false,\n    sent: null, retryAfter: 0, limitLogged: false, seq: 0, status: null};\n}\nconst pad = value => String(value).padStart(2, '0');\nconst toMinutes = value => { const [hours, minutes] = value.split(':').map(Number); return hours * 60 + minutes; };\nconst ruleDate = new Date(ruleNow);\nconst ruleTime = `${ruleDate.getFullYear()}-${pad(ruleDate.getMonth() + 1)}-${pad(ruleDate.getDate())} ${pad(ruleDate.getHours())}:${pad(ruleDate.getMinutes())}:${pad(ruleDate.getSeconds())}`;\nconst day = ruleTime.slice(0, 10);\nconst minute = ruleDate.getHours() * 60 + ruleDate.getMinutes() + ruleDate.getSeconds() / 60;\nconst at = new Date(realNow).toISOString();\nconst events = [];\nconst commands = [];\n\nif (st.day !== day) {\n  if (st.day !== null) events.push({event: 'light_daily_total', rule: RULE, day: st.day, on_min: Math.round(st.onMs / 60000), rule_time: ruleTime, at});\n  st.day = day;\n  st.onMs = 0;\n  st.limitLogged = false;\n}\n// Dem thoi gian den bat that (moi nguon); khoang trong dai (mat ket noi, restart) khong duoc tinh.\nif (st.lastAt !== null && st.lastOn) st.onMs += Math.max(0, Math.min(ruleNow - st.lastAt, 30000 * speed));\nst.lastAt = ruleNow;\nst.lastOn = device.connection === 'ONLINE' && device.state && device.state.light === 'ON';\n\nif (msg.kind === 'command_result') {\n  const result = msg.payload || {};\n  if (result.relay === 'light') {\n    if (st.sent && result.ref === st.sent.ref) {\n      if (result.result === 'APPLIED') {\n        st.sent.appliedAt = realNow;\n      } else {\n        if (result.reason !== 'BUSY') events.push({event: 'automation_command_failed', rule: RULE, ref: result.ref, result: result.result, reason: result.reason, rule_time: ruleTime, at});\n        st.sent = null;\n        st.retryAfter = realNow + (result.result === 'BLOCKED' ? 5000 : 30000);\n      }\n    } else if (result.result === 'APPLIED' && result.source !== SOURCE) {\n      st.sent = null;  // nguoi dung / che do khac vua doi den -> lan danh gia sau gui lai lenh giu\n    }\n  }\n}\n\nconst rawAdc = device.telemetry ? device.telemetry.light_adc : null;\nconst hasAdc = rawAdc !== null && rawAdc !== undefined && rawAdc !== '' && Number.isFinite(Number(rawAdc));\nconst adc = hasAdc ? Number(rawAdc) : null;\nif (hasAdc) st.dark = st.dark ? adc >= cfg.bright_off_adc : adc > cfg.dark_on_adc;\nconst start = toMinutes(cfg.window_start);\nconst off = toMinutes(cfg.off_time);\nconst inWindow = start <= off ? minute >= start && minute < off : minute >= start || minute < off;\nconst remainingMs = Math.max(0, cfg.daily_max_on_min * 60000 - st.onMs);\nlet desired;\nlet reason;\nif (!cfg.enabled) { desired = null; reason = 'rule_disabled'; }\nelse if (!inWindow) { desired = 'OFF'; reason = 'outside_schedule'; }\nelse if (remainingMs <= 0) { desired = 'OFF'; reason = 'daily_limit_reached'; }\nelse if (!hasAdc) { desired = null; reason = 'no_light_reading'; }\nelse { desired = st.dark ? 'ON' : 'OFF'; reason = st.dark ? 'dark_in_schedule' : 'bright_enough'; }\nif (reason === 'daily_limit_reached' && !st.limitLogged) {\n  events.push({event: 'light_daily_limit_reached', rule: RULE, on_min: Math.round(st.onMs / 60000), limit_min: cfg.daily_max_on_min, rule_time: ruleTime, at});\n  st.limitLogged = true;\n}\nconst minutesToOff = (off - minute + 1440) % 1440;\nconst ruleTtlS = desired === 'ON' ? Math.min(cfg.hold_ttl_s, remainingMs / 1000, minutesToOff * 60) : cfg.hold_ttl_s;\nconst ttlS = Math.min(3600, Math.max(desired === 'ON' ? 1 : 5, Math.ceil(ruleTtlS / speed)));\n\nconst active = msg.controlMode === 'AUTO' && device.connection === 'ONLINE';\nif (msg.modeChanged) st.sent = null;\nlet trigger = null;\nif (active && realNow >= st.retryAfter) {\n  const sent = st.sent;\n  const holding = sent && sent.state !== 'AUTO';\n  const overrideLost = holding && sent.appliedAt && device.stateAt > sent.appliedAt + 3000 && device.state.light_mode === 'AUTO';\n  if (desired === null) { if (holding) trigger = 'release'; }\n  else if (!sent || sent.state !== desired) trigger = 'desired_changed';\n  else if (overrideLost) trigger = 'override_lost';  // vd. firmware vua bo override khi mat ket noi\n  else if (realNow - sent.at >= sent.ttl_s * 500) trigger = 'refresh';\n}\nif (trigger) {\n  st.seq += 1;\n  const ref = `light-${st.seq}`;\n  const command = desired === null\n    ? {relay: 'light', mode: 'AUTO', source: SOURCE, ref, reason}\n    : {relay: 'light', mode: 'MANUAL', state: desired, ttl_s: ttlS, source: SOURCE, ref, reason};\n  commands.push({topic: 'orchid/command', payload: command});\n  st.sent = {ref, state: desired === null ? 'AUTO' : desired, at: realNow, ttl_s: desired === null ? 0 : ttlS, appliedAt: null};\n  if (trigger !== 'refresh') {\n    events.push({event: 'automation_action', rule: RULE, action: st.sent.state, reason, trigger, ttl_s: command.ttl_s || null,\n      light_adc: adc, on_today_min: Math.round(st.onMs / 60000), rule_time: ruleTime, at});\n  }\n}\nconst status = `${active ? '' : '[suspended: dashboard MANUAL or device not ONLINE] '}target ${desired || 'firmware AUTO'} (${reason}) · on today ${Math.round(st.onMs / 60000)}/${cfg.daily_max_on_min} min · window ${cfg.window_start}-${cfg.off_time}`;\nconst statusChanged = status !== st.status;\nst.status = status;\nflow.set('orchidW7Light', st);\nreturn [\n  commands.length ? commands : null,\n  events.length ? events.map(event => ({payload: JSON.stringify(event) + '\\n', event})) : null,\n  statusChanged ? {payload: status} : null\n];",
+    "func": "// Rule 1 - den theo khung gio + nguong sang, co gio tat va gioi han tong thoi luong bat trong ngay.\n// Chi phat lenh khi dashboard o AUTO; lenh ON co TTL <= ngan sach con lai nen firmware tu nha neu Node-RED dung.\nconst RULE = 'light_schedule';\nconst SOURCE = `automation:${RULE}`;\nconst cfg = msg.config.light;\nconst {realNow, ruleNow, speed, device} = msg;\nlet st = flow.get('orchidW7Light');\nif (!st || st.version !== msg.config.version) {\n  st = {version: msg.config.version, day: null, onMs: 0, lastAt: null, lastOn: false, dark: false,\n    sent: null, retryAfter: 0, limitLogged: false, seq: 0, status: null};\n}\nconst pad = value => String(value).padStart(2, '0');\nconst toMinutes = value => { const [hours, minutes] = value.split(':').map(Number); return hours * 60 + minutes; };\nconst ruleDate = new Date(ruleNow);\nconst ruleTime = `${ruleDate.getFullYear()}-${pad(ruleDate.getMonth() + 1)}-${pad(ruleDate.getDate())} ${pad(ruleDate.getHours())}:${pad(ruleDate.getMinutes())}:${pad(ruleDate.getSeconds())}`;\nconst day = ruleTime.slice(0, 10);\nconst minute = ruleDate.getHours() * 60 + ruleDate.getMinutes() + ruleDate.getSeconds() / 60;\nconst at = new Date(realNow).toISOString();\nconst events = [];\nconst commands = [];\n\nif (st.day !== day) {\n  if (st.day !== null) events.push({event: 'light_daily_total', rule: RULE, day: st.day, on_min: Math.round(st.onMs / 60000), rule_time: ruleTime, at});\n  st.day = day;\n  st.onMs = 0;\n  st.limitLogged = false;\n}\n// Dem thoi gian den bat that (moi nguon); khoang trong dai (mat ket noi, restart) khong duoc tinh.\nif (st.lastAt !== null && st.lastOn) st.onMs += Math.max(0, Math.min(ruleNow - st.lastAt, 30000 * speed));\nst.lastAt = ruleNow;\nst.lastOn = device.connection === 'ONLINE' && device.state && device.state.light === 'ON';\n\nif (msg.kind === 'command_result') {\n  const result = msg.payload || {};\n  if (result.relay === 'light') {\n    if (st.sent && result.ref === st.sent.ref) {\n      if (result.result === 'APPLIED') {\n        st.sent.appliedAt = realNow;\n      } else {\n        if (result.reason !== 'BUSY') events.push({event: 'automation_command_failed', rule: RULE, ref: result.ref, result: result.result, reason: result.reason, rule_time: ruleTime, at});\n        st.sent = null;\n        st.retryAfter = realNow + (result.result === 'BLOCKED' ? 5000 : 30000);\n      }\n    } else if (result.result === 'APPLIED' && result.source !== SOURCE) {\n      st.sent = null;  // nguoi dung / che do khac vua doi den -> lan danh gia sau gui lai lenh giu\n    }\n  }\n}\n\nconst rawAdc = device.telemetry ? device.telemetry.light_adc : null;\nconst hasAdc = rawAdc !== null && rawAdc !== undefined && rawAdc !== '' && Number.isFinite(Number(rawAdc));\nconst adc = hasAdc ? Number(rawAdc) : null;\nif (hasAdc) st.dark = st.dark ? adc >= cfg.bright_off_adc : adc > cfg.dark_on_adc;\nconst start = toMinutes(cfg.window_start);\nconst off = toMinutes(cfg.off_time);\nconst inWindow = start <= off ? minute >= start && minute < off : minute >= start || minute < off;\nconst remainingMs = Math.max(0, cfg.daily_max_on_min * 60000 - st.onMs);\nlet desired;\nlet reason;\nif (!cfg.enabled) { desired = null; reason = 'rule_disabled'; }\nelse if (!inWindow) { desired = 'OFF'; reason = 'outside_schedule'; }\nelse if (remainingMs <= 0) { desired = 'OFF'; reason = 'daily_limit_reached'; }\nelse if (!hasAdc) { desired = null; reason = 'no_light_reading'; }\nelse { desired = st.dark ? 'ON' : 'OFF'; reason = st.dark ? 'dark_in_schedule' : 'bright_enough'; }\nif (reason === 'daily_limit_reached' && !st.limitLogged) {\n  events.push({event: 'light_daily_limit_reached', rule: RULE, on_min: Math.round(st.onMs / 60000), limit_min: cfg.daily_max_on_min, rule_time: ruleTime, at});\n  st.limitLogged = true;\n}\nconst minutesToOff = (off - minute + 1440) % 1440;\nconst ruleTtlS = desired === 'ON' ? Math.min(cfg.hold_ttl_s, remainingMs / 1000, minutesToOff * 60) : cfg.hold_ttl_s;\nconst ttlS = Math.min(3600, Math.max(desired === 'ON' ? 1 : 5, Math.ceil(ruleTtlS / speed)));\n\nconst active = msg.controlMode === 'AUTO' && device.connection === 'ONLINE';\nif (msg.modeChanged) st.sent = null;\nlet trigger = null;\nif (active && realNow >= st.retryAfter) {\n  const sent = st.sent;\n  const holding = sent && sent.state !== 'AUTO';\n  const overrideLost = holding && sent.appliedAt && device.stateAt > sent.appliedAt + 3000 && device.state.light_mode === 'AUTO';\n  if (desired === null) { if (holding) trigger = 'release'; }\n  else if (!sent || sent.state !== desired) trigger = 'desired_changed';\n  else if (overrideLost) trigger = 'override_lost';  // vd. firmware vua bo override khi mat ket noi\n  else if (realNow - sent.at >= sent.ttl_s * 500) trigger = 'refresh';\n}\nif (trigger) {\n  st.seq += 1;\n  const ref = `light-${st.seq}`;\n  const command = desired === null\n    ? {relay: 'light', mode: 'AUTO', source: SOURCE, ref, reason}\n    : {relay: 'light', mode: 'MANUAL', state: desired, ttl_s: ttlS, source: SOURCE, ref, reason};\n  commands.push({topic: 'orchid/command', payload: command});\n  st.sent = {ref, state: desired === null ? 'AUTO' : desired, at: realNow, ttl_s: desired === null ? 0 : ttlS, appliedAt: null};\n  // Firmware lien tuc bo lenh giu (vd. firmware cu tren board that) -> cho 30 s moi gui lai, khong gui doi.\n  if (trigger === 'override_lost') st.retryAfter = realNow + 30000;\n  if (trigger !== 'refresh') {\n    events.push({event: 'automation_action', rule: RULE, action: st.sent.state, reason, trigger, ttl_s: command.ttl_s || null,\n      light_adc: adc, on_today_min: Math.round(st.onMs / 60000), rule_time: ruleTime, at});\n  }\n}\nconst status = `${active ? '' : '[suspended: dashboard MANUAL or device not ONLINE] '}target ${desired || 'firmware AUTO'} (${reason}) · on today ${Math.round(st.onMs / 60000)}/${cfg.daily_max_on_min} min · window ${cfg.window_start}-${cfg.off_time}`;\nconst statusChanged = status !== st.status;\nst.status = status;\nflow.set('orchidW7Light', st);\nreturn [\n  commands.length ? commands : null,\n  events.length ? events.map(event => ({payload: JSON.stringify(event) + '\\n', event})) : null,\n  statusChanged ? {payload: status} : null\n];",
     "outputs": 3,
     "timeout": 0,
     "noerr": 0,
@@ -1988,7 +1989,7 @@
     "type": "function",
     "z": "orchid-tab-week7-rules",
     "name": "Night care window: no AUTO mist at night",
-    "func": "// Chinh sach cham soc ban dem: ngoai khung gio cham soc, mac dinh khong cho phun AUTO.\n// Node-RED giu lenh mist MANUAL OFF (co TTL) nen firmware dung chu trinh AUTO; khoa nuoc/cooldown van o firmware.\nconst RULE = 'night_mist_policy';\nconst SOURCE = `automation:${RULE}`;\nconst cfg = msg.config.night_policy;\nconst {realNow, ruleNow, speed, device} = msg;\nlet st = flow.get('orchidW7Night');\nif (!st || st.version !== msg.config.version) {\n  st = {version: msg.config.version, phase: null, sent: null, retryAfter: 0, seq: 0, nightMistLogged: false, status: null};\n}\nconst pad = value => String(value).padStart(2, '0');\nconst toMinutes = value => { const [hours, minutes] = value.split(':').map(Number); return hours * 60 + minutes; };\nconst ruleDate = new Date(ruleNow);\nconst ruleTime = `${ruleDate.getFullYear()}-${pad(ruleDate.getMonth() + 1)}-${pad(ruleDate.getDate())} ${pad(ruleDate.getHours())}:${pad(ruleDate.getMinutes())}:${pad(ruleDate.getSeconds())}`;\nconst minute = ruleDate.getHours() * 60 + ruleDate.getMinutes() + ruleDate.getSeconds() / 60;\nconst at = new Date(realNow).toISOString();\nconst events = [];\nconst commands = [];\nconst start = toMinutes(cfg.care_start);\nconst end = toMinutes(cfg.care_end);\nconst inCare = start <= end ? minute >= start && minute < end : minute >= start || minute < end;\nconst phase = inCare ? 'CARE_WINDOW' : 'NIGHT';\nconst blockAutoMist = phase === 'NIGHT' && !cfg.allow_auto_mist_at_night;\nif (st.phase !== phase) {\n  events.push({event: 'care_window_changed', rule: RULE, phase, auto_mist: blockAutoMist ? 'BLOCKED' : 'ALLOWED',\n    care_window: `${cfg.care_start}-${cfg.care_end}`, rule_time: ruleTime, at});\n  st.phase = phase;\n}\n\nif (msg.kind === 'command_result') {\n  const result = msg.payload || {};\n  if (result.relay === 'mist') {\n    if (st.sent && result.ref === st.sent.ref) {\n      if (result.result === 'APPLIED') {\n        st.sent.appliedAt = realNow;\n      } else {\n        if (result.reason !== 'BUSY') events.push({event: 'automation_command_failed', rule: RULE, ref: result.ref, result: result.result, reason: result.reason, rule_time: ruleTime, at});\n        st.sent = null;\n        st.retryAfter = realNow + (result.result === 'BLOCKED' ? 5000 : 30000);\n      }\n    } else if (result.result === 'APPLIED' && result.source !== SOURCE) {\n      st.sent = null;\n    }\n  }\n}\n\n// Tinh truoc khi gui lai lenh: lenh giu OFF da ap dung tu >3 s truoc thi phun luc nay la bat thuong.\nconst holdApplied = Boolean(st.sent && st.sent.state === 'OFF' && st.sent.appliedAt && device.stateAt > st.sent.appliedAt + 3000);\nconst desired = blockAutoMist ? 'OFF' : null;\nconst ttlS = Math.min(3600, Math.max(5, Math.ceil(cfg.hold_ttl_s / speed)));\nconst active = msg.controlMode === 'AUTO' && device.connection === 'ONLINE';\nif (msg.modeChanged) st.sent = null;\nlet trigger = null;\nif (active && realNow >= st.retryAfter) {\n  const sent = st.sent;\n  const holding = sent && sent.state === 'OFF';\n  const overrideLost = holding && sent.appliedAt && device.stateAt > sent.appliedAt + 3000 && device.state.mist_mode === 'AUTO';\n  if (desired === null) { if (holding) trigger = 'release'; }\n  else if (!holding) trigger = 'night_started';\n  else if (overrideLost) trigger = 'override_lost';\n  else if (realNow - sent.at >= sent.ttl_s * 500) trigger = 'refresh';\n}\nif (trigger) {\n  st.seq += 1;\n  const ref = `night-${st.seq}`;\n  const command = desired === null\n    ? {relay: 'mist', mode: 'AUTO', source: SOURCE, ref, reason: 'care_window'}\n    : {relay: 'mist', mode: 'MANUAL', state: 'OFF', ttl_s: ttlS, source: SOURCE, ref, reason: 'night_no_auto_mist'};\n  commands.push({topic: 'orchid/command', payload: command});\n  st.sent = {ref, state: desired === null ? 'AUTO' : 'OFF', at: realNow, ttl_s: desired === null ? 0 : ttlS, appliedAt: null};\n  if (trigger !== 'refresh') {\n    events.push({event: 'automation_action', rule: RULE, action: desired === null ? 'RELEASE_AUTO_MIST' : 'HOLD_MIST_OFF',\n      trigger, ttl_s: command.ttl_s || null, phase, rule_time: ruleTime, at});\n  }\n}\n\n// Phun ban dem chi duoc phep nhu ngoai le cua nguoi van hanh (MANUAL) -> luon ghi lai de nhom xem xet.\n// Luc vua sang dem, lenh giu OFF dang tren duong toi firmware: chu ky dang chay chua tinh la vi pham.\nconst mistOn = device.state && device.state.mist === 'ON';\nconst operatorException = msg.controlMode === 'MANUAL';\nif (phase === 'NIGHT' && mistOn && !st.nightMistLogged && (operatorException || holdApplied || !blockAutoMist)) {\n  events.push({event: 'night_mist_observed', rule: RULE, control_mode: msg.controlMode, firmware_mist_mode: device.state.mist_mode || null,\n    note: operatorException ? 'operator exception during night' : blockAutoMist ? 'AUTO mist at night despite the OFF hold' : 'AUTO mist at night (team-approved exception)',\n    rule_time: ruleTime, at});\n  st.nightMistLogged = true;\n} else if (!mistOn) {\n  st.nightMistLogged = false;\n}\nconst policy = cfg.allow_auto_mist_at_night ? `AUTO mist allowed at night (${cfg.exception_note})` : 'no AUTO mist at night (default)';\nconst status = `${phase === 'NIGHT' ? 'NIGHT' : 'CARE WINDOW'} (care ${cfg.care_start}-${cfg.care_end}) · ${policy}${active ? '' : ' · [suspended: dashboard MANUAL or device not ONLINE]'}`;\nconst statusChanged = status !== st.status;\nst.status = status;\nflow.set('orchidW7Night', st);\nreturn [\n  commands.length ? commands : null,\n  events.length ? events.map(event => ({payload: JSON.stringify(event) + '\\n', event})) : null,\n  statusChanged ? {payload: status} : null\n];",
+    "func": "// Chinh sach cham soc ban dem: ngoai khung gio cham soc, mac dinh khong cho phun AUTO.\n// Node-RED giu lenh mist MANUAL OFF (co TTL) nen firmware dung chu trinh AUTO; khoa nuoc/cooldown van o firmware.\nconst RULE = 'night_mist_policy';\nconst SOURCE = `automation:${RULE}`;\nconst cfg = msg.config.night_policy;\nconst {realNow, ruleNow, speed, device} = msg;\nlet st = flow.get('orchidW7Night');\nif (!st || st.version !== msg.config.version) {\n  st = {version: msg.config.version, phase: null, sent: null, retryAfter: 0, seq: 0, nightMistLogged: false, status: null};\n}\nconst pad = value => String(value).padStart(2, '0');\nconst toMinutes = value => { const [hours, minutes] = value.split(':').map(Number); return hours * 60 + minutes; };\nconst ruleDate = new Date(ruleNow);\nconst ruleTime = `${ruleDate.getFullYear()}-${pad(ruleDate.getMonth() + 1)}-${pad(ruleDate.getDate())} ${pad(ruleDate.getHours())}:${pad(ruleDate.getMinutes())}:${pad(ruleDate.getSeconds())}`;\nconst minute = ruleDate.getHours() * 60 + ruleDate.getMinutes() + ruleDate.getSeconds() / 60;\nconst at = new Date(realNow).toISOString();\nconst events = [];\nconst commands = [];\nconst start = toMinutes(cfg.care_start);\nconst end = toMinutes(cfg.care_end);\nconst inCare = start <= end ? minute >= start && minute < end : minute >= start || minute < end;\nconst phase = inCare ? 'CARE_WINDOW' : 'NIGHT';\nconst blockAutoMist = phase === 'NIGHT' && !cfg.allow_auto_mist_at_night;\nif (st.phase !== phase) {\n  events.push({event: 'care_window_changed', rule: RULE, phase, auto_mist: blockAutoMist ? 'BLOCKED' : 'ALLOWED',\n    care_window: `${cfg.care_start}-${cfg.care_end}`, rule_time: ruleTime, at});\n  st.phase = phase;\n}\n\nif (msg.kind === 'command_result') {\n  const result = msg.payload || {};\n  if (result.relay === 'mist') {\n    if (st.sent && result.ref === st.sent.ref) {\n      if (result.result === 'APPLIED') {\n        st.sent.appliedAt = realNow;\n      } else {\n        if (result.reason !== 'BUSY') events.push({event: 'automation_command_failed', rule: RULE, ref: result.ref, result: result.result, reason: result.reason, rule_time: ruleTime, at});\n        st.sent = null;\n        st.retryAfter = realNow + (result.result === 'BLOCKED' ? 5000 : 30000);\n      }\n    } else if (result.result === 'APPLIED' && result.source !== SOURCE) {\n      st.sent = null;\n    }\n  }\n}\n\n// Tinh truoc khi gui lai lenh: lenh giu OFF da ap dung tu >3 s truoc thi phun luc nay la bat thuong.\nconst holdApplied = Boolean(st.sent && st.sent.state === 'OFF' && st.sent.appliedAt && device.stateAt > st.sent.appliedAt + 3000);\nconst desired = blockAutoMist ? 'OFF' : null;\nconst ttlS = Math.min(3600, Math.max(5, Math.ceil(cfg.hold_ttl_s / speed)));\nconst active = msg.controlMode === 'AUTO' && device.connection === 'ONLINE';\nif (msg.modeChanged) st.sent = null;\nlet trigger = null;\nif (active && realNow >= st.retryAfter) {\n  const sent = st.sent;\n  const holding = sent && sent.state === 'OFF';\n  const overrideLost = holding && sent.appliedAt && device.stateAt > sent.appliedAt + 3000 && device.state.mist_mode === 'AUTO';\n  if (desired === null) { if (holding) trigger = 'release'; }\n  else if (!holding) trigger = 'night_started';\n  else if (overrideLost) trigger = 'override_lost';\n  else if (realNow - sent.at >= sent.ttl_s * 500) trigger = 'refresh';\n}\nif (trigger) {\n  st.seq += 1;\n  const ref = `night-${st.seq}`;\n  const command = desired === null\n    ? {relay: 'mist', mode: 'AUTO', source: SOURCE, ref, reason: 'care_window'}\n    : {relay: 'mist', mode: 'MANUAL', state: 'OFF', ttl_s: ttlS, source: SOURCE, ref, reason: 'night_no_auto_mist'};\n  commands.push({topic: 'orchid/command', payload: command});\n  st.sent = {ref, state: desired === null ? 'AUTO' : 'OFF', at: realNow, ttl_s: desired === null ? 0 : ttlS, appliedAt: null};\n  // Firmware lien tuc bo lenh giu (vd. firmware cu tren board that) -> cho 30 s moi gui lai, khong gui doi.\n  if (trigger === 'override_lost') st.retryAfter = realNow + 30000;\n  if (trigger !== 'refresh') {\n    events.push({event: 'automation_action', rule: RULE, action: desired === null ? 'RELEASE_AUTO_MIST' : 'HOLD_MIST_OFF',\n      trigger, ttl_s: command.ttl_s || null, phase, rule_time: ruleTime, at});\n  }\n}\n\n// Phun ban dem chi duoc phep nhu ngoai le cua nguoi van hanh (MANUAL) -> luon ghi lai de nhom xem xet.\n// Luc vua sang dem, lenh giu OFF dang tren duong toi firmware: chu ky dang chay chua tinh la vi pham.\nconst mistOn = device.state && device.state.mist === 'ON';\nconst operatorException = msg.controlMode === 'MANUAL';\nif (phase === 'NIGHT' && mistOn && !st.nightMistLogged && (operatorException || holdApplied || !blockAutoMist)) {\n  events.push({event: 'night_mist_observed', rule: RULE, control_mode: msg.controlMode, firmware_mist_mode: device.state.mist_mode || null,\n    note: operatorException ? 'operator exception during night' : blockAutoMist ? 'AUTO mist at night despite the OFF hold' : 'AUTO mist at night (team-approved exception)',\n    rule_time: ruleTime, at});\n  st.nightMistLogged = true;\n} else if (!mistOn) {\n  st.nightMistLogged = false;\n}\nconst policy = cfg.allow_auto_mist_at_night ? `AUTO mist allowed at night (${cfg.exception_note})` : 'no AUTO mist at night (default)';\nconst status = `${phase === 'NIGHT' ? 'NIGHT' : 'CARE WINDOW'} (care ${cfg.care_start}-${cfg.care_end}) · ${policy}${active ? '' : ' · [suspended: dashboard MANUAL or device not ONLINE]'}`;\nconst statusChanged = status !== st.status;\nst.status = status;\nflow.set('orchidW7Night', st);\nreturn [\n  commands.length ? commands : null,\n  events.length ? events.map(event => ({payload: JSON.stringify(event) + '\\n', event})) : null,\n  statusChanged ? {payload: status} : null\n];",
     "outputs": 3,
     "timeout": 0,
     "noerr": 0,
@@ -2298,7 +2299,7 @@
     "type": "tab",
     "label": "Orchid - Người 3: Cảnh báo Telegram & Ghép luồng E2E",
     "disabled": false,
-    "info": "Tầng Cảnh báo Telegram Bot, Whitelist Chat ID, Downlink Commands chuẩn firmware và E2E Testing."
+    "info": "Tầng Cảnh báo Telegram Bot, Whitelist Chat ID, Downlink Commands chuẩn firmware và E2E Testing.\n\nGộp với tab Tuần 7: cảnh báo, watchdog và Telegram của tab này vẫn chạy; hai rule đèn/quạt và đường MQTT Out trực tiếp đã tắt vì trùng với tab Tuần 7. Các nút test lệnh giờ đi qua gateway (khoá AUTO/MANUAL, ACK, lịch sử lệnh)."
   },
   {
     "id": "nguoi3-orchid-mqtt-in",
@@ -2589,10 +2590,44 @@
     "wires": []
   },
   {
+    "id": "nguoi3-orchid-to-gateway",
+    "type": "function",
+    "z": "orchid-tab-nguoi3",
+    "name": "Nút test → gateway lệnh (ACK + lịch sử)",
+    "func": "// Nut test trong editor chi admin mo duoc, nen di qua gateway nhu lenh dashboard cua admin:\n// van bi khoa khi dashboard o AUTO, can thiet bi ONLINE, va duoc theo doi ACK + ghi lich su lenh.\nconst input = msg.payload || {};\nconst relay = msg.relay || input.relay;\nconst mode = input.mode === 'MANUAL' ? 'MANUAL' : 'AUTO';\nconst request = {relay, mode, source: 'dashboard', user: 'editor', role: 'admin', reason: 'editor_test_button'};\nif (mode === 'MANUAL') {\n  request.state = String(input.state || '').toUpperCase();\n  request.ttl_s = Number(input.ttl_s);\n}\nreturn {topic: 'orchid/command', payload: request};",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "info": "Thay cho đường MQTT Out trực tiếp: lệnh từ nút test đi cùng cổng với dashboard và automation.",
+    "x": 580,
+    "y": 540,
+    "wires": [
+      [
+        "nguoi3-orchid-gateway-out"
+      ]
+    ]
+  },
+  {
+    "id": "nguoi3-orchid-gateway-out",
+    "type": "link out",
+    "z": "orchid-tab-nguoi3",
+    "name": "Nút test → gateway",
+    "mode": "link",
+    "links": [
+      "orchid-gateway-in"
+    ],
+    "x": 810,
+    "y": 540,
+    "wires": []
+  },
+  {
     "id": "nguoi3-orchid-cmd-formatter",
     "type": "function",
     "z": "orchid-tab-nguoi3",
-    "name": "Format Firmware-Compliant Command",
+    "name": "Format Firmware-Compliant Command (thay bằng gateway)",
     "func": "// FORMAT PAYLOAD ĐÚNG 100% VỚI FIRMWARE ESP32 HIỆN TẠI\n// Payload yêu cầu:\n// - request_id: chuỗi duy nhất (VD: req-mist-1729123456789)\n// - mode: \"MANUAL\" hoặc \"AUTO\"\n// - state: \"ON\" hoặc \"OFF\" (khi mode === \"MANUAL\")\n// - ttl_s: số nguyên từ 1 đến 3600 (khi mode === \"MANUAL\")\n\nconst input = msg.payload || {};\nconst relay = msg.relay || input.relay || 'mist';\nconst mode = input.mode || 'AUTO';\nconst state = input.state ? String(input.state).toUpperCase() : 'ON';\nconst ttl_s = Number(input.ttl_s) || 60;\n\nconst reqId = 'req-' + relay + '-' + (mode === 'AUTO' ? 'auto' : state.toLowerCase()) + '-' + Date.now();\n\nlet payload = {\n    request_id: reqId,\n    mode: mode\n};\n\nif (mode === 'MANUAL') {\n    payload.state = state;\n    payload.ttl_s = ttl_s;\n}\n\nmsg.topic = 'garden/orchid/orchid-01/cmd/' + relay;\nmsg.payload = payload;\n\n// Lưu request_id vào context để theo dõi ACK\nflow.set('last_sent_request_id', reqId);\nreturn msg;",
     "outputs": 1,
     "x": 580,
@@ -2602,26 +2637,30 @@
         "nguoi3-orchid-mqtt-out-dynamic",
         "nguoi3-orchid-cmd-sent-debug"
       ]
-    ]
+    ],
+    "d": true,
+    "info": "Đã gộp vào tab Week 7 (một bộ rule duy nhất, đi qua gateway lệnh). Node để tắt để tham khảo."
   },
   {
     "id": "nguoi3-orchid-mqtt-out-dynamic",
     "type": "mqtt out",
     "z": "orchid-tab-nguoi3",
-    "name": "MQTT Out (cmd/mist, cmd/fan, cmd/light)",
+    "name": "MQTT Out trực tiếp (thay bằng gateway)",
     "topic": "",
     "qos": "1",
     "retain": "false",
     "broker": "orchid-broker",
     "x": 930,
     "y": 480,
-    "wires": []
+    "wires": [],
+    "d": true,
+    "info": "Đã gộp vào tab Week 7 (một bộ rule duy nhất, đi qua gateway lệnh). Node để tắt để tham khảo."
   },
   {
     "id": "nguoi3-orchid-cmd-sent-debug",
     "type": "debug",
     "z": "orchid-tab-nguoi3",
-    "name": "Command Sent Debug",
+    "name": "Command Sent Debug (thay bằng gateway)",
     "active": true,
     "tosidebar": true,
     "console": false,
@@ -2632,7 +2671,9 @@
     "statusType": "msg",
     "x": 880,
     "y": 420,
-    "wires": []
+    "wires": [],
+    "d": true,
+    "info": "Đã gộp vào tab Week 7 (một bộ rule duy nhất, đi qua gateway lệnh). Node để tắt để tham khảo."
   },
   {
     "id": "nguoi3-orchid-btn-mist-on",
@@ -2660,7 +2701,7 @@
     "y": 440,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2690,7 +2731,7 @@
     "y": 470,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2720,7 +2761,7 @@
     "y": 500,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2750,7 +2791,7 @@
     "y": 540,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2780,7 +2821,7 @@
     "y": 570,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2810,7 +2851,7 @@
     "y": 600,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2840,7 +2881,7 @@
     "y": 640,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2870,7 +2911,7 @@
     "y": 670,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2900,7 +2941,7 @@
     "y": 700,
     "wires": [
       [
-        "nguoi3-orchid-cmd-formatter"
+        "nguoi3-orchid-to-gateway"
       ]
     ]
   },
@@ -2908,7 +2949,7 @@
     "id": "nguoi3-orchid-rule-light",
     "type": "function",
     "z": "orchid-tab-nguoi3",
-    "name": "Rule 1: Đèn theo lịch & LDR (Không xuyên đêm)",
+    "name": "Rule 1: Đèn theo lịch & LDR (đã gộp vào tab Tuần 7)",
     "func": "// BUSINESS RULE 1: ĐIỀU KHIỂN ĐÈN THEO KHUNG GIỜ VÀ ÁNH SÁNG\n// Quy tắc ban đêm đã thống nhất:\n// 1. Không bật đèn xuyên đêm (từ 21:00 đến 06:00 sáng bắt buộc tắt/AUTO để đảm bảo pha tối cho lan).\n// 2. Trong khung giờ quang chu kỳ (06:00 đến 21:00):\n//    - Nếu thiếu sáng (light_adc >= 2200): Gửi lệnh bật đèn MANUAL với ttl_s = 300 (5 phút).\n//    - Nếu đủ sáng (light_adc <= 1800): Chuyển về AUTO hoặc tắt đèn.\n\nconst now = new Date();\nconst currentHour = now.getHours();\nconst telemetry = flow.get('orchidLatestTelemetry');\nconst relayState = flow.get('orchidRelayState') || {};\n\n// Kiểm tra khung giờ ban đêm: 21h tối đến 6h sáng\nconst isNightTime = (currentHour >= 21 || currentHour < 6);\n\nif (isNightTime) {\n    // Nếu đèn đang bật vào ban đêm, cưỡng bức tắt để bảo vệ lan\n    if (relayState.light === 'ON') {\n        node.warn('[RULE ĐÈN] Đang trong khung giờ ban đêm (21h-6h). Cưỡng bức tắt đèn.');\n        return {\n            relay: 'light',\n            payload: { mode: 'MANUAL', state: 'OFF', ttl_s: 300 }\n        };\n    }\n    return null;\n}\n\n// Trong khung giờ ban ngày (06:00 - 21:00)\nif (telemetry && telemetry.light_adc !== undefined) {\n    if (telemetry.light_adc >= 2200 && relayState.light !== 'ON') {\n        node.log('[RULE ĐÈN] Ban ngày thiếu sáng (ADC ' + telemetry.light_adc + ' >= 2200). Tự động bật đèn 5 phút.');\n        return {\n            relay: 'light',\n            payload: { mode: 'MANUAL', state: 'ON', ttl_s: 300 }\n        };\n    } else if (telemetry.light_adc <= 1800 && relayState.light === 'ON') {\n        node.log('[RULE ĐÈN] Ánh sáng tự nhiên đã đủ (ADC ' + telemetry.light_adc + ' <= 1800). Tự động tắt đèn.');\n        return {\n            relay: 'light',\n            payload: { mode: 'AUTO' }\n        };\n    }\n}\nreturn null;",
     "outputs": 1,
     "x": 580,
@@ -2917,13 +2958,15 @@
       [
         "nguoi3-orchid-cmd-formatter"
       ]
-    ]
+    ],
+    "d": true,
+    "info": "Đã gộp vào tab Week 7 (một bộ rule duy nhất, đi qua gateway lệnh). Node để tắt để tham khảo."
   },
   {
     "id": "nguoi3-orchid-rule-light-tick",
     "type": "inject",
     "z": "orchid-tab-nguoi3",
-    "name": "Check Light Rule (1m tick)",
+    "name": "Check Light Rule (đã gộp vào tab Tuần 7)",
     "props": [
       {
         "p": "payload"
@@ -2942,13 +2985,15 @@
       [
         "nguoi3-orchid-rule-light"
       ]
-    ]
+    ],
+    "d": true,
+    "info": "Đã gộp vào tab Week 7 (một bộ rule duy nhất, đi qua gateway lệnh). Node để tắt để tham khảo."
   },
   {
     "id": "nguoi3-orchid-rule-fan",
     "type": "function",
     "z": "orchid-tab-nguoi3",
-    "name": "Rule 2: Quạt hỗ trợ sau khi phun sương",
+    "name": "Rule 2: Quạt sau phun sương (đã gộp vào tab Tuần 7)",
     "func": "// BUSINESS RULE 2: QUẠT HỖ TRỢ SAU KHI PHUN SƯƠNG (POST-MIST VENTILATION)\n// Khi chu kỳ phun sương vừa kết thúc (mist chuyển từ ON sang OFF):\n// - Kích hoạt quạt thông gió trong 60 giây (ttl_s = 60).\n// - Mục đích: Làm ráo nhanh các giọt sương đọng trên kẽ lá lan, giảm tối đa nguy cơ nấm mốc và thối nõn.\n// - Quy tắc ban đêm: Không cho quạt chạy liên tục suốt đêm.\n\nconst trigger = msg.payload;\nif (!trigger || trigger.rule !== 'POST_MIST_VENTILATION') return null;\n\nconst now = new Date();\nconst currentHour = now.getHours();\n\nnode.log('[RULE QUẠT] Phát hiện kết thúc phun sương. Tự động kích hoạt quạt thông gió trong 60 giây.');\n\nreturn {\n    relay: 'fan',\n    payload: {\n        mode: 'MANUAL',\n        state: 'ON',\n        ttl_s: 60\n    }\n};",
     "outputs": 1,
     "x": 580,
@@ -2957,6 +3002,8 @@
       [
         "nguoi3-orchid-cmd-formatter"
       ]
-    ]
+    ],
+    "d": true,
+    "info": "Đã gộp vào tab Week 7 (một bộ rule duy nhất, đi qua gateway lệnh). Node để tắt để tham khảo."
   }
 ]
