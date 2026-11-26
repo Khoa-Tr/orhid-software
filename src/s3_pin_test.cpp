@@ -1,74 +1,39 @@
 #include <Arduino.h>
+#include <Wire.h>
 
 namespace Pins {
-constexpr uint8_t displaySck = 12;
-constexpr uint8_t displayMosi = 11;
-constexpr uint8_t displayCs = 10;
-constexpr uint8_t displayDc = 9;
-constexpr uint8_t displayRst = 8;
-constexpr uint8_t loopbackInput = 13;
-}
-
-namespace TestConfig {
-constexpr unsigned long settleTimeMs = 100UL;
-constexpr unsigned long reportIntervalMs = 500UL;
-}
-
-struct SignalPin {
-  uint8_t gpio;
-  const char* signal;
-};
-
-constexpr SignalPin signalPins[] = {
-    {Pins::displaySck, "SCL/SCK"},
-    {Pins::displayMosi, "SDA/MOSI"},
-    {Pins::displayCs, "CS"},
-    {Pins::displayDc, "DC"},
-    {Pins::displayRst, "RST"},
-};
-
-size_t currentPin = 0;
-unsigned long lastTestAt = 0;
-
-void testSignalPin(const SignalPin& pin) {
-  for (size_t index = 0; index < sizeof(signalPins) / sizeof(signalPins[0]); index++) {
-    digitalWrite(signalPins[index].gpio, LOW);
-  }
-
-  digitalWrite(pin.gpio, HIGH);
-  delay(TestConfig::settleTimeMs);
-  const int highRead = digitalRead(Pins::loopbackInput);
-
-  digitalWrite(pin.gpio, LOW);
-  delay(TestConfig::settleTimeMs);
-  const int lowRead = digitalRead(Pins::loopbackInput);
-
-  Serial.printf(
-      "DISPLAY_PIN signal=%s gpio=%u loopback_high=%d %s loopback_low=%d %s\n",
-      pin.signal, pin.gpio, highRead, highRead == HIGH ? "PASS" : "FAIL",
-      lowRead, lowRead == LOW ? "PASS" : "FAIL");
+constexpr uint8_t oledSda = 8;
+constexpr uint8_t oledScl = 9;
 }
 
 void setup() {
   Serial.begin(115200);
   delay(500);
+  Serial.println("I2C SCANNER - scanning for OLED and other I2C devices");
+  Serial.printf("Pins: SDA=GPIO%u SCL=GPIO%u\n", Pins::oledSda, Pins::oledScl);
 
-  pinMode(Pins::loopbackInput, INPUT_PULLDOWN);
-  for (size_t index = 0; index < sizeof(signalPins) / sizeof(signalPins[0]); index++) {
-    pinMode(signalPins[index].gpio, OUTPUT);
-    digitalWrite(signalPins[index].gpio, LOW);
-  }
-
-  Serial.println("DISPLAY PIN LOOPBACK TEST; relay control is not used");
-  Serial.println("GPIO13 must be jumpered to ONE display signal pin at a time.");
-  Serial.println("A HIGH PASS on the matching scan means the signal reaches that module pin.");
+  Wire.begin(Pins::oledSda, Pins::oledScl);
 }
 
 void loop() {
-  const unsigned long now = millis();
-  if (now - lastTestAt < TestConfig::reportIntervalMs) return;
-
-  lastTestAt = now;
-  testSignalPin(signalPins[currentPin]);
-  currentPin = (currentPin + 1) % (sizeof(signalPins) / sizeof(signalPins[0]));
+  Serial.println("\nScanning I2C bus...");
+  uint8_t found = 0;
+  for (uint8_t address = 1; address < 127; address++) {
+    Wire.beginTransmission(address);
+    const uint8_t error = Wire.endTransmission();
+    if (error == 0) {
+      Serial.printf("  I2C device found at 0x%02X", address);
+      if (address == 0x3C || address == 0x3D) {
+        Serial.print(" <-- SSD1306 OLED");
+      }
+      Serial.println();
+      found++;
+    }
+  }
+  if (found == 0) {
+    Serial.println("  No I2C devices found! Check GND/VDD/SCK/SDA wiring.");
+  } else {
+    Serial.printf("  Total: %u device(s) found\n", found);
+  }
+  delay(3000);
 }

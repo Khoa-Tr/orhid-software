@@ -629,3 +629,558 @@
 {"event":"ack_received","request_id":"auto-mvjnli3d-2","result":"APPLIED","reason":"","at":"2026-10-22T14:45:55.260Z"}
 {"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:45:55.393Z"}
 {"event":"relay_change","relay":"light","from":"OFF","to":"ON","at":"2026-10-22T14:45:55.393Z"}
+{"event":"control_mode_changed","from":"AUTO","to":"MANUAL","user":"operator","at":"2026-10-22T14:46:53.183Z"}
+{"event":"ack_received","request_id":"cfg-1792680423949","result":"APPLIED","reason":"CONFIG","at":"2026-10-22T14:47:04.805Z"}
+{"event":"ack_received","request_id":"cfg-1792680423949","result":"APPLIED","reason":"CONFIG","at":"2026-10-22T14:47:04.806Z"}
+{"event":"ack_received","request_id":"cfg-1792680435332","result":"APPLIED","reason":"CONFIG","at":"2026-10-22T14:47:15.928Z"}
+{"event":"ack_received","request_id":"cfg-1792680435332","result":"APPLIED","reason":"CONFIG","at":"2026-10-22T14:47:15.933Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T14:47:17.117Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T14:47:17.118Z"}
+{"event":"command_sent","request_id":"dash-mvjnnkms-3","ref":null,"relay":"mist","payload":{"request_id":"dash-mvjnnkms-3","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:47:30.868Z"}
+{"event":"ack_received","request_id":"dash-mvjnnkms-3","result":"REJECTED","reason":"WATER_LOCKOUT","at":"2026-10-22T14:47:31.413Z"}
+{"event":"command_result","request_id":"dash-mvjnnkms-3","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"operator","result":"REJECTED","reason":"WATER_LOCKOUT","latency_ms":545,"at":"2026-10-22T14:47:31.413Z"}
+{"event":"ack_received","request_id":"dash-mvjnnkms-3","result":"REJECTED","reason":"WATER_LOCKOUT","at":"2026-10-22T14:47:31.414Z"}
+{"event":"system_alert","alert":{"type":"COMMAND_REJECTED","severity":"WARNING","title":"LỆNH BỊ TỪ CHỐI (REJECTED)","message":"Lệnh [dash-mvjnnkms-3] bị ESP32 từ chối vì lý do an toàn: WATER_LOCKOUT","request_id":"dash-mvjnnkms-3","reason":"WATER_LOCKOUT","at":"2026-10-22T14:47:31.413Z"},"at":"2026-10-22T14:47:31.413Z"}
+{"event":"system_alert","alert":{"type":"COMMAND_REJECTED","severity":"WARNING","title":"LỆNH BỊ TỪ CHỐI (REJECTED)","message":"Lệnh [dash-mvjnnkms-3] bị ESP32 từ chối vì lý do an toàn: WATER_LOCKOUT","request_id":"dash-mvjnnkms-3","reason":"WATER_LOCKOUT","at":"2026-10-22T14:47:31.414Z"},"at":"2026-10-22T14:47:31.414Z"}
+{"event":"command_sent","request_id":"dash-mvjnowo4-4","ref":null,"relay":"fan","payload":{"request_id":"dash-mvjnowo4-4","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:48:33.124Z"}
+{"event":"ack_received","request_id":"dash-mvjnowo4-4","result":"APPLIED","reason":"","at":"2026-10-22T14:48:33.672Z"}
+{"event":"command_result","request_id":"dash-mvjnowo4-4","ref":null,"relay":"fan","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":548,"at":"2026-10-22T14:48:33.672Z"}
+{"event":"ack_received","request_id":"dash-mvjnowo4-4","result":"APPLIED","reason":"","at":"2026-10-22T14:48:33.672Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T14:48:34.027Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T14:48:34.027Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T14:48:34.601Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T14:48:34.602Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-22T14:50:08.326Z"}
+{"event":"telemetry_stale","age_s":17,"at":"2026-10-22T14:50:09.273Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 17 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":17,"at":"2026-10-22T14:50:09.273Z"},"at":"2026-10-22T14:50:09.273Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-22T14:50:23.983Z"}
+{"event":"threshold_active","rule":"orchidLightDemand","metric":"light_adc","value":2225,"threshold":2200,"at":"2026-10-22T14:58:19.273Z"}
+{"event":"command_sent","request_id":"dash-mvjo1mx5-5","ref":null,"relay":"fan","payload":{"request_id":"dash-mvjo1mx5-5","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"operator","reason":"operator_button","at":"2026-10-22T14:58:27.017Z"}
+{"event":"ack_received","request_id":"dash-mvjo1mx5-5","result":"APPLIED","reason":"","at":"2026-10-22T14:58:27.574Z"}
+{"event":"command_result","request_id":"dash-mvjo1mx5-5","ref":null,"relay":"fan","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"operator","result":"APPLIED","reason":null,"latency_ms":557,"at":"2026-10-22T14:58:27.574Z"}
+{"event":"ack_received","request_id":"dash-mvjo1mx5-5","result":"APPLIED","reason":"","at":"2026-10-22T14:58:27.579Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T14:58:27.941Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T14:58:27.941Z"}
+{"event":"telemetry_stale","age_s":15,"at":"2026-10-22T14:58:45.037Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 15 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":15,"at":"2026-10-22T14:58:45.037Z"},"at":"2026-10-22T14:58:45.037Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T14:58:45.919Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-22T14:58:45.919Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-22T14:58:45.919Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-22T14:58:49.998Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T14:58:52.187Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-22T14:58:52.188Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-22T14:59:49.310Z"}
+{"event":"telemetry_stale","age_s":18,"at":"2026-10-22T14:59:50.123Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 18 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":18,"at":"2026-10-22T14:59:50.123Z"},"at":"2026-10-22T14:59:50.123Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T14:59:50.778Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T14:59:50.779Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-22T14:59:50.779Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-22T14:59:50.779Z"},"at":"2026-10-22T14:59:50.779Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"OFFLINE","safe_state":null,"at":"2026-10-22T14:59:50.779Z"}
+{"event":"availability","state":"online","at":"2026-10-22T14:59:51.479Z"}
+{"event":"availability","state":"online","at":"2026-10-22T14:59:51.479Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-22T14:59:51.479Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-22T14:59:51.479Z"},"at":"2026-10-22T14:59:51.479Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:59:51.694Z"}
+{"event":"relay_change","relay":"light","from":"ON","to":"OFF","at":"2026-10-22T14:59:51.696Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-22T15:01:09.402Z"}
+{"event":"telemetry_stale","age_s":17,"at":"2026-10-22T15:01:10.228Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 17 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":17,"at":"2026-10-22T15:01:10.228Z"},"at":"2026-10-22T15:01:10.228Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T15:01:52.119Z"}
+{"event":"availability","state":"offline","at":"2026-10-22T15:01:52.120Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-22T15:01:52.120Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-22T15:01:52.120Z"},"at":"2026-10-22T15:01:52.120Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"OFFLINE","safe_state":null,"at":"2026-10-22T15:01:52.120Z"}
+{"event":"device_offline","at":"2026-10-22T15:01:55.263Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-22T15:01:55.264Z"},"at":"2026-10-22T15:01:55.264Z"}
+{"event":"device_offline_over_5m","duration_s":303,"at":"2026-10-22T15:06:55.648Z"}
+{"event":"system_alert","alert":{"type":"OFFLINE_5MIN","severity":"CRITICAL","title":"BÁO ĐỘNG KHẨN CẤP: MẤT KẾT NỐI QUÁ 5 PHÚT","message":"Thiết bị ESP32 (orchid-01) đã mất kết nối liên tục hơn 5 phút. Vui lòng kiểm tra trạm ngay lập tức!","at":"2026-10-22T15:07:01.112Z"},"at":"2026-10-22T15:07:01.112Z"}
+{"event":"rule_config_loaded","version":1,"clock":{"speed":1,"start_local":""},"rule_time":"2026-10-24T02:55:24.780Z","at":"2026-10-24T02:55:24.780Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T02:55:25.696Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T02:55:25.697Z"}
+{"event":"care_window_changed","rule":"night_mist_policy","phase":"CARE_WINDOW","auto_mist":"ALLOWED","care_window":"06:00-18:00","rule_time":"2026-10-24 09:55:25","at":"2026-10-24T02:55:25.697Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-24T02:55:25.697Z"},"at":"2026-10-24T02:55:25.697Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-24T02:55:25.697Z"}
+{"event":"device_offline","at":"2026-10-24T02:55:27.252Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-24T02:55:27.300Z"},"at":"2026-10-24T02:55:27.300Z"}
+{"event":"device_offline_over_5m","duration_s":302,"at":"2026-10-24T03:00:28.168Z"}
+{"event":"system_alert","alert":{"type":"OFFLINE_5MIN","severity":"CRITICAL","title":"BÁO ĐỘNG KHẨN CẤP: MẤT KẾT NỐI QUÁ 5 PHÚT","message":"Thiết bị ESP32 (orchid-01) đã mất kết nối liên tục hơn 5 phút. Vui lòng kiểm tra trạm ngay lập tức!","at":"2026-10-24T03:00:52.702Z"},"at":"2026-10-24T03:00:52.702Z"}
+{"event":"rule_config_loaded","version":1,"clock":{"speed":1,"start_local":""},"rule_time":"2026-10-24T03:01:51.707Z","at":"2026-10-24T03:01:51.707Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T03:01:52.771Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T03:01:52.776Z"}
+{"event":"care_window_changed","rule":"night_mist_policy","phase":"CARE_WINDOW","auto_mist":"ALLOWED","care_window":"06:00-18:00","rule_time":"2026-10-24 10:01:52","at":"2026-10-24T03:01:52.774Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-24T03:01:52.776Z"},"at":"2026-10-24T03:01:52.776Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-24T03:01:52.774Z"}
+{"event":"device_offline","at":"2026-10-24T03:01:54.164Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-24T03:01:54.211Z"},"at":"2026-10-24T03:01:54.211Z"}
+{"event":"device_offline_over_5m","duration_s":302,"at":"2026-10-24T03:06:55.174Z"}
+{"event":"system_alert","alert":{"type":"OFFLINE_5MIN","severity":"CRITICAL","title":"BÁO ĐỘNG KHẨN CẤP: MẤT KẾT NỐI QUÁ 5 PHÚT","message":"Thiết bị ESP32 (orchid-01) đã mất kết nối liên tục hơn 5 phút. Vui lòng kiểm tra trạm ngay lập tức!","at":"2026-10-24T03:07:14.762Z"},"at":"2026-10-24T03:07:14.762Z"}
+{"event":"availability","state":"online","at":"2026-10-24T03:07:16.623Z"}
+{"event":"availability","state":"online","at":"2026-10-24T03:07:16.624Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-24T03:07:16.623Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-24T03:07:16.624Z"},"at":"2026-10-24T03:07:16.624Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"desired_changed","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:07:17","at":"2026-10-24T03:07:17.590Z"}
+{"event":"command_sent","request_id":"auto-mvltisd3-1","ref":"light-1","relay":"light","payload":{"request_id":"auto-mvltisd3-1","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:07:17.655Z"}
+{"event":"ack_received","request_id":"auto-mvltisd3-1","result":"APPLIED","reason":"","at":"2026-10-24T03:07:19.430Z"}
+{"event":"command_result","request_id":"auto-mvltisd3-1","ref":"light-1","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1775,"at":"2026-10-24T03:07:19.430Z"}
+{"event":"ack_received","request_id":"auto-mvltisd3-1","result":"APPLIED","reason":"","at":"2026-10-24T03:07:19.565Z"}
+{"event":"telemetry_stale","age_s":17,"at":"2026-10-24T03:07:35.243Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:07:35.243Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 17 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":17,"at":"2026-10-24T03:07:35.243Z"},"at":"2026-10-24T03:07:35.243Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:07:35.613Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:07:37","at":"2026-10-24T03:07:37.241Z"}
+{"event":"command_sent","request_id":"auto-mvltj7ha-2","ref":"light-2","relay":"light","payload":{"request_id":"auto-mvltj7ha-2","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:07:37.246Z"}
+{"event":"ack_received","request_id":"auto-mvltj7ha-2","result":"APPLIED","reason":"","at":"2026-10-24T03:07:38.167Z"}
+{"event":"command_result","request_id":"auto-mvltj7ha-2","ref":"light-2","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":921,"at":"2026-10-24T03:07:38.167Z"}
+{"event":"ack_received","request_id":"auto-mvltj7ha-2","result":"APPLIED","reason":"","at":"2026-10-24T03:07:38.168Z"}
+{"event":"telemetry_stale","age_s":16,"at":"2026-10-24T03:07:51.758Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:07:51.757Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 16 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":16,"at":"2026-10-24T03:07:51.758Z"},"at":"2026-10-24T03:07:51.758Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:08:00.926Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:08:01","at":"2026-10-24T03:08:01.825Z"}
+{"event":"command_sent","request_id":"auto-mvltjqg6-3","ref":"light-3","relay":"light","payload":{"request_id":"auto-mvltjqg6-3","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:08:01.830Z"}
+{"event":"ack_received","request_id":"auto-mvltjqg6-3","result":"APPLIED","reason":"","at":"2026-10-24T03:08:03.149Z"}
+{"event":"command_result","request_id":"auto-mvltjqg6-3","ref":"light-3","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1319,"at":"2026-10-24T03:08:03.149Z"}
+{"event":"ack_received","request_id":"auto-mvltjqg6-3","result":"APPLIED","reason":"","at":"2026-10-24T03:08:03.151Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:08:12","at":"2026-10-24T03:08:12.863Z"}
+{"event":"command_sent","request_id":"auto-mvltjyyp-4","ref":"light-4","relay":"light","payload":{"request_id":"auto-mvltjyyp-4","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:08:12.865Z"}
+{"event":"ack_received","request_id":"auto-mvltjyyp-4","result":"APPLIED","reason":"","at":"2026-10-24T03:08:13.621Z"}
+{"event":"command_result","request_id":"auto-mvltjyyp-4","ref":"light-4","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":756,"at":"2026-10-24T03:08:13.621Z"}
+{"event":"ack_received","request_id":"auto-mvltjyyp-4","result":"APPLIED","reason":"","at":"2026-10-24T03:08:13.622Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:08:21","at":"2026-10-24T03:08:21.312Z"}
+{"event":"command_sent","request_id":"auto-mvltk5he-5","ref":"light-5","relay":"light","payload":{"request_id":"auto-mvltk5he-5","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:08:21.314Z"}
+{"event":"ack_received","request_id":"auto-mvltk5he-5","result":"APPLIED","reason":"","at":"2026-10-24T03:08:22.194Z"}
+{"event":"command_result","request_id":"auto-mvltk5he-5","ref":"light-5","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":880,"at":"2026-10-24T03:08:22.194Z"}
+{"event":"ack_received","request_id":"auto-mvltk5he-5","result":"APPLIED","reason":"","at":"2026-10-24T03:08:22.194Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:08:29","at":"2026-10-24T03:08:29.429Z"}
+{"event":"command_sent","request_id":"auto-mvltkbqu-6","ref":"light-6","relay":"light","payload":{"request_id":"auto-mvltkbqu-6","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:08:29.430Z"}
+{"event":"ack_received","request_id":"auto-mvltkbqu-6","result":"APPLIED","reason":"","at":"2026-10-24T03:08:30.239Z"}
+{"event":"command_result","request_id":"auto-mvltkbqu-6","ref":"light-6","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":809,"at":"2026-10-24T03:08:30.239Z"}
+{"event":"ack_received","request_id":"auto-mvltkbqu-6","result":"APPLIED","reason":"","at":"2026-10-24T03:08:30.240Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:08:37","at":"2026-10-24T03:08:37.977Z"}
+{"event":"command_sent","request_id":"auto-mvltkicf-7","ref":"light-7","relay":"light","payload":{"request_id":"auto-mvltkicf-7","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:08:37.983Z"}
+{"event":"ack_received","request_id":"auto-mvltkicf-7","result":"APPLIED","reason":"","at":"2026-10-24T03:08:39.802Z"}
+{"event":"command_result","request_id":"auto-mvltkicf-7","ref":"light-7","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1819,"at":"2026-10-24T03:08:39.802Z"}
+{"event":"ack_received","request_id":"auto-mvltkicf-7","result":"APPLIED","reason":"","at":"2026-10-24T03:08:39.803Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:08:46","at":"2026-10-24T03:08:46.754Z"}
+{"event":"command_sent","request_id":"auto-mvltkp46-8","ref":"light-8","relay":"light","payload":{"request_id":"auto-mvltkp46-8","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:08:46.758Z"}
+{"event":"ack_received","request_id":"auto-mvltkp46-8","result":"APPLIED","reason":"","at":"2026-10-24T03:08:47.998Z"}
+{"event":"command_result","request_id":"auto-mvltkp46-8","ref":"light-8","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1241,"at":"2026-10-24T03:08:47.999Z"}
+{"event":"ack_received","request_id":"auto-mvltkp46-8","result":"APPLIED","reason":"","at":"2026-10-24T03:08:47.999Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:08:55","at":"2026-10-24T03:08:55.285Z"}
+{"event":"command_sent","request_id":"auto-mvltkvp8-9","ref":"light-9","relay":"light","payload":{"request_id":"auto-mvltkvp8-9","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:08:55.292Z"}
+{"event":"ack_received","request_id":"auto-mvltkvp8-9","result":"APPLIED","reason":"","at":"2026-10-24T03:08:56.087Z"}
+{"event":"command_result","request_id":"auto-mvltkvp8-9","ref":"light-9","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":796,"at":"2026-10-24T03:08:56.088Z"}
+{"event":"ack_received","request_id":"auto-mvltkvp8-9","result":"APPLIED","reason":"","at":"2026-10-24T03:08:56.088Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:09:03","at":"2026-10-24T03:09:03.652Z"}
+{"event":"command_sent","request_id":"auto-mvltl25k-10","ref":"light-10","relay":"light","payload":{"request_id":"auto-mvltl25k-10","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:09:03.656Z"}
+{"event":"ack_received","request_id":"auto-mvltl25k-10","result":"APPLIED","reason":"","at":"2026-10-24T03:09:04.382Z"}
+{"event":"command_result","request_id":"auto-mvltl25k-10","ref":"light-10","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":726,"at":"2026-10-24T03:09:04.382Z"}
+{"event":"ack_received","request_id":"auto-mvltl25k-10","result":"APPLIED","reason":"","at":"2026-10-24T03:09:04.383Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:09:12","at":"2026-10-24T03:09:12.594Z"}
+{"event":"command_sent","request_id":"auto-mvltl91z-11","ref":"light-11","relay":"light","payload":{"request_id":"auto-mvltl91z-11","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:09:12.599Z"}
+{"event":"ack_received","request_id":"auto-mvltl91z-11","result":"APPLIED","reason":"","at":"2026-10-24T03:09:13.500Z"}
+{"event":"command_result","request_id":"auto-mvltl91z-11","ref":"light-11","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":901,"at":"2026-10-24T03:09:13.500Z"}
+{"event":"ack_received","request_id":"auto-mvltl91z-11","result":"APPLIED","reason":"","at":"2026-10-24T03:09:13.501Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:09:21","at":"2026-10-24T03:09:21.195Z"}
+{"event":"command_sent","request_id":"auto-mvltlfov-12","ref":"light-12","relay":"light","payload":{"request_id":"auto-mvltlfov-12","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:09:21.199Z"}
+{"event":"ack_received","request_id":"auto-mvltlfov-12","result":"APPLIED","reason":"","at":"2026-10-24T03:09:22.218Z"}
+{"event":"command_result","request_id":"auto-mvltlfov-12","ref":"light-12","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1019,"at":"2026-10-24T03:09:22.218Z"}
+{"event":"ack_received","request_id":"auto-mvltlfov-12","result":"APPLIED","reason":"","at":"2026-10-24T03:09:22.218Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:09:32","at":"2026-10-24T03:09:32.060Z"}
+{"event":"command_sent","request_id":"auto-mvltlo2o-13","ref":"light-13","relay":"light","payload":{"request_id":"auto-mvltlo2o-13","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:09:32.064Z"}
+{"event":"ack_received","request_id":"auto-mvltlo2o-13","result":"APPLIED","reason":"","at":"2026-10-24T03:09:32.936Z"}
+{"event":"command_result","request_id":"auto-mvltlo2o-13","ref":"light-13","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":872,"at":"2026-10-24T03:09:32.936Z"}
+{"event":"ack_received","request_id":"auto-mvltlo2o-13","result":"APPLIED","reason":"","at":"2026-10-24T03:09:32.937Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:09:44","at":"2026-10-24T03:09:44.723Z"}
+{"event":"command_sent","request_id":"auto-mvltlxui-14","ref":"light-14","relay":"light","payload":{"request_id":"auto-mvltlxui-14","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:09:44.730Z"}
+{"event":"ack_received","request_id":"auto-mvltlxui-14","result":"APPLIED","reason":"","at":"2026-10-24T03:09:45.659Z"}
+{"event":"command_result","request_id":"auto-mvltlxui-14","ref":"light-14","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":929,"at":"2026-10-24T03:09:45.659Z"}
+{"event":"ack_received","request_id":"auto-mvltlxui-14","result":"APPLIED","reason":"","at":"2026-10-24T03:09:45.660Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:09:57","at":"2026-10-24T03:09:57.345Z"}
+{"event":"command_sent","request_id":"auto-mvltm7lb-15","ref":"light-15","relay":"light","payload":{"request_id":"auto-mvltm7lb-15","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:09:57.359Z"}
+{"event":"ack_received","request_id":"auto-mvltm7lb-15","result":"APPLIED","reason":"","at":"2026-10-24T03:09:58.428Z"}
+{"event":"command_result","request_id":"auto-mvltm7lb-15","ref":"light-15","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1069,"at":"2026-10-24T03:09:58.428Z"}
+{"event":"ack_received","request_id":"auto-mvltm7lb-15","result":"APPLIED","reason":"","at":"2026-10-24T03:09:58.429Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:10:11","at":"2026-10-24T03:10:11.529Z"}
+{"event":"command_sent","request_id":"auto-mvltmij8-16","ref":"light-16","relay":"light","payload":{"request_id":"auto-mvltmij8-16","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:10:11.540Z"}
+{"event":"ack_received","request_id":"auto-mvltmij8-16","result":"APPLIED","reason":"","at":"2026-10-24T03:10:12.490Z"}
+{"event":"command_result","request_id":"auto-mvltmij8-16","ref":"light-16","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":950,"at":"2026-10-24T03:10:12.490Z"}
+{"event":"ack_received","request_id":"auto-mvltmij8-16","result":"APPLIED","reason":"","at":"2026-10-24T03:10:12.491Z"}
+{"event":"telemetry_stale","age_s":15,"at":"2026-10-24T03:10:26.961Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:10:26.960Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 15 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":15,"at":"2026-10-24T03:10:26.962Z"},"at":"2026-10-24T03:10:26.962Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:10:29.126Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:10:29","at":"2026-10-24T03:10:29.823Z"}
+{"event":"command_sent","request_id":"auto-mvltmwny-17","ref":"light-17","relay":"light","payload":{"request_id":"auto-mvltmwny-17","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:10:29.854Z"}
+{"event":"ack_received","request_id":"auto-mvltmwny-17","result":"APPLIED","reason":"","at":"2026-10-24T03:10:31.232Z"}
+{"event":"command_result","request_id":"auto-mvltmwny-17","ref":"light-17","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1379,"at":"2026-10-24T03:10:31.233Z"}
+{"event":"ack_received","request_id":"auto-mvltmwny-17","result":"APPLIED","reason":"","at":"2026-10-24T03:10:31.235Z"}
+{"event":"telemetry_stale","age_s":17,"at":"2026-10-24T03:10:46.987Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:10:46.987Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 17 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":17,"at":"2026-10-24T03:10:46.987Z"},"at":"2026-10-24T03:10:46.987Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:10:50.927Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:10:51","at":"2026-10-24T03:10:51.409Z"}
+{"event":"command_sent","request_id":"auto-mvltndav-18","ref":"light-18","relay":"light","payload":{"request_id":"auto-mvltndav-18","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:10:51.415Z"}
+{"event":"ack_received","request_id":"auto-mvltndav-18","result":"APPLIED","reason":"","at":"2026-10-24T03:10:52.356Z"}
+{"event":"command_result","request_id":"auto-mvltndav-18","ref":"light-18","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":941,"at":"2026-10-24T03:10:52.356Z"}
+{"event":"ack_received","request_id":"auto-mvltndav-18","result":"APPLIED","reason":"","at":"2026-10-24T03:10:52.357Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:11:07","at":"2026-10-24T03:11:07.045Z"}
+{"event":"command_sent","request_id":"auto-mvltnpdg-19","ref":"light-19","relay":"light","payload":{"request_id":"auto-mvltnpdg-19","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:11:07.060Z"}
+{"event":"ack_received","request_id":"auto-mvltnpdg-19","result":"APPLIED","reason":"","at":"2026-10-24T03:11:09.251Z"}
+{"event":"command_result","request_id":"auto-mvltnpdg-19","ref":"light-19","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":2191,"at":"2026-10-24T03:11:09.251Z"}
+{"event":"ack_received","request_id":"auto-mvltnpdg-19","result":"APPLIED","reason":"","at":"2026-10-24T03:11:09.251Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:11:21","at":"2026-10-24T03:11:21.700Z"}
+{"event":"command_sent","request_id":"auto-mvlto0o9-20","ref":"light-20","relay":"light","payload":{"request_id":"auto-mvlto0o9-20","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:11:21.705Z"}
+{"event":"ack_received","request_id":"auto-mvlto0o9-20","result":"APPLIED","reason":"","at":"2026-10-24T03:11:22.607Z"}
+{"event":"command_result","request_id":"auto-mvlto0o9-20","ref":"light-20","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":902,"at":"2026-10-24T03:11:22.607Z"}
+{"event":"ack_received","request_id":"auto-mvlto0o9-20","result":"APPLIED","reason":"","at":"2026-10-24T03:11:22.609Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:11:32","at":"2026-10-24T03:11:32.478Z"}
+{"event":"command_sent","request_id":"auto-mvlto8zr-21","ref":"light-21","relay":"light","payload":{"request_id":"auto-mvlto8zr-21","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:11:32.487Z"}
+{"event":"ack_received","request_id":"auto-mvlto8zr-21","result":"APPLIED","reason":"","at":"2026-10-24T03:11:33.270Z"}
+{"event":"command_result","request_id":"auto-mvlto8zr-21","ref":"light-21","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":783,"at":"2026-10-24T03:11:33.270Z"}
+{"event":"ack_received","request_id":"auto-mvlto8zr-21","result":"APPLIED","reason":"","at":"2026-10-24T03:11:33.270Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:11:44","at":"2026-10-24T03:11:44.331Z"}
+{"event":"command_sent","request_id":"auto-mvltoi4w-22","ref":"light-22","relay":"light","payload":{"request_id":"auto-mvltoi4w-22","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:11:44.336Z"}
+{"event":"ack_received","request_id":"auto-mvltoi4w-22","result":"APPLIED","reason":"","at":"2026-10-24T03:11:45.135Z"}
+{"event":"command_result","request_id":"auto-mvltoi4w-22","ref":"light-22","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":800,"at":"2026-10-24T03:11:45.136Z"}
+{"event":"ack_received","request_id":"auto-mvltoi4w-22","result":"APPLIED","reason":"","at":"2026-10-24T03:11:45.137Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:11:55","at":"2026-10-24T03:11:55.241Z"}
+{"event":"command_sent","request_id":"auto-mvltoqjz-23","ref":"light-23","relay":"light","payload":{"request_id":"auto-mvltoqjz-23","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:11:55.247Z"}
+{"event":"ack_received","request_id":"auto-mvltoqjz-23","result":"APPLIED","reason":"","at":"2026-10-24T03:11:56.452Z"}
+{"event":"command_result","request_id":"auto-mvltoqjz-23","ref":"light-23","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1205,"at":"2026-10-24T03:11:56.452Z"}
+{"event":"ack_received","request_id":"auto-mvltoqjz-23","result":"APPLIED","reason":"","at":"2026-10-24T03:11:56.453Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:12:06","at":"2026-10-24T03:12:06.835Z"}
+{"event":"command_sent","request_id":"auto-mvltozi1-24","ref":"light-24","relay":"light","payload":{"request_id":"auto-mvltozi1-24","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:12:06.841Z"}
+{"event":"ack_received","request_id":"auto-mvltozi1-24","result":"APPLIED","reason":"","at":"2026-10-24T03:12:07.613Z"}
+{"event":"command_result","request_id":"auto-mvltozi1-24","ref":"light-24","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":772,"at":"2026-10-24T03:12:07.613Z"}
+{"event":"ack_received","request_id":"auto-mvltozi1-24","result":"APPLIED","reason":"","at":"2026-10-24T03:12:07.613Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:12:18","at":"2026-10-24T03:12:18.212Z"}
+{"event":"command_sent","request_id":"auto-mvltp8a1-25","ref":"light-25","relay":"light","payload":{"request_id":"auto-mvltp8a1-25","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:12:18.217Z"}
+{"event":"ack_received","request_id":"auto-mvltp8a1-25","result":"APPLIED","reason":"","at":"2026-10-24T03:12:19.021Z"}
+{"event":"command_result","request_id":"auto-mvltp8a1-25","ref":"light-25","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":804,"at":"2026-10-24T03:12:19.021Z"}
+{"event":"ack_received","request_id":"auto-mvltp8a1-25","result":"APPLIED","reason":"","at":"2026-10-24T03:12:19.022Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:12:29","at":"2026-10-24T03:12:29.621Z"}
+{"event":"command_sent","request_id":"auto-mvltph31-26","ref":"light-26","relay":"light","payload":{"request_id":"auto-mvltph31-26","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:12:29.629Z"}
+{"event":"ack_received","request_id":"auto-mvltph31-26","result":"APPLIED","reason":"","at":"2026-10-24T03:12:30.956Z"}
+{"event":"command_result","request_id":"auto-mvltph31-26","ref":"light-26","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1328,"at":"2026-10-24T03:12:30.957Z"}
+{"event":"ack_received","request_id":"auto-mvltph31-26","result":"APPLIED","reason":"","at":"2026-10-24T03:12:30.958Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:12:41","at":"2026-10-24T03:12:41.771Z"}
+{"event":"command_sent","request_id":"auto-mvltpqgg-27","ref":"light-27","relay":"light","payload":{"request_id":"auto-mvltpqgg-27","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:12:41.776Z"}
+{"event":"ack_received","request_id":"auto-mvltpqgg-27","result":"APPLIED","reason":"","at":"2026-10-24T03:12:42.634Z"}
+{"event":"command_result","request_id":"auto-mvltpqgg-27","ref":"light-27","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":858,"at":"2026-10-24T03:12:42.634Z"}
+{"event":"ack_received","request_id":"auto-mvltpqgg-27","result":"APPLIED","reason":"","at":"2026-10-24T03:12:42.635Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:12:52","at":"2026-10-24T03:12:52.992Z"}
+{"event":"command_sent","request_id":"auto-mvltpz43-28","ref":"light-28","relay":"light","payload":{"request_id":"auto-mvltpz43-28","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:12:52.995Z"}
+{"event":"ack_received","request_id":"auto-mvltpz43-28","result":"APPLIED","reason":"","at":"2026-10-24T03:12:53.940Z"}
+{"event":"command_result","request_id":"auto-mvltpz43-28","ref":"light-28","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":945,"at":"2026-10-24T03:12:53.940Z"}
+{"event":"ack_received","request_id":"auto-mvltpz43-28","result":"APPLIED","reason":"","at":"2026-10-24T03:12:54.407Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:13:05","at":"2026-10-24T03:13:05.099Z"}
+{"event":"command_sent","request_id":"auto-mvltq8gk-29","ref":"light-29","relay":"light","payload":{"request_id":"auto-mvltq8gk-29","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:13:05.108Z"}
+{"event":"ack_received","request_id":"auto-mvltq8gk-29","result":"APPLIED","reason":"","at":"2026-10-24T03:13:05.839Z"}
+{"event":"command_result","request_id":"auto-mvltq8gk-29","ref":"light-29","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":731,"at":"2026-10-24T03:13:05.839Z"}
+{"event":"ack_received","request_id":"auto-mvltq8gk-29","result":"APPLIED","reason":"","at":"2026-10-24T03:13:05.841Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:13:17","at":"2026-10-24T03:13:17.097Z"}
+{"event":"command_sent","request_id":"auto-mvltqhpp-30","ref":"light-30","relay":"light","payload":{"request_id":"auto-mvltqhpp-30","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:13:17.101Z"}
+{"event":"ack_received","request_id":"auto-mvltqhpp-30","result":"APPLIED","reason":"","at":"2026-10-24T03:13:18.791Z"}
+{"event":"command_result","request_id":"auto-mvltqhpp-30","ref":"light-30","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1690,"at":"2026-10-24T03:13:18.791Z"}
+{"event":"ack_received","request_id":"auto-mvltqhpp-30","result":"APPLIED","reason":"","at":"2026-10-24T03:13:18.791Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:13:27","at":"2026-10-24T03:13:27.216Z"}
+{"event":"command_sent","request_id":"auto-mvltqpis-31","ref":"light-31","relay":"light","payload":{"request_id":"auto-mvltqpis-31","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:13:27.220Z"}
+{"event":"ack_received","request_id":"auto-mvltqpis-31","result":"APPLIED","reason":"","at":"2026-10-24T03:13:27.957Z"}
+{"event":"command_result","request_id":"auto-mvltqpis-31","ref":"light-31","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":737,"at":"2026-10-24T03:13:27.957Z"}
+{"event":"ack_received","request_id":"auto-mvltqpis-31","result":"APPLIED","reason":"","at":"2026-10-24T03:13:27.958Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:13:38","at":"2026-10-24T03:13:38.515Z"}
+{"event":"command_sent","request_id":"auto-mvltqy8p-32","ref":"light-32","relay":"light","payload":{"request_id":"auto-mvltqy8p-32","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:13:38.521Z"}
+{"event":"ack_received","request_id":"auto-mvltqy8p-32","result":"APPLIED","reason":"","at":"2026-10-24T03:13:41.729Z"}
+{"event":"command_result","request_id":"auto-mvltqy8p-32","ref":"light-32","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":3208,"at":"2026-10-24T03:13:41.729Z"}
+{"event":"ack_received","request_id":"auto-mvltqy8p-32","result":"APPLIED","reason":"","at":"2026-10-24T03:13:41.729Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:13:50","at":"2026-10-24T03:13:50.424Z"}
+{"event":"command_sent","request_id":"auto-mvltr7fk-33","ref":"light-33","relay":"light","payload":{"request_id":"auto-mvltr7fk-33","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:13:50.432Z"}
+{"event":"ack_received","request_id":"auto-mvltr7fk-33","result":"APPLIED","reason":"","at":"2026-10-24T03:13:52.134Z"}
+{"event":"command_result","request_id":"auto-mvltr7fk-33","ref":"light-33","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1703,"at":"2026-10-24T03:13:52.135Z"}
+{"event":"ack_received","request_id":"auto-mvltr7fk-33","result":"APPLIED","reason":"","at":"2026-10-24T03:13:52.136Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:14:05","at":"2026-10-24T03:14:05.116Z"}
+{"event":"command_sent","request_id":"auto-mvltrirp-34","ref":"light-34","relay":"light","payload":{"request_id":"auto-mvltrirp-34","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:14:05.125Z"}
+{"event":"ack_received","request_id":"auto-mvltrirp-34","result":"APPLIED","reason":"","at":"2026-10-24T03:14:06.033Z"}
+{"event":"command_result","request_id":"auto-mvltrirp-34","ref":"light-34","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":908,"at":"2026-10-24T03:14:06.033Z"}
+{"event":"ack_received","request_id":"auto-mvltrirp-34","result":"APPLIED","reason":"","at":"2026-10-24T03:14:06.034Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:14:17","at":"2026-10-24T03:14:17.329Z"}
+{"event":"command_sent","request_id":"auto-mvltrs6z-35","ref":"light-35","relay":"light","payload":{"request_id":"auto-mvltrs6z-35","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:14:17.339Z"}
+{"event":"ack_received","request_id":"auto-mvltrs6z-35","result":"APPLIED","reason":"","at":"2026-10-24T03:14:18.288Z"}
+{"event":"command_result","request_id":"auto-mvltrs6z-35","ref":"light-35","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":949,"at":"2026-10-24T03:14:18.288Z"}
+{"event":"ack_received","request_id":"auto-mvltrs6z-35","result":"APPLIED","reason":"","at":"2026-10-24T03:14:18.289Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:14:31","at":"2026-10-24T03:14:31.744Z"}
+{"event":"command_sent","request_id":"auto-mvlts3bc-36","ref":"light-36","relay":"light","payload":{"request_id":"auto-mvlts3bc-36","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:14:31.752Z"}
+{"event":"ack_received","request_id":"auto-mvlts3bc-36","result":"APPLIED","reason":"","at":"2026-10-24T03:14:33.685Z"}
+{"event":"command_result","request_id":"auto-mvlts3bc-36","ref":"light-36","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1933,"at":"2026-10-24T03:14:33.685Z"}
+{"event":"ack_received","request_id":"auto-mvlts3bc-36","result":"APPLIED","reason":"","at":"2026-10-24T03:14:33.686Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:14:44","at":"2026-10-24T03:14:44.258Z"}
+{"event":"command_sent","request_id":"auto-mvltscyz-37","ref":"light-37","relay":"light","payload":{"request_id":"auto-mvltscyz-37","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:14:44.267Z"}
+{"event":"ack_received","request_id":"auto-mvltscyz-37","result":"APPLIED","reason":"","at":"2026-10-24T03:14:46.180Z"}
+{"event":"command_result","request_id":"auto-mvltscyz-37","ref":"light-37","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1913,"at":"2026-10-24T03:14:46.180Z"}
+{"event":"ack_received","request_id":"auto-mvltscyz-37","result":"APPLIED","reason":"","at":"2026-10-24T03:14:46.182Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:14:57","at":"2026-10-24T03:14:57.479Z"}
+{"event":"command_sent","request_id":"auto-mvltsn65-38","ref":"light-38","relay":"light","payload":{"request_id":"auto-mvltsn65-38","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:14:57.485Z"}
+{"event":"ack_received","request_id":"auto-mvltsn65-38","result":"APPLIED","reason":"","at":"2026-10-24T03:14:58.446Z"}
+{"event":"command_result","request_id":"auto-mvltsn65-38","ref":"light-38","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":961,"at":"2026-10-24T03:14:58.446Z"}
+{"event":"ack_received","request_id":"auto-mvltsn65-38","result":"APPLIED","reason":"","at":"2026-10-24T03:14:58.463Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:15:08","at":"2026-10-24T03:15:08.854Z"}
+{"event":"command_sent","request_id":"auto-mvltsvy9-39","ref":"light-39","relay":"light","payload":{"request_id":"auto-mvltsvy9-39","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:15:08.865Z"}
+{"event":"ack_received","request_id":"auto-mvltsvy9-39","result":"APPLIED","reason":"","at":"2026-10-24T03:15:09.572Z"}
+{"event":"command_result","request_id":"auto-mvltsvy9-39","ref":"light-39","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":707,"at":"2026-10-24T03:15:09.572Z"}
+{"event":"ack_received","request_id":"auto-mvltsvy9-39","result":"APPLIED","reason":"","at":"2026-10-24T03:15:09.573Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:15:20","at":"2026-10-24T03:15:20.268Z"}
+{"event":"command_sent","request_id":"auto-mvltt4rc-40","ref":"light-40","relay":"light","payload":{"request_id":"auto-mvltt4rc-40","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:15:20.280Z"}
+{"event":"ack_received","request_id":"auto-mvltt4rc-40","result":"APPLIED","reason":"","at":"2026-10-24T03:15:21.154Z"}
+{"event":"command_result","request_id":"auto-mvltt4rc-40","ref":"light-40","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":875,"at":"2026-10-24T03:15:21.155Z"}
+{"event":"ack_received","request_id":"auto-mvltt4rc-40","result":"APPLIED","reason":"","at":"2026-10-24T03:15:22.211Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:15:33","at":"2026-10-24T03:15:33.678Z"}
+{"event":"command_sent","request_id":"auto-mvlttf3t-41","ref":"light-41","relay":"light","payload":{"request_id":"auto-mvlttf3t-41","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:15:33.689Z"}
+{"event":"ack_received","request_id":"auto-mvlttf3t-41","result":"APPLIED","reason":"","at":"2026-10-24T03:15:34.603Z"}
+{"event":"command_result","request_id":"auto-mvlttf3t-41","ref":"light-41","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":915,"at":"2026-10-24T03:15:34.604Z"}
+{"event":"ack_received","request_id":"auto-mvlttf3t-41","result":"APPLIED","reason":"","at":"2026-10-24T03:15:34.605Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:15:45","at":"2026-10-24T03:15:45.988Z"}
+{"event":"command_sent","request_id":"auto-mvlttolm-42","ref":"light-42","relay":"light","payload":{"request_id":"auto-mvlttolm-42","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:15:45.994Z"}
+{"event":"ack_received","request_id":"auto-mvlttolm-42","result":"APPLIED","reason":"","at":"2026-10-24T03:15:46.737Z"}
+{"event":"command_result","request_id":"auto-mvlttolm-42","ref":"light-42","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":743,"at":"2026-10-24T03:15:46.737Z"}
+{"event":"ack_received","request_id":"auto-mvlttolm-42","result":"APPLIED","reason":"","at":"2026-10-24T03:15:46.738Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:15:56","at":"2026-10-24T03:15:56.646Z"}
+{"event":"command_sent","request_id":"auto-mvlttwto-43","ref":"light-43","relay":"light","payload":{"request_id":"auto-mvlttwto-43","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:15:56.652Z"}
+{"event":"ack_received","request_id":"auto-mvlttwto-43","result":"APPLIED","reason":"","at":"2026-10-24T03:15:57.602Z"}
+{"event":"command_result","request_id":"auto-mvlttwto-43","ref":"light-43","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":950,"at":"2026-10-24T03:15:57.602Z"}
+{"event":"ack_received","request_id":"auto-mvlttwto-43","result":"APPLIED","reason":"","at":"2026-10-24T03:15:57.603Z"}
+{"event":"control_mode_changed","from":"AUTO","to":"MANUAL","user":"admin","at":"2026-10-24T03:16:14.964Z"}
+{"event":"telemetry_stale","age_s":19,"at":"2026-10-24T03:16:27.394Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:16:27.394Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 19 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":19,"at":"2026-10-24T03:16:27.394Z"},"at":"2026-10-24T03:16:27.394Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T03:16:45.589Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T03:16:45.591Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-24T03:16:45.590Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-24T03:16:45.591Z"},"at":"2026-10-24T03:16:45.591Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"OFFLINE","safe_state":null,"at":"2026-10-24T03:16:45.590Z"}
+{"event":"availability","state":"online","at":"2026-10-24T03:16:46.499Z"}
+{"event":"availability","state":"online","at":"2026-10-24T03:16:46.505Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-24T03:16:46.499Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-24T03:16:46.505Z"},"at":"2026-10-24T03:16:46.505Z"}
+{"event":"command_sent","request_id":"dash-mvltv38y-44","ref":null,"relay":"mist","payload":{"request_id":"dash-mvltv38y-44","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"admin","reason":"operator_button","at":"2026-10-24T03:16:51.634Z"}
+{"event":"ack_received","request_id":"dash-mvltv38y-44","result":"APPLIED","reason":"","at":"2026-10-24T03:16:52.530Z"}
+{"event":"command_result","request_id":"dash-mvltv38y-44","ref":null,"relay":"mist","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"admin","result":"APPLIED","reason":null,"latency_ms":897,"at":"2026-10-24T03:16:52.531Z"}
+{"event":"ack_received","request_id":"dash-mvltv38y-44","result":"APPLIED","reason":"","at":"2026-10-24T03:16:52.533Z"}
+{"event":"relay_change","relay":"mist","from":"OFF","to":"ON","at":"2026-10-24T03:16:53.198Z"}
+{"event":"relay_change","relay":"mist","from":"OFF","to":"ON","at":"2026-10-24T03:16:53.200Z"}
+{"event":"command_sent","request_id":"dash-mvltvd3k-45","ref":null,"relay":"mist","payload":{"request_id":"dash-mvltvd3k-45","mode":"MANUAL","state":"OFF","ttl_s":300},"source":"dashboard","user":"admin","reason":"operator_button","at":"2026-10-24T03:17:04.400Z"}
+{"event":"ack_received","request_id":"dash-mvltvd3k-45","result":"APPLIED","reason":"","at":"2026-10-24T03:17:05.610Z"}
+{"event":"command_result","request_id":"dash-mvltvd3k-45","ref":null,"relay":"mist","mode":"MANUAL","state":"OFF","ttl_s":300,"source":"dashboard","user":"admin","result":"APPLIED","reason":null,"latency_ms":1211,"at":"2026-10-24T03:17:05.611Z"}
+{"event":"ack_received","request_id":"dash-mvltvd3k-45","result":"APPLIED","reason":"","at":"2026-10-24T03:17:05.613Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:17:05.636Z"}
+{"event":"relay_change","relay":"mist","from":"ON","to":"OFF","at":"2026-10-24T03:17:06.045Z"}
+{"event":"relay_change","relay":"mist","from":"ON","to":"OFF","at":"2026-10-24T03:17:06.047Z"}
+{"event":"automation_skipped","rule":"fan_after_mist","reason":"dashboard_manual_mode","assists_today":0,"rule_time":"2026-10-24 10:17:06","at":"2026-10-24T03:17:06.046Z"}
+{"event":"telemetry_stale","age_s":19,"at":"2026-10-24T03:17:07.439Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 19 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":19,"at":"2026-10-24T03:17:07.440Z"},"at":"2026-10-24T03:17:07.440Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:17:08.025Z"}
+{"event":"command_sent","request_id":"dash-mvltvj8y-46","ref":null,"relay":"fan","payload":{"request_id":"dash-mvltvj8y-46","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"admin","reason":"operator_button","at":"2026-10-24T03:17:12.370Z"}
+{"event":"ack_received","request_id":"dash-mvltvj8y-46","result":"APPLIED","reason":"","at":"2026-10-24T03:17:15.053Z"}
+{"event":"command_result","request_id":"dash-mvltvj8y-46","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"admin","result":"APPLIED","reason":null,"latency_ms":2683,"at":"2026-10-24T03:17:15.053Z"}
+{"event":"ack_received","request_id":"dash-mvltvj8y-46","result":"APPLIED","reason":"","at":"2026-10-24T03:17:15.054Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-24T03:17:15.929Z"}
+{"event":"relay_change","relay":"fan","from":"OFF","to":"ON","at":"2026-10-24T03:17:15.930Z"}
+{"event":"command_sent","request_id":"dash-mvltvmzi-47","ref":null,"relay":"fan","payload":{"request_id":"dash-mvltvmzi-47","mode":"MANUAL","state":"ON","ttl_s":300},"source":"dashboard","user":"admin","reason":"operator_button","at":"2026-10-24T03:17:17.214Z"}
+{"event":"ack_received","request_id":"dash-mvltvmzi-47","result":"APPLIED","reason":"","at":"2026-10-24T03:17:19.019Z"}
+{"event":"command_result","request_id":"dash-mvltvmzi-47","ref":null,"relay":"fan","mode":"MANUAL","state":"ON","ttl_s":300,"source":"dashboard","user":"admin","result":"APPLIED","reason":null,"latency_ms":1805,"at":"2026-10-24T03:17:19.019Z"}
+{"event":"ack_received","request_id":"dash-mvltvmzi-47","result":"APPLIED","reason":"","at":"2026-10-24T03:17:19.022Z"}
+{"event":"telemetry_stale","age_s":19,"at":"2026-10-24T03:17:27.449Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:17:27.448Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 19 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":19,"at":"2026-10-24T03:17:27.449Z"},"at":"2026-10-24T03:17:27.449Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-24T03:17:30.794Z"}
+{"event":"relay_change","relay":"fan","from":"ON","to":"OFF","at":"2026-10-24T03:17:30.795Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:17:30.791Z"}
+{"event":"control_mode_changed","from":"MANUAL","to":"AUTO","user":"admin","at":"2026-10-24T03:17:34.601Z"}
+{"event":"command_sent","request_id":"dash-mvltw0eh-48","ref":null,"relay":"mist","payload":{"request_id":"dash-mvltw0eh-48","mode":"AUTO"},"source":"dashboard","user":"admin","reason":"mode_auto","at":"2026-10-24T03:17:34.601Z"}
+{"event":"command_sent","request_id":"dash-mvltw0ei-49","ref":null,"relay":"fan","payload":{"request_id":"dash-mvltw0ei-49","mode":"AUTO"},"source":"dashboard","user":"admin","reason":"mode_auto","at":"2026-10-24T03:17:34.602Z"}
+{"event":"command_sent","request_id":"dash-mvltw0ej-50","ref":null,"relay":"light","payload":{"request_id":"dash-mvltw0ej-50","mode":"AUTO"},"source":"dashboard","user":"admin","reason":"mode_auto","at":"2026-10-24T03:17:34.603Z"}
+{"event":"control_mode_changed","from":"AUTO","to":"MANUAL","user":"admin","at":"2026-10-24T03:17:35.659Z"}
+{"event":"ack_received","request_id":"dash-mvltw0eh-48","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:17:36.068Z"}
+{"event":"command_result","request_id":"dash-mvltw0eh-48","ref":null,"relay":"mist","mode":"AUTO","source":"dashboard","user":"admin","result":"APPLIED","reason":"AUTO","latency_ms":1468,"at":"2026-10-24T03:17:36.069Z"}
+{"event":"ack_received","request_id":"dash-mvltw0eh-48","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:17:36.074Z"}
+{"event":"ack_received","request_id":"dash-mvltw0ei-49","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:17:36.669Z"}
+{"event":"command_result","request_id":"dash-mvltw0ei-49","ref":null,"relay":"fan","mode":"AUTO","source":"dashboard","user":"admin","result":"APPLIED","reason":"AUTO","latency_ms":2067,"at":"2026-10-24T03:17:36.669Z"}
+{"event":"ack_received","request_id":"dash-mvltw0ei-49","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:17:36.673Z"}
+{"event":"ack_received","request_id":"dash-mvltw0ej-50","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:17:37.302Z"}
+{"event":"command_result","request_id":"dash-mvltw0ej-50","ref":null,"relay":"light","mode":"AUTO","source":"dashboard","user":"admin","result":"APPLIED","reason":"AUTO","latency_ms":2699,"at":"2026-10-24T03:17:37.302Z"}
+{"event":"ack_received","request_id":"dash-mvltw0ej-50","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:17:37.304Z"}
+{"event":"telemetry_stale","age_s":16,"at":"2026-10-24T03:17:47.470Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:17:47.470Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 16 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":16,"at":"2026-10-24T03:17:47.471Z"},"at":"2026-10-24T03:17:47.471Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:17:52.869Z"}
+{"event":"telemetry_stale","age_s":19,"at":"2026-10-24T03:18:12.504Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:18:12.503Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 19 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":19,"at":"2026-10-24T03:18:12.504Z"},"at":"2026-10-24T03:18:12.504Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:18:20.596Z"}
+{"event":"telemetry_stale","age_s":16,"at":"2026-10-24T03:18:37.542Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:18:37.541Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 16 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":16,"at":"2026-10-24T03:18:37.542Z"},"at":"2026-10-24T03:18:37.542Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:18:47.273Z"}
+{"event":"telemetry_stale","age_s":15,"at":"2026-10-24T03:19:02.568Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:19:02.568Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 15 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":15,"at":"2026-10-24T03:19:02.568Z"},"at":"2026-10-24T03:19:02.568Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:19:08.526Z"}
+{"event":"control_mode_changed","from":"MANUAL","to":"AUTO","user":"admin","at":"2026-10-24T03:19:21.381Z"}
+{"event":"command_sent","request_id":"dash-mvltyasm-51","ref":null,"relay":"mist","payload":{"request_id":"dash-mvltyasm-51","mode":"AUTO"},"source":"dashboard","user":"admin","reason":"mode_auto","at":"2026-10-24T03:19:21.382Z"}
+{"event":"command_sent","request_id":"dash-mvltyasn-52","ref":null,"relay":"fan","payload":{"request_id":"dash-mvltyasn-52","mode":"AUTO"},"source":"dashboard","user":"admin","reason":"mode_auto","at":"2026-10-24T03:19:21.383Z"}
+{"event":"command_sent","request_id":"dash-mvltyaso-53","ref":null,"relay":"light","payload":{"request_id":"dash-mvltyaso-53","mode":"AUTO"},"source":"dashboard","user":"admin","reason":"mode_auto","at":"2026-10-24T03:19:21.384Z"}
+{"event":"ack_received","request_id":"dash-mvltyasm-51","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:19:22.188Z"}
+{"event":"command_result","request_id":"dash-mvltyasm-51","ref":null,"relay":"mist","mode":"AUTO","source":"dashboard","user":"admin","result":"APPLIED","reason":"AUTO","latency_ms":807,"at":"2026-10-24T03:19:22.189Z"}
+{"event":"ack_received","request_id":"dash-mvltyasm-51","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:19:22.191Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"desired_changed","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:19:22","at":"2026-10-24T03:19:22.220Z"}
+{"event":"command_result","request_id":null,"ref":"light-44","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"BLOCKED","reason":"BUSY","at":"2026-10-24T03:19:22.228Z"}
+{"event":"ack_received","request_id":"dash-mvltyasn-52","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:19:23.169Z"}
+{"event":"command_result","request_id":"dash-mvltyasn-52","ref":null,"relay":"fan","mode":"AUTO","source":"dashboard","user":"admin","result":"APPLIED","reason":"AUTO","latency_ms":1787,"at":"2026-10-24T03:19:23.170Z"}
+{"event":"ack_received","request_id":"dash-mvltyasn-52","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:19:23.171Z"}
+{"event":"ack_received","request_id":"dash-mvltyaso-53","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:19:23.892Z"}
+{"event":"command_result","request_id":"dash-mvltyaso-53","ref":null,"relay":"light","mode":"AUTO","source":"dashboard","user":"admin","result":"APPLIED","reason":"AUTO","latency_ms":2509,"at":"2026-10-24T03:19:23.893Z"}
+{"event":"ack_received","request_id":"dash-mvltyaso-53","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:19:23.896Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:19:23.898Z"}
+{"event":"telemetry_stale","age_s":19,"at":"2026-10-24T03:19:27.607Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 19 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":19,"at":"2026-10-24T03:19:27.608Z"},"at":"2026-10-24T03:19:27.608Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"desired_changed","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:19:31","at":"2026-10-24T03:19:31.053Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:19:31.053Z"}
+{"event":"command_sent","request_id":"auto-mvltyias-54","ref":"light-45","relay":"light","payload":{"request_id":"auto-mvltyias-54","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:19:31.108Z"}
+{"event":"ack_received","request_id":"auto-mvltyias-54","result":"APPLIED","reason":"","at":"2026-10-24T03:19:32.485Z"}
+{"event":"command_result","request_id":"auto-mvltyias-54","ref":"light-45","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1378,"at":"2026-10-24T03:19:32.486Z"}
+{"event":"ack_received","request_id":"auto-mvltyias-54","result":"APPLIED","reason":"","at":"2026-10-24T03:19:32.487Z"}
+{"event":"telemetry_stale","age_s":16,"at":"2026-10-24T03:19:47.628Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:19:47.628Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 16 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":16,"at":"2026-10-24T03:19:47.628Z"},"at":"2026-10-24T03:19:47.628Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:19:52.371Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:19:52","at":"2026-10-24T03:19:52.830Z"}
+{"event":"command_sent","request_id":"auto-mvltyz2a-55","ref":"light-46","relay":"light","payload":{"request_id":"auto-mvltyz2a-55","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:19:52.834Z"}
+{"event":"ack_received","request_id":"auto-mvltyz2a-55","result":"APPLIED","reason":"","at":"2026-10-24T03:19:53.926Z"}
+{"event":"command_result","request_id":"auto-mvltyz2a-55","ref":"light-46","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1092,"at":"2026-10-24T03:19:53.926Z"}
+{"event":"ack_received","request_id":"auto-mvltyz2a-55","result":"APPLIED","reason":"","at":"2026-10-24T03:19:53.927Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:20:05","at":"2026-10-24T03:20:05.712Z"}
+{"event":"command_sent","request_id":"auto-mvltz909-56","ref":"light-47","relay":"light","payload":{"request_id":"auto-mvltz909-56","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:20:05.721Z"}
+{"event":"ack_received","request_id":"auto-mvltz909-56","result":"APPLIED","reason":"","at":"2026-10-24T03:20:06.390Z"}
+{"event":"command_result","request_id":"auto-mvltz909-56","ref":"light-47","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":669,"at":"2026-10-24T03:20:06.390Z"}
+{"event":"ack_received","request_id":"auto-mvltz909-56","result":"APPLIED","reason":"","at":"2026-10-24T03:20:06.393Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:20:20","at":"2026-10-24T03:20:20.500Z"}
+{"event":"command_sent","request_id":"auto-mvltzkf1-57","ref":"light-48","relay":"light","payload":{"request_id":"auto-mvltzkf1-57","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:20:20.509Z"}
+{"event":"ack_received","request_id":"auto-mvltzkf1-57","result":"APPLIED","reason":"","at":"2026-10-24T03:20:21.250Z"}
+{"event":"command_result","request_id":"auto-mvltzkf1-57","ref":"light-48","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":741,"at":"2026-10-24T03:20:21.250Z"}
+{"event":"ack_received","request_id":"auto-mvltzkf1-57","result":"APPLIED","reason":"","at":"2026-10-24T03:20:21.250Z"}
+{"event":"telemetry_stale","age_s":17,"at":"2026-10-24T03:20:37.700Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:20:37.700Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 17 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":17,"at":"2026-10-24T03:20:37.701Z"},"at":"2026-10-24T03:20:37.701Z"}
+{"event":"water_lockout","water_adc":656,"threshold":1200,"at":"2026-10-24T03:20:44.493Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:20:44.493Z"}
+{"event":"system_alert","alert":{"type":"WATER_LOW","severity":"CRITICAL","title":"CẢNH BÁO CẠN NƯỚC","message":"Mực nước bình chứa đang ở mức THẤP (ADC: 656 < 1200)! Phun sương bị khóa an toàn (WATER_LOCKOUT).","water_adc":656,"at":"2026-10-24T03:20:44.493Z"},"at":"2026-10-24T03:20:44.493Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:20:44","at":"2026-10-24T03:20:44.837Z"}
+{"event":"command_sent","request_id":"auto-mvlu036y-58","ref":"light-49","relay":"light","payload":{"request_id":"auto-mvlu036y-58","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:20:44.842Z"}
+{"event":"ack_received","request_id":"auto-mvlu036y-58","result":"APPLIED","reason":"","at":"2026-10-24T03:20:46.075Z"}
+{"event":"command_result","request_id":"auto-mvlu036y-58","ref":"light-49","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1233,"at":"2026-10-24T03:20:46.075Z"}
+{"event":"ack_received","request_id":"auto-mvlu036y-58","result":"APPLIED","reason":"","at":"2026-10-24T03:20:46.076Z"}
+{"event":"telemetry_stale","age_s":87,"at":"2026-10-24T03:22:12.277Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:22:12.277Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 87 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":87,"at":"2026-10-24T03:22:12.278Z"},"at":"2026-10-24T03:22:12.278Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T03:22:12.360Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T03:22:12.361Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-24T03:22:12.361Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-24T03:22:12.361Z"},"at":"2026-10-24T03:22:12.361Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"OFFLINE","safe_state":null,"at":"2026-10-24T03:22:12.361Z"}
+{"event":"availability","state":"online","at":"2026-10-24T03:22:17.100Z"}
+{"event":"availability","state":"online","at":"2026-10-24T03:22:17.101Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-24T03:22:17.101Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-24T03:22:17.101Z"},"at":"2026-10-24T03:22:17.101Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T03:22:28.102Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T03:22:28.103Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-24T03:22:28.102Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-24T03:22:28.103Z"},"at":"2026-10-24T03:22:28.103Z"}
+{"event":"device_offline","at":"2026-10-24T03:22:32.536Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-24T03:22:32.536Z"},"at":"2026-10-24T03:22:32.536Z"}
+{"event":"device_offline_over_5m","duration_s":388,"at":"2026-10-24T03:28:56.731Z"}
+{"event":"system_alert","alert":{"type":"OFFLINE_5MIN","severity":"CRITICAL","title":"BÁO ĐỘNG KHẨN CẤP: MẤT KẾT NỐI QUÁ 5 PHÚT","message":"Thiết bị ESP32 (orchid-01) đã mất kết nối liên tục hơn 5 phút. Vui lòng kiểm tra trạm ngay lập tức!","at":"2026-10-24T03:28:56.732Z"},"at":"2026-10-24T03:28:56.732Z"}
+{"event":"availability","state":"online","at":"2026-10-24T03:32:47.422Z"}
+{"event":"availability","state":"online","at":"2026-10-24T03:32:47.423Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-24T03:32:47.422Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-24T03:32:47.423Z"},"at":"2026-10-24T03:32:47.423Z"}
+{"event":"water_recovered","water_adc":3282,"threshold":1500,"at":"2026-10-24T03:32:48.247Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:32:48","at":"2026-10-24T03:32:48.246Z"}
+{"event":"system_alert","alert":{"type":"WATER_REFILLED","severity":"INFO","title":"MỰC NƯỚC ĐÃ PHỤC HỒI","message":"Bình chứa đã được châm nước đầy (ADC: 3282). Hệ thống sẵn sàng hoạt động trở lại.","at":"2026-10-24T03:32:48.247Z"},"at":"2026-10-24T03:32:48.247Z"}
+{"event":"command_sent","request_id":"auto-mvlufle3-59","ref":"light-50","relay":"light","payload":{"request_id":"auto-mvlufle3-59","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:32:48.267Z"}
+{"event":"ack_received","request_id":"auto-mvlufmli-1","result":"APPLIED","reason":"","at":"2026-10-24T03:32:48.923Z"}
+{"event":"ack_received","request_id":"auto-mvlufmli-1","result":"APPLIED","reason":"","at":"2026-10-24T03:32:48.924Z"}
+{"event":"ack_received","request_id":"auto-mvlufle3-59","result":"APPLIED","reason":"","at":"2026-10-24T03:32:49.501Z"}
+{"event":"command_result","request_id":"auto-mvlufle3-59","ref":"light-50","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1234,"at":"2026-10-24T03:32:49.501Z"}
+{"event":"ack_received","request_id":"auto-mvlufle3-59","result":"APPLIED","reason":"","at":"2026-10-24T03:32:49.502Z"}
+{"event":"ack_received","request_id":"dash-mvlug29z-2","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:33:08.959Z"}
+{"event":"ack_received","request_id":"dash-mvlug29z-2","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:33:08.960Z"}
+{"event":"ack_received","request_id":"dash-mvlug29z-3","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:33:09.741Z"}
+{"event":"ack_received","request_id":"dash-mvlug29z-3","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:33:09.742Z"}
+{"event":"ack_received","request_id":"dash-mvlug2a0-4","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:33:09.916Z"}
+{"event":"ack_received","request_id":"dash-mvlug2a0-4","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:33:09.917Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:33:10","at":"2026-10-24T03:33:10.644Z"}
+{"event":"command_sent","request_id":"auto-mvlug2nu-60","ref":"light-51","relay":"light","payload":{"request_id":"auto-mvlug2nu-60","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:33:10.650Z"}
+{"event":"ack_received","request_id":"auto-mvlug2nu-60","result":"APPLIED","reason":"","at":"2026-10-24T03:33:12.475Z"}
+{"event":"command_result","request_id":"auto-mvlug2nu-60","ref":"light-51","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1825,"at":"2026-10-24T03:33:12.475Z"}
+{"event":"ack_received","request_id":"auto-mvlug2nu-60","result":"APPLIED","reason":"","at":"2026-10-24T03:33:12.475Z"}
+{"event":"ack_received","request_id":"dash-mvlug55f-5","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:33:14.034Z"}
+{"event":"ack_received","request_id":"dash-mvlug55f-5","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:33:14.290Z"}
+{"event":"ack_received","request_id":"dash-mvlug55g-6","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:33:14.291Z"}
+{"event":"ack_received","request_id":"dash-mvlug55g-6","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:33:14.291Z"}
+{"event":"ack_received","request_id":"dash-mvlug55g-7","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:33:14.292Z"}
+{"event":"ack_received","request_id":"dash-mvlug55g-7","result":"APPLIED","reason":"AUTO","at":"2026-10-24T03:33:14.292Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:33:15","at":"2026-10-24T03:33:15.778Z"}
+{"event":"command_sent","request_id":"auto-mvlug6mf-61","ref":"light-52","relay":"light","payload":{"request_id":"auto-mvlug6mf-61","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:33:15.783Z"}
+{"event":"ack_received","request_id":"auto-mvlug6vx-8","result":"APPLIED","reason":"","at":"2026-10-24T03:33:16.484Z"}
+{"event":"ack_received","request_id":"auto-mvlug6vx-8","result":"APPLIED","reason":"","at":"2026-10-24T03:33:16.747Z"}
+{"event":"ack_received","request_id":"auto-mvlug6mf-61","result":"APPLIED","reason":"","at":"2026-10-24T03:33:16.803Z"}
+{"event":"command_result","request_id":"auto-mvlug6mf-61","ref":"light-52","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":1021,"at":"2026-10-24T03:33:16.804Z"}
+{"event":"ack_received","request_id":"auto-mvlug6mf-61","result":"APPLIED","reason":"","at":"2026-10-24T03:33:17.634Z"}
+{"event":"ack_received","request_id":"auto-mvlugc0m-9","result":"APPLIED","reason":"","at":"2026-10-24T03:33:21.702Z"}
+{"event":"ack_received","request_id":"auto-mvlugc0m-9","result":"APPLIED","reason":"","at":"2026-10-24T03:33:21.702Z"}
+{"event":"telemetry_stale","age_s":85,"at":"2026-10-24T03:35:48.184Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:35:48.184Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 85 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":85,"at":"2026-10-24T03:35:48.184Z"},"at":"2026-10-24T03:35:48.184Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T03:36:25.123Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T03:36:25.124Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-24T03:36:25.123Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-24T03:36:25.124Z"},"at":"2026-10-24T03:36:25.124Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"OFFLINE","safe_state":null,"at":"2026-10-24T03:36:25.123Z"}
+{"event":"device_offline","at":"2026-10-24T03:36:28.289Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-24T03:36:28.289Z"},"at":"2026-10-24T03:36:28.289Z"}
+{"event":"availability","state":"online","at":"2026-10-24T03:36:40.130Z"}
+{"event":"availability","state":"online","at":"2026-10-24T03:36:40.130Z"}
+{"event":"fault_cleared","fault":"link_offline","severity":"fault","connection":"WAITING","safe_state":null,"at":"2026-10-24T03:36:40.130Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_ONLINE","severity":"INFO","title":"ESP32 ĐÃ KẾT NỐI LẠI","message":"Trạm giám sát orchid-01 đã trực tuyến và bắt đầu truyền dữ liệu.","at":"2026-10-24T03:36:40.130Z"},"at":"2026-10-24T03:36:40.130Z"}
+{"event":"automation_action","rule":"light_schedule","action":"OFF","reason":"bright_enough","trigger":"override_lost","ttl_s":900,"light_adc":1410,"on_today_min":0,"rule_time":"2026-10-24 10:36:42","at":"2026-10-24T03:36:42.385Z"}
+{"event":"command_sent","request_id":"auto-mvlukm1n-62","ref":"light-53","relay":"light","payload":{"request_id":"auto-mvlukm1n-62","mode":"MANUAL","state":"OFF","ttl_s":900},"source":"automation:light_schedule","user":null,"reason":"bright_enough","at":"2026-10-24T03:36:42.395Z"}
+{"event":"ack_received","request_id":"auto-mvlukmsz-10","result":"APPLIED","reason":"","at":"2026-10-24T03:36:42.855Z"}
+{"event":"ack_received","request_id":"auto-mvlukmsz-10","result":"APPLIED","reason":"","at":"2026-10-24T03:36:42.855Z"}
+{"event":"ack_received","request_id":"auto-mvlukm1n-62","result":"APPLIED","reason":"","at":"2026-10-24T03:36:43.245Z"}
+{"event":"command_result","request_id":"auto-mvlukm1n-62","ref":"light-53","relay":"light","mode":"MANUAL","state":"OFF","ttl_s":900,"source":"automation:light_schedule","user":null,"result":"APPLIED","reason":null,"latency_ms":850,"at":"2026-10-24T03:36:43.245Z"}
+{"event":"ack_received","request_id":"auto-mvlukm1n-62","result":"APPLIED","reason":"","at":"2026-10-24T03:36:43.245Z"}
+{"event":"telemetry_stale","age_s":41,"at":"2026-10-24T03:39:58.767Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:39:58.767Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 41 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":41,"at":"2026-10-24T03:39:58.768Z"},"at":"2026-10-24T03:39:58.768Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:40:00.320Z"}
+{"event":"telemetry_stale","age_s":74,"at":"2026-10-24T03:42:00.293Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T03:42:00.293Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 74 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":74,"at":"2026-10-24T03:42:00.293Z"},"at":"2026-10-24T03:42:00.293Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"ONLINE","safe_state":null,"at":"2026-10-24T03:42:11.364Z"}
+{"event":"telemetry_stale","age_s":3501,"at":"2026-10-24T04:41:26.960Z"}
+{"event":"fault_active","fault":"telemetry_stale","severity":"warning","connection":"STALE","safe_state":"No telemetry for >15 s: dashboard commands blocked; values on screen are old","at":"2026-10-24T04:41:26.959Z"}
+{"event":"system_alert","alert":{"type":"TELEMETRY_STALE","severity":"WARNING","title":"DỮ LIỆU TELEMETRY QUÁ HẠN","message":"Đã hơn 3501 giây không nhận được dữ liệu cảm biến mới từ trạm.","age_s":3501,"at":"2026-10-24T04:41:26.960Z"},"at":"2026-10-24T04:41:26.960Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T04:41:34.455Z"}
+{"event":"availability","state":"offline","at":"2026-10-24T04:41:34.456Z"}
+{"event":"fault_active","fault":"link_offline","severity":"fault","connection":"OFFLINE","safe_state":"Device offline (LWT): firmware cleared manual overrides and runs local AUTO with safety limits; dashboard commands blocked","at":"2026-10-24T04:41:34.455Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI ESP32 (OFFLINE)","message":"Broker nhận bản tin Last Will: ESP32 orchid-01 đã ngắt kết nối đột ngột!","at":"2026-10-24T04:41:34.456Z"},"at":"2026-10-24T04:41:34.456Z"}
+{"event":"fault_cleared","fault":"telemetry_stale","severity":"warning","connection":"OFFLINE","safe_state":null,"at":"2026-10-24T04:41:34.455Z"}
+{"event":"device_offline","at":"2026-10-24T04:41:36.995Z"}
+{"event":"system_alert","alert":{"type":"DEVICE_OFFLINE","severity":"CRITICAL","title":"MẤT KẾT NỐI THIẾT BỊ","message":"Trạng thái MQTT: ESP32 orchid-01 đang offline!","at":"2026-10-24T04:41:36.995Z"},"at":"2026-10-24T04:41:36.995Z"}
+{"event":"device_offline_over_5m","duration_s":304,"at":"2026-10-24T04:46:38.555Z"}
+{"event":"system_alert","alert":{"type":"OFFLINE_5MIN","severity":"CRITICAL","title":"BÁO ĐỘNG KHẨN CẤP: MẤT KẾT NỐI QUÁ 5 PHÚT","message":"Thiết bị ESP32 (orchid-01) đã mất kết nối liên tục hơn 5 phút. Vui lòng kiểm tra trạm ngay lập tức!","at":"2026-10-24T04:50:01.257Z"},"at":"2026-10-24T04:50:01.257Z"}
+{"event":"rule_config_loaded","version":1,"clock":{"speed":1,"start_local":""},"rule_time":"2026-11-26T04:14:43.403Z","at":"2026-11-26T04:14:43.402Z"}
+{"event":"care_window_changed","rule":"night_mist_policy","phase":"CARE_WINDOW","auto_mist":"ALLOWED","care_window":"06:00-18:00","rule_time":"2026-11-26 11:14:44","at":"2026-11-26T04:14:44.904Z"}
+{"event":"rule_config_loaded","version":1,"clock":{"speed":1,"start_local":""},"rule_time":"2026-11-26T04:22:30.755Z","at":"2026-11-26T04:22:30.755Z"}
+{"event":"care_window_changed","rule":"night_mist_policy","phase":"CARE_WINDOW","auto_mist":"ALLOWED","care_window":"06:00-18:00","rule_time":"2026-11-26 11:22:32","at":"2026-11-26T04:22:32.253Z"}

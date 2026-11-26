@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <DHT.h>
-#include <SPI.h>
+#include <Wire.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_ST7789.h>
+#include <Adafruit_SSD1306.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
@@ -23,6 +23,12 @@
 #define ORCHID_DEVICE_ID "orchid-01"
 #endif
 
+// ============================================================================
+// TUẦN 1 & 2: CẤU HÌNH PHẦN CỨNG & SƠ ĐỒ CHÂN I/O (ESP32-S3 PHYSICAL)
+// - Cảm biến: DHT22 (GPIO4), LDR Ánh sáng (GPIO1), Cảm biến mực nước (GPIO2)
+// - Relay chấp hành: Đèn (GPIO5), Quạt (GPIO6), Bơm phun sương (GPIO7)
+// - Màn hình OLED SSD1306 128x64 I2C: SDA (GPIO8), SCL (GPIO9)
+// ============================================================================
 namespace Pins {
 constexpr uint8_t dht = 4;
 constexpr uint8_t ldr = 1;
@@ -30,27 +36,41 @@ constexpr uint8_t water = 2;
 constexpr uint8_t lightRelay = 5;
 constexpr uint8_t fanRelay = 6;
 constexpr uint8_t mistRelay = 7;
-constexpr uint8_t displaySck = 12;
-constexpr uint8_t displayMosi = 11;
-constexpr uint8_t displayCs = 10;
-constexpr uint8_t displayDc = 9;
-constexpr uint8_t displayRst = 8;
+constexpr uint8_t oledSda = 8;
+constexpr uint8_t oledScl = 9;
 }
 
+// ============================================================================
+// TUẦN 3 & TUẦN 7: NGƯỠNG ĐIỀU KHIỂN & CẤU HÌNH ĐỘNG (DYNAMIC THRESHOLDS)
+// - Tuần 3: Các ngưỡng hysteresis cơ bản (RH 65/80%, Temp 33/31°C, LDR 2200/1800, Water 1200/1500)
+// - Tuần 7: Chuyển sang biến động để Node-RED có thể điều chỉnh qua MQTT topic /config
+// ============================================================================
 namespace Thresholds {
-constexpr float mistHumidityOn = 65.0f;
-constexpr float mistHumidityOff = 80.0f;
-constexpr float fanTemperatureOn = 33.0f;
-constexpr float fanTemperatureOff = 31.0f;
-constexpr float fanHumidityOn = 90.0f;
-constexpr float fanHumidityOff = 85.0f;
-constexpr int lightOnAdc = 2200;
-constexpr int lightOffAdc = 1800;
-constexpr int waterLowAdc = 1200;
-constexpr int waterRefilledAdc = 1500;
+float mistHumidityOn = 65.0f;
+float mistHumidityOff = 80.0f;
+float fanTemperatureOn = 33.0f;
+float fanTemperatureOff = 31.0f;
+float fanHumidityOn = 90.0f;
+float fanHumidityOff = 85.0f;
+int lightOnAdc = 2200;
+int lightOffAdc = 1800;
+// [TAM THOI BO QUA RULE MUC NUOC DE TEST PHAN CUNG]
+int waterLowAdc = 0;        // Goc: 1200
+int waterRefilledAdc = 0;   // Goc: 1500
 constexpr unsigned long maxMistDurationMs = 120000UL;
 constexpr unsigned long mistCooldownMs = 60000UL;
+constexpr unsigned long maxAutoLightOnMs = 4UL * 60UL * 60UL * 1000UL;
 constexpr unsigned long sampleIntervalMs = 2500UL;
+}
+
+// ============================================================================
+// TUẦN 3 & TUẦN 7: BẢO VỆ AN TOÀN & LỌC NHIỄU CẢM BIẾN (SAFETY & FILTERING)
+// - 3 lần đọc DHT lỗi liên tiếp (~7.5s) -> SENSOR_FAULT: không phun AUTO, từ chối lệnh phun
+// - rejectSpike(): Lọc loại bỏ mẫu nhảy vọt đột biến (chống xung nhiễu)
+// - RunningAverage: Bộ lọc trung bình trượt cửa sổ 5 mẫu làm mượt dữ liệu
+// ============================================================================
+namespace Safety {
+constexpr uint8_t dhtFaultAfterFailures = 3;
 }
 
 namespace Filtering {
@@ -61,6 +81,11 @@ constexpr int maxAdcJump = 1200;
 constexpr uint8_t maxConsecutiveRejects = 3;
 }
 
+// ============================================================================
+// TUẦN 4: THÔNG SỐ KẾT NỐI MẠNG WI-FI & MQTT BROKER
+// - Broker công khai: broker.emqx.io:1883
+// - Thời gian thử lại kết nối, timeout và kích thước bộ đệm lệnh
+// ============================================================================
 namespace NetworkConfig {
 constexpr char brokerHost[] = "broker.emqx.io";
 constexpr uint16_t brokerPort = 1883;
@@ -68,17 +93,24 @@ constexpr unsigned long wifiRetryIntervalMs = 10000UL;
 constexpr unsigned long mqttRetryIntervalMs = 5000UL;
 constexpr uint32_t maxManualTtlSeconds = 3600;
 constexpr size_t commandBufferSize = 256;
+constexpr size_t mqttPacketBufferSize = 512;
 }
 
+// ============================================================================
+// TUẦN 2: CẤU HÌNH HIỂN THỊ MÀN HÌNH OLED SSD1306 (128x64 I2C)
+// ============================================================================
 namespace DisplayConfig {
-constexpr uint16_t width = 240;
-constexpr uint16_t height = 240;
-constexpr int16_t valueX = 108;
-constexpr uint16_t valueWidth = width - valueX - 4;
-constexpr int16_t firstRowY = 34;
-constexpr int16_t rowHeight = 28;
+constexpr uint16_t width = 128;
+constexpr uint16_t height = 64;
+constexpr uint8_t i2cAddress = 0x3C;
+constexpr int16_t labelWidth = 42;
+constexpr int16_t firstRowY = 10;
+constexpr int16_t rowHeight = 8;
 }
 
+// ============================================================================
+// TUẦN 3: BỘ LỌC TÍN HIỆU & KHỞI TẠO ĐỐI TƯỢNG PHẦN CỨNG
+// ============================================================================
 struct FilteredSensors {
   float temperatureRaw = NAN;
   float temperature = 0;
@@ -111,11 +143,11 @@ struct RunningAverage {
   }
 };
 
-enum class MistState : uint8_t { Idle, Running, Cooldown, WaterLockout };
+enum class MistState : uint8_t { Idle, Running, Cooldown, WaterLockout, SensorFault };
 enum class SwitchState : uint8_t { Off, On };
 
 DHT dhtSensor(Pins::dht, DHT22);
-Adafruit_ST7789 display(&SPI, Pins::displayCs, Pins::displayDc, Pins::displayRst);
+Adafruit_SSD1306 display(DisplayConfig::width, DisplayConfig::height, &Wire, -1);
 RunningAverage<float> temperatureFilter;
 RunningAverage<float> humidityFilter;
 RunningAverage<int> lightFilter;
@@ -125,11 +157,21 @@ SwitchState fanState = SwitchState::Off;
 SwitchState lightState = SwitchState::Off;
 unsigned long mistStateSince = 0;
 unsigned long lastSampleAt = 0;
+unsigned long lightOnSince = 0;
+bool lightWaitingForDaylight = false;
+uint8_t dhtFailStreak = 0;
+bool dhtFault = false;
 uint8_t temperatureRejects = 0;
 uint8_t humidityRejects = 0;
 uint8_t lightRejects = 0;
 uint8_t waterRejects = 0;
 
+
+// ============================================================================
+// TUẦN 6: ĐIỀU KHIỂN TỪ XA AN TOÀN & GHI ĐÈ THỦ CÔNG (NGƯỜI 3)
+// - Quản lý chế độ ghi đè thủ công (MANUAL Override) kèm thời gian sống (TTL)
+// - anyManualOverride(): Kiểm tra xem có thiết bị nào đang bị can thiệp tay không
+// ============================================================================
 struct RelayOverride {
   bool active = false;
   bool on = false;
@@ -140,6 +182,15 @@ struct RelayOverride {
 RelayOverride mistOverride;
 RelayOverride fanOverride;
 RelayOverride lightOverride;
+
+bool anyManualOverride() {
+  return mistOverride.active || fanOverride.active || lightOverride.active;
+}
+
+// ============================================================================
+// TUẦN 4: ĐỊA CHỈ TOPIC MQTT (UPLINK & DOWNLINK)
+// - Telemetry, State, Availability, Command topics, ACK, Config
+// ============================================================================
 WiFiClient networkSocket;
 PubSubClient mqttClient(networkSocket);
 char telemetryTopic[96];
@@ -147,6 +198,7 @@ char stateTopic[96];
 char availabilityTopic[96];
 char commandTopics[3][96];
 char ackTopic[96];
+char configTopic[96];
 unsigned long lastWifiAttemptAt = 0;
 unsigned long lastMqttAttemptAt = 0;
 int latestWaterAdc = 0;
@@ -157,76 +209,129 @@ bool mistRelayOn = false;
 bool fanRelayOn = false;
 bool lightRelayOn = false;
 
-void drawDisplayValue(uint8_t row, const char* value, uint16_t color = ST77XX_CYAN) {
-  const int16_t y = DisplayConfig::firstRowY + row * DisplayConfig::rowHeight;
-  display.fillRect(DisplayConfig::valueX, y, DisplayConfig::valueWidth, 20, ST77XX_BLACK);
-  display.setTextColor(color, ST77XX_BLACK);
-  display.setCursor(DisplayConfig::valueX, y);
-  display.print(value);
+const char* overrideModeName(const RelayOverride& relayOverride) {
+  return relayOverride.active ? "MANUAL" : "AUTO";
 }
 
-void initializeDisplay() {
-  SPI.begin(Pins::displaySck, -1, Pins::displayMosi, Pins::displayCs);
-  display.init(DisplayConfig::width, DisplayConfig::height);
-  display.setRotation(0);
-  display.fillScreen(ST77XX_BLACK);
-  display.setTextSize(2);
-  display.setTextWrap(false);
-  display.setTextColor(ST77XX_YELLOW, ST77XX_BLACK);
-  display.setCursor(8, 8);
-  display.print("ORCHID GARDEN");
-  display.drawFastHLine(8, 28, DisplayConfig::width - 16, ST77XX_BLUE);
-
-  const char* labels[] = {"TEMP", "HUM", "LDR", "WATER", "MIST", "FAN", "LIGHT"};
-  for (uint8_t row = 0; row < sizeof(labels) / sizeof(labels[0]); row++) {
-    display.setTextColor(ST77XX_WHITE, ST77XX_BLACK);
-    display.setCursor(8, DisplayConfig::firstRowY + row * DisplayConfig::rowHeight);
-    display.print(labels[row]);
-  }
+bool waterLockoutActive() {
+  return mistState == MistState::WaterLockout ||
+      (latestWaterValid && latestWaterAdc < Thresholds::waterLowAdc);
 }
 
 const char* displayMistState(MistState state) {
   switch (state) {
     case MistState::Idle: return "IDLE";
-    case MistState::Running: return "RUNNING";
-    case MistState::Cooldown: return "COOLDOWN";
-    case MistState::WaterLockout: return "LOW WATER";
+    case MistState::Running: return "RUN";
+    case MistState::Cooldown: return "COOL";
+    case MistState::WaterLockout: return "LOCK";
+    case MistState::SensorFault: return "FLT";
   }
-  return "UNKNOWN";
+  return "?";
+}
+
+
+// ============================================================================
+// TUẦN 2: KHỞI TẠO VÀ CẬP NHẬT GIAO DIỆN MÀN HÌNH OLED SSD1306
+// - initializeDisplay(): Cấu hình I2C và vẽ logo khởi động
+// - updateDisplay(): Hiển thị Nhiệt độ, Độ ẩm, Quang trở, Mực nước, Trạng thái bơm/quạt/đèn và Chế độ AUTO/MANUAL
+// ============================================================================
+void initializeDisplay() {
+  Wire.begin(Pins::oledSda, Pins::oledScl);
+  if (!display.begin(SSD1306_SWITCHCAPVCC, DisplayConfig::i2cAddress)) {
+    Serial.println("ERROR: SSD1306 not found; check wiring");
+    return;
+  }
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(16, 0);
+  display.print("ORCHID GARDEN");
+  display.drawFastHLine(0, DisplayConfig::firstRowY - 2, DisplayConfig::width, SSD1306_WHITE);
+  display.display();
 }
 
 void updateDisplay(const FilteredSensors& sensors) {
-  char value[20];
-  if (sensors.dhtValid) {
-    snprintf(value, sizeof(value), "%.1f C", sensors.temperature);
-  } else {
-    snprintf(value, sizeof(value), "DHT ERROR");
-  }
-  drawDisplayValue(0, value, sensors.dhtValid ? ST77XX_CYAN : ST77XX_RED);
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
 
-  if (sensors.dhtValid) {
-    snprintf(value, sizeof(value), "%.1f %%", sensors.humidity);
-  } else {
-    snprintf(value, sizeof(value), "DHT ERROR");
-  }
-  drawDisplayValue(1, value, sensors.dhtValid ? ST77XX_CYAN : ST77XX_RED);
+  // Title
+  display.setCursor(16, 0);
+  display.print("ORCHID GARDEN");
+  display.drawFastHLine(0, DisplayConfig::firstRowY - 2, DisplayConfig::width, SSD1306_WHITE);
 
-  snprintf(value, sizeof(value), "%d", sensors.lightFiltered);
-  drawDisplayValue(2, value);
-  snprintf(value, sizeof(value), "%d", sensors.waterFiltered);
-  drawDisplayValue(3, value);
-  drawDisplayValue(4, mistRelayOn ? "ON" : displayMistState(mistState),
-                   mistRelayOn ? ST77XX_GREEN : ST77XX_CYAN);
-  drawDisplayValue(5, fanRelayOn ? "ON" : "OFF",
-                   fanRelayOn ? ST77XX_GREEN : ST77XX_CYAN);
-  drawDisplayValue(6, lightRelayOn ? "ON" : "OFF",
-                   lightRelayOn ? ST77XX_GREEN : ST77XX_CYAN);
+  char line[22];
+  int16_t y = DisplayConfig::firstRowY;
+
+  // Row 0: Temperature
+  if (sensors.dhtValid) {
+    snprintf(line, sizeof(line), "TEMP  %.1f C", sensors.temperature);
+  } else {
+    snprintf(line, sizeof(line), "TEMP  ERROR");
+  }
+  display.setCursor(0, y);
+  display.print(line);
+  y += DisplayConfig::rowHeight;
+
+  // Row 1: Humidity
+  if (sensors.dhtValid) {
+    snprintf(line, sizeof(line), "HUM   %.1f %%", sensors.humidity);
+  } else {
+    snprintf(line, sizeof(line), "HUM   ERROR");
+  }
+  display.setCursor(0, y);
+  display.print(line);
+  y += DisplayConfig::rowHeight;
+
+  // Row 2: LDR
+  snprintf(line, sizeof(line), "LDR   %d", sensors.lightFiltered);
+  display.setCursor(0, y);
+  display.print(line);
+  y += DisplayConfig::rowHeight;
+
+  // Row 3: Water
+  snprintf(line, sizeof(line), "WATER %d", sensors.waterFiltered);
+  display.setCursor(0, y);
+  display.print(line);
+  y += DisplayConfig::rowHeight;
+
+  // Row 4: Mist state
+  snprintf(line, sizeof(line), "MIST  %s",
+           mistRelayOn ? "ON" : displayMistState(mistState));
+  display.setCursor(0, y);
+  display.print(line);
+  y += DisplayConfig::rowHeight;
+
+  // Row 5: Fan + Light on same row to save space
+  snprintf(line, sizeof(line), "FAN %s  LIGHT %s",
+           fanRelayOn ? "ON" : "--",
+           lightRelayOn ? "ON" : "--");
+  display.setCursor(0, y);
+  display.print(line);
+  y += DisplayConfig::rowHeight;
+
+  // Row 6: Mode
+  snprintf(line, sizeof(line), "MODE  %s",
+           anyManualOverride() ? "MANUAL" : "AUTO");
+  display.setCursor(0, y);
+  display.print(line);
+
+  display.display();
 }
 
+// ============================================================================
+// TUẦN 1: ĐIỀU KHIỂN XUẤT TÍN HIỆU GPIO RELAY CHẤP HÀNH
+// - Module Relay tích cực mức CAO (HIGH = Hút Relay bật thiết bị, LOW = Nhả Relay tắt)
+// ============================================================================
 void setRelay(uint8_t pin, bool on) {
   digitalWrite(pin, on ? HIGH : LOW);
 }
 
+// ============================================================================
+// TUẦN 3: THUẬT TOÁN LỌC NHIỄU CẢM BIẾN (SPIKE REJECTION & RUNNING AVERAGE)
+// - rejectSpike(): Kiểm tra độ chênh lệch giữa 2 mẫu liên tiếp, nếu vượt ngưỡng nhảy thì giữ mẫu cũ
+// - readFilteredSensors(): Đọc các chân ADC và DHT22, sau đó đưa qua các bộ lọc trung bình trượt
+// ============================================================================
 template <typename T>
 T rejectSpike(T rawValue, T previousValue, T maximumJump, bool hasPrevious, uint8_t& rejects) {
   if (hasPrevious && abs(rawValue - previousValue) > maximumJump &&
@@ -273,18 +378,22 @@ const char* mistStateName(MistState state) {
     case MistState::Running: return "RUNNING";
     case MistState::Cooldown: return "COOLDOWN";
     case MistState::WaterLockout: return "WATER_LOCKOUT";
+    case MistState::SensorFault: return "SENSOR_FAULT";
   }
   return "?";
 }
 
 void setMistState(MistState next, unsigned long now);
 
-bool anyManualOverride() {
-  return mistOverride.active || fanOverride.active || lightOverride.active;
-}
-
+// ============================================================================
+// TUẦN 4: ĐÓNG GÓI DỮ LIỆU JSON & XUẤT BẢN MQTT TELEMETRY / TRẠNG THÁI (UPLINK)
+// - publishJson(): Hàm nền tảng tuần tự hóa JSON và gửi qua MQTT
+// - publishAck(): Phản hồi xác nhận lệnh từ Node-RED (APPLIED / REJECTED)
+// - publishState(): Đẩy trạng thái relay, FSM mode và các ngưỡng hiện tại
+// - publishTelemetry(): Đẩy số liệu cảm biến môi trường theo chu kỳ
+// ============================================================================
 void publishJson(const char* topic, JsonDocument& document, bool retained = false) {
-  char payload[NetworkConfig::commandBufferSize];
+  char payload[NetworkConfig::mqttPacketBufferSize];
   const size_t length = serializeJson(document, payload, sizeof(payload));
   if (length == 0 || length >= sizeof(payload)) {
     Serial.printf("MQTT publish failed: JSON too large for %s\n", topic);
@@ -311,15 +420,21 @@ void publishState() {
   document["fan"] = fanRelayOn ? "ON" : "OFF";
   document["light"] = lightRelayOn ? "ON" : "OFF";
   document["mist_state"] = mistStateName(mistState);
-  document["water_lockout"] = mistState == MistState::WaterLockout;
+  document["water_lockout"] = waterLockoutActive();
+  document["dht_fault"] = dhtFault;
   document["mode"] = anyManualOverride() ? "MANUAL" : "AUTO";
+  document["mist_rh_on"] = Thresholds::mistHumidityOn;
+  document["fan_temp_on"] = Thresholds::fanTemperatureOn;
+  document["mist_mode"] = overrideModeName(mistOverride);
+  document["fan_mode"] = overrideModeName(fanOverride);
+  document["light_mode"] = overrideModeName(lightOverride);
   publishJson(stateTopic, document, true);
 }
 
 void publishTelemetry(const FilteredSensors& sensors) {
   if (!mqttClient.connected()) return;
   JsonDocument document;
-  if (sensors.dhtValid || temperatureFilter.count > 0) {
+  if (!dhtFault && (sensors.dhtValid || temperatureFilter.count > 0)) {
     document["temperature_c"] = sensors.temperature;
     document["humidity_pct"] = sensors.humidity;
   } else {
@@ -328,13 +443,18 @@ void publishTelemetry(const FilteredSensors& sensors) {
   }
   document["light_adc"] = sensors.lightFiltered;
   document["water_adc"] = sensors.waterFiltered;
+  document["dht_fail_streak"] = dhtFailStreak;
   publishJson(telemetryTopic, document);
 }
 
+// ============================================================================
+// TUẦN 6: TẦNG CHẤP HÀNH RELAY KÈM KHÓA LIÊN ĐỘNG AN TOÀN (SAFETY INTERLOCK)
+// - Bơm phun sương: Tuyệt đối không bật nếu bể cạn nước (WaterLockout), Cooldown hoặc SensorFault
+// - Quạt & Đèn: Tự động điều khiển theo cảm biến hoặc cưỡng bức theo lệnh MANUAL
+// ============================================================================
 void applyRelayOutputs() {
-  const bool waterLockout = mistState == MistState::WaterLockout ||
-      (latestWaterValid && latestWaterAdc < Thresholds::waterLowAdc);
-  const bool mistSafetyAllowsOn = !waterLockout && mistState != MistState::Cooldown;
+  const bool mistSafetyAllowsOn = !waterLockoutActive() &&
+      mistState != MistState::Cooldown && mistState != MistState::SensorFault;
   const bool requestedMistOn = mistOverride.active
       ? mistOverride.on
       : mistState == MistState::Running;
@@ -347,6 +467,19 @@ void applyRelayOutputs() {
   setRelay(Pins::lightRelay, lightRelayOn);
 }
 
+// ============================================================================
+// TUẦN 6: QUẢN LÝ THỜI GIAN GHI ĐÈ THỦ CÔNG (TTL TIMEOUT VỀ AUTO & BẢO VỆ CHỐNG CHÁY)
+// - cancelManualOverrides(): Hủy toàn bộ ghi đè khi mất kết nối mạng hoặc khẩn cấp
+// - expireManualOverrides(): Kiểm tra timeout TTL từng relay, trả về AUTO
+// ============================================================================
+void cancelManualOverrides(const char* reason) {
+  mistOverride.active = false;
+  fanOverride.active = false;
+  lightOverride.active = false;
+  Serial.printf("SAFETY %s; manual overrides cleared -> AUTO\n", reason);
+  applyRelayOutputs();
+}
+
 void expireManualOverrides(unsigned long now) {
   RelayOverride* overrides[] = {&mistOverride, &fanOverride, &lightOverride};
   const char* names[] = {"mist", "fan", "light"};
@@ -357,6 +490,7 @@ void expireManualOverrides(unsigned long now) {
       Serial.printf("MQTT override expired: %s -> AUTO\n", names[index]);
     }
   }
+
 
   if (mistOverride.active && mistOverride.on &&
       now - mistOverride.startedAt >= Thresholds::maxMistDurationMs) {
@@ -373,6 +507,12 @@ void expireManualOverrides(unsigned long now) {
   }
 }
 
+// ============================================================================
+// TUẦN 6 & TUẦN 7: XỬ LÝ LỆNH DOWNLINK TỪ NODE-RED (ĐIỀU KHIỂN & CẤU HÌNH NGƯỠNG)
+// - Topic /config (Tuần 7): Nhận và áp dụng giá trị ngưỡng động mới vào Thresholds
+// - Topic /cmd/{mist,fan,light} (Tuần 6): Xử lý bật/tắt thủ công (MANUAL) hoặc trả về AUTO
+// - Kiểm tra tính hợp lệ và xuất bản phản hồi ACK
+// ============================================================================
 void handleMqttMessage(char* topic, byte* payload, unsigned int length) {
   if (length == 0 || length >= NetworkConfig::commandBufferSize) {
     Serial.printf("MQTT command rejected: invalid payload length=%u\n", length);
@@ -383,6 +523,24 @@ void handleMqttMessage(char* topic, byte* payload, unsigned int length) {
   const DeserializationError error = deserializeJson(document, payload, length);
   if (error) {
     Serial.printf("MQTT command rejected: invalid JSON (%s)\n", error.c_str());
+    return;
+  }
+
+  if (strcmp(topic, configTopic) == 0) {
+    if (!document["mist_rh_on"].isNull()) Thresholds::mistHumidityOn = document["mist_rh_on"].as<float>();
+    if (!document["mist_rh_off"].isNull()) Thresholds::mistHumidityOff = document["mist_rh_off"].as<float>();
+    if (!document["fan_temp_on"].isNull()) Thresholds::fanTemperatureOn = document["fan_temp_on"].as<float>();
+    if (!document["fan_temp_off"].isNull()) Thresholds::fanTemperatureOff = document["fan_temp_off"].as<float>();
+    if (!document["light_on_adc"].isNull()) Thresholds::lightOnAdc = document["light_on_adc"].as<int>();
+    if (!document["light_off_adc"].isNull()) Thresholds::lightOffAdc = document["light_off_adc"].as<int>();
+    if (!document["water_low_adc"].isNull()) Thresholds::waterLowAdc = document["water_low_adc"].as<int>();
+    if (!document["water_refilled_adc"].isNull()) Thresholds::waterRefilledAdc = document["water_refilled_adc"].as<int>();
+    Serial.printf("CONFIG updated: mist_rh_on=%.1f mist_rh_off=%.1f fan_temp_on=%.1f light_on=%d\n",
+                  Thresholds::mistHumidityOn, Thresholds::mistHumidityOff,
+                  Thresholds::fanTemperatureOn, Thresholds::lightOnAdc);
+    const char* reqId = document["request_id"] | "cfg";
+    publishAck(reqId, "APPLIED", "CONFIG");
+    publishState();
     return;
   }
 
@@ -447,6 +605,11 @@ void handleMqttMessage(char* topic, byte* payload, unsigned int length) {
                 requestId, state, static_cast<unsigned long>(ttlSeconds));
 }
 
+// ============================================================================
+// TUẦN 4: QUẢN LÝ KẾT NỐI MẠNG WI-FI & MQTT BROKER TỰ ĐỘNG PHỤC HỒI
+// - initializeMqttTopics(): Tạo định danh các topic theo ID thiết bị
+// - serviceNetwork(): Duy trì kết nối Wi-Fi và MQTT Client; tự động kết nối lại khi mất mạng
+// ============================================================================
 void initializeMqttTopics() {
   snprintf(telemetryTopic, sizeof(telemetryTopic),
            "garden/orchid/%s/telemetry", ORCHID_DEVICE_ID);
@@ -462,6 +625,8 @@ void initializeMqttTopics() {
            "garden/orchid/%s/cmd/light", ORCHID_DEVICE_ID);
   snprintf(ackTopic, sizeof(ackTopic),
            "garden/orchid/%s/ack", ORCHID_DEVICE_ID);
+  snprintf(configTopic, sizeof(configTopic),
+           "garden/orchid/%s/config", ORCHID_DEVICE_ID);
 }
 
 void serviceNetwork(unsigned long now) {
@@ -491,6 +656,7 @@ void serviceNetwork(unsigned long now) {
   if (mqttWasConnected) {
     Serial.println("MQTT disconnected; retrying");
     mqttWasConnected = false;
+    cancelManualOverrides("MQTT link lost");
   }
   if (now - lastMqttAttemptAt < NetworkConfig::mqttRetryIntervalMs) return;
   lastMqttAttemptAt = now;
@@ -515,10 +681,20 @@ void serviceNetwork(unsigned long now) {
       subscribed = false;
     }
   }
+  if (!mqttClient.subscribe(configTopic, 1)) {
+    Serial.printf("MQTT subscribe failed: %s\n", configTopic);
+    subscribed = false;
+  }
   Serial.printf("MQTT connected; subscriptions=%s\n", subscribed ? "OK" : "ERROR");
   publishState();
 }
 
+// ============================================================================
+// TUẦN 3: GIẢI THUẬT ĐIỀU KHIỂN TỰ ĐỘNG (FSM BƠM PHUN SƯƠNG, HYSTERESIS QUẠT & ĐÈN)
+// - updateMist(): Máy trạng thái FSM (IDLE -> RUNNING -> COOLDOWN hoặc WATER_LOCKOUT / SENSOR_FAULT)
+// - updateFan(): Điều khiển quạt với trễ nhiệt độ (ON khi > 33°C, OFF khi < 31°C)
+// - updateLight(): Điều khiển đèn theo ngưỡng quang trở LDR (ON khi trời tối, OFF khi sáng)
+// ============================================================================
 void setMistState(MistState next, unsigned long now) {
   if (next == mistState) return;
   Serial.printf("STATE mist %s -> %s\n", mistStateName(mistState), mistStateName(next));
@@ -526,16 +702,38 @@ void setMistState(MistState next, unsigned long now) {
   mistStateSince = now;
 }
 
-void updateMist(unsigned long now, float humidity, int waterAdc) {
+void updateDhtHealth(bool dhtValid) {
+  if (dhtValid) {
+    if (dhtFault) Serial.println("RECOVERED DHT22 readings valid again");
+    dhtFailStreak = 0;
+    dhtFault = false;
+    return;
+  }
+  if (dhtFailStreak < UINT8_MAX) dhtFailStreak++;
+  Serial.printf("DHT22 read failed (%u consecutive)\n", dhtFailStreak);
+  if (!dhtFault && dhtFailStreak >= Safety::dhtFaultAfterFailures) {
+    dhtFault = true;
+    Serial.printf("FAULT DHT22 %u consecutive read failures; mist AUTO blocked\n", dhtFailStreak);
+  }
+}
+
+void updateMist(unsigned long now, bool climateValid, float humidity, int waterAdc) {
   const bool waterLow = waterAdc < Thresholds::waterLowAdc;
+  const bool waterRefilled = waterAdc >= Thresholds::waterRefilledAdc;
+  const bool autoMistHeld = mistOverride.active && !mistOverride.on;
   const unsigned long elapsed = now - mistStateSince;
   switch (mistState) {
     case MistState::Idle:
       if (waterLow) setMistState(MistState::WaterLockout, now);
-      else if (humidity < Thresholds::mistHumidityOn) setMistState(MistState::Running, now);
+      else if (dhtFault) setMistState(MistState::SensorFault, now);
+      else if (climateValid && !autoMistHeld && humidity < Thresholds::mistHumidityOn) {
+        setMistState(MistState::Running, now);
+      }
       break;
     case MistState::Running:
       if (waterLow) setMistState(MistState::WaterLockout, now);
+      else if (dhtFault) setMistState(MistState::SensorFault, now);
+      else if (autoMistHeld) setMistState(MistState::Cooldown, now);
       else if (humidity >= Thresholds::mistHumidityOff) setMistState(MistState::Idle, now);
       else if (elapsed >= Thresholds::maxMistDurationMs) setMistState(MistState::Cooldown, now);
       break;
@@ -544,7 +742,11 @@ void updateMist(unsigned long now, float humidity, int waterAdc) {
       else if (elapsed >= Thresholds::mistCooldownMs) setMistState(MistState::Idle, now);
       break;
     case MistState::WaterLockout:
-      if (waterAdc >= Thresholds::waterRefilledAdc) setMistState(MistState::Idle, now);
+      if (waterRefilled) setMistState(MistState::Idle, now);
+      break;
+    case MistState::SensorFault:
+      if (waterLow) setMistState(MistState::WaterLockout, now);
+      else if (!dhtFault) setMistState(MistState::Cooldown, now);
       break;
   }
 }
@@ -562,16 +764,26 @@ void updateFan(float temperature, float humidity) {
   }
 }
 
-void updateLight(int lightAdc) {
-  if (lightState == SwitchState::Off && lightAdc > Thresholds::lightOnAdc) {
+void updateLight(unsigned long now, int lightAdc) {
+  if (lightAdc < Thresholds::lightOffAdc) lightWaitingForDaylight = false;
+  if (lightState == SwitchState::Off && lightAdc > Thresholds::lightOnAdc && !lightWaitingForDaylight) {
     lightState = SwitchState::On;
+    lightOnSince = now;
     Serial.println("STATE light -> ON");
   } else if (lightState == SwitchState::On && lightAdc < Thresholds::lightOffAdc) {
     lightState = SwitchState::Off;
     Serial.println("STATE light -> OFF");
+  } else if (lightState == SwitchState::On && now - lightOnSince >= Thresholds::maxAutoLightOnMs) {
+    lightState = SwitchState::Off;
+    lightWaitingForDaylight = true;
+    Serial.println("SAFETY light AUTO on-time limit reached; off until daylight is seen");
   }
 }
 
+// ============================================================================
+// KHỞI TẠO HỆ THỐNG TOÀN DIỆN (SETUP TUẦN 1 -> 7)
+// - Cấu hình chân I/O, độ phân giải ADC 12-bit, khởi tạo màn hình OLED SSD1306, DHT22 và MQTT
+// ============================================================================
 void setup() {
   Serial.begin(115200);
   initializeMqttTopics();
@@ -579,7 +791,7 @@ void setup() {
   WiFi.setAutoReconnect(true);
   mqttClient.setServer(NetworkConfig::brokerHost, NetworkConfig::brokerPort);
   mqttClient.setCallback(handleMqttMessage);
-  mqttClient.setBufferSize(NetworkConfig::commandBufferSize);
+  mqttClient.setBufferSize(NetworkConfig::mqttPacketBufferSize);
   mqttClient.setSocketTimeout(1);
   mqttClient.setKeepAlive(30);
   lastWifiAttemptAt = millis() - NetworkConfig::wifiRetryIntervalMs;
@@ -597,7 +809,8 @@ void setup() {
   dhtSensor.begin();
   Serial.println("Orchid garden controller - ESP32-S3 physical");
   Serial.println("Pins: DHT=GPIO4 LDR_AO=GPIO1 WATER_S=GPIO2 RELAYS light=GPIO5 fan=GPIO6 mist=GPIO7");
-  Serial.println("Display: ST7789 240x240 SCK=GPIO12 MOSI=GPIO11 CS=GPIO10 DC=GPIO9 RST=GPIO8");
+  Serial.printf("Display: SSD1306 128x64 I2C SDA=GPIO%u SCL=GPIO%u ADDR=0x%02X\n",
+                Pins::oledSda, Pins::oledScl, DisplayConfig::i2cAddress);
   Serial.println("Thresholds: mist RH<65/stop>=80, water lock<1200/refill>=1500");
   Serial.printf("MQTT device=%s broker=%s:%u\n",
                 ORCHID_DEVICE_ID, NetworkConfig::brokerHost, NetworkConfig::brokerPort);
@@ -605,6 +818,11 @@ void setup() {
   Serial.println("MQTT Wi-Fi defaults to Wokwi-GUEST; configure orchid_secrets.h for a local network");
 }
 
+// ============================================================================
+// CHU TRÌNH ĐIỀU KHIỂN THỜI GIAN THỰC ĐỒNG BỘ NON-BLOCKING (LOOP TUẦN 1 -> 7)
+// - Duy trì MQTT, kiểm tra timeout ghi đè, lấy mẫu định kỳ 2500ms
+// - Chạy giải thuật tự động, cập nhật màn hình OLED cục bộ và xuất bản dữ liệu lên MQTT Broker
+// ============================================================================
 void loop() {
   const unsigned long now = millis();
   serviceNetwork(now);
@@ -617,31 +835,29 @@ void loop() {
   const FilteredSensors sensors = readFilteredSensors();
   latestWaterAdc = sensors.waterFiltered;
   latestWaterValid = true;
+  updateDhtHealth(sensors.dhtValid);
+
+  const bool climateValid = !dhtFault && (sensors.dhtValid || temperatureFilter.count > 0);
+
   Serial.printf("RAW ldr=%d water=%d temp=%.1f humidity=%.1f | AVG ldr=%d water=%d temp=%.1f humidity=%.1f\n",
                 sensors.lightRaw, sensors.waterRaw, sensors.temperatureRaw, sensors.humidityRaw,
                 sensors.lightFiltered, sensors.waterFiltered, sensors.temperature, sensors.humidity);
-  if (!sensors.dhtValid && temperatureFilter.count == 0) {
-    Serial.println("DHT22 read failed; outputs remain OFF until first valid sample");
-    updateDisplay(sensors);
-    publishTelemetry(sensors);
-    publishState();
-    return;
-  }
 
-  updateMist(now, sensors.humidity, sensors.waterFiltered);
-  updateFan(sensors.temperature, sensors.humidity);
-  updateLight(sensors.lightFiltered);
+  updateMist(now, climateValid, sensors.humidity, sensors.waterFiltered);
+  if (climateValid) updateFan(sensors.temperature, sensors.humidity);
+  updateLight(now, sensors.lightFiltered);
   expireManualOverrides(now);
   applyRelayOutputs();
   updateDisplay(sensors);
-  Serial.printf("STATE mist=%s fan=%s light=%s water_lockout=%s\n",
+  Serial.printf("STATE mist=%s fan=%s light=%s water_lockout=%s dht_fault=%s\n",
                 mistStateName(mistState), fanState == SwitchState::On ? "ON" : "OFF",
                 lightState == SwitchState::On ? "ON" : "OFF",
-                mistState == MistState::WaterLockout ? "YES" : "NO");
+                waterLockoutActive() ? "YES" : "NO",
+                dhtFault ? "YES" : "NO");
   Serial.printf("OUTPUT mist=%s fan=%s light=%s\n",
                 mistRelayOn ? "ON" : "OFF",
                 fanRelayOn ? "ON" : "OFF",
                 lightRelayOn ? "ON" : "OFF");
   publishTelemetry(sensors);
   publishState();
-}
+}
