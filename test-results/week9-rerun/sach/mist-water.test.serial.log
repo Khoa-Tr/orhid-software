@@ -1,0 +1,114 @@
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:1156
+load:0x40078000,len:11456
+ho 0 tail 12 room 4
+load:0x40080400,len:2972
+entry 0x400805dc
+Orchid garden controller startedCAL columns: raw_light filtered_light raw_water filtered_water raw_temp filtered_temp raw_humidity filtered_humidity
+MQTT device=orchid-01 broker=broker.emqx.io:1883
+MQTT topics: telemetry/state/availability/cmd/{mist,fan,light}/ack
+MQTT Wi-Fi defaults to Wokwi-GUEST; configure orchid_secrets.h for a local network
+NET Wi-Fi connecting to Wokwi-GUEST
+NET Wi-Fi connected; IP=10.13.37.2
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+MQTT connecting to broker.emqx.io:1883
+MQTT connected; subscriptions=OK
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFFOUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=69.6
+T: 28.0 C | RH: 69.6 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=67.2
+T: 28.0 C | RH: 67.2 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=64.8
+STATE mist IDLE -> RUNNINGRELAY mist GPIO25 OFF -> ON
+T: 28.0 C | RH: 64.8 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFFOUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=64.8
+T: 28.0 C | RH: 64.8 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+OUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=64.8
+T: 28.0 C | RH: 64.8 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+OUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=67.2
+T: 28.0 C | RH: 67.2 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+OUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=69.6
+T: 28.0 C | RH: 69.6 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+OUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+OUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+OUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFFOUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=82.0 filtered_humidity=74.0
+T: 28.0 C | RH: 74.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+OUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=82.0 filtered_humidity=76.0
+T: 28.0 C | RH: 76.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+OUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=82.0 filtered_humidity=78.0
+T: 28.0 C | RH: 78.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+OUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=82.0 filtered_humidity=80.0
+STATE mist RUNNING -> IDLERELAY mist GPIO25 ON -> OFF
+T: 28.0 C | RH: 80.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=80.0
+T: 28.0 C | RH: 80.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=78.0
+T: 28.0 C | RH: 78.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=76.0
+T: 28.0 C | RH: 76.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=74.0
+T: 28.0 C | RH: 74.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFFOUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=69.6
+T: 28.0 C | RH: 69.6 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=67.2
+T: 28.0 C | RH: 67.2 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=64.8
+STATE mist IDLE -> RUNNINGRELAY mist GPIO25 OFF -> ON
+T: 28.0 C | RH: 64.8 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+OUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=410 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=62.4
+T: 28.0 C | RH: 62.4 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+OUTPUT mist=ON fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=410 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=60.0 filtered_humidity=60.0
+T: 28.0 C | RH: 60.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: RUNNING | Fan: OFF | Grow light: OFF
+OUTPUT mist=ON fan=OFF light=OFF

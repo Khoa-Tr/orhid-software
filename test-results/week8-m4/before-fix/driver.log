@@ -1,0 +1,5 @@
+2026-10-22T05:33:25.097Z PHASE 0 waiting for the real firmware on Wokwi (Serial "MQTT connected") and dashboard ONLINE
+2026-10-22T05:34:21.180Z OK  Wokwi firmware connected to broker.emqx.io
+2026-10-22T05:34:21.787Z OK  dashboard shows ONLINE from fresh telemetry
+2026-10-22T05:34:22.473Z SHOT w8-01-online-auto.jpg
+2026-10-22T05:34:22.473Z PHASE U uplink 720s: sample dashboard every 5 s

@@ -97,7 +97,8 @@ constexpr uint16_t brokerPort = 1883;
 constexpr unsigned long wifiRetryIntervalMs = 10000UL;  // thử nối lại Wi-Fi mỗi 10 s
 constexpr unsigned long mqttRetryIntervalMs = 5000UL;   // thử nối lại MQTT mỗi 5 s (không chặn loop)
 constexpr uint32_t maxManualTtlSeconds = 3600;          // ttl_s hợp lệ của lệnh MANUAL: 1-3600 s
-constexpr size_t commandBufferSize = 256;               // payload lệnh/config từ 256 byte trở lên bị bỏ, không ACK
+constexpr size_t commandBufferSize = 384;               // payload lệnh/config tối đa 383 byte; dài hơn -> ACK REJECTED PAYLOAD_TOO_LARGE
+constexpr size_t maxAckRequestIdLength = 96;            // request_id dài hơn thì không ACK được (gói ACK vượt bộ đệm MQTT)
 // Goi MQTT gom header + topic + payload; state JSON day du can hon 256 byte.
 constexpr size_t mqttPacketBufferSize = 512;
 }
@@ -216,6 +217,15 @@ bool lightRelayOn = false;
 // ============================================================================
 // TUẦN 1: ĐIỀU KHIỂN XUẤT TÍN HIỆU GPIO RELAY CHẤP HÀNH
 // ============================================================================
+// Thoi gian da troi qua tu moc 'since' toi 'now'. 'now' lay o dau vong loop(), con lenh MQTT xu ly
+// trong cung vong loop dat moc bang millis() (muon hon 'now'); khi do 'now - since' am se tran thanh
+// so rat lon (unsigned) va lenh MANUAL bi coi la het TTL ngay. Moc nam sau 'now' thi tinh la 0 ms.
+// Van dung khi millis() quay vong sau ~49 ngay.
+unsigned long elapsedMs(unsigned long now, unsigned long since) {
+  const unsigned long diff = now - since;
+  return diff > 0x7FFFFFFFUL ? 0UL : diff;
+}
+
 void setRelay(uint8_t pin, bool on) {
   digitalWrite(pin, on ? HIGH : LOW);
 }
@@ -439,14 +449,14 @@ void expireManualOverrides(unsigned long now) {
   const char* names[] = {"mist", "fan", "light"};
   for (size_t index = 0; index < sizeof(overrides) / sizeof(overrides[0]); index++) {
     RelayOverride& relayOverride = *overrides[index];
-    if (relayOverride.active && now - relayOverride.startedAt >= relayOverride.ttlMs) {
+    if (relayOverride.active && elapsedMs(now, relayOverride.startedAt) >= relayOverride.ttlMs) {
       relayOverride.active = false;
       Serial.printf("MQTT override expired: %s -> AUTO\n", names[index]);
     }
   }
 
   // Tinh tu luc relay bat that, khong tu lenh moi nhat: lenh ON lap lai khong keo dai thoi gian phun.
-  if (manualMistRunActive && now - manualMistRunStartedAt >= Thresholds::maxMistDurationMs) {
+  if (manualMistRunActive && elapsedMs(now, manualMistRunStartedAt) >= Thresholds::maxMistDurationMs) {
     mistOverride.active = false;
     setMistState(MistState::Cooldown, now);
     Serial.println("MQTT mist safety limit reached; entering cooldown");
@@ -455,7 +465,7 @@ void expireManualOverrides(unsigned long now) {
   if (mistOverride.active && mistOverride.on &&
       (waterLockoutActive() || mistState == MistState::SensorFault)) {
     mistOverride.active = false;
-    if (now - lastManualSafetyWarningAt >= 1000UL) {
+    if (elapsedMs(now, lastManualSafetyWarningAt) >= 1000UL) {
       Serial.printf("MQTT mist override cancelled: %s\n",
                     mistState == MistState::SensorFault ? "SENSOR_FAULT" : "WATER_LOCKOUT");
       lastManualSafetyWarningAt = now;
@@ -562,8 +572,23 @@ void handleMqttMessage(char* topic, byte* payload, unsigned int length) {
     return;
   }
 #endif
-  if (length == 0 || length >= NetworkConfig::commandBufferSize) {
-    Serial.printf("MQTT command rejected: invalid payload length=%u\n", length);
+  if (length == 0) {
+    Serial.println("MQTT command rejected: empty payload");
+    return;
+  }
+  if (length >= NetworkConfig::commandBufferSize) {
+    // BUG-02: khong bo lenh lang le. Doc rieng request_id (bo loc ArduinoJson, it RAM) roi ACK REJECTED
+    // de dashboard biet ly do thay vi chi thay NO_ACK.
+    Serial.printf("MQTT command rejected: payload too large length=%u (max %u)\n", length,
+                  static_cast<unsigned>(NetworkConfig::commandBufferSize - 1));
+    JsonDocument filter;
+    filter["request_id"] = true;
+    JsonDocument idOnly;
+    if (deserializeJson(idOnly, payload, length, DeserializationOption::Filter(filter))) return;
+    const char* requestId = idOnly["request_id"] | (strcmp(topic, configTopic) == 0 ? "cfg" : "");
+    if (requestId[0] != '\0' && strlen(requestId) <= NetworkConfig::maxAckRequestIdLength) {
+      publishAck(requestId, "REJECTED", "PAYLOAD_TOO_LARGE");
+    }
     return;
   }
   // Log downlink buoc 1/3: firmware nhan lenh (topic + payload nguyen van).
@@ -764,7 +789,7 @@ void updateMist(unsigned long now, bool climateValid, float humidity, int waterA
   const bool waterRefilled = waterAdc >= Thresholds::waterRefilledAdc;
   // Lenh MANUAL OFF (vd. Node-RED chan phun ban dem) giu chu trinh AUTO, khong chay ngam phia sau.
   const bool autoMistHeld = mistOverride.active && !mistOverride.on;
-  const unsigned long elapsed = now - mistStateSince;
+  const unsigned long elapsed = elapsedMs(now, mistStateSince);
 
   switch (mistState) {
     case MistState::Idle:
@@ -815,7 +840,7 @@ void updateLight(unsigned long now, int lightAdc) {
     lightOnSince = now;
   } else if (lightState == SwitchState::On && lightAdc < Thresholds::lightOffAdc) {
     lightState = SwitchState::Off;
-  } else if (lightState == SwitchState::On && now - lightOnSince >= Thresholds::maxAutoLightOnMs) {
+  } else if (lightState == SwitchState::On && elapsedMs(now, lightOnSince) >= Thresholds::maxAutoLightOnMs) {
     lightState = SwitchState::Off;
     lightWaitingForDaylight = true;
     Serial.println("SAFETY light AUTO on-time limit reached; off until daylight is seen");

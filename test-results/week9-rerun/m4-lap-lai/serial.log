@@ -1,0 +1,890 @@
+2026-10-22T07:36:05.463Z # serial connected rfc2217://localhost:4000?ign_set_control
+2026-10-22T08:20:37.592Z # serial disconnected: connection failed (reader thread died)
+2026-10-22T08:20:40.130Z # serial connected rfc2217://localhost:4000?ign_set_control
+2026-10-22T08:20:40.331Z NET Wi-Fi connected; IP=10.13.37.2
+2026-10-22T08:20:40.738Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:20:40.738Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:20:40.738Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:20:43.397Z MQTT connecting to broker.emqx.io:1883
+2026-10-22T08:20:44.217Z MQTT connected; subscriptions=OK
+2026-10-22T08:20:44.217Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:20:44.217Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:20:44.217Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:20:45.032Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"auto-mvj9u6j3-1","mode":"MANUAL","state":"OFF","ttl_s":900}
+2026-10-22T08:20:45.032Z ACK auto-mvj9u6j3-1 result=APPLIED
+2026-10-22T08:20:45.032Z MQTT command auto-mvj9u6j3-1: mode=MANUAL state=OFF ttl_s=900
+2026-10-22T08:20:46.668Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:20:46.668Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:20:46.668Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:20:49.931Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:20:49.931Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:20:49.931Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:20:53.203Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:20:53.203Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:20:53.203Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:20:56.474Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:20:56.474Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:20:56.474Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:20:59.745Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:20:59.745Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:20:59.745Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:03.013Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:03.014Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:03.014Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:06.280Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:06.280Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:06.280Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:09.344Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:09.344Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:09.344Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:12.611Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:12.611Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:12.611Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:16.077Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:16.077Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:16.077Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:19.343Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:19.343Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:19.343Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:22.400Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:22.400Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:22.400Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:25.865Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:25.865Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:25.865Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:29.137Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:29.137Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:29.137Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:32.409Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:32.409Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:32.409Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:35.681Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:35.681Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:35.681Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:38.944Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:38.944Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:38.944Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:41.999Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:41.999Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:41.999Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:45.267Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:45.267Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:45.267Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:48.537Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:48.537Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:48.537Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:51.805Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:51.805Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:51.806Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:55.081Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:55.081Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:55.081Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:21:58.348Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:21:58.348Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:21:58.348Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:22:01.617Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:01.617Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:01.617Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:22:04.893Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:04.893Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:04.893Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:22:08.359Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:08.359Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:08.359Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:22:09.992Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvj9w03s-2","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-22T08:22:09.992Z RELAY fan GPIO26 OFF -> ON
+2026-10-22T08:22:09.992Z ACK dash-mvj9w03s-2 result=APPLIED
+2026-10-22T08:22:09.992Z MQTT command dash-mvj9w03s-2: mode=MANUAL state=ON ttl_s=300
+2026-10-22T08:22:11.208Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvj9w14t-3","mode":"MANUAL","state":"OFF","ttl_s":300}
+2026-10-22T08:22:11.208Z RELAY fan GPIO26 ON -> OFF
+2026-10-22T08:22:11.208Z ACK dash-mvj9w14t-3 result=APPLIED
+2026-10-22T08:22:11.413Z MQTT command dash-mvj9w14t-3: mode=MANUAL state=OFF ttl_s=300
+2026-10-22T08:22:11.619Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:11.619Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:11.619Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:22:11.819Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"dash-mvj9w1lx-4","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-22T08:22:11.820Z RELAY light GPIO27 OFF -> ON
+2026-10-22T08:22:11.820Z ACK dash-mvj9w1lx-4 result=APPLIED
+2026-10-22T08:22:11.820Z MQTT command dash-mvj9w1lx-4: mode=MANUAL state=ON ttl_s=300
+2026-10-22T08:22:12.839Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvj9w2bh-5","mode":"AUTO"}
+2026-10-22T08:22:12.839Z ACK dash-mvj9w2bh-5 result=APPLIED reason=AUTO
+2026-10-22T08:22:12.839Z MQTT command dash-mvj9w2bh-5: mode=AUTO
+2026-10-22T08:22:13.247Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvj9w2bh-6","mode":"AUTO"}
+2026-10-22T08:22:13.247Z ACK dash-mvj9w2bh-6 result=APPLIED reason=AUTO
+2026-10-22T08:22:13.247Z MQTT command dash-mvj9w2bh-6: mode=AUTO
+2026-10-22T08:22:13.247Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"dash-mvj9w2bh-7","mode":"AUTO"}
+2026-10-22T08:22:13.247Z RELAY light GPIO27 ON -> OFF
+2026-10-22T08:22:13.247Z ACK dash-mvj9w2bh-7 result=APPLIED reason=AUTO
+2026-10-22T08:22:13.247Z MQTT command dash-mvj9w2bh-7: mode=AUTO
+2026-10-22T08:22:15.086Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:15.086Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:15.086Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:22:15.086Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvj9w41m-8","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:22:15.086Z RELAY fan GPIO26 OFF -> ON
+2026-10-22T08:22:15.086Z ACK dash-mvj9w41m-8 result=APPLIED
+2026-10-22T08:22:15.086Z MQTT command dash-mvj9w41m-8: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:22:18.344Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:18.344Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:18.344Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:22:21.621Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:21.621Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:21.621Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:22:24.884Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:24.884Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:24.884Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:22:28.157Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:28.157Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:28.157Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:22:31.428Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:31.428Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:31.428Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:22:34.701Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:34.701Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:34.701Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:22:37.966Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:37.966Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:37.966Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:22:41.239Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:41.239Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:41.239Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:22:44.504Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:44.504Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:44.505Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:22:47.778Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:47.778Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:47.778Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:22:51.044Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:51.044Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:51.044Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:22:54.314Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:54.314Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:54.314Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:22:57.579Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:22:57.579Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:22:57.579Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:23:00.833Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:00.833Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:00.833Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:23:04.104Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:04.104Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:04.104Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:23:07.371Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:07.371Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:07.371Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:23:10.639Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:10.639Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:10.639Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:23:13.904Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:13.904Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:13.904Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:23:17.377Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:17.377Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:17.377Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:23:20.639Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:20.639Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:20.639Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:23:23.901Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:23.901Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:23.901Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:23:27.164Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:27.164Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:27.164Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:23:30.435Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:30.435Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:30.435Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:23:33.703Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:33.703Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:33.703Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:23:33.703Z MQTT override expired: fan -> AUTO
+2026-10-22T08:23:33.703Z RELAY fan GPIO26 ON -> OFF
+2026-10-22T08:23:33.906Z >> TX FAULT WATER LOW
+2026-10-22T08:23:34.111Z TEST fault injection: FAULT WATER LOW
+2026-10-22T08:23:36.973Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:36.973Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:36.973Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:23:40.247Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:40.247Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:40.247Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:23:43.511Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=2745 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:43.511Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 2745 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:43.511Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:23:46.775Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=2209 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:46.775Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 2209 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:46.775Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:23:50.031Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=1672 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:50.031Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 1672 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:50.031Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:23:53.298Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=1136 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:53.298Z STATE mist IDLE -> WATER_LOCKOUT
+2026-10-22T08:23:53.298Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 1136 | Mist: WATER_LOCKOUT | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:53.503Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:23:54.932Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvj9y93l-9","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:23:54.932Z ACK dash-mvj9y93l-9 result=REJECTED reason=WATER_LOCKOUT
+2026-10-22T08:23:55.137Z >> TX FAULT WATER OFF
+2026-10-22T08:23:55.342Z TEST fault injection: FAULT WATER OFF
+2026-10-22T08:23:56.763Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=600 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:23:56.763Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 600 | Mist: WATER_LOCKOUT | Fan: OFF | Grow light: OFF
+2026-10-22T08:23:56.763Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:24:00.028Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=600 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:00.028Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 600 | Mist: WATER_LOCKOUT | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:00.028Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:24:03.293Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=1136 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:03.293Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 1136 | Mist: WATER_LOCKOUT | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:03.293Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:24:06.568Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=1672 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:06.568Z STATE mist WATER_LOCKOUT -> IDLE
+2026-10-22T08:24:06.568Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 1672 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:06.568Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:24:07.589Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvj9yiwn-10","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-22T08:24:07.589Z RELAY mist GPIO25 OFF -> ON
+2026-10-22T08:24:07.589Z ACK dash-mvj9yiwn-10 result=APPLIED
+2026-10-22T08:24:07.589Z MQTT command dash-mvj9yiwn-10: mode=MANUAL state=ON ttl_s=300
+2026-10-22T08:24:09.831Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=2209 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:09.831Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 2209 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:09.831Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:24:11.257Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvj9ylp2-11","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:24:11.257Z ACK dash-mvj9ylp2-11 result=APPLIED
+2026-10-22T08:24:11.257Z MQTT command dash-mvj9ylp2-11: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:24:13.298Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=2745 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:13.299Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 2745 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:13.299Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:24:14.320Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvj9yo0h-12","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:24:14.320Z ACK dash-mvj9yo0h-12 result=APPLIED
+2026-10-22T08:24:14.320Z MQTT command dash-mvj9yo0h-12: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:24:16.559Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:16.559Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:16.559Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:24:17.168Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvj9yqbx-13","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:24:17.168Z ACK dash-mvj9yqbx-13 result=APPLIED
+2026-10-22T08:24:17.168Z MQTT command dash-mvj9yqbx-13: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:24:19.837Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:19.837Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:19.837Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:24:20.246Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvj9ysnd-14","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:24:20.246Z ACK dash-mvj9ysnd-14 result=APPLIED
+2026-10-22T08:24:20.246Z MQTT command dash-mvj9ysnd-14: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:24:23.092Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:23.092Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:23.092Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:24:23.297Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvj9yuyt-15","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:24:23.297Z ACK dash-mvj9yuyt-15 result=APPLIED
+2026-10-22T08:24:23.297Z MQTT command dash-mvj9yuyt-15: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:24:26.155Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvj9yxa9-16","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:24:26.155Z ACK dash-mvj9yxa9-16 result=APPLIED
+2026-10-22T08:24:26.155Z MQTT command dash-mvj9yxa9-16: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:24:26.556Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:26.556Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:26.556Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:24:27.574Z STATE mist IDLE -> COOLDOWN
+2026-10-22T08:24:27.574Z MQTT mist safety limit reached; entering cooldown
+2026-10-22T08:24:27.574Z RELAY mist GPIO25 ON -> OFF
+2026-10-22T08:24:29.200Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvj9yzlp-17","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:24:29.200Z ACK dash-mvj9yzlp-17 result=REJECTED reason=MIST_COOLDOWN
+2026-10-22T08:24:29.815Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:29.816Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:29.816Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:24:33.087Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:33.087Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:33.087Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:24:33.292Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvj9z2oy-18","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:24:33.292Z RELAY fan GPIO26 OFF -> ON
+2026-10-22T08:24:33.292Z ACK dash-mvj9z2oy-18 result=APPLIED
+2026-10-22T08:24:33.292Z MQTT command dash-mvj9z2oy-18: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:24:33.898Z >> TX FAULT CMD DROP ON
+2026-10-22T08:24:34.101Z TEST fault injection: FAULT CMD DROP ON
+2026-10-22T08:24:35.731Z TEST command dropped without ACK: garden/orchid/orchid-01/cmd/light
+2026-10-22T08:24:36.342Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:36.342Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:36.342Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:24:39.606Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:39.606Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:39.606Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:24:42.670Z >> TX FAULT CMD DROP OFF
+2026-10-22T08:24:42.872Z TEST fault injection: FAULT CMD DROP OFF
+2026-10-22T08:24:42.872Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:42.872Z STATE mist COOLDOWN -> IDLE
+2026-10-22T08:24:42.873Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:43.077Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:24:44.308Z >> TX FAULT MQTT DROP
+2026-10-22T08:24:44.513Z TEST fault injection: FAULT MQTT DROP
+2026-10-22T08:24:44.513Z MQTT disconnected; retrying
+2026-10-22T08:24:44.513Z SAFETY MQTT link lost; manual overrides cleared -> AUTO (1 active)
+2026-10-22T08:24:44.513Z RELAY fan GPIO26 ON -> OFF
+2026-10-22T08:24:44.513Z MQTT connecting to broker.emqx.io:1883
+2026-10-22T08:24:45.332Z MQTT connected; subscriptions=OK
+2026-10-22T08:24:46.144Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:46.348Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:46.348Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:24:47.164Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvj9zdbz-20","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-22T08:24:47.164Z RELAY fan GPIO26 OFF -> ON
+2026-10-22T08:24:47.164Z ACK dash-mvj9zdbz-20 result=APPLIED
+2026-10-22T08:24:47.164Z MQTT command dash-mvj9zdbz-20: mode=MANUAL state=ON ttl_s=300
+2026-10-22T08:24:47.982Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvj9ze1g-21","mode":"AUTO"}
+2026-10-22T08:24:47.982Z ACK dash-mvj9ze1g-21 result=APPLIED reason=AUTO
+2026-10-22T08:24:47.982Z MQTT command dash-mvj9ze1g-21: mode=AUTO
+2026-10-22T08:24:48.187Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"dash-mvj9ze1h-23","mode":"AUTO"}
+2026-10-22T08:24:48.187Z ACK dash-mvj9ze1h-23 result=APPLIED reason=AUTO
+2026-10-22T08:24:48.187Z MQTT command dash-mvj9ze1h-23: mode=AUTO
+2026-10-22T08:24:48.187Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvj9ze1h-22","mode":"AUTO"}
+2026-10-22T08:24:48.187Z RELAY fan GPIO26 ON -> OFF
+2026-10-22T08:24:48.187Z ACK dash-mvj9ze1h-22 result=APPLIED reason=AUTO
+2026-10-22T08:24:48.187Z MQTT command dash-mvj9ze1h-22: mode=AUTO
+2026-10-22T08:24:49.617Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:49.617Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:49.617Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:24:52.881Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:52.881Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:52.881Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:24:53.701Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"auto-mvj9zibg-24","mode":"MANUAL","state":"OFF","ttl_s":900}
+2026-10-22T08:24:53.701Z ACK auto-mvj9zibg-24 result=APPLIED
+2026-10-22T08:24:53.701Z MQTT command auto-mvj9zibg-24: mode=MANUAL state=OFF ttl_s=900
+2026-10-22T08:24:53.701Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"big300-mvj9zhsx","mode":"MANUAL","state":"OFF","ttl_s":60,"note":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+2026-10-22T08:24:53.701Z ACK big300-mvj9zhsx result=APPLIED
+2026-10-22T08:24:53.906Z MQTT command big300-mvj9zhsx: mode=MANUAL state=OFF ttl_s=60
+2026-10-22T08:24:54.723Z CMD rx garden/orchid/orchid-01/config {
+2026-10-22T08:24:54.723Z           "request_id": "cfgbig-mvj9zhsx",
+2026-10-22T08:24:54.723Z           "mist_rh_on": 65,
+2026-10-22T08:24:54.723Z           "mist_rh_off": 80,
+2026-10-22T08:24:54.723Z           "fan_temp_on": 33,
+2026-10-22T08:24:54.723Z           "fan_temp_off": 31,
+2026-10-22T08:24:54.723Z           "light_on_adc": 2200,
+2026-10-22T08:24:54.723Z           "light_off_adc": 1800,
+2026-10-22T08:24:54.723Z           "water_low_adc": 1200,
+2026-10-22T08:24:54.723Z           "water_refilled_adc": 1500
+2026-10-22T08:24:54.723Z }
+2026-10-22T08:24:54.928Z CONFIG updated: mist_rh_on=65.0 mist_rh_off=80.0 fan_temp_on=33.0 light_on=2200 water_low=1200
+2026-10-22T08:24:54.928Z ACK cfgbig-mvj9zhsx result=APPLIED reason=CONFIG
+2026-10-22T08:24:55.744Z MQTT command rejected: payload too large length=420 (max 383)
+2026-10-22T08:24:55.745Z ACK big420-mvj9zhsx result=REJECTED reason=PAYLOAD_TOO_LARGE
+2026-10-22T08:24:56.153Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:56.153Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:56.153Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:24:56.358Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"auto-mvj9zhsx","mode":"AUTO"}
+2026-10-22T08:24:56.358Z ACK auto-mvj9zhsx result=APPLIED reason=AUTO
+2026-10-22T08:24:56.358Z MQTT command auto-mvj9zhsx: mode=AUTO
+2026-10-22T08:24:59.415Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:24:59.415Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:24:59.415Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:25:02.892Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:02.892Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:02.892Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:25:04.524Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvj9zqta-25","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-22T08:25:04.524Z RELAY fan GPIO26 OFF -> ON
+2026-10-22T08:25:04.524Z ACK dash-mvj9zqta-25 result=APPLIED
+2026-10-22T08:25:04.524Z MQTT command dash-mvj9zqta-25: mode=MANUAL state=ON ttl_s=300
+2026-10-22T08:25:06.147Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:06.147Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:06.147Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:06.147Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvj9zs2n-26","mode":"MANUAL","state":"OFF","ttl_s":300}
+2026-10-22T08:25:06.147Z RELAY fan GPIO26 ON -> OFF
+2026-10-22T08:25:06.147Z ACK dash-mvj9zs2n-26 result=APPLIED
+2026-10-22T08:25:06.352Z MQTT command dash-mvj9zs2n-26: mode=MANUAL state=OFF ttl_s=300
+2026-10-22T08:25:07.369Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"dash-mvj9zt0f-27","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-22T08:25:07.369Z RELAY light GPIO27 OFF -> ON
+2026-10-22T08:25:07.369Z ACK dash-mvj9zt0f-27 result=APPLIED
+2026-10-22T08:25:07.369Z MQTT command dash-mvj9zt0f-27: mode=MANUAL state=ON ttl_s=300
+2026-10-22T08:25:08.386Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvj9ztpx-28","mode":"AUTO"}
+2026-10-22T08:25:08.386Z ACK dash-mvj9ztpx-28 result=APPLIED reason=AUTO
+2026-10-22T08:25:08.386Z MQTT command dash-mvj9ztpx-28: mode=AUTO
+2026-10-22T08:25:08.386Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"dash-mvj9ztpx-30","mode":"AUTO"}
+2026-10-22T08:25:08.386Z RELAY light GPIO27 ON -> OFF
+2026-10-22T08:25:08.386Z ACK dash-mvj9ztpx-30 result=APPLIED reason=AUTO
+2026-10-22T08:25:08.590Z MQTT command dash-mvj9ztpx-30: mode=AUTO
+2026-10-22T08:25:08.590Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvj9ztpx-29","mode":"AUTO"}
+2026-10-22T08:25:08.590Z ACK dash-mvj9ztpx-29 result=APPLIED reason=AUTO
+2026-10-22T08:25:08.590Z MQTT command dash-mvj9ztpx-29: mode=AUTO
+2026-10-22T08:25:09.611Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:09.611Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:09.611Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:25:10.636Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvj9zvg4-31","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:25:10.637Z RELAY fan GPIO26 OFF -> ON
+2026-10-22T08:25:10.637Z ACK dash-mvj9zvg4-31 result=APPLIED
+2026-10-22T08:25:10.637Z MQTT command dash-mvj9zvg4-31: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:25:12.882Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:12.882Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:12.882Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:16.149Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:16.149Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:16.149Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:19.409Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:19.410Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:19.410Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:22.667Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:22.667Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:22.667Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:25.936Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:25.936Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:25.936Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:29.000Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:29.000Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:29.203Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:32.269Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:32.269Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:32.474Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:35.532Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:35.533Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:35.533Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:38.800Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:38.800Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:38.800Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:42.070Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:42.070Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:42.070Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:45.130Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:45.130Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:45.334Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:48.404Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:48.404Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:48.404Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:51.669Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:51.669Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:51.669Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:54.934Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:54.934Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:54.934Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:25:58.001Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:25:58.207Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:25:58.207Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:26:01.263Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:01.263Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:01.263Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:26:04.521Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:04.521Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:04.521Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:26:07.790Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:07.790Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:07.790Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:26:10.849Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:11.054Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:11.054Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:26:14.115Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:14.116Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:14.116Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:26:17.374Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:17.374Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:17.374Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:26:20.640Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:20.640Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:20.640Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:26:23.697Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:23.902Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:23.902Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:26:26.965Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:26.966Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:26.966Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:26:27.987Z MQTT override expired: fan -> AUTO
+2026-10-22T08:26:27.987Z RELAY fan GPIO26 ON -> OFF
+2026-10-22T08:26:28.191Z >> TX FAULT WATER LOW
+2026-10-22T08:26:28.393Z TEST fault injection: FAULT WATER LOW
+2026-10-22T08:26:30.234Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:30.234Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:30.234Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:26:33.494Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:33.494Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:33.494Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:26:36.554Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=2745 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:36.554Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 2745 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:36.554Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:26:39.822Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=2209 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:39.822Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 2209 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:39.822Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:26:43.092Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=1672 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:43.092Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 1672 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:43.092Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:26:46.151Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=1136 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:46.151Z STATE mist IDLE -> WATER_LOCKOUT
+2026-10-22T08:26:46.356Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 1136 | Mist: WATER_LOCKOUT | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:46.356Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:26:48.399Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja1yua-32","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:26:48.399Z ACK dash-mvja1yua-32 result=REJECTED reason=WATER_LOCKOUT
+2026-10-22T08:26:48.805Z >> TX FAULT WATER OFF
+2026-10-22T08:26:49.006Z TEST fault injection: FAULT WATER OFF
+2026-10-22T08:26:49.412Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=600 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:49.617Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 600 | Mist: WATER_LOCKOUT | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:49.617Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:26:52.677Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=600 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:52.677Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 600 | Mist: WATER_LOCKOUT | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:52.677Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:26:56.002Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=1136 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:56.002Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 1136 | Mist: WATER_LOCKOUT | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:56.002Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:26:59.332Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=1672 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:26:59.332Z STATE mist WATER_LOCKOUT -> IDLE
+2026-10-22T08:26:59.332Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 1672 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:26:59.332Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:27:00.576Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja286s-33","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-22T08:27:00.576Z RELAY mist GPIO25 OFF -> ON
+2026-10-22T08:27:00.576Z ACK dash-mvja286s-33 result=APPLIED
+2026-10-22T08:27:00.576Z MQTT command dash-mvja286s-33: mode=MANUAL state=ON ttl_s=300
+2026-10-22T08:27:02.643Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=2209 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:02.853Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 2209 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:02.853Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:27:04.304Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja2b7j-34","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:27:04.304Z ACK dash-mvja2b7j-34 result=APPLIED
+2026-10-22T08:27:04.304Z MQTT command dash-mvja2b7j-34: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:27:05.968Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=2745 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:06.179Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 2745 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:06.179Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:27:07.215Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja2dj0-35","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:27:07.215Z ACK dash-mvja2dj0-35 result=APPLIED
+2026-10-22T08:27:07.215Z MQTT command dash-mvja2dj0-35: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:27:09.287Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:09.495Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:09.495Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:27:10.322Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja2fuh-36","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:27:10.322Z ACK dash-mvja2fuh-36 result=APPLIED
+2026-10-22T08:27:10.322Z MQTT command dash-mvja2fuh-36: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:27:12.616Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:12.826Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:12.826Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:27:13.446Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja2i5x-37","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:27:13.446Z ACK dash-mvja2i5x-37 result=APPLIED
+2026-10-22T08:27:13.446Z MQTT command dash-mvja2i5x-37: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:27:15.927Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:15.927Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:15.927Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:27:16.347Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja2khe-38","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:27:16.347Z ACK dash-mvja2khe-38 result=APPLIED
+2026-10-22T08:27:16.347Z MQTT command dash-mvja2khe-38: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:27:19.264Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:19.264Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:19.264Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:27:19.474Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja2msv-39","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:27:19.474Z ACK dash-mvja2msv-39 result=APPLIED
+2026-10-22T08:27:19.474Z MQTT command dash-mvja2msv-39: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:27:20.516Z STATE mist IDLE -> COOLDOWN
+2026-10-22T08:27:20.516Z MQTT mist safety limit reached; entering cooldown
+2026-10-22T08:27:20.516Z RELAY mist GPIO25 ON -> OFF
+2026-10-22T08:27:22.383Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja2p4b-40","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:27:22.383Z ACK dash-mvja2p4b-40 result=REJECTED reason=MIST_COOLDOWN
+2026-10-22T08:27:22.587Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:22.587Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:22.587Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:27:25.897Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:25.897Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:25.897Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:27:26.308Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvja2s7n-41","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:27:26.308Z RELAY fan GPIO26 OFF -> ON
+2026-10-22T08:27:26.308Z ACK dash-mvja2s7n-41 result=APPLIED
+2026-10-22T08:27:26.308Z MQTT command dash-mvja2s7n-41: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:27:26.932Z >> TX FAULT CMD DROP ON
+2026-10-22T08:27:27.142Z TEST fault injection: FAULT CMD DROP ON
+2026-10-22T08:27:28.794Z TEST command dropped without ACK: garden/orchid/orchid-01/cmd/light
+2026-10-22T08:27:29.215Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:29.215Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:29.215Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:27:32.541Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:32.541Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:32.541Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:27:35.654Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:35.654Z STATE mist COOLDOWN -> IDLE
+2026-10-22T08:27:35.654Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:35.654Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:27:36.065Z >> TX FAULT CMD DROP OFF
+2026-10-22T08:27:36.274Z TEST fault injection: FAULT CMD DROP OFF
+2026-10-22T08:27:37.741Z >> TX FAULT MQTT DROP
+2026-10-22T08:27:37.951Z TEST fault injection: FAULT MQTT DROP
+2026-10-22T08:27:37.951Z MQTT disconnected; retrying
+2026-10-22T08:27:37.951Z SAFETY MQTT link lost; manual overrides cleared -> AUTO (1 active)
+2026-10-22T08:27:37.951Z RELAY fan GPIO26 ON -> OFF
+2026-10-22T08:27:37.951Z MQTT connecting to broker.emqx.io:1883
+2026-10-22T08:27:38.579Z MQTT connect failed; state=3
+2026-10-22T08:27:38.785Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:38.785Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:38.785Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:27:41.479Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:41.479Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:41.479Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:27:43.143Z MQTT connecting to broker.emqx.io:1883
+2026-10-22T08:27:43.962Z MQTT connected; subscriptions=OK
+2026-10-22T08:27:44.169Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:44.169Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:44.169Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:27:45.007Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvja36mi-43","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-22T08:27:45.007Z RELAY fan GPIO26 OFF -> ON
+2026-10-22T08:27:45.007Z ACK dash-mvja36mi-43 result=APPLIED
+2026-10-22T08:27:45.007Z MQTT command dash-mvja36mi-43: mode=MANUAL state=ON ttl_s=300
+2026-10-22T08:27:45.629Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja373p-44","mode":"AUTO"}
+2026-10-22T08:27:45.629Z ACK dash-mvja373p-44 result=APPLIED reason=AUTO
+2026-10-22T08:27:45.629Z MQTT command dash-mvja373p-44: mode=AUTO
+2026-10-22T08:27:45.839Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvja373p-45","mode":"AUTO"}
+2026-10-22T08:27:45.839Z RELAY fan GPIO26 ON -> OFF
+2026-10-22T08:27:45.839Z ACK dash-mvja373p-45 result=APPLIED reason=AUTO
+2026-10-22T08:27:45.839Z MQTT command dash-mvja373p-45: mode=AUTO
+2026-10-22T08:27:45.839Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"dash-mvja373q-46","mode":"AUTO"}
+2026-10-22T08:27:45.839Z ACK dash-mvja373q-46 result=APPLIED reason=AUTO
+2026-10-22T08:27:45.839Z MQTT command dash-mvja373q-46: mode=AUTO
+2026-10-22T08:27:47.494Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:47.704Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:47.704Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:27:50.813Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:50.813Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:50.813Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:27:51.441Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"auto-mvja3biv-47","mode":"MANUAL","state":"OFF","ttl_s":900}
+2026-10-22T08:27:51.441Z ACK auto-mvja3biv-47 result=APPLIED
+2026-10-22T08:27:51.441Z MQTT command auto-mvja3biv-47: mode=MANUAL state=OFF ttl_s=900
+2026-10-22T08:27:54.154Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:54.154Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:54.154Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:27:57.488Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:27:57.488Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:27:57.488Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:27:57.488Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvja3gai-48","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-22T08:27:57.488Z RELAY fan GPIO26 OFF -> ON
+2026-10-22T08:27:57.488Z ACK dash-mvja3gai-48 result=APPLIED
+2026-10-22T08:27:57.698Z MQTT command dash-mvja3gai-48: mode=MANUAL state=ON ttl_s=300
+2026-10-22T08:27:59.156Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvja3hkc-49","mode":"MANUAL","state":"OFF","ttl_s":300}
+2026-10-22T08:27:59.156Z RELAY fan GPIO26 ON -> OFF
+2026-10-22T08:27:59.156Z ACK dash-mvja3hkc-49 result=APPLIED
+2026-10-22T08:27:59.156Z MQTT command dash-mvja3hkc-49: mode=MANUAL state=OFF ttl_s=300
+2026-10-22T08:27:59.780Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"dash-mvja3i1g-50","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-22T08:27:59.780Z RELAY light GPIO27 OFF -> ON
+2026-10-22T08:27:59.780Z ACK dash-mvja3i1g-50 result=APPLIED
+2026-10-22T08:27:59.780Z MQTT command dash-mvja3i1g-50: mode=MANUAL state=ON ttl_s=300
+2026-10-22T08:28:00.406Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja3iik-51","mode":"AUTO"}
+2026-10-22T08:28:00.406Z ACK dash-mvja3iik-51 result=APPLIED reason=AUTO
+2026-10-22T08:28:00.406Z MQTT command dash-mvja3iik-51: mode=AUTO
+2026-10-22T08:28:00.616Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvja3iil-52","mode":"AUTO"}
+2026-10-22T08:28:00.616Z ACK dash-mvja3iil-52 result=APPLIED reason=AUTO
+2026-10-22T08:28:00.616Z MQTT command dash-mvja3iil-52: mode=AUTO
+2026-10-22T08:28:00.616Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"dash-mvja3iil-53","mode":"AUTO"}
+2026-10-22T08:28:00.616Z RELAY light GPIO27 ON -> OFF
+2026-10-22T08:28:00.616Z ACK dash-mvja3iil-53 result=APPLIED reason=AUTO
+2026-10-22T08:28:00.616Z MQTT command dash-mvja3iil-53: mode=AUTO
+2026-10-22T08:28:00.826Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:00.826Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:00.826Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:28:02.691Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvja3k8b-54","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:28:02.691Z RELAY fan GPIO26 OFF -> ON
+2026-10-22T08:28:02.691Z ACK dash-mvja3k8b-54 result=APPLIED
+2026-10-22T08:28:02.691Z MQTT command dash-mvja3k8b-54: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:28:04.137Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:04.137Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:04.137Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:07.223Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:07.224Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:07.224Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:10.554Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:10.554Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:10.554Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:13.682Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:13.682Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:13.682Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:17.009Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:17.009Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:17.009Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:20.131Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:20.131Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:20.131Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:23.463Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:23.463Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:23.463Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:26.565Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:26.775Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:26.775Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:29.886Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:29.886Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:29.886Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:33.211Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:33.211Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:33.211Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:36.327Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:36.531Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:36.531Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:39.656Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:39.656Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:39.656Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:42.981Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:42.981Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:42.981Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:46.100Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:46.100Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:46.100Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:49.430Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:49.430Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:49.430Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:52.537Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:52.537Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:52.537Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:55.846Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:55.846Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:55.846Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:28:59.186Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:28:59.186Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:28:59.186Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:29:02.318Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:02.318Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:02.318Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:29:05.652Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:05.652Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:05.652Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:29:08.771Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:08.771Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:08.771Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:29:12.096Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:12.097Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:12.097Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:29:15.216Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:15.424Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:15.424Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:29:18.558Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:18.558Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:18.558Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:29:20.433Z MQTT override expired: fan -> AUTO
+2026-10-22T08:29:20.433Z RELAY fan GPIO26 ON -> OFF
+2026-10-22T08:29:20.634Z >> TX FAULT WATER LOW
+2026-10-22T08:29:20.844Z TEST fault injection: FAULT WATER LOW
+2026-10-22T08:29:21.881Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:21.881Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:21.881Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:29:24.993Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:24.993Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:24.993Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:29:28.320Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=2745 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:28.320Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 2745 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:28.320Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:29:31.594Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=2209 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:31.594Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 2209 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:31.594Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:29:34.660Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=1672 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:34.862Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 1672 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:34.862Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:29:37.928Z CAL raw_light=1410 filtered_light=1410 raw_water=600 filtered_water=1136 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:37.928Z STATE mist IDLE -> WATER_LOCKOUT
+2026-10-22T08:29:37.928Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 1136 | Mist: WATER_LOCKOUT | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:37.928Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:29:39.763Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja5n5d-55","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:29:39.763Z ACK dash-mvja5n5d-55 result=REJECTED reason=WATER_LOCKOUT
+2026-10-22T08:29:39.968Z >> TX FAULT WATER OFF
+2026-10-22T08:29:40.173Z TEST fault injection: FAULT WATER OFF
+2026-10-22T08:29:41.199Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=600 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:41.199Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 600 | Mist: WATER_LOCKOUT | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:41.199Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:29:44.459Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=600 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:44.459Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 600 | Mist: WATER_LOCKOUT | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:44.459Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:29:47.524Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=1136 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:47.524Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 1136 | Mist: WATER_LOCKOUT | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:47.524Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:29:50.787Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=1672 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:50.787Z STATE mist WATER_LOCKOUT -> IDLE
+2026-10-22T08:29:50.787Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 1672 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:50.787Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:29:51.799Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja5whc-56","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-22T08:29:51.800Z RELAY mist GPIO25 OFF -> ON
+2026-10-22T08:29:51.800Z ACK dash-mvja5whc-56 result=APPLIED
+2026-10-22T08:29:52.005Z MQTT command dash-mvja5whc-56: mode=MANUAL state=ON ttl_s=300
+2026-10-22T08:29:54.049Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=2209 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:54.049Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 2209 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:54.049Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:29:55.480Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja5z9m-57","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:29:55.480Z ACK dash-mvja5z9m-57 result=APPLIED
+2026-10-22T08:29:55.480Z MQTT command dash-mvja5z9m-57: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:29:57.320Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=2745 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:29:57.321Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 2745 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:29:57.321Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:29:58.540Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja61l1-58","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:29:58.540Z ACK dash-mvja61l1-58 result=APPLIED
+2026-10-22T08:29:58.540Z MQTT command dash-mvja61l1-58: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:30:00.375Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:00.580Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:00.580Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:30:01.603Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja63wh-59","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:30:01.603Z ACK dash-mvja63wh-59 result=APPLIED
+2026-10-22T08:30:01.603Z MQTT command dash-mvja63wh-59: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:30:03.636Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:03.636Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:03.636Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:30:04.453Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja667x-60","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:30:04.453Z ACK dash-mvja667x-60 result=APPLIED
+2026-10-22T08:30:04.453Z MQTT command dash-mvja667x-60: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:30:06.908Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:06.908Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:06.908Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:30:07.518Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja68jd-61","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:30:07.518Z ACK dash-mvja68jd-61 result=APPLIED
+2026-10-22T08:30:07.518Z MQTT command dash-mvja68jd-61: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:30:10.181Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:10.181Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:10.181Z OUTPUT mist=ON fan=OFF light=OFF
+2026-10-22T08:30:10.382Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja6aut-62","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:30:10.382Z ACK dash-mvja6aut-62 result=APPLIED
+2026-10-22T08:30:10.382Z MQTT command dash-mvja6aut-62: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:30:11.399Z STATE mist IDLE -> COOLDOWN
+2026-10-22T08:30:11.399Z MQTT mist safety limit reached; entering cooldown
+2026-10-22T08:30:11.400Z RELAY mist GPIO25 ON -> OFF
+2026-10-22T08:30:13.437Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:13.437Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:13.437Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:30:13.437Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja6d69-63","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:30:13.437Z ACK dash-mvja6d69-63 result=REJECTED reason=MIST_COOLDOWN
+2026-10-22T08:30:16.704Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:16.704Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:16.704Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:30:17.313Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvja6g9k-64","mode":"MANUAL","state":"ON","ttl_s":60}
+2026-10-22T08:30:17.518Z RELAY fan GPIO26 OFF -> ON
+2026-10-22T08:30:17.518Z ACK dash-mvja6g9k-64 result=APPLIED
+2026-10-22T08:30:17.518Z MQTT command dash-mvja6g9k-64: mode=MANUAL state=ON ttl_s=60
+2026-10-22T08:30:17.724Z >> TX FAULT CMD DROP ON
+2026-10-22T08:30:17.929Z TEST fault injection: FAULT CMD DROP ON
+2026-10-22T08:30:19.555Z TEST command dropped without ACK: garden/orchid/orchid-01/cmd/light
+2026-10-22T08:30:19.755Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:19.960Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:19.961Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:30:23.014Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:23.015Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: COOLDOWN | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:23.015Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:30:26.275Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:26.275Z STATE mist COOLDOWN -> IDLE
+2026-10-22T08:30:26.275Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:26.275Z OUTPUT mist=OFF fan=ON light=OFF
+2026-10-22T08:30:26.275Z >> TX FAULT CMD DROP OFF
+2026-10-22T08:30:26.476Z TEST fault injection: FAULT CMD DROP OFF
+2026-10-22T08:30:27.901Z >> TX FAULT MQTT DROP
+2026-10-22T08:30:28.104Z TEST fault injection: FAULT MQTT DROP
+2026-10-22T08:30:28.104Z MQTT disconnected; retrying
+2026-10-22T08:30:28.104Z SAFETY MQTT link lost; manual overrides cleared -> AUTO (1 active)
+2026-10-22T08:30:28.104Z RELAY fan GPIO26 ON -> OFF
+2026-10-22T08:30:28.104Z MQTT connecting to broker.emqx.io:1883
+2026-10-22T08:30:29.122Z MQTT connected; subscriptions=OK
+2026-10-22T08:30:29.327Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:29.532Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:29.532Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:30:30.352Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvja6q7p-66","mode":"MANUAL","state":"ON","ttl_s":300}
+2026-10-22T08:30:30.352Z RELAY fan GPIO26 OFF -> ON
+2026-10-22T08:30:30.352Z ACK dash-mvja6q7p-66 result=APPLIED
+2026-10-22T08:30:30.352Z MQTT command dash-mvja6q7p-66: mode=MANUAL state=ON ttl_s=300
+2026-10-22T08:30:31.370Z CMD rx garden/orchid/orchid-01/cmd/mist {"request_id":"dash-mvja6qx6-67","mode":"AUTO"}
+2026-10-22T08:30:31.371Z ACK dash-mvja6qx6-67 result=APPLIED reason=AUTO
+2026-10-22T08:30:31.371Z MQTT command dash-mvja6qx6-67: mode=AUTO
+2026-10-22T08:30:31.371Z CMD rx garden/orchid/orchid-01/cmd/fan {"request_id":"dash-mvja6qx7-68","mode":"AUTO"}
+2026-10-22T08:30:31.371Z RELAY fan GPIO26 ON -> OFF
+2026-10-22T08:30:31.371Z ACK dash-mvja6qx7-68 result=APPLIED reason=AUTO
+2026-10-22T08:30:31.575Z MQTT command dash-mvja6qx7-68: mode=AUTO
+2026-10-22T08:30:31.575Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"dash-mvja6qx7-69","mode":"AUTO"}
+2026-10-22T08:30:31.575Z ACK dash-mvja6qx7-69 result=APPLIED reason=AUTO
+2026-10-22T08:30:31.575Z MQTT command dash-mvja6qx7-69: mode=AUTO
+2026-10-22T08:30:32.791Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:32.791Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:32.791Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:30:36.053Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:36.053Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:36.053Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:30:36.659Z CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"auto-mvja6v31-70","mode":"MANUAL","state":"OFF","ttl_s":900}
+2026-10-22T08:30:36.659Z ACK auto-mvja6v31-70 result=APPLIED
+2026-10-22T08:30:36.659Z MQTT command auto-mvja6v31-70: mode=MANUAL state=OFF ttl_s=900
+2026-10-22T08:30:39.319Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:39.319Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:39.319Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:30:42.378Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:42.584Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:42.584Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:30:45.642Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:45.642Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:45.642Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:30:48.909Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:48.909Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:48.909Z OUTPUT mist=OFF fan=OFF light=OFF
+2026-10-22T08:30:52.170Z CAL raw_light=1410 filtered_light=1410 raw_water=3282 filtered_water=3282 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+2026-10-22T08:30:52.170Z T: 28.0 C | RH: 72.0 % | Light ADC: 1410 | Water ADC: 3282 | Mist: IDLE | Fan: OFF | Grow light: OFF
+2026-10-22T08:30:52.170Z OUTPUT mist=OFF fan=OFF light=OFF

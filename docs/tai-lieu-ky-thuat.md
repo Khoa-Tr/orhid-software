@@ -40,7 +40,7 @@ sequenceDiagram
     G-->>D: Last command "APPLIED, … ms", mở khóa nút, ghi Command history
 ```
 
-Nếu firmware từ chối (ví dụ `WATER_LOCKOUT`), relay không đổi và ACK là `REJECTED` kèm lý do. Nếu không có ACK trong 6 s, gateway báo `NO_ACK`. Log chạy thật trên Wokwi của tuần 8 sẽ được thêm vào `test-results/` sau lượt chạy firmware trên Wokwi (chưa có tại thời điểm viết tài liệu này).
+Nếu firmware từ chối (ví dụ `WATER_LOCKOUT`), relay không đổi và ACK là `REJECTED` kèm lý do. Nếu không có ACK trong 6 s, gateway báo `NO_ACK`. Log chạy thật trên Wokwi của tuần 8 (firmware thật, build `esp32dev_fault_test`, broker `broker.emqx.io`) nằm trong [`test-results/week8-m4/`](../test-results/week8-m4/README.md): 10 ca downlink kèm log từng lệnh (gửi → broker → `CMD rx` → `RELAY` → `ACK` → dashboard) và đối chiếu uplink Serial ↔ MQTT ↔ dashboard.
 
 ## 2. Sơ đồ đấu dây (Wokwi, `diagram.json`)
 
@@ -127,7 +127,7 @@ Lưu ý: tin `online` retained có thể còn sót trên broker công khai sau k
 | `state` | với `MANUAL` | `"ON"` / `"OFF"` | Trạng thái yêu cầu (chữ hoa, không dùng `true`/`false`) |
 | `ttl_s` | với `MANUAL` | số nguyên 1–3600 | Thời gian giữ lệnh tay; hết hạn firmware tự về AUTO. Dashboard cho chọn 60, 300, 900, 1800, 3600 |
 
-Toàn bộ payload phải nhỏ hơn 256 byte.
+Toàn bộ payload phải nhỏ hơn 384 byte (`commandBufferSize`). Payload từ 384 byte trở lên bị từ chối với ACK `PAYLOAD_TOO_LARGE` (nếu đọc được `request_id`); gói trên khoảng 470 byte thì thư viện MQTT của firmware (bộ đệm gói 512 byte) bỏ luôn, không ACK. Trước tuần 9 giới hạn là 256 byte và payload dài bị bỏ không ACK (BUG-02).
 
 ### 3.6. `ack`
 
@@ -149,7 +149,8 @@ Toàn bộ payload phải nhỏ hơn 256 byte.
 | `REJECTED` | `MIST_COOLDOWN` | `mist ON` khi bơm đang nghỉ sau lần phun |
 | `REJECTED` | `INVALID_CONFIG` | `config` có trường không phải số |
 | `REJECTED` | `CONFIG_OUT_OF_RANGE` | `config` ngoài giới hạn an toàn (bảng 3.7) |
-| — không ACK — | | Payload rỗng hoặc từ 256 byte, JSON sai, lệnh `cmd/…` thiếu `request_id`. Node-RED báo `NO_ACK` sau 6 s. (Gói `config` thiếu `request_id` vẫn được ACK với `request_id` là `"cfg"`.) |
+| `REJECTED` | `PAYLOAD_TOO_LARGE` | Payload lệnh/config từ 384 byte trở lên (`request_id` dài tối đa 96 ký tự mới được ACK) |
+| — không ACK — | | Payload rỗng, gói trên khoảng 470 byte, JSON sai, lệnh `cmd/…` thiếu `request_id`. Node-RED báo `NO_ACK` sau 6 s. (Gói `config` thiếu `request_id` vẫn được ACK với `request_id` là `"cfg"`.) |
 
 Mỗi bước downlink đều được firmware in ra Serial (115200 baud) để đối chiếu: `CMD rx <topic> <payload>` khi nhận, `RELAY <relay> GPIO<n> <cũ> -> <mới>` khi chân relay đổi, `ACK <request_id> result=… [reason=…]` khi gửi ACK.
 

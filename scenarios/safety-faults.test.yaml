@@ -1,8 +1,9 @@
-name: 'Orchid week 7 - DHT fault, water lockout, recovery and light cap'
+name: 'Orchid week 7 - DHT fault, water lockout and recovery'
 version: 1
 author: 'orhid'
 
-# Chay voi build esp32dev_fault_test (phun 15 s, cooldown 10 s, den AUTO toi da 20 s).
+# Chay voi build esp32dev_fault_test (phun 15 s, cooldown 10 s).
+# Buoc S5 (gioi han thoi gian bat den AUTO) nam o light-cap.test.yaml de moi phien Wokwi CI duoi 5 phut.
 # Loi DHT duoc gia lap bang lenh Serial chi co trong build test.
 steps:
   - wait-serial: 'Orchid garden controller started'
@@ -40,16 +41,3 @@ steps:
   - wait-serial: 'STATE mist SENSOR_FAULT -> COOLDOWN'
   - wait-serial: 'STATE mist COOLDOWN -> IDLE'
   - wait-serial: 'STATE mist IDLE -> RUNNING'
-
-  # S5: den AUTO cuc bo khong bat qua gioi han, chi bat lai sau khi thay troi sang
-  - set-control: { part-id: dht, control: humidity, value: 72 }
-  - set-control: { part-id: ldr, control: lux, value: 10 }
-  - wait-serial: 'STATE light -> ON'
-  - wait-serial: 'SAFETY light AUTO on-time limit reached'
-  - wait-serial: 'STATE light -> OFF'
-  - delay: 10000ms
-  - wait-serial: 'Grow light: OFF'
-  - set-control: { part-id: ldr, control: lux, value: 1000 }
-  - delay: 15000ms
-  - set-control: { part-id: ldr, control: lux, value: 10 }
-  - wait-serial: 'STATE light -> ON'

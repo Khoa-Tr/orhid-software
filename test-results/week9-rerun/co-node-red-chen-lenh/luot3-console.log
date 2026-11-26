@@ -1,0 +1,374 @@
+== Build firmware esp32dev ==
+== Chay scenarios/fan-temp.test.yaml voi esp32dev (quat theo nhiet do) ==
+Wokwi CLI v0.29.0 (940b7237d26f)
+Connected to Wokwi Simulation API 1.0.0-20261020-gc04f892e
+Starting simulation...
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:1156
+load:0x40078000,len:11456
+ho 0 tail 12 room 4
+load:0x40080400,len:2972
+entry 0x400805dc
+Orchid garden controller started
+[Orchid week 3 - fan by temperature] Expected text matched: "Orchid garden controller started"
+[Orchid week 3 - fan by temperature] delay 15000ms
+CAL columns: raw_light filtered_light raw_water filtered_water raw_temp filtered_temp raw_humidity filtered_humidity
+MQTT device=orchid-01 broker=broker.emqx.io:1883
+MQTT topics: telemetry/state/availability/cmd/{mist,fan,light}/ack
+MQTT Wi-Fi defaults to Wokwi-GUEST; configure orchid_secrets.h for a local network
+NET Wi-Fi connecting to Wokwi-GUEST
+NET Wi-Fi connected; IP=10.13.37.2
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+MQTT connecting to broker.emqx.io:1883
+MQTT connected; subscriptions=OK
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"auto-mvj7hlhc-104","mode":"MANUAL","state":"OFF","ttl_s":900}
+ACK auto-mvj7hlhc-104 result=APPLIED
+MQTT command auto-mvj7hlhc-104: mode=MANUAL state=OFF ttl_s=900
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+[Orchid week 3 - fan by temperature] Expected text matched: "Mist: IDLE | Fan: OFF | Grow light: OFF"
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=34.0 filtered_temp=29.2 raw_humidity=72.0 filtered_humidity=72.0
+T: 29.2 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=34.0 filtered_temp=30.4 raw_humidity=72.0 filtered_humidity=72.0
+T: 30.4 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=34.0 filtered_temp=31.6 raw_humidity=72.0 filtered_humidity=72.0
+T: 31.6 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=34.0 filtered_temp=32.8 raw_humidity=72.0 filtered_humidity=72.0
+T: 32.8 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=34.0 filtered_temp=34.0 raw_humidity=72.0 filtered_humidity=72.0
+STATE fan -> ON
+[Orchid week 3 - fan by temperature] Expected text matched: "STATE fan -> ON"
+[Orchid week 3 - fan by temperature] delay 15000ms
+RELAY fan GPIO26 OFF -> ON
+T: 34.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=32.0 filtered_temp=33.6 raw_humidity=72.0 filtered_humidity=72.0
+T: 33.6 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=32.0 filtered_temp=33.2 raw_humidity=72.0 filtered_humidity=72.0
+T: 33.2 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=32.0 filtered_temp=32.8 raw_humidity=72.0 filtered_humidity=72.0
+T: 32.8 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=32.0 filtered_temp=32.4 raw_humidity=72.0 filtered_humidity=72.0
+T: 32.4 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=32.0 filtered_temp=32.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 32.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=32.0 filtered_temp=32.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 32.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON
+[Orchid week 3 - fan by temperature] Expected text matched: "Fan: ON"
+ | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=30.0 filtered_temp=31.6 raw_humidity=72.0 filtered_humidity=72.0
+T: 31.6 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=30.0 filtered_temp=31.2 raw_humidity=72.0 filtered_humidity=72.0
+T: 31.2 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=30.0 filtered_temp=30.8 raw_humidity=72.0 filtered_humidity=72.0
+STATE fan -> OFF
+[Orchid week 3 - fan by temperature] Expected text matched: "STATE fan -> OFF"
+[Orchid week 3 - fan by temperature] Scenario completed successfully
+PASS: fan-temp (117s)
+TAT CA SCENARIO PASS; log tong hop: /Users/mac/Downloads/orhid/orhid-software/test-results/week9-rerun/serial.log
+exit-fan-temp 0
+== Build firmware esp32dev ==
+== Chay scenarios/fan-humidity.test.yaml voi esp32dev (quat theo do am) ==
+Wokwi CLI v0.29.0 (940b7237d26f)
+Connected to Wokwi Simulation API 1.0.0-20261020-gc04f892e
+Starting simulation...
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:1156
+load:0x40078000,len:11456
+ho 0 tail 12 room 4
+load:0x40080400,len:2972
+entry 0x400805dc
+Orchid garden controller started
+[Orchid week 3 - fan by humidity] Expected text matched: "Orchid garden controller started"
+[Orchid week 3 - fan by humidity] delay 15000ms
+CAL columns: raw_light filtered_light raw_water filtered_water raw_temp filtered_temp raw_humidity filtered_humidity
+MQTT device=orchid-01 broker=broker.emqx.io:1883
+MQTT topics: telemetry/state/availability/cmd/{mist,fan,light}/ack
+MQTT Wi-Fi defaults to Wokwi-GUEST; configure orchid_secrets.h for a local network
+NET Wi-Fi connecting to Wokwi-GUEST
+NET Wi-Fi connected; IP=10.13.37.2
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+MQTT connecting to broker.emqx.io:1883
+MQTT connected; subscriptions=OK
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"auto-mvj7k6gn-105","mode":"MANUAL","state":"OFF","ttl_s":900}
+ACK auto-mvj7k6gn-105 result=APPLIED
+MQTT command auto-mvj7k6gn-105: mode=MANUAL state=OFF ttl_s=900
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+[Orchid week 3 - fan by humidity] Expected text matched: "Mist: IDLE | Fan: OFF | Grow light: OFF"
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=93.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=93.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=93.0 filtered_humidity=76.2
+T: 28.0 C | RH: 76.2 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=93.0 filtered_humidity=80.4
+T: 28.0 C | RH: 80.4 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=93.0 filtered_humidity=84.6
+T: 28.0 C | RH: 84.6 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=93.0 filtered_humidity=88.8
+T: 28.0 C | RH: 88.8 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=93.0 filtered_humidity=93.0
+STATE fan -> ON
+[Orchid week 3 - fan by humidity] Expected text matched: "STATE fan -> ON"
+[Orchid week 3 - fan by humidity] delay 15000ms
+RELAY fan GPIO26 OFF -> ON
+T: 28.0 C | RH: 93.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=87.0 filtered_humidity=91.8
+T: 28.0 C | RH: 91.8 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=87.0 filtered_humidity=90.6
+T: 28.0 C | RH: 90.6 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=87.0 filtered_humidity=89.4
+T: 28.0 C | RH: 89.4 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=87.0 filtered_humidity=88.2
+T: 28.0 C | RH: 88.2 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=87.0 filtered_humidity=87.0
+T: 28.0 C | RH: 87.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=87.0 filtered_humidity=87.0
+T: 28.0 C | RH: 87.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON
+[Orchid week 3 - fan by humidity] Expected text matched: "Fan: ON"
+ | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=80.0 filtered_humidity=85.6
+T: 28.0 C | RH: 85.6 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: ON | Grow light: OFF
+OUTPUT mist=OFF fan=ON light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=80.0 filtered_humidity=84.2
+STATE fan -> OFF
+[Orchid week 3 - fan by humidity] Expected text matched: "STATE fan -> OFF"
+[Orchid week 3 - fan by humidity] Scenario completed successfully
+PASS: fan-humidity (189s)
+TAT CA SCENARIO PASS; log tong hop: /Users/mac/Downloads/orhid/orhid-software/test-results/week9-rerun/serial.log
+exit-fan-humidity 0
+== Build firmware esp32dev_fault_test ==
+== Chay scenarios/light-cap.test.yaml voi esp32dev_fault_test (den AUTO toi da 20s) ==
+Wokwi CLI v0.29.0 (940b7237d26f)
+Connected to Wokwi Simulation API 1.0.0-20261020-gc04f892e
+Starting simulation...
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:1156
+load:0x40078000,len:11456
+ho 0 tail 12 room 4
+load:0x40080400,len:2972
+entry 0x400805dc
+Orchid garden controller started
+[Orchid week 7 - light AUTO on-time cap] Expected text matched: "Orchid garden controller started"
+[Orchid week 7 - light AUTO on-time cap] delay 15000ms
+CAL columns: raw_light filtered_light raw_water filtered_water raw_temp filtered_temp raw_humidity filtered_humidity
+MQTT device=orchid-01 broker=broker.emqx.io:1883
+MQTT topics: telemetry/state/availability/cmd/{mist,fan,light}/ack
+MQTT Wi-Fi defaults to Wokwi-GUEST; configure orchid_secrets.h for a local network
+TEST build: serial FAULT DHT ON|OFF, FAULT CMD DROP ON|OFF, FAULT WATER LOW|OFF, FAULT MQTT DROP
+NET Wi-Fi connecting to Wokwi-GUEST
+NET Wi-Fi connected; IP=10.13.37.2
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+MQTT connecting to broker.emqx.io:1883
+MQTT connected; subscriptions=OK
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"auto-mvj7od6v-106","mode":"MANUAL","state":"OFF","ttl_s":900}
+ACK auto-mvj7od6v-106 result=APPLIED
+MQTT command auto-mvj7od6v-106: mode=MANUAL state=OFF ttl_s=900
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=680 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+[Orchid week 7 - light AUTO on-time cap] Expected text matched: "Mist: IDLE | Fan: OFF | Grow light: OFF"
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=3413 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=3413 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=3413 filtered_light=1226 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 1226 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=3413 filtered_light=1773 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 1773 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=3413 filtered_light=2319 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+STATE light -> ON
+[Orchid week 7 - light AUTO on-time cap] Expected text matched: "STATE light -> ON"
+T: 28.0 C | RH: 72.0 % | Light ADC: 2319 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: ON
+OUTPUT mist=OFF fan=OFF light=OFF
+CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"auto-mvj7pq17-107","mode":"MANUAL","state":"ON","ttl_s":900}
+RELAY light GPIO27 OFF -> ON
+ACK auto-mvj7pq17-107 result=APPLIED
+MQTT command auto-mvj7pq17-107: mode=MANUAL state=ON ttl_s=900
+CAL raw_light=3413 filtered_light=2866 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 2866 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: ON
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=3413 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: ON
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=3413 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: ON
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=3413 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: ON
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=3413 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: ON
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=3413 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: ON
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=3413 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: ON
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=3413 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+SAFETY light AUTO on-time limit reached
+[Orchid week 7 - light AUTO on-time cap] Expected text matched: "SAFETY light AUTO on-time limit reached"
+; off until daylight is seen
+STATE light -> OFF
+[Orchid week 7 - light AUTO on-time cap] Expected text matched: "STATE light -> OFF"
+[Orchid week 7 - light AUTO on-time cap] delay 10000ms
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=3413 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=3413 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=3413 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=3413 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=3413 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+[Orchid week 7 - light AUTO on-time cap] Expected text matched: "Grow light: OFF"
+[Orchid week 7 - light AUTO on-time cap] delay 15000ms
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=680 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=680 filtered_light=3413 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 3413 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=680 filtered_light=2866 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 2866 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=680 filtered_light=2319 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 2319 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=ON
+CAL raw_light=680 filtered_light=1773 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 1773 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=ON
+CMD rx garden/orchid/orchid-01/cmd/light {"request_id":"auto-mvj7s90m-108","mode":"MANUAL","state":"OFF","ttl_s":900}
+RELAY light GPIO27 ON -> OFF
+ACK auto-mvj7s90m-108 result=APPLIED
+MQTT command auto-mvj7s90m-108: mode=MANUAL state=OFF ttl_s=900
+CAL raw_light=680 filtered_light=1226 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 1226 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=3413 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=3413 filtered_light=680 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 680 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=3413 filtered_light=1226 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 1226 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=3413 filtered_light=1773 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+T: 28.0 C | RH: 72.0 % | Light ADC: 1773 | Water ADC: 2457 | Mist: IDLE | Fan: OFF | Grow light: OFF
+OUTPUT mist=OFF fan=OFF light=OFF
+CAL raw_light=3413 filtered_light=2319 raw_water=2457 filtered_water=2457 raw_temp=28.0 filtered_temp=28.0 raw_humidity=72.0 filtered_humidity=72.0
+STATE light -> ON
+[Orchid week 7 - light AUTO on-time cap] Expected text matched: "STATE light -> ON"
+[Orchid week 7 - light AUTO on-time cap] Scenario completed successfully
+PASS: light-cap (244s)
+TAT CA SCENARIO PASS; log tong hop: /Users/mac/Downloads/orhid/orhid-software/test-results/week9-rerun/serial.log
+exit-light-cap 0
+ALL DONE

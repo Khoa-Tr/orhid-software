@@ -1,0 +1,6 @@
+- Thời gian uplink: 2026-10-22T05:43:06.460Z → 2026-10-22T05:55:09.749Z (12.1 phút)
+- Dòng `T: …` trên Serial: 199; gói `telemetry` trên broker: 199
+- Serial ↔ MQTT khớp đủ 4 giá trị (nhiệt độ, độ ẩm, ADC ánh sáng, ADC nước): **199/199**; lệch: 0; Serial không có gói MQTT: 0
+- Độ trễ Serial → broker → máy ghi: trung vị 157 ms, p95 278 ms, lớn nhất 1891 ms
+- Mẫu dashboard (5 s/lần): 144; khớp với gói telemetry mới nhất: **144/144**; đơn vị °C và % đúng: có
+- Trạng thái kết nối trên dashboard trong lúc đọc: ONLINE 140, STALE 4

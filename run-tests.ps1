@@ -1,4 +1,5 @@
 # Chay tu dong bang test tuan 3 bang Wokwi CLI.
+# Tat Node-RED truoc khi chay: firmware dung chung broker va device orchid-01 voi dashboard.
 # Cach dung (PowerShell, dang o thu muc orhid):
 #   $env:WOKWI_CLI_TOKEN = "<token lay tu https://wokwi.com/dashboard/ci>"
 #   .\run-tests.ps1
@@ -28,9 +29,21 @@ if ($LASTEXITCODE -ne 0) { Write-Host "Build loi" -ForegroundColor Red; exit 1 }
 
 New-Item -ItemType Directory -Force -Path "test-results" | Out-Null
 
+# Scenario khong gui lenh MQTT nao. Firmware ma nhan "CMD rx" nghia la co Node-RED (cua ai do) dang dieu khien
+# orchid-01 tren broker cong khai -> ket qua khong con tin duoc. Tat Node-RED roi chay lai.
+function Assert-NoOutsideCommand([string]$scenario, [string]$log) {
+  if ((Test-Path $log) -and (Select-String -Path $log -Pattern "CMD rx" -Quiet)) {
+    Write-Host "FAIL: $scenario - firmware nhan lenh MQTT tu ngoai; tat Node-RED/dashboard dang chay roi chay lai" -ForegroundColor Red
+    exit 3
+  }
+}
+
 $scenarios = @(
-  "scenarios/mist-water.test.yaml",
-  "scenarios/fan-light.test.yaml",
+  "scenarios/mist.test.yaml",
+  "scenarios/water.test.yaml",
+  "scenarios/fan-temp.test.yaml",
+  "scenarios/fan-humidity.test.yaml",
+  "scenarios/light.test.yaml",
   "scenarios/sensor-filter.test.yaml"
 )
 
@@ -39,6 +52,7 @@ foreach ($scenario in $scenarios) {
   $log = "test-results/$name.serial.log"
   Write-Host "== Chay $scenario ==" -ForegroundColor Cyan
   & $cli . --scenario $scenario --timeout 270000 --serial-log-file $log
+  Assert-NoOutsideCommand $scenario $log
   if ($LASTEXITCODE -ne 0) {
     Write-Host "FAIL: $scenario (xem $log)" -ForegroundColor Red
     Get-ChildItem "test-results/*.serial.log" -ErrorAction SilentlyContinue |
@@ -66,6 +80,7 @@ function Invoke-TestBuildScenario([string]$envName, [string]$scenario, [string]$
 
     Write-Host "== Chay $scenario voi $envName ==" -ForegroundColor Cyan
     & $cli . --scenario $scenario --timeout 240000 --serial-log-file $log
+    Assert-NoOutsideCommand $scenario $log
     if ($LASTEXITCODE -ne 0) {
       Write-Host "FAIL: $scenario (xem $log)" -ForegroundColor Red
       exit $LASTEXITCODE
@@ -79,7 +94,9 @@ function Invoke-TestBuildScenario([string]$envName, [string]$scenario, [string]$
 Invoke-TestBuildScenario "esp32dev_timer_test" "scenarios/mist-timer.test.yaml" `
   "test-results/mist-timer.serial.log" "timer test 15s/10s"
 Invoke-TestBuildScenario "esp32dev_fault_test" "scenarios/safety-faults.test.yaml" `
-  "test-results/safety-faults.serial.log" "gia lap loi DHT/nuoc, den toi da 20s"
+  "test-results/safety-faults.serial.log" "gia lap loi DHT/nuoc va hoi phuc"
+Invoke-TestBuildScenario "esp32dev_fault_test" "scenarios/light-cap.test.yaml" `
+  "test-results/light-cap.serial.log" "den AUTO toi da 20s"
 Invoke-TestBuildScenario "esp32dev_fault_test" "scenarios/link-loss.test.yaml" `
   "test-results/link-loss.serial.log" "gia lap mat MQTT"
 
