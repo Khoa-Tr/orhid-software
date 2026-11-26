@@ -4,17 +4,11 @@
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 
-#if __has_include("orchid_secrets.h")
-#include "orchid_secrets.h"
-#endif
-
-#ifndef ORCHID_WIFI_SSID
+// File main.cpp dành riêng cho mô phỏng Wokwi (esp32dev / esp32dev_fault_test).
+// Wokwi bắt buộc dùng AP ảo Wokwi-GUEST, không mật khẩu.
+// Đối với mạch thật ESP32-S3, cấu hình Wi-Fi nằm trong src/s3_physical.cpp và include/orchid_secrets.h.
 #define ORCHID_WIFI_SSID "Wokwi-GUEST"
-#endif
-
-#ifndef ORCHID_WIFI_PASSWORD
 #define ORCHID_WIFI_PASSWORD ""
-#endif
 
 #ifndef ORCHID_DEVICE_ID
 #define ORCHID_DEVICE_ID "orchid-01"
@@ -55,8 +49,9 @@ float fanHumidityOff = 85.0f;     // %RH: điều kiện tắt quạt, đi cùng
 // Den bat khi ADC > lightOnAdc (troi toi), tat khi ADC < lightOffAdc (du sang)
 int lightOnAdc = 2200;            // ADC LDR: trên mức này (tối) bật đèn AUTO
 int lightOffAdc = 1800;           // ADC LDR: dưới mức này (đủ sáng) tắt đèn
-int waterLowAdc = 1200;           // ADC nước: dưới mức này -> WATER_LOCKOUT, cắt bơm, từ chối mist ON
-int waterRefilledAdc = 1500;      // ADC nước: từ mức này trở lên mới mở khóa bơm
+// [TAM THOI BO QUA RULE MUC NUOC DE TEST PHAN CUNG]
+int waterLowAdc = 0;           // Goc: 1200
+int waterRefilledAdc = 0;      // Goc: 1500
 #ifdef ORCHID_TIMER_TEST
 // Chỉ build test (esp32dev_timer_test / esp32dev_fault_test): rút ngắn để scenario chạy trong giới hạn phiên Wokwi.
 constexpr unsigned long maxMistDurationMs = 15000UL;

@@ -6,6 +6,7 @@ const guard = createGuard(loadUsers(process.env.ORCHID_AUTH_FILE));
 module.exports = {
   uiHost: "127.0.0.1",
   uiPort: Number(process.env.ORCHID_NODE_RED_PORT) || 1880,
+  httpStatic: "c:\\Users\\ACER\\OneDrive\\Documents\\PlatformIO\\Projects\\orhid\\web",
   flowFile: "flows.json",
   credentialSecret: "orchid-local-demo-only",
   adminAuth: guard.adminAuth,

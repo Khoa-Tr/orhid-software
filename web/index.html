@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OrchidSense Pro | Hệ Thống Giám Sát & Điều Khiển Vườn Lan Thông Minh</title>
+  
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Paho MQTT WebSocket Client -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            orchid: {
+              50: '#faf5ff',
+              100: '#f3e8ff',
+              200: '#e9d5ff',
+              300: '#d8b4fe',
+              400: '#c084fc',
+              500: '#a855f7',
+              600: '#9333ea',
+              700: '#7e22ce',
+              800: '#6b21a8',
+              900: '#581c87',
+              950: '#3b0764',
+            },
+            botanical: {
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              900: '#064e3b',
+              950: '#022c22',
+            },
+            deep: {
+              900: '#0b1120',
+              950: '#060913',
+            }
+          },
+          animation: {
+            'spin-slow': 'spin 3s linear infinite',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'water-wave': 'wave 4s ease-in-out infinite',
+            'glow-pulse': 'glow 2s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            wave: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-4px)' },
+            },
+            glow: {
+              '0%': { boxShadow: '0 0 15px rgba(16, 185, 129, 0.3)' },
+              '100%': { boxShadow: '0 0 30px rgba(16, 185, 129, 0.7)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ------------------------------------------------------------------------- */
+    /* THEME SYSTEM: LIGHT (Orchid Botanical Gradient) vs DARK (Deep Night)       */
+    /* ------------------------------------------------------------------------- */
+    
+    /* GIAO DIỆN SÁNG: Phối hợp Xanh lá Lan + Vàng Hoa Lan + Tím Trắng Hoa Lan */
+    html:not(.dark) body {
+      background: 
+        radial-gradient(circle at 10% 15%, rgba(16, 185, 129, 0.16) 0%, transparent 45%),
+        radial-gradient(circle at 90% 10%, rgba(250, 204, 21, 0.18) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(192, 132, 252, 0.22) 0%, transparent 45%),
+        radial-gradient(circle at 15% 85%, rgba(52, 211, 153, 0.18) 0%, transparent 40%),
+        linear-gradient(135deg, #f0fdf4 0%, #fefce8 32%, #faf5ff 68%, #ecfdf5 100%);
+      background-attachment: fixed;
+      color: #0f172a;
+    }
+
+    /* GIAO DIỆN TỐI: Botanical Cyber Glass Deep 950 */
+    html.dark body {
+      background: #060913;
+      background-attachment: fixed;
+      color: #f1f5f9;
+    }
+
+    /* Glassmorphism Panels */
+    .glass-panel {
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    /* Light Mode Glass Panel */
+    html:not(.dark) .glass-panel {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(16, 185, 129, 0.22);
+      box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.08), 0 4px 12px -2px rgba(168, 85, 247, 0.06);
+    }
+
+    /* Dark Mode Glass Panel */
+    html.dark .glass-panel {
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    
+    .glass-card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card-hover:hover {
+      transform: translateY(-3px);
+    }
+    html:not(.dark) .glass-card-hover:hover {
+      border-color: rgba(16, 185, 129, 0.45);
+      box-shadow: 0 16px 36px -10px rgba(16, 185, 129, 0.2);
+    }
+    html.dark .glass-card-hover:hover {
+      border-color: rgba(192, 132, 252, 0.3);
+      box-shadow: 0 12px 40px -10px rgba(168, 85, 247, 0.25);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(16, 185, 129, 0.3);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(16, 185, 129, 0.6);
+    }
+
+    /* Signature Gradient Titles */
+    .orchid-gradient-text {
+      background: linear-gradient(135deg, #059669 0%, #7e22ce 55%, #db2777 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    html.dark .orchid-gradient-text {
+      background: linear-gradient(135deg, #34d399 0%, #c084fc 55%, #f472b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .emerald-gradient-text {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    html.dark .emerald-gradient-text {
+      background: linear-gradient(135deg, #6ee7b7 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* FSM State Nodes */
+    .fsm-node {
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .fsm-node.active-state {
+      transform: scale(1.04);
+      filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.35));
+    }
+
+    /* Theme Switcher Toggle Transition */
+    .theme-toggle-slider {
+      transition: transform 0.25s ease-in-out, background-color 0.25s ease;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen selection:bg-botanical-500 selection:text-white relative overflow-x-hidden transition-colors duration-300">
+
+  <!-- ========================================================================= -->
+  <!-- AMBIENT BOTANICAL ORCHID GLOWS (Adapts to Light / Dark)                   -->
+  <!-- ========================================================================= -->
+  <div class="fixed top-[-10%] left-[-8%] w-[520px] h-[520px] rounded-full bg-emerald-500/20 dark:bg-botanical-500/10 blur-[130px] pointer-events-none -z-10"></div>
+  <div class="fixed top-[28%] right-[-10%] w-[580px] h-[580px] rounded-full bg-orchid-400/25 dark:bg-orchid-600/10 blur-[150px] pointer-events-none -z-10"></div>
+  <div class="fixed bottom-[-10%] left-[25%] w-[620px] h-[620px] rounded-full bg-amber-300/30 dark:bg-emerald-600/10 blur-[140px] pointer-events-none -z-10"></div>
+
+  <!-- ========================================================================= -->
+  <!-- TOP NAVIGATION HEADER                                                     -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-emerald-500/20 dark:border-white/10 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo & Branding -->
+      <div class="flex items-center space-x-3.5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-botanical-500 via-amber-400 to-orchid-500 p-[2px] shadow-lg shadow-botanical-500/20">
+          <div class="w-full h-full bg-white dark:bg-deep-900 rounded-[14px] flex items-center justify-center relative overflow-hidden transition-colors">
+            <i data-lucide="flower-2" class="w-7 h-7 text-botanical-600 dark:text-orchid-300 animate-pulse-slow"></i>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="font-display font-extrabold text-xl tracking-wide orchid-gradient-text">OrchidSense Pro</h1>
+            <span class="px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase rounded-full bg-emerald-500/15 dark:bg-orchid-500/20 text-emerald-700 dark:text-orchid-300 border border-emerald-500/30 dark:border-orchid-500/30">v2.5 IoT</span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 font-medium">Hệ Thống Tự Động Hóa Vi Khí Hậu & Phun Sương Vườn Lan</p>
+        </div>
+      </div>
+
+      <!-- Header Controls: Connectivity, Theme Switcher, Clock, E-STOP -->
+      <div class="flex items-center space-x-2.5 sm:space-x-3.5">
+        
+        <!-- MQTT Broker Connection Status Badge -->
+        <div id="mqtt-status-pill" class="hidden md:flex items-center space-x-2 px-3 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-semibold">
+          <span class="w-2 h-2 rounded-full bg-amber-500 dark:bg-amber-400 animate-ping"></span>
+          <span id="mqtt-status-text">Broker...</span>
+        </div>
+
+        <!-- Hardware Connection Badge: RÕ RÀNG & TRỰC QUAN -->
+        <div id="device-status-badge" class="flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-bold shadow-sm transition-all duration-300">
+          <span id="device-pulse-dot" class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+          <span id="device-status-text">PHẦN CỨNG: CHỜ KẾT NỐI</span>
+          <span id="device-last-seen" class="text-[10px] text-slate-500 dark:text-slate-400 font-mono hidden lg:inline">| Chờ ESP32...</span>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- THEME SWITCHER BUTTON (Sáng / Tối phong cách Vườn Lan)               -->
+        <!-- =================================================================== -->
+        <button id="theme-toggle-btn" onclick="toggleTheme()" title="Chuyển đổi Chế Độ Sáng (Vườn Lan Gradient) / Tối (Cyber Glass)" 
+                class="px-3 py-1.5 rounded-full bg-white/80 dark:bg-white/10 hover:bg-emerald-50 dark:hover:bg-white/20 border border-emerald-500/30 dark:border-white/15 text-slate-800 dark:text-slate-200 transition-all duration-300 flex items-center space-x-1.5 text-xs font-bold shadow-sm hover:scale-105 active:scale-95">
+          <span id="theme-icon" class="flex items-center">
+            <!-- Icon rendered dynamically via JS -->
+          </span>
+          <span id="theme-label" class="hidden sm:inline">Chế độ Sáng</span>
+        </button>
+
+        <!-- Live Clock -->
+        <div class="hidden xl:flex flex-col text-right font-mono text-xs text-slate-500 dark:text-slate-400 border-l border-emerald-500/20 dark:border-white/10 pl-3">
+          <span id="live-clock" class="text-slate-900 dark:text-white font-bold text-sm">--:--:--</span>
+          <span id="live-date">26/11/2026</span>
+        </div>
+
+        <!-- Emergency All Stop Quick Button -->
+        <button id="btn-emergency-stop" onclick="triggerEmergencyStop()" title="Dừng Khẩn Cấp Mọi Thiết Bị" class="px-3.5 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-600 border border-rose-500/40 text-rose-600 dark:text-rose-300 hover:text-white transition-all duration-300 flex items-center space-x-1.5 text-xs font-bold tracking-wide shadow-md">
+          <i data-lucide="octagon-alert" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">E-STOP</span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN DASHBOARD CONTENT                                                    -->
+  <!-- ========================================================================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    
+    <!-- BANNER: SYSTEM ALERT (Dynamically toggled) -->
+    <div id="system-alert-banner" class="hidden rounded-2xl p-4 bg-rose-500/15 border border-rose-500/40 flex items-start space-x-3 transition-all duration-500 shadow-lg">
+      <i data-lucide="alert-triangle" class="w-6 h-6 text-rose-500 shrink-0 mt-0.5"></i>
+      <div class="flex-1">
+        <h3 id="alert-banner-title" class="text-sm font-bold text-rose-700 dark:text-rose-300 uppercase tracking-wide">CẢNH BÁO BẢO VỆ AN TOÀN</h3>
+        <p id="alert-banner-msg" class="text-xs text-rose-800 dark:text-rose-200/90 mt-0.5 font-medium">Bơm phun sương bị khóa do cạn nước!</p>
+      </div>
+      <button onclick="dismissBanner()" class="text-rose-600 dark:text-rose-400 hover:text-rose-900 dark:hover:text-white text-xs font-mono font-bold">Đóng [✕]</button>
+    </div>
+
+    <!-- ======================================================================= -->
+    <!-- SECTION 1: 4 TELEMETRY SENSOR METRICS (HERO CARDS)                      -->
+    <!-- ======================================================================= -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      
+      <!-- Card 1: TEMPERATURE -->
+      <div class="glass-panel glass-card-hover rounded-3xl p-5 relative overflow-hidden group">
+        <div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-rose-500/10 blur-2xl group-hover:bg-rose-500/20 transition-all"></div>
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-500 dark:text-rose-400">
+              <i data-lucide="thermometer" class="w-5 h-5"></i>
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Nhiệt Độ</span>
+          </div>
+          <span id="temp-badge" class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">Bình thường</span>
+        </div>
+        
+        <div class="flex items-baseline space-x-2 my-2">
+          <span id="temp-val" class="font-display font-extrabold text-4xl tracking-tight text-slate-900 dark:text-white">--.-</span>
+          <span class="text-slate-500 dark:text-slate-400 font-display font-semibold text-lg">°C</span>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400 font-medium">
+          <span>Ngưỡng quạt: <strong class="text-amber-600 dark:text-amber-400">&gt; 33.0°C</strong></span>
+          <span id="temp-streak" class="text-slate-500">DHT22: OK</span>
+        </div>
+      </div>
+
+      <!-- Card 2: RELATIVE HUMIDITY -->
+      <div class="glass-panel glass-card-hover rounded-3xl p-5 relative overflow-hidden group">
+        <div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-botanical-500/15 blur-2xl group-hover:bg-botanical-500/25 transition-all"></div>
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-botanical-500/15 border border-botanical-500/30 flex items-center justify-center text-botanical-600 dark:text-botanical-400">
+              <i data-lucide="droplets" class="w-5 h-5"></i>
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Độ Ẩm Không Khí</span>
+          </div>
+          <span id="hum-badge" class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">Tối ưu</span>
+        </div>
+        
+        <div class="flex items-baseline space-x-2 my-2">
+          <span id="hum-val" class="font-display font-extrabold text-4xl tracking-tight text-slate-900 dark:text-white">--.-</span>
+          <span class="text-slate-500 dark:text-slate-400 font-display font-semibold text-lg">% RH</span>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400 font-medium">
+          <span>Bật bơm: <strong class="text-botanical-600 dark:text-botanical-400">&lt; 65%</strong></span>
+          <span>Dừng: <strong class="text-slate-700 dark:text-slate-300">&ge; 80%</strong></span>
+        </div>
+      </div>
+
+      <!-- Card 3: SUNLIGHT / LDR -->
+      <div class="glass-panel glass-card-hover rounded-3xl p-5 relative overflow-hidden group">
+        <div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-amber-500/15 blur-2xl group-hover:bg-amber-500/25 transition-all"></div>
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
+              <i data-lucide="sun-medium" class="w-5 h-5"></i>
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Cường Độ Sáng</span>
+          </div>
+          <span id="light-badge" class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30">Ban ngày</span>
+        </div>
+        
+        <div class="flex items-baseline space-x-2 my-2">
+          <span id="ldr-val" class="font-display font-extrabold text-4xl tracking-tight text-slate-900 dark:text-white">----</span>
+          <span class="text-slate-500 dark:text-slate-400 font-display font-semibold text-lg">ADC</span>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400 font-medium">
+          <span>Tối bật đèn: <strong class="text-orchid-600 dark:text-orchid-400">&gt; 2200</strong></span>
+          <span>Sáng tắt: <strong class="text-slate-700 dark:text-slate-300">&lt; 1800</strong></span>
+        </div>
+      </div>
+
+      <!-- Card 4: WATER RESERVOIR LEVEL -->
+      <div class="glass-panel glass-card-hover rounded-3xl p-5 relative overflow-hidden group">
+        <div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-cyan-500/15 blur-2xl group-hover:bg-cyan-500/25 transition-all"></div>
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
+              <i data-lucide="waves" class="w-5 h-5"></i>
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Mực Nước Bồn</span>
+          </div>
+          <span id="water-badge" class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">Đủ Nước</span>
+        </div>
+        
+        <div class="flex items-baseline space-x-2 my-2">
+          <span id="water-val" class="font-display font-extrabold text-4xl tracking-tight text-slate-900 dark:text-white">----</span>
+          <span class="text-slate-500 dark:text-slate-400 font-display font-semibold text-lg">ADC</span>
+        </div>
+
+        <!-- Progress bar tank simulation -->
+        <div class="w-full bg-slate-200 dark:bg-white/10 rounded-full h-2 mt-3 overflow-hidden">
+          <div id="water-progress-bar" class="bg-gradient-to-r from-cyan-500 to-botanical-500 h-2 rounded-full transition-all duration-500" style="width: 75%"></div>
+        </div>
+
+        <div class="mt-3 pt-2 flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400 font-medium">
+          <span>Khóa cạn: <strong class="text-rose-600 dark:text-rose-400">&lt; 1200</strong></span>
+          <span>Phục hồi: <strong class="text-botanical-600 dark:text-botanical-400">&ge; 1500</strong></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ======================================================================= -->
+    <!-- SECTION 2: SMART ACTUATOR CONTROL CENTER (3 RELAYS + MANUAL OVERRIDES)   -->
+    <!-- ======================================================================= -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- ACTUATOR 1: BƠM PHUN SƯƠNG (MIST PUMP) -->
+      <div class="glass-panel rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between border-t-4 border-t-botanical-500 shadow-md">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+              <div id="mist-icon-box" class="w-12 h-12 rounded-2xl bg-botanical-500/15 border border-botanical-500/30 flex items-center justify-center text-botanical-600 dark:text-botanical-400 transition-all">
+                <i data-lucide="cloud-rain" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">Bơm Phun Sương</h3>
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">GPIO25 / GPIO7</span>
+              </div>
+            </div>
+            <div class="flex flex-col items-end">
+              <span id="mist-state-tag" class="px-2.5 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700">TẮT</span>
+              <span id="mist-mode-tag" class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 uppercase font-bold">Chế độ AUTO</span>
+            </div>
+          </div>
+
+          <!-- Lockout alert on card if active -->
+          <div id="mist-lockout-notice" class="hidden mb-4 p-2.5 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-700 dark:text-rose-300 text-xs flex items-center space-x-2">
+            <i data-lucide="shield-x" class="w-4 h-4 text-rose-500 shrink-0"></i>
+            <span class="font-bold">KHÓA BƠM: Bồn cạn nước (&lt; 1200)</span>
+          </div>
+
+          <!-- TTL Selector Buttons for Manual Control -->
+          <div class="space-y-1.5 mb-4">
+            <label class="text-xs text-slate-600 dark:text-slate-400 font-semibold flex items-center justify-between">
+              <span>Thời gian can thiệp tay (TTL):</span>
+              <span id="mist-ttl-preview" class="text-botanical-600 dark:text-orchid-400 font-mono font-bold">60 giây</span>
+            </label>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="setActuatorTTL('mist', 30)" class="ttl-btn-mist px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 font-semibold transition-all">30s</button>
+              <button onclick="setActuatorTTL('mist', 60)" class="ttl-btn-mist px-2.5 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/50 text-xs font-mono text-emerald-800 dark:text-orchid-300 font-bold transition-all shadow-sm">60s</button>
+              <button onclick="setActuatorTTL('mist', 120)" class="ttl-btn-mist px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 font-semibold transition-all">120s</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="grid grid-cols-3 gap-2 mt-2 pt-4 border-t border-slate-200 dark:border-white/10">
+          <button onclick="sendRelayCommand('mist', 'MANUAL', 'ON')" class="px-3 py-2.5 rounded-xl bg-botanical-600 hover:bg-botanical-500 active:scale-95 text-white font-bold text-xs tracking-wide transition-all shadow-md flex items-center justify-center space-x-1">
+            <i data-lucide="play" class="w-3.5 h-3.5"></i>
+            <span>BẬT TAY</span>
+          </button>
+          <button onclick="sendRelayCommand('mist', 'MANUAL', 'OFF')" class="px-3 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white font-bold text-xs tracking-wide transition-all shadow-md flex items-center justify-center space-x-1">
+            <i data-lucide="square" class="w-3.5 h-3.5"></i>
+            <span>TẮT TAY</span>
+          </button>
+          <button onclick="sendRelayCommand('mist', 'AUTO', '')" class="px-3 py-2.5 rounded-xl bg-slate-600 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 active:scale-95 text-white font-bold text-xs tracking-wide transition-all shadow-md flex items-center justify-center space-x-1">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            <span>VỀ AUTO</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ACTUATOR 2: QUẠT THÔNG GIÓ (FAN ASSIST) -->
+      <div class="glass-panel rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between border-t-4 border-t-cyan-500 shadow-md">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+              <div id="fan-icon-box" class="w-12 h-12 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400 transition-all">
+                <i data-lucide="fan" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">Quạt Thông Gió</h3>
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">GPIO26 / GPIO6</span>
+              </div>
+            </div>
+            <div class="flex flex-col items-end">
+              <span id="fan-state-tag" class="px-2.5 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700">TẮT</span>
+              <span id="fan-mode-tag" class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 uppercase font-bold">Chế độ AUTO</span>
+            </div>
+          </div>
+
+          <div class="space-y-1.5 mb-4">
+            <label class="text-xs text-slate-600 dark:text-slate-400 font-semibold flex items-center justify-between">
+              <span>Thời gian can thiệp tay (TTL):</span>
+              <span id="fan-ttl-preview" class="text-cyan-600 dark:text-cyan-400 font-mono font-bold">60 giây</span>
+            </label>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="setActuatorTTL('fan', 60)" class="ttl-btn-fan px-2.5 py-1.5 rounded-xl bg-cyan-500/20 border border-cyan-500/50 text-xs font-mono text-cyan-800 dark:text-cyan-300 font-bold transition-all shadow-sm">60s</button>
+              <button onclick="setActuatorTTL('fan', 300)" class="ttl-btn-fan px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 font-semibold transition-all">5m</button>
+              <button onclick="setActuatorTTL('fan', 600)" class="ttl-btn-fan px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 font-semibold transition-all">10m</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 mt-2 pt-4 border-t border-slate-200 dark:border-white/10">
+          <button onclick="sendRelayCommand('fan', 'MANUAL', 'ON')" class="px-3 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 active:scale-95 text-white font-bold text-xs tracking-wide transition-all shadow-md flex items-center justify-center space-x-1">
+            <i data-lucide="play" class="w-3.5 h-3.5"></i>
+            <span>BẬT TAY</span>
+          </button>
+          <button onclick="sendRelayCommand('fan', 'MANUAL', 'OFF')" class="px-3 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white font-bold text-xs tracking-wide transition-all shadow-md flex items-center justify-center space-x-1">
+            <i data-lucide="square" class="w-3.5 h-3.5"></i>
+            <span>TẮT TAY</span>
+          </button>
+          <button onclick="sendRelayCommand('fan', 'AUTO', '')" class="px-3 py-2.5 rounded-xl bg-slate-600 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 active:scale-95 text-white font-bold text-xs tracking-wide transition-all shadow-md flex items-center justify-center space-x-1">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            <span>VỀ AUTO</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ACTUATOR 3: ĐÈN QUANG HỢP (GROW LIGHT) -->
+      <div class="glass-panel rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between border-t-4 border-t-orchid-500 shadow-md">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+              <div id="light-icon-box" class="w-12 h-12 rounded-2xl bg-orchid-500/15 border border-orchid-500/30 flex items-center justify-center text-orchid-600 dark:text-orchid-400 transition-all">
+                <i data-lucide="lightbulb" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">Đèn Quang Hợp</h3>
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">GPIO27 / GPIO5</span>
+              </div>
+            </div>
+            <div class="flex flex-col items-end">
+              <span id="light-state-tag" class="px-2.5 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700">TẮT</span>
+              <span id="light-mode-tag" class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 uppercase font-bold">Chế độ AUTO</span>
+            </div>
+          </div>
+
+          <div class="space-y-1.5 mb-4">
+            <label class="text-xs text-slate-600 dark:text-slate-400 font-semibold flex items-center justify-between">
+              <span>Thời gian can thiệp tay (TTL):</span>
+              <span id="light-ttl-preview" class="text-orchid-600 dark:text-orchid-400 font-mono font-bold">300 giây</span>
+            </label>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="setActuatorTTL('light', 120)" class="ttl-btn-light px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 font-semibold transition-all">2m</button>
+              <button onclick="setActuatorTTL('light', 300)" class="ttl-btn-light px-2.5 py-1.5 rounded-xl bg-orchid-500/20 border border-orchid-500/50 text-xs font-mono text-orchid-800 dark:text-orchid-300 font-bold transition-all shadow-sm">5m</button>
+              <button onclick="setActuatorTTL('light', 900)" class="ttl-btn-light px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 font-semibold transition-all">15m</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 mt-2 pt-4 border-t border-slate-200 dark:border-white/10">
+          <button onclick="sendRelayCommand('light', 'MANUAL', 'ON')" class="px-3 py-2.5 rounded-xl bg-orchid-600 hover:bg-orchid-500 active:scale-95 text-white font-bold text-xs tracking-wide transition-all shadow-md flex items-center justify-center space-x-1">
+            <i data-lucide="play" class="w-3.5 h-3.5"></i>
+            <span>BẬT TAY</span>
+          </button>
+          <button onclick="sendRelayCommand('light', 'MANUAL', 'OFF')" class="px-3 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white font-bold text-xs tracking-wide transition-all shadow-md flex items-center justify-center space-x-1">
+            <i data-lucide="square" class="w-3.5 h-3.5"></i>
+            <span>TẮT TAY</span>
+          </button>
+          <button onclick="sendRelayCommand('light', 'AUTO', '')" class="px-3 py-2.5 rounded-xl bg-slate-600 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 active:scale-95 text-white font-bold text-xs tracking-wide transition-all shadow-md flex items-center justify-center space-x-1">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            <span>VỀ AUTO</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ======================================================================= -->
+    <!-- SECTION 3: TRẠNG THÁI VẬN HÀNH TOÀN DIỆN (BƠM FSM • QUẠT • ĐÈN)         -->
+    <!-- ======================================================================= -->
+    <div class="space-y-4">
+      
+      <!-- Part 1: BƠM PHUN SƯƠNG (FSM 5 TRẠNG THÁI) -->
+      <div class="glass-panel rounded-3xl p-6 relative overflow-hidden border border-slate-200 dark:border-white/10 shadow-md">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-5 pb-4 border-b border-slate-200 dark:border-white/10 gap-2">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-botanical-500/15 border border-botanical-500/30 flex items-center justify-center text-botanical-600 dark:text-botanical-400">
+              <i data-lucide="git-commit" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">1. Máy Trạng Thái FSM — Bơm Phun Sương</h3>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-botanical-500/20 text-botanical-700 dark:text-botanical-300 border border-botanical-500/30">Cấp 1</span>
+              </div>
+              <p class="text-xs text-slate-600 dark:text-slate-400 font-medium">Chu trình hữu hạn tự động điều khiển bởi giải thuật FSM trong firmware ESP32</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2 shrink-0">
+            <span class="text-xs text-slate-600 dark:text-slate-400 font-mono font-semibold">Trạng thái Bơm:</span>
+            <span id="current-fsm-badge" class="px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700">
+              CHỜ TÍN HIỆU ESP32...
+            </span>
+          </div>
+        </div>
+
+        <!-- FSM 5 States Pipeline -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
+          
+          <!-- Node 1: IDLE -->
+          <div id="fsm-IDLE" class="fsm-node p-4 rounded-2xl bg-white/70 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex flex-col items-center text-center relative opacity-50 shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 mb-2">
+              <i data-lucide="clock" class="w-5 h-5"></i>
+            </div>
+            <span class="font-display font-bold text-sm text-slate-900 dark:text-white">IDLE</span>
+            <span class="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Nghỉ chờ<br>Độ ẩm &ge; 65%</span>
+          </div>
+
+          <!-- Node 2: RUNNING -->
+          <div id="fsm-RUNNING" class="fsm-node p-4 rounded-2xl bg-white/70 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex flex-col items-center text-center relative opacity-50 shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 mb-2">
+              <i data-lucide="zap" class="w-5 h-5"></i>
+            </div>
+            <span class="font-display font-bold text-sm text-slate-900 dark:text-white">RUNNING</span>
+            <span class="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Đang phun sương<br>Tối đa 15s/120s</span>
+          </div>
+
+          <!-- Node 3: COOLDOWN -->
+          <div id="fsm-COOLDOWN" class="fsm-node p-4 rounded-2xl bg-white/70 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex flex-col items-center text-center relative opacity-50 shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 mb-2">
+              <i data-lucide="timer" class="w-5 h-5"></i>
+            </div>
+            <span class="font-display font-bold text-sm text-slate-900 dark:text-white">COOLDOWN</span>
+            <span class="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Hạ nhiệt bắt buộc<br>Nghỉ 10s/60s</span>
+          </div>
+
+          <!-- Node 4: WATER_LOCKOUT -->
+          <div id="fsm-WATER_LOCKOUT" class="fsm-node p-4 rounded-2xl bg-white/70 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex flex-col items-center text-center relative opacity-50 shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 mb-2">
+              <i data-lucide="shield-alert" class="w-5 h-5"></i>
+            </div>
+            <span class="font-display font-bold text-sm text-slate-900 dark:text-white">LOCKOUT</span>
+            <span class="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Khóa Cạn Nước<br>ADC &lt; 1200</span>
+          </div>
+
+          <!-- Node 5: SENSOR_FAULT -->
+          <div id="fsm-SENSOR_FAULT" class="fsm-node p-4 rounded-2xl bg-white/70 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex flex-col items-center text-center relative opacity-50 shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 mb-2">
+              <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+            </div>
+            <span class="font-display font-bold text-sm text-slate-900 dark:text-white">FAULT</span>
+            <span class="text-[11px] text-slate-600 dark:text-slate-400 mt-1">Lỗi DHT22<br>&ge; 3 lần liên tiếp</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Part 2 & 3: TRẠNG THÁI LOGIC CỦA QUẠT VÀ ĐÈN -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- TRẠNG THÁI QUẠT THÔNG GIÓ -->
+        <div class="glass-panel rounded-3xl p-5 border border-slate-200 dark:border-white/10 relative overflow-hidden shadow-md">
+          <div class="flex items-center justify-between mb-3 pb-3 border-b border-slate-200 dark:border-white/10">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
+                <i data-lucide="wind" class="w-4 h-4"></i>
+              </div>
+              <h4 class="font-display font-bold text-sm text-slate-900 dark:text-white">2. Trạng Thái Vận Hành Quạt Gió</h4>
+            </div>
+            <span id="fan-logic-status-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700">TẮT</span>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center justify-between p-2 rounded-xl bg-slate-100/80 dark:bg-white/5">
+              <span class="text-slate-600 dark:text-slate-400">Nguyên nhân kích hoạt:</span>
+              <span id="fan-logic-reason" class="font-bold text-slate-800 dark:text-slate-200">Nhiệt độ an toàn (&le; 31°C)</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-xl bg-slate-100/80 dark:bg-white/5">
+              <span class="text-slate-600 dark:text-slate-400">Luật tự động (Hysteresis):</span>
+              <span class="font-mono font-bold text-cyan-700 dark:text-cyan-300">Bật khi &gt;33°C / Tắt khi &lt;31°C</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-xl bg-slate-100/80 dark:bg-white/5">
+              <span class="text-slate-600 dark:text-slate-400">Hỗ trợ sau phun (Post-Mist):</span>
+              <span class="font-mono font-bold text-botanical-700 dark:text-botanical-300">Bật 60s hong ráo lá lan</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRẠNG THÁI ĐÈN QUANG HỢP -->
+        <div class="glass-panel rounded-3xl p-5 border border-slate-200 dark:border-white/10 relative overflow-hidden shadow-md">
+          <div class="flex items-center justify-between mb-3 pb-3 border-b border-slate-200 dark:border-white/10">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-lg bg-orchid-500/15 border border-orchid-500/30 flex items-center justify-center text-orchid-600 dark:text-orchid-400">
+                <i data-lucide="sun" class="w-4 h-4"></i>
+              </div>
+              <h4 class="font-display font-bold text-sm text-slate-900 dark:text-white">3. Trạng Thái Vận Hành Đèn Quang Hợp</h4>
+            </div>
+            <span id="light-logic-status-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700">TẮT</span>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center justify-between p-2 rounded-xl bg-slate-100/80 dark:bg-white/5">
+              <span class="text-slate-600 dark:text-slate-400">Nguyên nhân kích hoạt:</span>
+              <span id="light-logic-reason" class="font-bold text-slate-800 dark:text-slate-200">Đủ ánh sáng ban ngày (LDR &lt; 1800)</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-xl bg-slate-100/80 dark:bg-white/5">
+              <span class="text-slate-600 dark:text-slate-400">Luật tự động (LDR Threshold):</span>
+              <span class="font-mono font-bold text-orchid-700 dark:text-orchid-300">Bật khi &gt;2200 / Tắt khi &lt;1800</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-xl bg-slate-100/80 dark:bg-white/5">
+              <span class="text-slate-600 dark:text-slate-400">Khóa an toàn chống cháy lá:</span>
+              <span class="font-mono font-bold text-amber-700 dark:text-amber-300">Tối đa 4 giờ liên tục / đêm</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ======================================================================= -->
+    <!-- SECTION 4: REALTIME SENSOR CHARTS & RECENT EVENT LOGS                   -->
+    <!-- ======================================================================= -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Chart Left (2 columns) -->
+      <div class="lg:col-span-2 glass-panel rounded-3xl p-6 relative shadow-md">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-2.5">
+            <i data-lucide="line-chart" class="w-5 h-5 text-botanical-600 dark:text-botanical-400"></i>
+            <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">Đồ Thị Biến Thiên Nhiệt Độ & Độ Ẩm</h3>
+          </div>
+          <div class="flex items-center space-x-3 text-xs font-semibold">
+            <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span><span class="text-slate-700 dark:text-slate-300">Nhiệt độ (°C)</span></span>
+            <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-botanical-500"></span><span class="text-slate-700 dark:text-slate-300">Độ ẩm (%)</span></span>
+          </div>
+        </div>
+        
+        <div class="w-full h-72">
+          <canvas id="telemetryChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Live Event Log Stream (1 column) -->
+      <div class="glass-panel rounded-3xl p-6 flex flex-col justify-between shadow-md">
+        <div>
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-white/10">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="scroll-text" class="w-4 h-4 text-orchid-600 dark:text-orchid-400"></i>
+              <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">Nhật Ký Sự Kiện Real-time</h3>
+            </div>
+            <span class="text-[10px] text-slate-500 dark:text-slate-400 font-mono font-bold" id="event-count">0 sự kiện</span>
+          </div>
+
+          <div id="event-log-container" class="space-y-2.5 max-h-[250px] overflow-y-auto pr-1 text-xs font-mono">
+            <!-- Dynamic Event Items will be injected here -->
+            <div class="p-2.5 rounded-xl bg-slate-100/70 dark:bg-white/5 border border-slate-200 dark:border-white/5 text-slate-500 dark:text-slate-400 text-center py-8">
+              Chưa có sự kiện nào được ghi nhận.
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 dark:border-white/10 mt-3 flex items-center justify-between text-[11px] text-slate-500">
+          <span>Topic: garden/orchid/orchid-01/#</span>
+          <button onclick="clearEventLogs()" class="hover:text-slate-800 dark:hover:text-slate-300 font-bold">Xóa log [✕]</button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT: THEME ENGINE, REAL-TIME MQTT CLIENT & REACTIVE UI CONTROLLER  -->
+  <!-- ========================================================================= -->
+  <script>
+    // -------------------------------------------------------------------------
+    // 0. THEME SWITCHER ENGINE (LIGHT GRADIENT vs DEEP DARK)
+    // -------------------------------------------------------------------------
+    let currentTheme = localStorage.getItem('orchidsense_theme') || 'light';
+
+    function initTheme() {
+      applyTheme(currentTheme);
+    }
+
+    function toggleTheme() {
+      currentTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+      applyTheme(currentTheme);
+    }
+
+    function applyTheme(theme) {
+      const html = document.documentElement;
+      const isDark = (theme === 'dark');
+      
+      if (isDark) {
+        html.classList.add('dark');
+        html.classList.remove('light');
+      } else {
+        html.classList.remove('dark');
+        html.classList.add('light');
+      }
+
+      localStorage.setItem('orchidsense_theme', theme);
+      updateThemeButtonUI(isDark);
+      updateChartTheme(isDark);
+    }
+
+    function updateThemeButtonUI(isDark) {
+      const iconSpan = document.getElementById('theme-icon');
+      const label = document.getElementById('theme-label');
+
+      if (isDark) {
+        // In dark mode: button offers switching to Light theme
+        iconSpan.innerHTML = '<i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>';
+        label.innerText = 'Giao diện Sáng (Lan)';
+        label.className = 'hidden sm:inline text-amber-300 font-semibold';
+      } else {
+        // In light mode: button offers switching to Dark theme
+        iconSpan.innerHTML = '<i data-lucide="moon" class="w-4 h-4 text-orchid-600"></i>';
+        label.innerText = 'Giao diện Tối';
+        label.className = 'hidden sm:inline text-slate-700 font-semibold';
+      }
+
+      lucide.createIcons();
+    }
+
+    // Initialize Lucide Icons immediately
+    lucide.createIcons();
+
+    // -------------------------------------------------------------------------
+    // 1. MQTT CLIENT CONFIGURATION (WSS to EMQX Public Broker)
+    // -------------------------------------------------------------------------
+    const MQTT_CONFIG = {
+      host: 'broker.emqx.io',
+      port: 8084, // Secure WebSocket port
+      path: '/mqtt',
+      clientId: 'orchidsense-web-' + Math.random().toString(16).substr(2, 8),
+      deviceId: 'orchid-01',
+    };
+
+    const TOPICS = {
+      telemetry: `garden/orchid/${MQTT_CONFIG.deviceId}/telemetry`,
+      state: `garden/orchid/${MQTT_CONFIG.deviceId}/state`,
+      availability: `garden/orchid/${MQTT_CONFIG.deviceId}/availability`,
+      ack: `garden/orchid/${MQTT_CONFIG.deviceId}/ack`,
+      cmdMist: `garden/orchid/${MQTT_CONFIG.deviceId}/cmd/mist`,
+      cmdFan: `garden/orchid/${MQTT_CONFIG.deviceId}/cmd/fan`,
+      cmdLight: `garden/orchid/${MQTT_CONFIG.deviceId}/cmd/light`,
+      config: `garden/orchid/${MQTT_CONFIG.deviceId}/config`,
+    };
+
+    let client = null;
+    let selectedTTL = {
+      mist: 60,
+      fan: 60,
+      light: 300
+    };
+
+    // -------------------------------------------------------------------------
+    // 2. REAL-TIME CHART SETUP (Chart.js with Dynamic Theme Adaptation)
+    // -------------------------------------------------------------------------
+    const ctx = document.getElementById('telemetryChart').getContext('2d');
+    const MAX_DATA_POINTS = 20;
+
+    const telemetryChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: 'Nhiệt độ (°C)',
+            borderColor: '#f43f5e',
+            backgroundColor: 'rgba(244, 63, 94, 0.12)',
+            data: [],
+            yAxisID: 'yTemp',
+            tension: 0.4,
+            borderWidth: 2.5,
+            pointRadius: 3,
+            pointHoverRadius: 6,
+            fill: true,
+          },
+          {
+            label: 'Độ ẩm (%)',
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16, 185, 129, 0.12)',
+            data: [],
+            yAxisID: 'yHum',
+            tension: 0.4,
+            borderWidth: 2.5,
+            pointRadius: 3,
+            pointHoverRadius: 6,
+            fill: true,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(15, 23, 42, 0.92)',
+            titleFont: { family: 'Plus Jakarta Sans', size: 12 },
+            bodyFont: { family: 'JetBrains Mono', size: 12 },
+            padding: 10,
+            borderColor: 'rgba(255, 255, 255, 0.1)',
+            borderWidth: 1,
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: 'rgba(0, 0, 0, 0.05)' },
+            ticks: { color: '#64748b', font: { family: 'JetBrains Mono', size: 10 } }
+          },
+          yTemp: {
+            type: 'linear',
+            position: 'left',
+            min: 15,
+            max: 45,
+            grid: { color: 'rgba(0, 0, 0, 0.05)' },
+            ticks: { color: '#f43f5e', font: { family: 'JetBrains Mono', size: 11 } }
+          },
+          yHum: {
+            type: 'linear',
+            position: 'right',
+            min: 30,
+            max: 100,
+            grid: { display: false },
+            ticks: { color: '#10b981', font: { family: 'JetBrains Mono', size: 11 } }
+          }
+        }
+      }
+    });
+
+    function updateChartTheme(isDark) {
+      if (!telemetryChart) return;
+      const gridColor = isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.06)';
+      const tickColor = isDark ? '#94a3b8' : '#475569';
+      
+      telemetryChart.options.scales.x.grid.color = gridColor;
+      telemetryChart.options.scales.x.ticks.color = tickColor;
+      telemetryChart.options.scales.yTemp.grid.color = gridColor;
+      
+      telemetryChart.options.plugins.tooltip.backgroundColor = isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.98)';
+      telemetryChart.options.plugins.tooltip.titleColor = isDark ? '#f8fafc' : '#0f172a';
+      telemetryChart.options.plugins.tooltip.bodyColor = isDark ? '#e2e8f0' : '#1e293b';
+      telemetryChart.options.plugins.tooltip.borderColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(16, 185, 129, 0.3)';
+
+      telemetryChart.update();
+    }
+
+    // -------------------------------------------------------------------------
+    // 3. MQTT CONNECTION HANDLERS
+    // -------------------------------------------------------------------------
+    function connectMQTT() {
+      updateMqttPill('connecting', 'Đang kết nối...');
+
+      try {
+        client = new Paho.MQTT.Client(MQTT_CONFIG.host, MQTT_CONFIG.port, MQTT_CONFIG.path, MQTT_CONFIG.clientId);
+        client.onConnectionLost = onConnectionLost;
+        client.onMessageArrived = onMessageArrived;
+
+        client.connect({
+          useSSL: true,
+          timeout: 5,
+          keepAliveInterval: 30,
+          cleanSession: true,
+          onSuccess: onConnectSuccess,
+          onFailure: onConnectFailure,
+        });
+      } catch (err) {
+        console.error('MQTT Init Error:', err);
+        updateMqttPill('disconnected', 'Lỗi Khởi Tạo');
+      }
+    }
+
+    function onConnectSuccess() {
+      console.log('Connected to MQTT Broker:', MQTT_CONFIG.host);
+      updateMqttPill('connected', 'BROKER ONLINE');
+
+      // Subscribe wildcard feed
+      const subTopic = `garden/orchid/${MQTT_CONFIG.deviceId}/#`;
+      client.subscribe(subTopic, { qos: 1 });
+      addEventLog('MQTT', 'Subscribed topic ' + subTopic, 'info');
+    }
+
+    function onConnectFailure(response) {
+      console.warn('MQTT Connection Failed:', response.errorMessage);
+      updateMqttPill('disconnected', 'Mất Kết Nối');
+      setTimeout(connectMQTT, 5000);
+    }
+
+    function onConnectionLost(response) {
+      console.warn('MQTT Connection Lost:', response.errorMessage);
+      updateMqttPill('disconnected', 'Đã Ngắt Kết Nối');
+      setTimeout(connectMQTT, 4000);
+    }
+
+    // -------------------------------------------------------------------------
+    // 4. MQTT MESSAGE INGESTION & DISPATCHER
+    // -------------------------------------------------------------------------
+    function onMessageArrived(message) {
+      const topic = message.destinationName;
+      let payload = message.payloadString;
+
+      let data = null;
+      try {
+        data = JSON.parse(payload);
+      } catch (e) {
+        data = payload;
+      }
+
+      // 1. Telemetry
+      if (topic.endsWith('/telemetry')) {
+        handleTelemetry(data);
+      }
+      // 2. State & Relay status
+      else if (topic.endsWith('/state')) {
+        handleState(data);
+      }
+      // 3. Availability (Online / Offline)
+      else if (topic.endsWith('/availability')) {
+        handleAvailability(data);
+      }
+      // 4. Acknowledgement
+      else if (topic.endsWith('/ack')) {
+        handleAck(data);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 5. TELEMETRY HANDLER
+    // -------------------------------------------------------------------------
+    function handleTelemetry(t) {
+      if (!t || typeof t !== 'object') return;
+      markHardwareOnline();
+
+      const nowTime = new Date().toLocaleTimeString('vi-VN', { hour12: false });
+
+      // Temperature
+      if (t.temperature_c !== null && t.temperature_c !== undefined) {
+        document.getElementById('temp-val').innerText = t.temperature_c.toFixed(1);
+        const tempBadge = document.getElementById('temp-badge');
+        if (t.temperature_c >= 33.0) {
+          tempBadge.innerText = 'Quá nhiệt (>33°C)';
+          tempBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30';
+        } else if (t.temperature_c < 20.0) {
+          tempBadge.innerText = 'Lạnh (<20°C)';
+          tempBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30';
+        } else {
+          tempBadge.innerText = 'Lý tưởng';
+          tempBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30';
+        }
+      } else {
+        document.getElementById('temp-val').innerText = 'ERROR';
+      }
+
+      // Humidity
+      if (t.humidity_pct !== null && t.humidity_pct !== undefined) {
+        document.getElementById('hum-val').innerText = t.humidity_pct.toFixed(1);
+        const humBadge = document.getElementById('hum-badge');
+        if (t.humidity_pct < 65.0) {
+          humBadge.innerText = 'Khô hanh (<65%)';
+          humBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30';
+        } else if (t.humidity_pct >= 80.0) {
+          humBadge.innerText = 'Ẩm ướt (≥80%)';
+          humBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30';
+        } else {
+          humBadge.innerText = 'Tối ưu';
+          humBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30';
+        }
+      } else {
+        document.getElementById('hum-val').innerText = 'ERROR';
+      }
+
+      // LDR Sunlight
+      if (t.light_adc !== undefined) {
+        document.getElementById('ldr-val').innerText = t.light_adc;
+        const lightBadge = document.getElementById('light-badge');
+        if (t.light_adc > 2200) {
+          lightBadge.innerText = 'Trời tối (Bật đèn)';
+          lightBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-orchid-500/20 text-orchid-700 dark:text-orchid-300 border border-orchid-500/40';
+        } else if (t.light_adc < 1000) {
+          lightBadge.innerText = 'Nắng mạnh';
+          lightBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30';
+        } else {
+          lightBadge.innerText = 'Ánh sáng râm mát';
+          lightBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30';
+        }
+      }
+
+      // Water Level ADC
+      if (t.water_adc !== undefined) {
+        document.getElementById('water-val').innerText = t.water_adc;
+        const waterBadge = document.getElementById('water-badge');
+        const progressBar = document.getElementById('water-progress-bar');
+        
+        // Progress bar percentage (0-4095)
+        const pct = Math.min(100, Math.max(0, Math.round((t.water_adc / 3500) * 100)));
+        progressBar.style.width = pct + '%';
+
+        if (t.water_adc < 1200) {
+          waterBadge.innerText = 'CẠN NƯỚC (<1200)';
+          waterBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/40 animate-pulse';
+          progressBar.className = 'bg-rose-500 h-2 rounded-full transition-all duration-500';
+          showAlertBanner('CẢNH BÁO BẢO VỆ CẠN NƯỚC', `Mực nước bồn tưới đang ở mức THẤP (ADC: ${t.water_adc} < 1200)! Bơm phun sương bị khóa cưỡng bức.`);
+        } else if (t.water_adc < 1500) {
+          waterBadge.innerText = 'VÙNG TRỄ (Chờ đầy ≥1500)';
+          waterBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/40';
+          progressBar.className = 'bg-amber-400 h-2 rounded-full transition-all duration-500';
+        } else {
+          waterBadge.innerText = 'ĐỦ NƯỚC AN TOÀN';
+          waterBadge.className = 'px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30';
+          progressBar.className = 'bg-gradient-to-r from-cyan-500 to-botanical-500 h-2 rounded-full transition-all duration-500';
+          dismissBanner();
+        }
+      }
+
+      // Sensor Fault status
+      const streakElem = document.getElementById('temp-streak');
+      if (t.dht_fail_streak && t.dht_fail_streak > 0) {
+        streakElem.innerText = `DHT Lỗi: ${t.dht_fail_streak} lần`;
+        streakElem.className = 'text-rose-500 font-bold';
+      } else {
+        streakElem.innerText = 'DHT22: OK';
+        streakElem.className = 'text-slate-500';
+      }
+
+      // Update Chart
+      if (t.temperature_c !== null && t.humidity_pct !== null) {
+        addChartPoint(nowTime, t.temperature_c, t.humidity_pct);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 6. STATE & ACTUATOR HANDLER
+    // -------------------------------------------------------------------------
+    function handleState(s) {
+      if (!s || typeof s !== 'object') return;
+
+      // 1. Mist Relay
+      const mistTag = document.getElementById('mist-state-tag');
+      const mistIcon = document.getElementById('mist-icon-box');
+      if (s.mist === 'ON') {
+        mistTag.innerText = 'ĐANG BẬT';
+        mistTag.className = 'px-2.5 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-botanical-500/20 text-botanical-700 dark:text-botanical-300 border border-botanical-500/40 animate-pulse';
+        mistIcon.className = 'w-12 h-12 rounded-2xl bg-botanical-500/30 border border-botanical-400 flex items-center justify-center text-botanical-600 dark:text-botanical-300 shadow-lg shadow-botanical-500/30';
+      } else {
+        mistTag.innerText = 'TẮT';
+        mistTag.className = 'px-2.5 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700';
+        mistIcon.className = 'w-12 h-12 rounded-2xl bg-botanical-500/15 border border-botanical-500/30 flex items-center justify-center text-botanical-600 dark:text-botanical-400';
+      }
+      document.getElementById('mist-mode-tag').innerText = `Chế độ: ${s.mist_mode || s.mode || 'AUTO'}`;
+
+      // Water lockout on mist card
+      const lockoutNotice = document.getElementById('mist-lockout-notice');
+      if (s.water_lockout) {
+        lockoutNotice.classList.remove('hidden');
+      } else {
+        lockoutNotice.classList.add('hidden');
+      }
+
+      // 2. Fan Relay
+      const fanTag = document.getElementById('fan-state-tag');
+      const fanIcon = document.getElementById('fan-icon-box');
+      if (s.fan === 'ON') {
+        fanTag.innerText = 'ĐANG BẬT';
+        fanTag.className = 'px-2.5 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40 animate-pulse';
+        fanIcon.className = 'w-12 h-12 rounded-2xl bg-cyan-500/30 border border-cyan-400 flex items-center justify-center text-cyan-600 dark:text-cyan-300 shadow-lg shadow-cyan-500/30';
+        fanIcon.querySelector('i').classList.add('animate-spin-slow');
+      } else {
+        fanTag.innerText = 'TẮT';
+        fanTag.className = 'px-2.5 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700';
+        fanIcon.className = 'w-12 h-12 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400';
+        fanIcon.querySelector('i').classList.remove('animate-spin-slow');
+      }
+      document.getElementById('fan-mode-tag').innerText = `Chế độ: ${s.fan_mode || s.mode || 'AUTO'}`;
+
+      // 3. Grow Light Relay
+      const lightTag = document.getElementById('light-state-tag');
+      const lightIcon = document.getElementById('light-icon-box');
+      if (s.light === 'ON') {
+        lightTag.innerText = 'ĐANG BẬT';
+        lightTag.className = 'px-2.5 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-orchid-500/20 text-orchid-700 dark:text-orchid-300 border border-orchid-500/40 animate-pulse';
+        lightIcon.className = 'w-12 h-12 rounded-2xl bg-orchid-500/30 border border-orchid-400 flex items-center justify-center text-orchid-600 dark:text-orchid-300 shadow-lg shadow-orchid-500/30';
+      } else {
+        lightTag.innerText = 'TẮT';
+        lightTag.className = 'px-2.5 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700';
+        lightIcon.className = 'w-12 h-12 rounded-2xl bg-orchid-500/15 border border-orchid-500/30 flex items-center justify-center text-orchid-600 dark:text-orchid-400';
+      }
+      document.getElementById('light-mode-tag').innerText = `Chế độ: ${s.light_mode || s.mode || 'AUTO'}`;
+
+      // 4. Update Detailed Logic Panels for Fan and Light
+      const fanBadge = document.getElementById('fan-logic-status-badge');
+      const fanReason = document.getElementById('fan-logic-reason');
+      if (s.fan === 'ON') {
+        fanBadge.innerText = 'ĐANG BẬT (ON)';
+        fanBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40 animate-pulse';
+        fanReason.innerText = s.fan_mode === 'MANUAL' ? 'Bật thủ công từ Dashboard (MANUAL)' : 'Tự động kích hoạt (Nhiệt độ > 33°C hoặc Độ ẩm > 90%)';
+      } else {
+        fanBadge.innerText = 'TẮT (OFF)';
+        fanBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700';
+        fanReason.innerText = 'Nhiệt độ an toàn (≤ 31°C)';
+      }
+
+      const lightBadge = document.getElementById('light-logic-status-badge');
+      const lightReason = document.getElementById('light-logic-reason');
+      if (s.light === 'ON') {
+        lightBadge.innerText = 'ĐANG BẬT (ON)';
+        lightBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-orchid-500/20 text-orchid-700 dark:text-orchid-300 border border-orchid-500/40 animate-pulse';
+        lightReason.innerText = s.light_mode === 'MANUAL' ? 'Bật thủ công từ Dashboard (MANUAL)' : 'Tự động kích hoạt (Trời tối LDR > 2200)';
+      } else {
+        lightBadge.innerText = 'TẮT (OFF)';
+        lightBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700';
+        lightReason.innerText = 'Đủ ánh sáng ban ngày (LDR < 1800)';
+      }
+
+      // 5. Update FSM State Machine Display
+      if (s.mist_state) {
+        updateFSMVisualizer(s.mist_state);
+      }
+      markHardwareOnline();
+    }
+
+    // -------------------------------------------------------------------------
+    // 7. AVAILABILITY, HARDWARE HEARTBEAT & ACK HANDLER
+    // -------------------------------------------------------------------------
+    let lastHardwareSeenAt = 0;
+
+    function markHardwareOnline() {
+      lastHardwareSeenAt = Date.now();
+      const badge = document.getElementById('device-status-badge');
+      const text = document.getElementById('device-status-text');
+      const dot = document.getElementById('device-pulse-dot');
+      
+      badge.className = 'flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-botanical-500/20 border border-botanical-500/40 text-botanical-800 dark:text-botanical-300 text-xs font-bold shadow-sm transition-all duration-300';
+      dot.className = 'w-2.5 h-2.5 rounded-full bg-botanical-500 dark:bg-botanical-400 animate-pulse';
+      text.innerText = 'PHẦN CỨNG: ONLINE (orchid-01)';
+    }
+
+    function markHardwareOffline(reason = 'Chưa kết nối') {
+      const badge = document.getElementById('device-status-badge');
+      const text = document.getElementById('device-status-text');
+      const dot = document.getElementById('device-pulse-dot');
+      
+      badge.className = 'flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-bold shadow-sm transition-all duration-300';
+      dot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500';
+      text.innerText = `PHẦN CỨNG: OFFLINE (${reason})`;
+    }
+
+    function handleAvailability(status) {
+      if (status === 'online') {
+        markHardwareOnline();
+        addEventLog('LINK', 'Thiết bị ESP32 đã kết nối (ONLINE)', 'success');
+      } else {
+        markHardwareOffline('Mất kết nối LWT');
+        showAlertBanner('MẤT KẾT NỐI THIẾT BỊ', 'ESP32 vừa ngắt kết nối đột ngột (Kích hoạt Last Will and Testament)!');
+        addEventLog('LINK', 'ESP32 bị ngắt kết nối (LWT OFFLINE)', 'error');
+        updateFSMVisualizer(null);
+      }
+    }
+
+    function handleAck(ack) {
+      if (!ack || typeof ack !== 'object') return;
+      markHardwareOnline();
+      const isApplied = ack.result === 'APPLIED';
+      const type = isApplied ? 'success' : 'warning';
+      addEventLog('ACK', `Lệnh [${ack.request_id || 'CMD'}]: ${ack.result} ${ack.reason || ''}`, type);
+    }
+
+    // -------------------------------------------------------------------------
+    // 8. FSM STATE VISUALIZER CONTROLLER
+    // -------------------------------------------------------------------------
+    function updateFSMVisualizer(stateName) {
+      const states = ['IDLE', 'RUNNING', 'COOLDOWN', 'WATER_LOCKOUT', 'SENSOR_FAULT'];
+      const currentBadge = document.getElementById('current-fsm-badge');
+
+      if (!stateName) {
+        currentBadge.innerText = 'CHỜ TÍN HIỆU TỪ ESP32...';
+        currentBadge.className = 'px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700';
+        states.forEach(st => {
+          const elem = document.getElementById('fsm-' + st);
+          if (!elem) return;
+          elem.className = 'fsm-node p-4 rounded-2xl bg-white/70 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex flex-col items-center text-center opacity-40 shadow-sm';
+          elem.querySelector('.w-10').className = 'w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 mb-2';
+        });
+        return;
+      }
+
+      currentBadge.innerText = stateName;
+      currentBadge.className = 'px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orchid-500/20 text-orchid-800 dark:text-orchid-300 border border-orchid-500/40 animate-pulse';
+
+      states.forEach(st => {
+        const elem = document.getElementById('fsm-' + st);
+        if (!elem) return;
+
+        if (st === stateName) {
+          elem.className = 'fsm-node p-4 rounded-2xl bg-orchid-500/25 border-2 border-orchid-500 text-orchid-900 dark:text-orchid-200 active-state shadow-lg shadow-orchid-500/25 relative opacity-100';
+          elem.querySelector('.w-10').className = 'w-10 h-10 rounded-full bg-orchid-500 text-white flex items-center justify-center mb-2 shadow-md';
+        } else {
+          elem.className = 'fsm-node p-4 rounded-2xl bg-white/70 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex flex-col items-center text-center opacity-60 shadow-sm';
+          elem.querySelector('.w-10').className = 'w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 mb-2';
+        }
+      });
+    }
+
+    // -------------------------------------------------------------------------
+    // 9. COMMAND SENDER (DOWNLINK MQTT)
+    // -------------------------------------------------------------------------
+    function setActuatorTTL(actuator, ttlSeconds) {
+      selectedTTL[actuator] = ttlSeconds;
+      document.getElementById(`${actuator}-ttl-preview`).innerText = `${ttlSeconds} giây`;
+      
+      // Update UI button active states
+      document.querySelectorAll(`.ttl-btn-${actuator}`).forEach(btn => {
+        if (btn.innerText.includes(ttlSeconds + 's') || (ttlSeconds >= 60 && btn.innerText.includes(Math.floor(ttlSeconds/60) + 'm'))) {
+          btn.className = `ttl-btn-${actuator} px-2.5 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/50 text-xs font-mono text-emerald-800 dark:text-orchid-300 font-bold transition-all shadow-sm`;
+        } else {
+          btn.className = `ttl-btn-${actuator} px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 font-semibold transition-all`;
+        }
+      });
+    }
+
+    function sendRelayCommand(actuator, mode, state) {
+      if (!client || !client.isConnected()) {
+        alert('Chưa kết nối được tới MQTT Broker. Vui lòng kiểm tra lại mạng!');
+        return;
+      }
+
+      const reqId = 'web-' + Math.floor(Math.random() * 90000 + 10000);
+      let payloadObj = {
+        request_id: reqId,
+        mode: mode,
+      };
+
+      if (mode === 'MANUAL') {
+        payloadObj.state = state;
+        payloadObj.ttl_s = selectedTTL[actuator] || 60;
+      }
+
+      const topic = TOPICS[`cmd${actuator.charAt(0).toUpperCase() + actuator.slice(1)}`];
+      const message = new Paho.MQTT.Message(JSON.stringify(payloadObj));
+      message.destinationName = topic;
+      message.qos = 1;
+
+      client.send(message);
+      addEventLog('CMD', `Gửi lệnh ${actuator.toUpperCase()} -> ${mode} ${state || ''} (TTL: ${payloadObj.ttl_s || 0}s)`, 'info');
+    }
+
+    function triggerEmergencyStop() {
+      if (!confirm('XÁC NHẬN DỪNG KHẨN CẤP:\nBạn có chắc chắn muốn ngắt toàn bộ Relay (Bơm, Quạt, Đèn) về trạng thái an toàn không?')) return;
+      
+      sendRelayCommand('mist', 'MANUAL', 'OFF');
+      setTimeout(() => sendRelayCommand('fan', 'MANUAL', 'OFF'), 100);
+      setTimeout(() => sendRelayCommand('light', 'MANUAL', 'OFF'), 200);
+      addEventLog('E-STOP', 'Đã kích hoạt ngắt toàn bộ relay khẩn cấp!', 'error');
+    }
+
+    // -------------------------------------------------------------------------
+    // 10. UI HELPERS & LOGGING
+    // -------------------------------------------------------------------------
+    let eventCounter = 0;
+    function addEventLog(tag, message, level = 'info') {
+      const container = document.getElementById('event-log-container');
+      const time = new Date().toLocaleTimeString('vi-VN', { hour12: false });
+      
+      let badgeColor = 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300';
+      if (level === 'success') badgeColor = 'bg-botanical-500/20 text-botanical-700 dark:text-botanical-300 border border-botanical-500/30';
+      if (level === 'warning') badgeColor = 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30';
+      if (level === 'error') badgeColor = 'bg-rose-500/20 text-rose-700 dark:text-rose-300 border border-rose-500/30';
+
+      const item = document.createElement('div');
+      item.className = 'p-2 rounded-xl bg-slate-100/80 dark:bg-white/5 border border-slate-200 dark:border-white/5 flex items-start space-x-2 text-[11px] leading-tight animate-fade-in';
+      item.innerHTML = `
+        <span class="text-slate-500 font-mono text-[10px] mt-0.5">${time}</span>
+        <span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${badgeColor}">${tag}</span>
+        <span class="text-slate-800 dark:text-slate-200 flex-1 break-words font-medium">${message}</span>
+      `;
+
+      if (eventCounter === 0) container.innerHTML = '';
+      container.insertBefore(item, container.firstChild);
+      eventCounter++;
+      document.getElementById('event-count').innerText = `${eventCounter} sự kiện`;
+    }
+
+    function clearEventLogs() {
+      document.getElementById('event-log-container').innerHTML = '<div class="p-2.5 rounded-xl bg-slate-100/70 dark:bg-white/5 text-slate-500 text-center py-6">Đã xóa nhật ký sự kiện.</div>';
+      eventCounter = 0;
+      document.getElementById('event-count').innerText = '0 sự kiện';
+    }
+
+    function showAlertBanner(title, msg) {
+      const banner = document.getElementById('system-alert-banner');
+      document.getElementById('alert-banner-title').innerText = title;
+      document.getElementById('alert-banner-msg').innerText = msg;
+      banner.classList.remove('hidden');
+    }
+
+    function dismissBanner() {
+      document.getElementById('system-alert-banner').classList.add('hidden');
+    }
+
+    function updateMqttPill(status, text) {
+      const pill = document.getElementById('mqtt-status-pill');
+      const label = document.getElementById('mqtt-status-text');
+      label.innerText = text;
+
+      if (status === 'connected') {
+        pill.className = 'hidden md:flex items-center space-x-2 px-3 py-1.5 rounded-full bg-botanical-500/15 border border-botanical-500/30 text-botanical-700 dark:text-botanical-400 text-xs font-semibold';
+        pill.querySelector('span').className = 'w-2 h-2 rounded-full bg-botanical-500 dark:bg-botanical-400 animate-pulse';
+      } else if (status === 'connecting') {
+        pill.className = 'hidden md:flex items-center space-x-2 px-3 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-400 text-xs font-semibold';
+        pill.querySelector('span').className = 'w-2 h-2 rounded-full bg-amber-500 dark:bg-amber-400 animate-ping';
+      } else {
+        pill.className = 'hidden md:flex items-center space-x-2 px-3 py-1.5 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-semibold';
+        pill.querySelector('span').className = 'w-2 h-2 rounded-full bg-rose-500';
+      }
+    }
+
+    function addChartPoint(timeLabel, temp, hum) {
+      telemetryChart.data.labels.push(timeLabel);
+      telemetryChart.data.datasets[0].data.push(temp);
+      telemetryChart.data.datasets[1].data.push(hum);
+
+      if (telemetryChart.data.labels.length > MAX_DATA_POINTS) {
+        telemetryChart.data.labels.shift();
+        telemetryChart.data.datasets[0].data.shift();
+        telemetryChart.data.datasets[1].data.shift();
+      }
+      telemetryChart.update('none'); // Update without animation lag
+    }
+
+    // Live Clock & Hardware Heartbeat Watchdog
+    setInterval(() => {
+      const now = new Date();
+      document.getElementById('live-clock').innerText = now.toLocaleTimeString('vi-VN', { hour12: false });
+
+      // Hardware Feed Watchdog: Check if ESP32 packet was received recently
+      const lastSeenElem = document.getElementById('device-last-seen');
+      if (lastHardwareSeenAt === 0) {
+        lastSeenElem.innerText = '| Chờ ESP32...';
+      } else {
+        const elapsed = Math.floor((Date.now() - lastHardwareSeenAt) / 1000);
+        if (elapsed > 8) {
+          markHardwareOffline(`Mất tín hiệu ${elapsed}s trước`);
+          lastSeenElem.innerText = `| Mất tín hiệu (${elapsed}s)`;
+        } else {
+          lastSeenElem.innerText = `| Nhận ${elapsed}s trước`;
+        }
+      }
+    }, 1000);
+
+    // Initial Launch: apply theme, connect MQTT, initialize FSM display & watchdog
+    window.addEventListener('load', () => {
+      initTheme();
+      connectMQTT();
+      updateFSMVisualizer(null);
+      markHardwareOffline('Chưa kết nối');
+    });
+  </script>
+
+</body>
+</html>
