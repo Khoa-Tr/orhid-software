@@ -6,3 +6,6 @@
 include/orchid_secrets.h
 compile_commands.json
 .DS_Store
+.env
+.env.*
+!.env.example

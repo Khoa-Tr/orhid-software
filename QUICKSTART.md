@@ -59,6 +59,19 @@ Khi thấy dòng thông báo chữ xanh **`[SUCCESS]`**, firmware binary `.pio/b
 ```
 *Node-RED sẽ chạy ngầm tại cổng `1880`, kết nối tới MQTT Broker và phục vụ giao diện Web.*
 
+### Cấu hình Telegram Bot (tùy chọn)
+1. Sao chép `.env.example` thành `.env` ở thư mục gốc của project.
+2. Điền `TELEGRAM_BOT_TOKEN` và `TELEGRAM_GROUP_CHAT_ID` vào `.env`.
+3. Khởi động lại Node-RED để nạp cấu hình. `.env` đã được Git bỏ qua; không chia sẻ hoặc commit file này.
+
+Có thể thay cho `.env`, đặt hai biến môi trường trong cùng cửa sổ PowerShell trước khi chạy script:
+```powershell
+$env:TELEGRAM_BOT_TOKEN = "token-cua-bot"
+$env:TELEGRAM_GROUP_CHAT_ID = "-100xxxxxxxxxx"
+.\nodered\start-node-red.ps1
+```
+Trên macOS/Linux, dùng `export TELEGRAM_BOT_TOKEN=...` và `export TELEGRAM_GROUP_CHAT_ID=...` trước khi chạy `./nodered/start-node-red.sh`.
+
 ### 4.2. Mở Giao Diện Giám Sát Web Dashboard
 Mở trình duyệt bất kỳ (Chrome / Edge):
 - **Web Dashboard OrchidSense Pro:** 👉 **[http://localhost:1880/index.html](http://localhost:1880/index.html)**
